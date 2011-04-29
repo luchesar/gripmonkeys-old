@@ -18,11 +18,13 @@ public class CursoDeConducirApplication extends Application {
 
 	@Override
 	public void init() {
-		window = new Window("My Vaadin Application");
+		window = new Window("My Vaadin Application sdf sdf");
 		setMainWindow(window);
 		
 		
 		VerDashLayout root = new VerDashLayout();
+		
+		root.addComponent(new Button("test"));
 		root.setSizeFull();
 		root.setMargin(true);
 		root.setSpacing(true);
