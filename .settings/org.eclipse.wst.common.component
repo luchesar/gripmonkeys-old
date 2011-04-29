@@ -1,4 +1,5 @@
-<project-modules id="moduleCoreId" project-version="2.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
   <wb-module deploy-name="cursodeconducir">
     <property name="context-root" value="cursodeconducir"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
@@ -9,6 +10,12 @@
     <dependent-module archiveName="appengine-jsr107cache-1.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/appengine/appengine-jsr107cache/1.4.3/appengine-jsr107cache-1.4.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="borderlayout-0.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/borderlayout/0.3/borderlayout-0.3.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="dashlayout-0.1.5-beta.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dashlayout/0.1.5-beta/dashlayout-0.1.5-beta.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="transaction-api-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -16,5 +23,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
   </wb-module>
 </project-modules>

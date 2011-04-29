@@ -37,13 +37,22 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>net.kindleit</groupId>
+				<artifactId>maven-gae-plugin</artifactId>
+				<version>0.8.1</version>
+				<configuration>
+					<serverId>appengine.google.com</serverId>
+					<sdkDir>${gae.home}</sdkDir>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>war/WEB-INF/lib</directory>
+							<directory>src/main/webapp/WEB-INF/lib</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
@@ -65,7 +74,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>war/WEB-INF/lib</outputDirectory>
+							<outputDirectory>src/main/webapp/WEB-INF/lib</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -89,6 +98,7 @@
 						<buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
 						<buildcommand>com.google.appengine.eclipse.core.enhancerbuilder</buildcommand>
 						<buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
+						<buildcommand>com.vaadin.integration.eclipse.widgetsetBuilder</buildcommand>
 					</buildcommands>
 					<additionalProjectnatures>
 						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
@@ -112,16 +122,42 @@
 
 			<!-- Compile custom GWT components or widget dependencies with the GWT 
 				compiler -->
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
-				<version>2.1.0-1</version> <configuration> <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory> 
-				<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> <runTarget>cursodeconducir</runTarget> 
-				<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp> 
-				<noServer>true</noServer> <port>8080</port> <soyc>false</soyc> </configuration> 
-				<executions> <execution> <goals> <goal>resources</goal> <goal>compile</goal> 
-				</goals> </execution> </executions> </plugin> <plugin> <groupId>com.vaadin</groupId> 
-				<artifactId>vaadin-maven-plugin</artifactId> <version>1.0.1</version> <executions> 
-				<execution> <configuration> </configuration> <goals> <goal>update-widgetset</goal> 
-				</goals> </execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>2.1.0-1</version>
+				<!-- <configuration>
+					<webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
+					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+					<runTarget>cursodeconducir</runTarget>
+					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+					<noServer>true</noServer>
+					<port>8080</port>
+					<soyc>false</soyc>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>resources</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions> -->
+			</plugin>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<configuration>
+						</configuration>
+						<goals>
+							<goal>update-widgetset</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<!-- A simple Jetty test server at http://localhost:8080/cursodeconducir 
 				can be launched with the Maven goal jetty:run and stopped with jetty:stop -->
@@ -194,9 +230,23 @@
 			<artifactId>vaadin</artifactId>
 			<version>${vaadin.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>borderlayout</artifactId>
+			<version>0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>dashlayout</artifactId>
+			<version>0.1.5-beta</version>
+		</dependency>
 		<!-- This is also used by gwt-maven-plugin to deduce GWT version number. -->
-		<!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
-			<version>2.1.1</version> <scope>provided</scope> </dependency> -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>2.1.1</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
@@ -243,7 +293,7 @@
 			<version>1.1.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
-		</dependency>
+		</dependency> 
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-jta_1.1_spec</artifactId>
@@ -266,5 +316,4 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-
 </project>

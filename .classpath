@@ -1,10 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
-  <classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
-  <classpathentry kind="var" path="M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar" sourcepath="M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-labs/1.4.3/appengine-api-labs-1.4.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-jsr107cache/1.4.3/appengine-jsr107cache-1.4.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4.jar" sourcepath="M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4-sources.jar"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="src" output="src/main/webapp/WEB-INF/classes" path="src/main/java"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
