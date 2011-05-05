@@ -1,4 +1,5 @@
-#Fri Apr 29 17:21:24 BST 2011
+#Wed May 04 08:34:31 BST 2011
+com.vaadin.integration.eclipse.widgetsetBuildsSuspended=true
 com.vaadin.integration.eclipse.widgetsetCompilationEta=78802
 com.vaadin.integration.eclipse.widgetsetDirty=false
 com.vaadin.integration.eclipse.widgetsetParallelism=1
