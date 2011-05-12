@@ -126,23 +126,12 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
 				<version>2.1.0-1</version>
-				<!-- <configuration>
-					<webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-					<runTarget>cursodeconducir</runTarget>
-					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
-					<noServer>true</noServer>
-					<port>8080</port>
-					<soyc>false</soyc>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>resources</goal>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions> -->
+				<!-- <configuration> <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory> 
+					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> <runTarget>cursodeconducir</runTarget> 
+					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp> 
+					<noServer>true</noServer> <port>8080</port> <soyc>false</soyc> </configuration> 
+					<executions> <execution> <goals> <goal>resources</goal> <goal>compile</goal> 
+					</goals> </execution> </executions> -->
 			</plugin>
 			<plugin>
 				<groupId>com.vaadin</groupId>
@@ -240,6 +229,11 @@
 			<artifactId>dashlayout</artifactId>
 			<version>0.1.5-beta</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>cufonlabel</artifactId>
+			<version>0.1.1</version>
+		</dependency>
 		<!-- This is also used by gwt-maven-plugin to deduce GWT version number. -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -293,7 +287,7 @@
 			<version>1.1.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-jta_1.1_spec</artifactId>

@@ -1,22 +1,17 @@
 package org.bitbucket.cursodeconducir;
 
-import org.vaadin.addon.borderlayout.BorderLayout;
-
 import com.vaadin.Application;
+import com.vaadin.incubator.cufonlabel.CufonLink;
 import com.vaadin.incubator.dashlayout.ui.HorDashLayout;
 import com.vaadin.incubator.dashlayout.ui.VerDashLayout;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -42,12 +37,16 @@ public class CursoDeConducirApplication extends Application {
 
 	private void setUpLayout() {
 		VerDashLayout invisibleRoot = new VerDashLayout();
+		invisibleRoot.setStyleName("logo");
 		invisibleRoot.setSizeFull();
+		invisibleRoot.setSpacing(false);
 		invisibleRoot.setMargin(false);
 		window.setContent(invisibleRoot);
 
 		VerDashLayout topWrapper = new VerDashLayout();
 		invisibleRoot.addComponent(topWrapper);
+		invisibleRoot.setComponentAlignment(topWrapper, Alignment.TOP_CENTER);
+		invisibleRoot.setExpandRatio(topWrapper, 0);
 
 		topWrapper.setStyleName("topWrapper");
 		topWrapper.setHeight("90px");
@@ -82,39 +81,50 @@ public class CursoDeConducirApplication extends Application {
 		topSpace.setStyleName("logo");
 		topSpace.setMargin(false);
 		topSpace.setSpacing(false);
-		topSpace.addComponent(new Label("Top Space"));
 
 		menuPanel = new HorizontalLayout();
 		topSpace.addComponent(menuPanel);
 		topSpace.setComponentAlignment(menuPanel, Alignment.BOTTOM_RIGHT);
 		menuPanel.setSizeFull();
-		// menuPanel.setSpacing(false);
-		// menuPanel.setMargin(false);
-//		menuPanel.setStyleName("logo");
 		
-		AbsoluteLayout content = new AbsoluteLayout();
-		content.setSizeUndefined();
+		VerDashLayout contentWrapper = new VerDashLayout();
+		contentWrapper.setStyleName("contentWrapper");
+		contentWrapper.setSizeFull();
+		contentWrapper.setMargin(false);
+		contentWrapper.setSpacing(false);
+	
+		invisibleRoot.addComponent(contentWrapper);
+		invisibleRoot.setComponentAlignment(contentWrapper, Alignment.MIDDLE_CENTER);
+		invisibleRoot.setExpandRatio(contentWrapper, 10);
+		
+		HorDashLayout content = new HorDashLayout();
+		content.setSizeFull();
 		content.setWidth(960, Sizeable.UNITS_PIXELS);
+		content.setSpacing(false);
 		content.setMargin(false);
-		content.setStyleName("top");
-		content.addComponent(new Label("Conent"));
-
-		topWrapper.addComponent(content);
-		topWrapper.setComponentAlignment(content, Alignment.BOTTOM_CENTER);
+		content.setStyleName("content");
+		
+		contentWrapper.addComponent(content);
+		contentWrapper.setComponentAlignment(content, Alignment.TOP_CENTER);
 		
 	}
 
 	private void setUpTopMenu() {
-		
-		CssLayout menu = new CssLayout();
-		menu.setSizeFull();
+
+		HorizontalLayout menu = new HorizontalLayout();
+		menu.setSpacing(true);
+		menu.setSizeUndefined();
 		menu.setStyleName("logo");
 		menuPanel.addComponent(menu);
-		menuPanel.setComponentAlignment(menu, Alignment.BOTTOM_CENTER);
-		
-		menu.addComponent(new Link("Inicio", new ExternalResource("http://test")));
-		menu.addComponent(new Link("Cursos Gratiutos Online", new ExternalResource("http://test")));
-		menu.addComponent(new Link("Examne de trafico", new ExternalResource("http://test")));
-		menu.addComponent(new Link("Tu nota de Examen", new ExternalResource("http://test")));
+		menuPanel.setComponentAlignment(menu, Alignment.BOTTOM_LEFT);
+
+		menu.addComponent(new CufonLink("Inicio", "HelveticaRounded",
+				new ExternalResource("http://test")));
+		menu.addComponent(new CufonLink("Cursos Gratiutos Online",
+				"HelveticaRounded", new ExternalResource("http://test")));
+		menu.addComponent(new CufonLink("Examne de trafico",
+				"HelveticaRounded", new ExternalResource("http://test")));
+		menu.addComponent(new CufonLink("Tu nota de Examen",
+				"HelveticaRounded", new ExternalResource("http://test")));
 	}
 }

@@ -251,11 +251,11 @@ function org_bitbucket_cursodeconducir_widgetset_CursoDeConducirWidgetSet(){
   $stats && $stats({moduleName:'org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'selectingPermutation'});
   if (!isHostedMode()) {
     try {
-      unflattenKeylistIntoAnswers(['ie8'], '58D4700B5AC011C576125994CE0AC47C');
-      unflattenKeylistIntoAnswers(['safari'], '68A71AFE0F41F2E263151DF7F02FED14');
-      unflattenKeylistIntoAnswers(['opera'], 'A8CD90C3EF1E83BD60EB469010014665');
-      unflattenKeylistIntoAnswers(['ie6'], 'B9A3ACCC2AFC317E14B256189C847C93');
-      unflattenKeylistIntoAnswers(['gecko1_8'], 'D24B9A6441086CF8039F44A177D32CB3');
+      unflattenKeylistIntoAnswers(['safari'], '186C79C0395270B4B482ED84291B6D79');
+      unflattenKeylistIntoAnswers(['gecko1_8'], '5C8D9E5C646C6EC45836EB65BB33F2E9');
+      unflattenKeylistIntoAnswers(['opera'], '795B2F45E9134E16C75081C2A9661F16');
+      unflattenKeylistIntoAnswers(['ie6'], '96D16A0AB21DE2B6387FE495D62E63F3');
+      unflattenKeylistIntoAnswers(['ie8'], 'A7F4F5FA0A2B18CE73F87D0B278A54BD');
       strongName = answers[computePropValue('user.agent')];
       var idx = strongName.indexOf(':');
       if (idx != -1) {
@@ -305,6 +305,10 @@ function org_bitbucket_cursodeconducir_widgetset_CursoDeConducirWidgetSet(){
   , 50);
   $stats && $stats({moduleName:'org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'end'});
   $stats && $stats({moduleName:'org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'loadExternalRefs', millis:(new Date).getTime(), type:'begin'});
+  if (!__gwt_scriptsLoaded['cufon.js']) {
+    __gwt_scriptsLoaded['cufon.js'] = true;
+    document.write('<script language="javascript" src="' + base + 'cufon.js"><\/script>');
+  }
   $doc_0.write('<script defer="defer">org_bitbucket_cursodeconducir_widgetset_CursoDeConducirWidgetSet.onInjectionDone(\'org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet\')<\/script>');
 }
 

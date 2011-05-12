@@ -20,14 +20,6 @@ div.top {
 	margin: 0; #
 	border: 1px solid #9aacbf; #
 	padding: 10px;
-	background: #fff;
-}
-
-div.top {
-	margin: 0; #
-	border: 1px solid #9aacbf; #
-	padding: 10px;
-	background: #fff;
 }
 
 .top .v-label {
@@ -36,9 +28,19 @@ div.top {
 
 div.logo {
 	margin: 0;
-	border: 1px solid #9aacbf; #
-	padding: 10px;
+}
+
+div.contentWrapper {
+	margin-top: -8px;
+	background: #ffffff;
+}
+
+div.content {
+	border: 2px solid #9aacbf;
+	margin-top: -8px;
+	border-top: 0px;
 	background: #fff;
+	overflow: hidden;
 }
 
 div.cell1,div.cell2,div.cell3 {

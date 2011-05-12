@@ -6,4 +6,6 @@
     <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
 
     <inherits name="com.vaadin.incubator.dashlayout.DashLayoutWidgetSet" />
+
+    <inherits name="com.vaadin.incubator.cufonlabel.widgetset.CufonlabelApplicationWidgetset" />
 </module>
