@@ -3,11 +3,16 @@
 	width: 30px;
 }
 
+body {
+	font: helvatica, arial, freesans, clean, sans-serif;
+}
+
 h2 {
 	margin-top: 0;
 }
 
 div.topWrapper {
+	border-top: 0px;
 	border: 1px solid #9aacbf;
 }
 
@@ -22,12 +27,8 @@ div.top {
 	padding: 10px;
 }
 
-.top .v-label {
-	margin-right: 30px;
-}
-
-div.logo {
-	margin: 0;
+div.logoPanel {
+	cursor: pointer;
 }
 
 div.contentWrapper {
@@ -36,11 +37,31 @@ div.contentWrapper {
 }
 
 div.content {
-	border: 2px solid #9aacbf;
 	margin-top: -8px;
 	border-top: 0px;
 	background: #fff;
 	overflow: hidden;
+}
+
+div.m-p-contentArea {
+	background-color: #efeee9;
+	border-bottom-left-radius: 9px 9px;
+	border-bottom-right-radius: 9px 9px;
+	border-top-left-radius: 9px 9px;
+	border-top-right-radius: 9px 9px;
+	font: helvatica, arial, freesans, clean, sans-serif;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.148438) 0px 2px 0px;
+}
+
+div.bottomSpace {
+	margin-top: -8px;
+	border-top: 1px solid #9aacbf;
+	border-bottom: 0px;
+	background: #d3d2c4;
+	overflow: hidden;
+	background-image: url("footer_background_80x80.png");
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 div.cell1,div.cell2,div.cell3 {
