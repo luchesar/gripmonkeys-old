@@ -3,6 +3,11 @@
 	width: 30px;
 }
 
+a {
+	color: #4183C4;
+	text-decoration: none;
+}
+
 body {
 	font: helvatica, arial, freesans, clean, sans-serif;
 }
@@ -14,6 +19,9 @@ h2 {
 div.topWrapper {
 	border-top: 0px;
 	border: 1px solid #9aacbf;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E0E0E0),
+		color-stop(1.1, #FFFFFF) );
+	background-image: -moz-linear-gradient(center bottom, #869E97 0%, #E8EBEB 110%);
 }
 
 .code .v-link {
@@ -29,6 +37,53 @@ div.top {
 
 div.logoPanel {
 	cursor: pointer;
+}
+
+div.menu {
+	-webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 1px;
+	background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#FCFCFC),
+		to(#E8E8E8) );
+	background-image: -webkit-gradient(linear, 0% 0, 0% 100%, from(#FCFCFC),
+		to(#E8E8E8) );
+	background-repeat-x: initial;
+	background-repeat-y: initial;
+	background-attachment: initial;
+	background-position-x: initial;
+	background-position-y: initial;
+	background-origin: initial;
+	background-clip: initial;
+	background-color: initial;
+	border-bottom-color: whiteSmoke;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border: 1px solid;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #E9E9E9;
+	border-right-color: #E9E9E9;
+	border-left-color: #E9E9E9;
+	border-top-left-radius: 5px 5px;
+	border-top-right-radius: 5px 5px;
+	font-size: 12px;
+	font-weight: bold;
+	text-shadow: white 1px 1px 0px;
+}
+
+a.menu span {
+	text-decoration: none;
+	vertical-align: middle;
+	
+	background:
+		url(https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/nav-rule.png) no-repeat 0px 50%;
+	float: left;
+	margin: 0px;
+	padding: 0px 11px 0px 13px;
 }
 
 div.contentWrapper {
@@ -49,7 +104,6 @@ div.m-p-contentArea {
 	border-bottom-right-radius: 9px 9px;
 	border-top-left-radius: 9px 9px;
 	border-top-right-radius: 9px 9px;
-	font: helvatica, arial, freesans, clean, sans-serif;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.148438) 0px 2px 0px;
 }
 

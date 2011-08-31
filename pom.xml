@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<datanucleus.version>1.1.5</datanucleus.version>
 		<vaadin.version>6.5.4</vaadin.version>
-		<appengine.version>1.4.3</appengine.version>
+		<appengine.version>1.5.1</appengine.version>
 	</properties>
 
 	<build>
@@ -35,6 +35,18 @@
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.9</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.9</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>net.kindleit</groupId>
@@ -196,6 +208,11 @@
 			</snapshots>
 		</repository>
 		<repository>
+			<id>google-releases</id>
+			<name>Google Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/google-releases</url>
+		</repository>
+		<repository>
 			<id>vaadin-addons</id>
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
@@ -218,6 +235,12 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin</artifactId>
 			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.addons</groupId>
@@ -254,12 +277,27 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>${appengine.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-jsr107cache</artifactId>
 			<version>${appengine.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${appengine.version}</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.google.appengine.orm</groupId>
 			<artifactId>datanucleus-appengine</artifactId>
@@ -308,6 +346,16 @@
 			<version>${appengine.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>gaedatastorecontainers</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>easyuploads</artifactId>
+			<version>0.4.8</version>
 		</dependency>
 	</dependencies>
 </project>

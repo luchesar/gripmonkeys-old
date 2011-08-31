@@ -1,8 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="src/main/webapp/WEB-INF/classes" path="src/main/java"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
+  <classpathentry kind="src" path="src/test/java" output="target/test-classes" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
+  <classpathentry kind="var" path="M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar" sourcepath="M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-labs/1.5.1/appengine-api-labs-1.5.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-stubs/1.5.1/appengine-api-stubs-1.5.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-jsr107cache/1.5.1/appengine-jsr107cache-1.5.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-testing/1.5.1/appengine-testing-1.5.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/borderlayout/0.3/borderlayout-0.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/cufonlabel/0.1.1/cufonlabel-0.1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dashlayout/0.1.5-beta/dashlayout-0.1.5-beta.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/easyuploads/0.4.8/easyuploads-0.4.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/gaedatastorecontainers/2.0.0/gaedatastorecontainers-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.1.1/gwt-user-2.1.1.jar" sourcepath="M2_REPO/com/google/gwt/gwt-user/2.1.1/gwt-user-2.1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar" sourcepath="M2_REPO/junit/junit/4.8.1/junit-4.8.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4.jar" sourcepath="M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4-sources.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 </classpath>

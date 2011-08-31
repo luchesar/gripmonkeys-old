@@ -2,6 +2,21 @@
 
 @import url(template.css);
 
+.v-app,.v-window,.v-popupview-popup,.v-tooltip,.v-app input,.v-app select,.v-app button,.v-app textarea,.v-window input,.v-window select,.v-window button,.v-window textarea,.v-popupview-popup input,.v-popupview-popup select,.v-popupview-popup button,.v-popupview-popup textarea,.v-filterselect-suggestpopup,.v-datefield-popup,.v-contextmenu,.v-Notification,.v-menubar-submenu,.v-drag-element
+	{
+	color: #555;
+	font-family: 'Lucida Grande',
+		'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
+	font-size: 12.35px;
+	line-height: normal;
+}
+
+.body {
+	color: #333;
+	font-family: 'Lucida Grande',
+		'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
+}
+
 .v-link {
 	white-space: nowrap;
 	margin: 5px;

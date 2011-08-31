@@ -8,4 +8,8 @@
     <inherits name="com.vaadin.incubator.dashlayout.DashLayoutWidgetSet" />
 
     <inherits name="com.vaadin.incubator.cufonlabel.widgetset.CufonlabelApplicationWidgetset" />
+
+    <inherits name="com.gaedatastorecontainers.example.widgetset.GaedatastorecontainersWidgetset" />
+
+    <inherits name="org.vaadin.easyuploads.EasyuploadsWidgetset" />
 </module>
