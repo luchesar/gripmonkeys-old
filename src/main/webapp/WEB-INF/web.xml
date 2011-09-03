@@ -10,6 +10,16 @@
 		<param-value>false</param-value>
 	</context-param>
 	<servlet>
+        <servlet-name>Upload</servlet-name>
+        <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.Upload</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BlobServe</servlet-name>
+        <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.BlobServe</servlet-class>
+    </servlet>
+    
+	<servlet>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
 		<init-param>
@@ -22,6 +32,17 @@
 			<param-value>org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet</param-value>
 		</init-param>
 	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>BlobServe</servlet-name>
+		<url-pattern>/blob</url-pattern>
+	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>
