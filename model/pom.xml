@@ -2,267 +2,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.bitbucket.cursodeconducir</groupId>
-	<artifactId>cursodeconducir</artifactId>
-	<packaging>war</packaging>
-	<version>1.0</version>
-	<name>Curso De Conducir</name>
+	<parent>
+		<groupId>org.bitbucket.cursodeconducir</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>model</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+	<name>Model</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<datanucleus.version>1.1.5</datanucleus.version>
-		<vaadin.version>6.5.4</vaadin.version>
 		<appengine.version>1.5.1</appengine.version>
 	</properties>
 
 	<build>
-		<finalName>CursoDeConducir</finalName>
-		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.9</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.surefire</groupId>
-						<artifactId>surefire-junit47</artifactId>
-						<version>2.9</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>net.kindleit</groupId>
-				<artifactId>maven-gae-plugin</artifactId>
-				<version>0.8.1</version>
-				<configuration>
-					<serverId>appengine.google.com</serverId>
-					<sdkDir>${gae.home}</sdkDir>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>src/main/webapp/WEB-INF/lib</directory>
-							<includes>
-								<include>*.jar</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.2</version>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>src/main/webapp/WEB-INF/lib</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.0.2</version>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
-					<wtpversion>2.0</wtpversion>
-					<testOutputDirectory>target/test-classes</testOutputDirectory>
-					<classpathContainers>
-						<classpathContainer>com.google.appengine.eclipse.core.GAE_CONTAINER</classpathContainer>
-					</classpathContainers>
 					<buildcommands>
 						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
-						<buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
 						<buildcommand>com.google.appengine.eclipse.core.enhancerbuilder</buildcommand>
 						<buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
-						<buildcommand>com.vaadin.integration.eclipse.widgetsetBuilder</buildcommand>
 					</buildcommands>
 					<additionalProjectnatures>
 						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
 						<projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
-						<projectnature>com.google.gdt.eclipse.core.webAppNature</projectnature>
-						<projectnature>com.vaadin.integration.eclipse.widgetsetNature</projectnature>
 					</additionalProjectnatures>
-					<excludes>
-						<!-- Included in GAE_CONTAINER -->
-						<exclude>com.google.appengine:appengine-api-1.0-sdk</exclude>
-						<exclude>com.google.appengine:appengine-api-1.0-labs</exclude>
-						<exclude>com.google.appengine.orm:datanucleus-appengine</exclude>
-						<exclude>org.datanucleus:datanucleus-jpa</exclude>
-						<exclude>org.datanucleus:datanucleus-core</exclude>
-						<exclude>org.apache.geronimo.specs:geronimo-jpa_3.0_spec</exclude>
-						<exclude>org.apache.geronimo.specs:geronimo-jta_1.1_spec</exclude>
-						<exclude>javax.jdo:jdo2-api</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-
-			<!-- Compile custom GWT components or widget dependencies with the GWT 
-				compiler -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.1.0-1</version>
-				<!-- <configuration> <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory> 
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> <runTarget>cursodeconducir</runTarget> 
-					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp> 
-					<noServer>true</noServer> <port>8080</port> <soyc>false</soyc> </configuration> 
-					<executions> <execution> <goals> <goal>resources</goal> <goal>compile</goal> 
-					</goals> </execution> </executions> -->
-			</plugin>
-			<plugin>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-maven-plugin</artifactId>
-				<version>1.0.1</version>
-				<executions>
-					<execution>
-						<configuration>
-						</configuration>
-						<goals>
-							<goal>update-widgetset</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- A simple Jetty test server at http://localhost:8080/cursodeconducir 
-				can be launched with the Maven goal jetty:run and stopped with jetty:stop -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.24</version>
-				<configuration>
-					<stopPort>9966</stopPort>
-					<stopKey>cursodeconducir</stopKey>
-					<!-- Redeploy every x seconds if changes are detected, 0 for no automatic 
-						redeployment -->
-					<scanIntervalSeconds>0</scanIntervalSeconds>
-					<!-- make sure Jetty also finds the widgetset -->
-					<webAppConfig>
-						<contextPath>/cursodeconducir</contextPath>
-						<baseResource implementation="org.mortbay.resource.ResourceCollection">
-							<!-- Workaround for Maven/Jetty issue http://jira.codehaus.org/browse/JETTY-680 -->
-							<!-- <resources>src/main/webapp,${project.build.directory}/${project.build.finalName}</resources> -->
-							<resourcesAsCSV>src/main/webapp,${project.build.directory}/${project.build.finalName}</resourcesAsCSV>
-						</baseResource>
-					</webAppConfig>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>sonatype</id>
-			<url>https://maven.atlassian.com/content/groups/public/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>google-releases</id>
-			<name>Google Releases</name>
-			<url>https://oss.sonatype.org/content/repositories/google-releases</url>
-		</repository>
-		<repository>
-			<id>vaadin-addons</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-		<repository>
-			<id>www.mvnsearch.org</id>
-			<name>Maven search repository</name>
-			<url>http://www.mvnsearch.org/maven2/</url>
-		</repository>
-	</repositories>
-
-	<!-- <pluginRepositories> <pluginRepository> <id>codehaus-snapshots</id> 
-		<url>http://nexus.codehaus.org/snapshots</url> <snapshots> <enabled>true</enabled> 
-		</snapshots> <releases> <enabled>false</enabled> </releases> </pluginRepository> 
-		<pluginRepository> <id>vaadin-snapshots</id> <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url> 
-		<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>false</enabled> 
-		</releases> </pluginRepository> </pluginRepositories> -->
-
 	<dependencies>
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin</artifactId>
-			<version>${vaadin.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>borderlayout</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>dashlayout</artifactId>
-			<version>0.1.5-beta</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>cufonlabel</artifactId>
-			<version>0.1.1</version>
-		</dependency>
-		<!-- This is also used by gwt-maven-plugin to deduce GWT version number. -->
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>2.1.1</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
@@ -277,12 +59,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-stubs</artifactId>
-            <version>${appengine.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>${appengine.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-jsr107cache</artifactId>
@@ -346,16 +128,6 @@
 			<version>${appengine.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>gaedatastorecontainers</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>easyuploads</artifactId>
-			<version>0.4.8</version>
 		</dependency>
 	</dependencies>
 </project>

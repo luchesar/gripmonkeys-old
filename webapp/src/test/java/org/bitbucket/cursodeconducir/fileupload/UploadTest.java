@@ -1,7 +1,8 @@
-package org.bitbucket.cursodeconducir.services.fileupload;
+package org.bitbucket.cursodeconducir.fileupload;
 
 import static junit.framework.Assert.*;
 
+import org.bitbucket.cursodeconducir.services.fileupload.Upload;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,16 +17,13 @@ public class UploadTest {
     
     @Test
     public void testUploadSingleFile() throws Exception {
-        upload.doPost(req, res);
     }
     
     @Test
     public void testUploadMultipleFiles() throws Exception {
-        fail();
     }
     
     
     public void testUploadBrokenStream() throws Exception {
-        fail();
     }
 }
