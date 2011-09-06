@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>cursodeconducir</name>
+	<comment></comment>
+	<projects>
+		<project>cc.model</project>
+		<project>cc.webapp</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>
