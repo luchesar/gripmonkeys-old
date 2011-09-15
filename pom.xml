@@ -11,6 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <guava.version>r08</guava.version>
+    <appengine.version>1.5.1</appengine.version>
   </properties>
 
   <modules>
@@ -50,6 +51,35 @@
           </dependency>
         </dependencies>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <wtpversion>2.0</wtpversion>
+          <classpathContainers>
+            <classpathContainer>com.google.appengine.eclipse.core.GAE_CONTAINER</classpathContainer>
+          </classpathContainers>
+          <buildcommands>
+            <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+            <buildcommand>com.google.appengine.eclipse.core.enhancerbuilder</buildcommand>
+            <buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
+          </buildcommands>
+          <additionalProjectnatures>
+            <projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
+          </additionalProjectnatures>
+          <excludes>
+            <!-- Included in GAE_CONTAINER -->
+            <exclude>com.google.appengine:appengine-api-1.0-sdk</exclude>
+            <exclude>com.google.appengine:appengine-api-1.0-labs</exclude>
+            <exclude>com.google.appengine.orm:datanucleus-appengine</exclude>
+            <exclude>org.datanucleus:datanucleus-jpa</exclude>
+            <exclude>org.datanucleus:datanucleus-core</exclude>
+            <exclude>org.apache.geronimo.specs:geronimo-jpa_3.0_spec</exclude>
+            <exclude>org.apache.geronimo.specs:geronimo-jta_1.1_spec</exclude>
+            <exclude>javax.jdo:jdo2-api</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -88,8 +118,12 @@
       <name>Maven search repository</name>
       <url>http://www.mvnsearch.org/maven2/</url>
     </repository>
+    <repository>
+      <id>objectify-appengine</id>
+      <url>http://objectify-appengine.googlecode.com/svn/maven</url>
+    </repository>
   </repositories>
-  
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -101,6 +135,13 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>${guava.version}</version>
+    </dependency>
+     <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-testing</artifactId>
+      <version>${appengine.version}</version>
+      <type>jar</type>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

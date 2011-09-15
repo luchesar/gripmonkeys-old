@@ -19,7 +19,6 @@ public class Upload extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException,
             IOException {
-
         Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
         BlobKey blobKey = blobs.get(FILE_PROP);
 

@@ -22,67 +22,30 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.google.appengine.repackaged.com.google.common.collect.Maps;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyFactory;
+import com.googlecode.objectify.ObjectifyService;
 
 public class TestObjectStorageImpl implements TestObjectStorage {
 
+    private ObjectifyFactory fact = new ObjectifyFactory();;
+    
+    public TestObjectStorageImpl() {
+        fact.register(TestObjectImpl.class);
+    }
+
     @Override
     public void store(final TestObject aTestObject) throws ServiceException {
-        Util.inTransaction(new Closures.Void<ServiceException>() {
-
-            @Override
-            public void exec(DatastoreService ds) throws ServiceException {
-                Entity entity = new Entity(ENTITY_NAME, aTestObject.getTitle());
-                entity.setProperty(PROP_TITLE, aTestObject.getTitle());
-                entity.setProperty(PROP_BODY, aTestObject.getTestBody());
-                entity.setProperty(PROP_CORRECT_ANSWER_INDEX, aTestObject.getCorrectAnswerIndex());
-                Key testObjectKey = ds.put(entity);
-
-                ds.delete(listChildKeys(ds, PROP_POSSIBLE_ANSWER, entity.getKey()));
-                int index = 0;
-                for (String answer : aTestObject.getPossibleAnswers()) {
-                    Entity possibleAnswer = new Entity(PROP_POSSIBLE_ANSWER, testObjectKey);
-                    possibleAnswer.setProperty(PROP_POSSIBLE_ANSWER_INDEX, index);
-                    possibleAnswer.setProperty(PROP_POSSIBLE_ANSWER_CONTENT, answer);
-                    ds.put(possibleAnswer);
-                    index++;
-                }
-            }
-        });
+        Objectify objectify = fact.begin();
+        com.googlecode.objectify.Key<TestObject> put = objectify.put(aTestObject);
+        System.out.println(put);
     }
 
     @Override
     public TestObject load(final String title) throws ServiceException {
-        return Util.inTransaction(new Closures.Closure<TestObject, ServiceException>() {
-
-            @Override
-            public TestObject exec(DatastoreService ds) throws ServiceException {
-
-                Key testKey = KeyFactory.createKey(ENTITY_NAME, title);
-
-                try {
-                    Entity entity = ds.get(testKey);
-                    String title = (String) entity.getProperty(PROP_TITLE);
-                    String body = (String) entity.getProperty(PROP_BODY);
-                    int correctAnswerIndex = ((Long) entity.getProperty(PROP_CORRECT_ANSWER_INDEX))
-                            .intValue();
-
-                    Map<Integer, String> answers = Maps.newTreeMap();
-                    for (Entity answer : listChildren(PROP_POSSIBLE_ANSWER, testKey)) {
-                        String answerContent = (String) answer
-                                .getProperty(PROP_POSSIBLE_ANSWER_CONTENT);
-                        int index = ((Long) answer.getProperty(PROP_POSSIBLE_ANSWER_INDEX))
-                                .intValue();
-
-                        answers.put(index, answerContent);
-                    }
-
-                    return new TestObjectImpl(title, body, Lists.newArrayList(answers.values()),
-                            correctAnswerIndex);
-                } catch (EntityNotFoundException e) {
-                    return null;
-                }
-            }
-        });
+        Objectify objectify = fact.begin();
+        Key testKey = KeyFactory.createKey(TestObjectImpl.class.getSimpleName(), title);
+        return objectify.find(new com.googlecode.objectify.Key<TestObject>(testKey));
     }
 
     @Override

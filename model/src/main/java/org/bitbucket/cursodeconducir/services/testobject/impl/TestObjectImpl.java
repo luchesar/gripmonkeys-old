@@ -3,6 +3,8 @@ package org.bitbucket.cursodeconducir.services.testobject.impl;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Id;
+
 import org.bitbucket.cursodeconducir.services.testobject.TestObject;
 
 import com.google.appengine.repackaged.com.google.common.base.Objects;
@@ -10,10 +12,14 @@ import com.google.appengine.repackaged.com.google.common.collect.Lists;
 
 @SuppressWarnings("serial")
 public class TestObjectImpl implements TestObject {
-    private final String title;
-    private final String testBody;
-    private final List<String> possibleAnswers;
-    private final int correctAnswerIndex;
+    @Id
+    private String title;
+    private String testBody;
+    private List<String> possibleAnswers;
+    private int correctAnswerIndex;
+    
+    public TestObjectImpl() {
+    }
 
     public TestObjectImpl(String aTitle, String aTestBody,
             List<String> aTestPossibleAnswers, int aCorrectAnswerIndex) {

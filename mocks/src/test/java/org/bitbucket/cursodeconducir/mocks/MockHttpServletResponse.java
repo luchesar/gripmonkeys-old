@@ -3,7 +3,7 @@
  *
  * Creator: carl
  */
-package com.ontologypartners.mocks.servlet;
+package org.bitbucket.cursodeconducir.mocks;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
