@@ -7,10 +7,19 @@
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-stubs/1.5.1/appengine-api-stubs-1.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-jsr107cache/1.5.1/appengine-jsr107cache-1.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-testing/1.5.1/appengine-testing-1.5.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/r08/guava-r08.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar" sourcepath="M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/lucho/.m2/repository/commons-io/commons-io/2.0.1/commons-io-2.0.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/r08/guava-r08.jar" sourcepath="M2_REPO/com/google/guava/guava/r08/guava-r08-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/lucho/.m2/repository/com/google/guava/guava/r08/guava-r08-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar" sourcepath="M2_REPO/junit/junit/4.8.1/junit-4.8.1-sources.jar"/>
   <classpathentry kind="src" path="/mocks"/>
-  <classpathentry kind="var" path="M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0.jar" sourcepath="M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 </classpath>

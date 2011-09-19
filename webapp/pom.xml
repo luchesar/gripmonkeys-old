@@ -50,6 +50,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
+              <includeScope>compile</includeScope>
               <outputDirectory>src/main/webapp/WEB-INF/lib</outputDirectory>
             </configuration>
           </execution>
@@ -210,6 +211,12 @@
       <artifactId>gson</artifactId>
       <version>1.7.1</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

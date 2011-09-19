@@ -19,19 +19,19 @@
         <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.BlobServe</servlet-class>
     </servlet>
     
-	<servlet>
-		<servlet-name>Vaadin Application Servlet</servlet-name>
-		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
-		<init-param>
-			<description>Vaadin application class to start</description>
-			<param-name>application</param-name>
-			<param-value>org.bitbucket.cursodeconducir.CursoDeConducirApplication</param-value>
-		</init-param>
-		<init-param>
-			<param-name>widgetset</param-name>
-			<param-value>org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet</param-value>
-		</init-param>
-	</servlet>
+	<!-- <servlet>
+  <servlet-name>Vaadin Application Servlet</servlet-name>
+  <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+  <init-param>
+    <description>Vaadin application class to start</description>
+    <param-name>application</param-name>
+    <param-value>org.bitbucket.cursodeconducir.CursoDeConducirApplication</param-value>
+  </init-param>
+  <init-param>
+    <param-name>widgetset</param-name>
+    <param-value>org.bitbucket.cursodeconducir.widgetset.CursoDeConducirWidgetSet</param-value>
+  </init-param>
+</servlet> -->
 	
 	<servlet-mapping>
 		<servlet-name>Upload</servlet-name>
@@ -43,8 +43,8 @@
 		<url-pattern>/blob</url-pattern>
 	</servlet-mapping>
 	
-	<servlet-mapping>
+	<!-- <servlet-mapping>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 </web-app>

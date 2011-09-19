@@ -62,7 +62,7 @@
       <artifactId>appengine-api-stubs</artifactId>
       <version>${appengine.version}</version>
       <type>jar</type>
-      <scope>compile</scope>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
@@ -71,14 +71,6 @@
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-testing</artifactId>
-      <version>${appengine.version}</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-
     <dependency>
       <groupId>com.google.appengine.orm</groupId>
       <artifactId>datanucleus-appengine</artifactId>
