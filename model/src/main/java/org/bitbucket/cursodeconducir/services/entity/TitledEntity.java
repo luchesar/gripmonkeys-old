@@ -1,16 +1,22 @@
 package org.bitbucket.cursodeconducir.services.entity;
 
+import javax.jdo.annotations.Unique;
 import javax.persistence.Id;
+import javax.persistence.UniqueConstraint;
 
 import com.google.appengine.repackaged.com.google.common.base.Objects;
 import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;
 
 @Cached
 public class TitledEntity {
     @Id
-    private long id;
+    private Long id;
+    
     private String title;
+    @Unindexed
+    private String image;
     @Unindexed
     private String description;
 
@@ -18,13 +24,13 @@ public class TitledEntity {
 
     }
 
-    public TitledEntity(long aId, String aTitle, String aDescription) {
-        id = aId;
+    public TitledEntity(String aTitle, String aImage, String aDescription) {
         title = aTitle;
+        image = aImage;
         description = aDescription;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -32,8 +38,32 @@ public class TitledEntity {
         return title;
     }
 
+    public String getTitleImage() {
+        return image;
+    }
+
     public String getDescription() {
         return description;
+    }
+    
+    public String getImage() {
+        return image;
+    }
+
+    public void setTitleImage(String aImage) {
+        image = aImage;
+    }
+
+    public void setId(Long aId) {
+        id = aId;
+    }
+
+    public void setTitle(String aTitle) {
+        title = aTitle;
+    }
+
+    public void setDescription(String aDescription) {
+        description = aDescription;
     }
 
     @Override
@@ -48,11 +78,18 @@ public class TitledEntity {
         TitledEntity other = (TitledEntity) aObj;
 
         return Objects.equal(id, other.id) && Objects.equal(title, other.title)
+                && Objects.equal(image, other.image)
                 && Objects.equal(description, other.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, title, description);
+        return Objects.hashCode(id, title, image, description);
+    }
+
+    @Override
+    public String toString() {
+        return "TitledEntity [id=" + id + ", title=" + title + ", titleImage=" + image
+                + ", description=" + description + "]";
     }
 }

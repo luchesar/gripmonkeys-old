@@ -1,8 +1,4 @@
-/**
- * (c) 2007 Ontology-Partners Ltd.  All rights reserved.
- *
- * Creator: carl
- */
+
 package org.bitbucket.cursodeconducir.mocks;
 
 import java.io.BufferedReader;
@@ -28,10 +24,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-/**
- * @author carl
- * 
- */
 public class MockHttpServletRequest implements HttpServletRequest {
 
     private final HashMap<String, String[]> m_parameters;
@@ -62,7 +54,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return strings == null ? null : strings[0];
     }
 
-    public Map getParameterMap() {
+    public Map<String, String[]> getParameterMap() {
         return m_parameters;
     }
 
@@ -74,8 +66,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
         m_session = session;
     }
 
-    public Enumeration getParameterNames() {
-        return new CollectionEnumeration(m_parameters.keySet());
+    public Enumeration<String> getParameterNames() {
+        return new CollectionEnumeration<String>(m_parameters.keySet());
     }
 
     public void setParameters(HashMap<String, String[]> parameters) {
@@ -110,11 +102,11 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return m_headers.get(name);
     }
 
-    public Enumeration getHeaderNames() {
+    public Enumeration<String> getHeaderNames() {
         return Collections.enumeration(m_headers.keySet());
     }
 
-    public Enumeration getHeaders(String name) {
+    public Enumeration<String> getHeaders(String name) {
         String value = m_headers.get(name);
         if (value != null) {
             return Collections.enumeration(Collections.singletonList(value));
@@ -195,7 +187,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
-    public Enumeration getAttributeNames() {
+    public Enumeration<String> getAttributeNames() {
         return null;
     }
 
@@ -239,7 +231,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
-    public Enumeration getLocales() {
+    public Enumeration<String> getLocales() {
         return null;
     }
 
@@ -307,11 +299,11 @@ public class MockHttpServletRequest implements HttpServletRequest {
         // do nothing
     }
 
-    private static class CollectionEnumeration<E> implements Enumeration {
+    private static class CollectionEnumeration<E> implements Enumeration<E> {
 
-        private final Iterator m_iterator;
+        private final Iterator<E> m_iterator;
 
-        public CollectionEnumeration(Collection collection) {
+        public CollectionEnumeration(Collection<E> collection) {
             this.m_iterator = collection.iterator();
         }
 
@@ -319,7 +311,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
             return m_iterator.hasNext();
         }
 
-        public Object nextElement() {
+        public E nextElement() {
             return m_iterator.next();
         }
 

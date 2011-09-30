@@ -1,8 +1,3 @@
-/**
- * (c) 2007 Ontology-Partners Ltd.  All rights reserved.
- *
- * Creator: carl
- */
 package org.bitbucket.cursodeconducir.mocks;
 
 import java.io.ByteArrayOutputStream;
@@ -20,10 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
-/**
- * @author carl
- * 
- */
 public class MockHttpServletResponse implements HttpServletResponse {
 
     private static final String CHARACTER_SET = "UTF-8";

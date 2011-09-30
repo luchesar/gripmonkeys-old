@@ -2,7 +2,7 @@
   <classpathentry kind="src" path="src/test/java" output="target/test-classes" including="**/*.java"/>
   <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
-  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" sourcepath="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar" sourcepath="M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-labs/1.5.1/appengine-api-labs-1.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-jsr107cache/1.5.1/appengine-jsr107cache-1.5.1.jar"/>

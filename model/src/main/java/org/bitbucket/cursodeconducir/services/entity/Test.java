@@ -2,35 +2,30 @@ package org.bitbucket.cursodeconducir.services.entity;
 
 import java.util.List;
 
+import com.google.appengine.repackaged.com.google.common.base.Objects;
 import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;
 
 @Cached
+@Unindexed
 public class Test extends TitledEntity {
-    @Unindexed
     private List<String> possibleAnswers;
-    @Unindexed
     private int correctAnswerIndex;
-    @Unindexed
     private String explanation;
-    @Unindexed
-    private List<String> imageRelativePaths;
-    @Unindexed
-    private List<String> videoRelativePaths;
+    private List<String> images;
 
     public Test() {
         super();
     }
 
-    public Test(long aId, String aTitle, String aDescription, List<String> aPossibleAnswers,
-            int aCorrectAnswerIndex, String aExplanation, List<String> aImageRelativePaths,
-            List<String> aVideoRelativePaths) {
-        super(aId, aTitle, aDescription);
+    public Test(String aTitle, String aImage, String aDescription, List<String> aPossibleAnswers,
+            int aCorrectAnswerIndex, String aExplanation, List<String> aImageRelativePaths) {
+        super(aTitle, aImage, aDescription);
         possibleAnswers = aPossibleAnswers;
         correctAnswerIndex = aCorrectAnswerIndex;
         explanation = aExplanation;
-        imageRelativePaths = aImageRelativePaths;
-        videoRelativePaths = aVideoRelativePaths;
+        images = aImageRelativePaths;
     }
 
     public List<String> getPossibleAnswers() {
@@ -45,11 +40,57 @@ public class Test extends TitledEntity {
         return explanation;
     }
 
-    public List<String> getImageRelativePaths() {
-        return imageRelativePaths;
+    public List<String> getImages() {
+        return images;
     }
 
-    public List<String> getVideoRelativePaths() {
-        return videoRelativePaths;
+    public void setPossibleAnswers(List<String> aPossibleAnswers) {
+        possibleAnswers = aPossibleAnswers;
     }
+
+    public void setCorrectAnswerIndex(int aCorrectAnswerIndex) {
+        correctAnswerIndex = aCorrectAnswerIndex;
+    }
+
+    public void setExplanation(String aExplanation) {
+        explanation = aExplanation;
+    }
+
+    public void setImages(List<String> aImages) {
+        images = aImages;
+    }
+
+    @Override
+    public boolean equals(Object aObj) {
+        if (this == aObj) {
+            return true;
+        }
+        if (!(aObj instanceof Test)) {
+            return false;
+        }
+        if (!super.equals(aObj)) {
+            return false;
+        }
+        Test other = (Test) aObj;
+
+        return Objects.equal(possibleAnswers, other.possibleAnswers)
+                && Objects.equal(correctAnswerIndex, other.correctAnswerIndex)
+                && Objects.equal(explanation, other.explanation)
+                && Objects.equal(images, other.images);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(super.hashCode(), possibleAnswers, correctAnswerIndex, explanation,
+                images);
+    }
+
+    @Override
+    public String toString() {
+        return "Test [getId()=" + getId() + ", getTitle()=" + getTitle() + ", getTitleImage()="
+                + getTitleImage() + ", getDescription()=" + getDescription() + ", getImage()="
+                + getImage() + "possibleAnswers=" + possibleAnswers + ", correctAnswerIndex="
+                + correctAnswerIndex + ", explanation=" + explanation + ", images=" + images + "]";
+    }
+
 }

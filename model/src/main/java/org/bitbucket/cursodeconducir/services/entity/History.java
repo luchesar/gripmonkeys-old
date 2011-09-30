@@ -8,5 +8,4 @@ public class History {
     @Id
     private long id;
     private User user;
-    private List<TestAnswer> answers;
 }
