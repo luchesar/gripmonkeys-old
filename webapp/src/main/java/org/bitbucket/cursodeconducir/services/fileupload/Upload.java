@@ -14,10 +14,9 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 @SuppressWarnings("serial")
 public class Upload extends HttpServlet {
-    private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException,
             IOException {
+        BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
         for (Map.Entry<String, BlobKey> blob : blobs.entrySet()) {
             res.setHeader(blob.getKey(), blob.getValue().getKeyString());

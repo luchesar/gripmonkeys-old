@@ -29,7 +29,6 @@
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.1.1/gwt-user-2.1.1.jar" sourcepath="M2_REPO/com/google/gwt/gwt-user/2.1.1/gwt-user-2.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar" sourcepath="M2_REPO/junit/junit/4.8.1/junit-4.8.1-sources.jar"/>
-  <classpathentry kind="src" path="/mocks"/>
   <classpathentry kind="src" path="/model"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0.jar" sourcepath="M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4.jar" sourcepath="M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4-sources.jar"/>

@@ -1,12 +1,10 @@
 package org.bitbucket.cursodeconducir.services.storage;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.bitbucket.cursodeconducir.services.Closures;
 import org.bitbucket.cursodeconducir.services.ServiceException;
 import org.bitbucket.cursodeconducir.services.Util;
 import org.bitbucket.cursodeconducir.services.entity.Test;
