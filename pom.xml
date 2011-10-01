@@ -15,7 +15,6 @@
   </properties>
 
   <modules>
-    <module>mocks</module>
     <module>model</module>
     <module>webapp</module>
   </modules>

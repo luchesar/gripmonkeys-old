@@ -1,4 +1,5 @@
-<project-modules id="moduleCoreId" project-version="2.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
   <wb-module deploy-name="webapp">
     <property name="context-root" value="webapp"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
@@ -31,9 +32,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="guava-r08.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava/r08/guava-r08.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mocks.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mocks/mocks">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="model.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/model/model">

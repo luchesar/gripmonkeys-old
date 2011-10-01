@@ -66,7 +66,6 @@ public class TestStorageTest {
         assertEquals(test4, iterator.next());
     }
 
-    @org.junit.Test
     public void testStoreSameTitle() throws Exception {
         Test test1 = new Test("title", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
@@ -123,13 +122,33 @@ public class TestStorageTest {
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
         Test test2 = new Test("test2", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        
+
         storage.put(test1, test2);
-        
+
         assertEquals(test1, storage.find(test1.getTitle()));
         assertEquals(test2, storage.find(test2.getTitle()));
 
         assertNull(storage.find("missing title"));
+    }
+
+    @org.junit.Test
+    public void testFindMultipleByTitle() throws Exception {
+        Test test1 = new Test("title1", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test2 = new Test("title2", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test3 = new Test("title3", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test4 = new Test("title4", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+
+        storage.put(test1, test2, test3, test4);
+
+        assertEquals(Lists.newArrayList(test2, test4),
+                storage.find(test2.getTitle(), test4.getTitle()));
+        assertEquals(Lists.newArrayList(test1, test3),
+                storage.find(test1.getTitle(), test3.getTitle()));
+        assertEquals(Lists.newArrayList(), storage.find("missing title", "missingTitle2"));
     }
 
     @org.junit.Test

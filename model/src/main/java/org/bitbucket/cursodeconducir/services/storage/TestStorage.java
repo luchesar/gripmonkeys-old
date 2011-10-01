@@ -25,6 +25,7 @@ public class TestStorage {
 
     public Set<Test> put(final Test... tests) throws ServiceException {
         Objectify objectify = Util.factory().begin();
+        
         Map<Key<Test>, Test> putResult = objectify.put(Arrays.asList(tests));
         return Sets.newLinkedHashSet(putResult.values());
     }
@@ -63,6 +64,12 @@ public class TestStorage {
                     + query.list());
         }
         return query.get();
+    }
+    
+    public List<Test> find(final String... titles) {
+        Objectify objectify = Util.factory().begin();
+        Query<Test> query = objectify.query(Test.class).filter("title in", titles);
+        return query.list();
     }
 
     public void delete(final long... ids) {
