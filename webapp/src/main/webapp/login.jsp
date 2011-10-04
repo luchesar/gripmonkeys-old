@@ -65,27 +65,7 @@
 </script>
 </head>
 <body class='sessions'>
-	<div id='overlay'></div>
-	<div id='notices'></div>
-	<header class='gray-gradient' id='header'>
-	<div>
-		<div class='logo'>
-			<h1>
-				<a href='/'>Codecademy</a>
-			</h1>
-		</div>
-		<nav>
-		<ul>
-			<li><a href="http://www.codecademy.com/subjects/javascript">Courses</a>
-			</li>
-			<li><a href="/sign_in" class="sign_in_header">Sign In</a></li>
-			<li><a href="/register/sign_up" class="sign_up_header">Create
-					Account</a></li>
-		</ul>
-
-		</nav>
-	</div>
-	</header>
+	<%@include file="menu.jsp" %>
 	<div id='container'>
 		<div id='content'>
 			<div>

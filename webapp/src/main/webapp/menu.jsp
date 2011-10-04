@@ -3,12 +3,12 @@
 <div class="topbar">
 	<div class="fill">
 		<div class="container">
-			<a class="brand" href="#">Curso de conducir</a>
+			<a class="brand" href="/">Curso de conducir</a>
 			<div class="pull-right">
 				<ul class="nav">
 					<li class="active"><a href="#">Cources</a>
 					</li>
-					<li><a href="#about">Sign In</a>
+					<li><a href="login.jsp">Sign In</a>
 					</li>
 				</ul>
 				<form action="">
