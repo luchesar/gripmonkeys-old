@@ -1,12 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Bootstrap, from Twitter</title>
+<meta charset="utf-8" />
+<title>Curso de conducir</title>
 <meta name="description" content="" />
 <meta name="author" content="" />
 <link rel="stylesheet" href="css/bootstrap.min.css" />
-<script src="js/jquery.tmpl.js" type="text/javascript" />
+<script data-main="scripts/main" src="scripts/require.js"
+	language="javascript"></script>
+<script src="scripts/jquery.js" language="javascript"></script>
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -15,8 +17,7 @@ body {
 </head>
 
 <body>
-	<%@include file="menu.jsp"%>
-
+	<%@include file="modules/menu.html" %>
 	<div class="container">
 
 		<!-- Main hero unit for a primary marketing message or call to action -->
@@ -52,7 +53,7 @@ body {
 		</div>
 		<footer>
 		<p>&copy; Company 2011</p>
-		</footer>
+     </footer>
 
 	</div>
 	<!-- /container -->

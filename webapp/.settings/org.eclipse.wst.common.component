@@ -9,28 +9,28 @@
     <dependent-module archiveName="appengine-jsr107cache-1.5.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/appengine/appengine-jsr107cache/1.5.1/appengine-jsr107cache-1.5.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="borderlayout-0.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/borderlayout/0.3/borderlayout-0.3.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="commons-io-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="cufonlabel-0.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/cufonlabel/0.1.1/cufonlabel-0.1.1.jar">
+    <dependent-module archiveName="datanucleus-core-1.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/datanucleus/datanucleus-core/1.1.5/datanucleus-core-1.1.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dashlayout-0.1.5-beta.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dashlayout/0.1.5-beta/dashlayout-0.1.5-beta.jar">
+    <dependent-module archiveName="datanucleus-jpa-1.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/datanucleus/datanucleus-jpa/1.1.5/datanucleus-jpa-1.1.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="easyuploads-0.4.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/easyuploads/0.4.8/easyuploads-0.4.8.jar">
+    <dependent-module archiveName="geronimo-jpa_3.0_spec-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-jpa_3.0_spec/1.1.1/geronimo-jpa_3.0_spec-1.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="gaedatastorecontainers-2.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/gaedatastorecontainers/2.0.0/gaedatastorecontainers-2.0.0.jar">
+    <dependent-module archiveName="geronimo-jta_1.1_spec-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="gson-1.7.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/1.7.1/gson-1.7.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="guava-r08.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava/r08/guava-r08.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jdo2-api-2.3-eb.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="model.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/model/model">
@@ -40,9 +40,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="transaction-api-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="vaadin-6.5.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin/6.5.4/vaadin-6.5.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>

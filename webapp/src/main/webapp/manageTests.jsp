@@ -76,7 +76,7 @@ body {
 </head>
 
 <body>
-	<%@include file="menu.jsp" %>
+	<%@include file="modules/menu.html" %>
 	<div class="container">
 		<div class="content">
 			<div class="page-header">

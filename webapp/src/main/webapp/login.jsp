@@ -1,14 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="ie6 no-js" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="ie7 no-js" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="ie8 no-js" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class='no-js' lang='en'>
-<!--<![endif]-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
 <script type="text/javascript">
 	var _sf_startpt = (new Date()).getTime();
@@ -29,43 +19,14 @@
 	_kms('//doug1izaerwt3.cloudfront.net/a8c173bfd5ec377516a48bea90a3766964cab3c6.1.js');
 	_kmq.push([ 'identify', '4e874a7a0ceeb90001003d70' ]);
 </script>
-<title>Codecademy</title>
+<title>Curso de conducir</title>
 <meta charset='utf-8'>
-<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
-<meta
-	content="Codecademy is the easiest way to learn how to code. It's interactive, fun, and you can do it with your friends."
-	name='description'>
-<meta content='Codecademy' name='author'>
-<link href='/favicon.ico' rel='shortcut icon'>
-<meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link href="/assets/application.css?1317345234" media="all"
-	rel="stylesheet" type="text/css" />
-<link href='http://fonts.googleapis.com/css?family=Lobster'
-	rel='stylesheet' type='text/css'>
-<script src="/javascripts/modernizr.min.js?1317345234"
-	type="text/javascript"></script>
-<script src="/javascripts/respond.min.js?1317345234"
-	type="text/javascript"></script>
-<meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token"
-	content="BqaX5yPmy9428CFStnD0nAbnT9ccb/SCXmYDEskomSU=" />
-<meta property="og:title" content="Codecademy" />
-<meta property="og:description"
-	content="Codecademy is the easiest way to learn how to code. It's interactive, fun, and you can do it with your friends." />
-<meta property="og:site_name" content="Codecademy" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.codecademy.com/sign_in" />
-<meta property="og:image"
-	content="http://www.codecademy.com/images/thumbnail.png" />
-<meta property="fb:app_id" content="212500508799908" />
-<script type="text/javascript">
-	var NREUMQ = NREUMQ || [];
-	NREUMQ.push([ "mark", "firstbyte", new Date().getTime() ]);
-</script>
+<script data-main="scripts/main" src="scripts/require.js"
+    language="javascript"></script>
 </head>
 <body class='sessions'>
-	<%@include file="menu.jsp" %>
+	<%@include file="modules/menu.html" %>
 	<div id='container'>
 		<div id='content'>
 			<div>

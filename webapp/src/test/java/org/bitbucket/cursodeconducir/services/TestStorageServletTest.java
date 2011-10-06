@@ -17,7 +17,7 @@ import com.google.appengine.tools.development.testing.LocalTaskQueueTestConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-public class TestStorageServletTest {
+public abstract class TestStorageServletTest {
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
             new LocalDatastoreServiceTestConfig(), new LocalMemcacheServiceTestConfig(),
             new LocalTaskQueueTestConfig());

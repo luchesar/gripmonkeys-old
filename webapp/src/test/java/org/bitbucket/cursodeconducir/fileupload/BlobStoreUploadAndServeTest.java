@@ -21,7 +21,7 @@ import com.google.appengine.repackaged.com.google.common.collect.Maps;
 import com.google.appengine.tools.development.testing.LocalBlobstoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-public class BlobStoreUploadAndServeTest {
+public abstract class BlobStoreUploadAndServeTest {
     private final LocalServiceTestHelper helper =
         new LocalServiceTestHelper(new LocalBlobstoreServiceTestConfig());
     private BlobServe blobServe;

@@ -3,7 +3,6 @@ package org.bitbucket.cursodeconducir.services.entity;
 import java.util.Date;
 
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Unindexed;
@@ -14,7 +13,6 @@ public class TestAnswer {
     private Date date;
     private boolean isCorrect;
     @Unindexed
-    @Transient
     private Test test;
     private int answer;
 

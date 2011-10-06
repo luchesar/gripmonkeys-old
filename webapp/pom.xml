@@ -73,26 +73,17 @@
           <buildcommands>
             <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
             <buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
-            <buildcommand>com.google.appengine.eclipse.core.enhancerbuilder</buildcommand>
-            <buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
-            <buildcommand>com.vaadin.integration.eclipse.widgetsetBuilder</buildcommand>
           </buildcommands>
           <additionalProjectnatures>
             <projectnature>org.eclipse.jdt.core.javanature</projectnature>
             <projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
             <projectnature>com.google.gdt.eclipse.core.webAppNature</projectnature>
-            <projectnature>com.vaadin.integration.eclipse.widgetsetNature</projectnature>
           </additionalProjectnatures>
           <excludes>
             <!-- Included in GAE_CONTAINER -->
             <exclude>com.google.appengine:appengine-api-1.0-sdk</exclude>
             <exclude>com.google.appengine:appengine-api-1.0-labs</exclude>
             <exclude>com.google.appengine.orm:datanucleus-appengine</exclude>
-            <exclude>org.datanucleus:datanucleus-jpa</exclude>
-            <exclude>org.datanucleus:datanucleus-core</exclude>
-            <exclude>org.apache.geronimo.specs:geronimo-jpa_3.0_spec</exclude>
-            <exclude>org.apache.geronimo.specs:geronimo-jta_1.1_spec</exclude>
-            <exclude>javax.jdo:jdo2-api</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -106,20 +97,6 @@
           <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> <runTarget>cursodeconducir</runTarget> <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp> 
           <noServer>true</noServer> <port>8080</port> <soyc>false</soyc> </configuration> <executions> <execution> <goals> <goal>resources</goal> 
           <goal>compile</goal> </goals> </execution> </executions> -->
-      </plugin>
-      <plugin>
-        <groupId>com.vaadin</groupId>
-        <artifactId>vaadin-maven-plugin</artifactId>
-        <version>1.0.1</version>
-        <executions>
-          <execution>
-            <configuration>
-            </configuration>
-            <goals>
-              <goal>update-widgetset</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>net.kindleit</groupId>
@@ -163,44 +140,6 @@
       <artifactId>model</artifactId>
       <version>${project.version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>com.vaadin</groupId>
-      <artifactId>vaadin</artifactId>
-      <version>${vaadin.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.vaadin.addons</groupId>
-      <artifactId>borderlayout</artifactId>
-      <version>0.3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.vaadin.addons</groupId>
-      <artifactId>dashlayout</artifactId>
-      <version>0.1.5-beta</version>
-    </dependency>
-    <dependency>
-      <groupId>org.vaadin.addons</groupId>
-      <artifactId>cufonlabel</artifactId>
-      <version>0.1.1</version>
-    </dependency>
-    <!-- This is also used by gwt-maven-plugin to deduce GWT version number. -->
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-      <version>2.1.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.vaadin.addons</groupId>
-      <artifactId>gaedatastorecontainers</artifactId>
-      <version>2.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.vaadin.addons</groupId>
-      <artifactId>easyuploads</artifactId>
-      <version>0.4.8</version>
-    </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
@@ -211,7 +150,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

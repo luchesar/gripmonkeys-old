@@ -1,12 +1,9 @@
 package org.bitbucket.cursodeconducir.services.entity;
 
-import javax.jdo.annotations.Unique;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 
 import com.google.appengine.repackaged.com.google.common.base.Objects;
 import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;
 
 @Cached
