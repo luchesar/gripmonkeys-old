@@ -1,29 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
-<script type="text/javascript">
-	var _sf_startpt = (new Date()).getTime();
-	var root_url = "http://www.codecademy.com/";
-
-	var _kmq = _kmq || [];
-	function _kms(u) {
-		setTimeout(function() {
-			var s = document.createElement('script');
-			var f = document.getElementsByTagName('script')[0];
-			s.type = 'text/javascript';
-			s.async = true;
-			s.src = u;
-			f.parentNode.insertBefore(s, f);
-		}, 1);
-	}
-	_kms('//i.kissmetrics.com/i.js');
-	_kms('//doug1izaerwt3.cloudfront.net/a8c173bfd5ec377516a48bea90a3766964cab3c6.1.js');
-	_kmq.push([ 'identify', '4e874a7a0ceeb90001003d70' ]);
-</script>
 <title>Curso de conducir</title>
-<meta charset='utf-8'>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<script data-main="scripts/main" src="scripts/require.js"
-    language="javascript"></script>
+<%@include file="modules/cssAndJs.html" %>
 </head>
 <body class='sessions'>
 	<%@include file="modules/menu.html" %>

@@ -36,12 +36,12 @@
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>tests</servlet-name>
-    <jsp-file>/manageTests.jsp</jsp-file>
+    <servlet-name>admin-tests</servlet-name>
+    <jsp-file>admin/tests.jsp</jsp-file>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>tests</servlet-name>
-    <url-pattern>/tests</url-pattern>
+    <servlet-name>admin-tests</servlet-name>
+    <url-pattern>/admin/tests</url-pattern>
   </servlet-mapping>
 </web-app>

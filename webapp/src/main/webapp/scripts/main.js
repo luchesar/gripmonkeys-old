@@ -1,1 +1,0 @@
-require(["order!jquery", "order!jquery.tmpl",]);
