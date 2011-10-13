@@ -21,11 +21,6 @@ body {
 	/* 40px to make the container go all the way to the bottom of the topbar */
 }
 
-.container {
-	width: 820px;
-	/* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
-}
-
 /* The white background content wrapper */
 .content {
 	background-color: #fff;
@@ -47,104 +42,48 @@ body {
 	margin: -20px -20px 20px;
 }
 
-/* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
-	margin-left: 0;
-	padding-left: 19px;
-	border-left: 1px solid #eee;
+.testDescription-input {
+	width: 200px;
+	height: 150px
 }
 </style>
 
 <link rel="shortcut icon" href="favicon.ico">
+<link rel="placeholder" href="http://placehold.it/210x150">
+
+<script id="activeTestTemplate" type="x-tmpl-mustache">
+    <%@include file="/modules/test.html"%>
+</script>
+<script id="allTestsTemplate" type="x-tmpl-mustache">
+    <%@include file="/modules/allTests.html"%>
+</script>
+
 <script type="text/javascript">
-	(function($) {
-		$(document).ready(function() {
-			$('#testDescription').wysiwyg({
-				controls : {
-					strikeThrough : {
-						visible : true
-					},
-					underline : {
-						visible : true
-					},
-					separator00 : {
-						visible : false
-					},
-					justifyLeft : {
-						visible : true
-					},
-					justifyCenter : {
-						visible : true
-					},
-					justifyRight : {
-						visible : true
-					},
-					justifyFull : {
-						visible : true
-					},
-					separator01 : {
-						visible : false
-					},
-					indent : {
-						visible : true
-					},
-					outdent : {
-						visible : true
-					},
-					separator02 : {
-						visible : false
-					},
-					subscript : {
-						visible : true
-					},
-					superscript : {
-						visible : true
-					},
-					separator03 : {
-						visible : false
-					},
-					undo : {
-						visible : false
-					},
-					redo : {
-						visible : false
-					},
-					separator04 : {
-						visible : false
-					},
-					insertOrderedList : {
-						visible : true
-					},
-					insertUnorderedList : {
-						visible : true
-					},
-					insertHorizontalRule : {
-						visible : true
-					},
-					separator07 : {
-						visible : false
-					},
-					cut : {
-						visible : false
-					},
-					copy : {
-						visible : false
-					},
-					paste : {
-						visible : false
-					},
-					html : {
-						visible : true
-					}
-				}
-			});
-		});
-	})(jQuery);
+    
+    <%@include file="/modules/test.js"%>
+    var model =  {
+        allTests :[],
+        activeTest : 'test'
+    }
+    var testModule;
+    
+    function updateActiveTest(aModel) {
+        console.log("update active test " + aModel.activeTest);
+        $('#activeTestTemplate').mustache(aModel).appendTo('#activeTest');
+    }
+    function updateAllTests(aModel) {
+        $('#allTestsTemplate').mustache(aModel).appendTo('#allTests');
+    }
+    $(function () {
+        updateActiveTest(model);
+        updateAllTests(model);
+        testModule = new TestModule(model, updateActiveTest);
+    });
 </script>
 
 </head>
-<%@include file="../modules/menu.html"%>
 <body>
+  <%@include file="../modules/menu.html"%>
   <div class="container">
     <div class="content">
       <div class="page-header">
@@ -156,56 +95,20 @@ body {
               </h1>
             </div>
             <div class="span1">
-              <a class="btn large danger" href="#create">Create</a>
+              <a id="createButton" class="btn large danger" href="#create">Create</a>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="span10">
-          <h3 align="center">
-            <small>No test selected</small>
-          </h3>
-          <h3 align="center">
-            Create new test <small>enter new test fields</small>
-          </h3>
-
-          <form>
-            <div>
-              <input class="xlarge" placeholder="Test title" id="testTitle" name="testTitle" size="40" type="text">
-              <span class="help-block">A prase that identifies the test </span>
-            </div>
-            <div>
-              <div class="media-grid">
-                <a id="testImage" href="#"> <img class="thumbnail" src="http://placehold.it/210x150" alt=""> </a>
-              </div>
-              <span class="help-block"> Block of help text to describe the field above if need be. </span>
-            </div>
-
-            <div>
-              <textarea class="xxlarge" id="testDescription" name="tstDescription" rows="2"></textarea>
-              <span class="help-block"> Block of help text to describe the field above if need be. </span>
-            </div>
-            <div>
-              <input type="submit" class="btn primary" value="Save changes">&nbsp;
-              <button type="reset" class="btn">Cancel</button>
-            </div>
-          </form>
-
-        </div>
-        <div class="span4">
-          <h3>
-            Existing tests <small>No tests yet</small>
-          </h3>
+        <div id="activeTest" class="span10"></div>
+        <div id="allTests" class="span6">
         </div>
       </div>
     </div>
-
     <footer>
       <p>&copy; Company 2011</p>
     </footer>
   </div>
-  <!-- /container -->
-
 </body>
 </html>

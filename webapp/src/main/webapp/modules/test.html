@@ -1,5 +1,43 @@
-<script id="test" type="x-tmpl-mustache">
+{{#activeTest}}
+<h3 align="center">
+  Create new test <small>enter new test fields</small>
+</h3>
 
-       This is a test user template
-
-    </script>
+<div class="clear-fix info">
+  <form>
+    <div class="">
+      <table style="border: 0">
+        <tr">
+          <td>Title:</td>
+          <td><input class="xlarge" placeholder="Test title" id="testTitle" name="testTitle" size="40" type="text">
+            <span class="help-block">A prase that identifies the test </span></td>
+        </tr>
+        <tr>
+          <td>Image:</td>
+          <td>
+            <div class="media-grid">
+<!--               <a id="testImage" href="#"> <img class="thumbnail" src="http://placehold.it/210x150" alt=""> </a> -->
+            </div> <span class="help-block"> Block of help text to describe the field above if need be. </span></td>
+        </tr>
+        <tr>
+          <td>Description:</td>
+          <td>
+            <div>
+              <textarea class="xxlarge testDescription" id="testDescription" name="tstDescription" rows="2"></textarea>
+              <span class="help-block"> Block of help text to describe the field above if need be. </span>
+            </div></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <input id="test.submit" type="submit" class="btn primary" value="Save changes">&nbsp;
+      <button id="test.cancel" type="reset" class="btn">Cancel</button>
+    </div>
+  </form>
+</div>
+{{/activeTest}} 
+{{^activeTest}}
+<h3 align="center">
+  <small>No test selected</small>
+</h3>
+{{/activeTest}}
