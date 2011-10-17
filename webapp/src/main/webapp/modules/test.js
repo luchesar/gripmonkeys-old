@@ -1,6 +1,8 @@
-function TestModule(model, onUpdate) {
+function TestModule(model, template, container) {
     this.model = model;
-    this.onUpdate = onUpdate;
+    this.template = template;
+    this.container = container;
+    
     this.controls = { controls : { separator00 : { visible : false },
         separator01 : { visible : false }, separator02 : { visible : false },
         separator03 : { visible : false }, undo : { visible : false },
@@ -11,27 +13,32 @@ function TestModule(model, onUpdate) {
         insertImage : { visible : false }, insertTable : { visible : false },
         createLink : { visible : false }, code : { visible : false } } };
 
-    this.createEmptyHtmlEditor = function(id) {
-        $(id).wysiwyg(this.controls);
-        $(id).wysiwyg('setContent', '');
-        $(id).wysiwyg({ iFrameClass : "testDescription-input" });
+    this.createEmptyHtmlEditor = function(textArea) {
+        textArea.wysiwyg(this.controls);
+        textArea.wysiwyg('setContent', '');
+        textArea.wysiwyg({ iFrameClass : "testDescription-input" });
     };
-    this.createEmptyHtmlEditor('#testDescription');
     
-    console.log($('#sdfaftest.submit'));
-    console.log($('#test.submit'));
-    console.log($('#test.cancel'));
-    $('#test.submit').click(function(eventObject) {
-
-    });
+    this.update = function(test) {
+        this.model.activeTest = test;
+        this.container.empty();
+        this.template.mustache(model).appendTo(this.container);
+    };
     
-    $('#sdfaftest.submit').click(function(eventObject) {
-
-    });
+    this.cancel = function(test) {
+        this.model.activeTest = null;
+        this.container.empty();
+        this.template.mustache(model).appendTo(this.container);
+        this.createEmptyHtmlEditor($('#testDescription'));
+    };
     
-    $('#test.cancel').click(function(eventObject) {
-        console.log('cancel.click');
-        this.model.activeTest = '';
-        onUpdate();
-    });
+    this.onHashChange = function() {
+        if (window.location.hash == '#create') {
+            this.update('empty test');
+        } else if (window.location.hash == '#cancel') {
+            this.update('');
+        } else if (window.location.hash == '#save') {
+            
+        }  
+    };
 }

@@ -60,24 +60,27 @@ body {
 
 <script type="text/javascript">
     
-    <%@include file="/modules/test.js"%>
-    var model =  {
-        allTests :[],
-        activeTest : 'test'
-    }
+<%@include file="/modules/test.js"%>
+    var allTestsDiv;
+    var model = { allTests : [], activeTest : null };
     var testModule;
-    
-    function updateActiveTest(aModel) {
-        console.log("update active test " + aModel.activeTest);
-        $('#activeTestTemplate').mustache(aModel).appendTo('#activeTest');
+
+    function updateAllTests() {
+        allTestsDiv.empty();
+        $('#allTestsTemplate').mustache(model).appendTo(allTestsDiv);
     }
-    function updateAllTests(aModel) {
-        $('#allTestsTemplate').mustache(aModel).appendTo('#allTests');
-    }
-    $(function () {
-        updateActiveTest(model);
-        updateAllTests(model);
-        testModule = new TestModule(model, updateActiveTest);
+
+    $(function() {
+        allTestsDiv = $('#allTests');
+        updateAllTests();
+        testModule = new TestModule(model, $('#activeTestTemplate'), $('#activeTest'));
+        
+        $(window).hashchange(function() {
+            if (testModule) {
+                testModule.onHashChange();
+            }
+        });
+        $(window).hashchange();
     });
 </script>
 
@@ -102,8 +105,7 @@ body {
       </div>
       <div class="row">
         <div id="activeTest" class="span10"></div>
-        <div id="allTests" class="span6">
-        </div>
+        <div id="allTests" class="span6"></div>
       </div>
     </div>
     <footer>
