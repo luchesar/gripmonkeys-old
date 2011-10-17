@@ -21,12 +21,15 @@ function TestModule(model, template, container) {
     
     this.update = function(test) {
         this.model.activeTest = test;
-        this.container.empty();
-        this.template.mustache(model).appendTo(this.container);
+        this.updateContainer();
     };
     
     this.cancel = function(test) {
         this.model.activeTest = null;
+        this.updateContainer();
+    };
+    
+    this.updateContainer = function() {
         this.container.empty();
         this.template.mustache(model).appendTo(this.container);
         this.createEmptyHtmlEditor($('#testDescription'));
