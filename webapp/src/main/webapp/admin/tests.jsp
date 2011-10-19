@@ -61,26 +61,13 @@ body {
 <script type="text/javascript">
     
 <%@include file="/modules/test.js"%>
-    var allTestsDiv;
-    var model = { allTests : [], activeTest : null };
-    var testModule;
-
-    function updateAllTests() {
-        allTestsDiv.empty();
-        $('#allTestsTemplate').mustache(model).appendTo(allTestsDiv);
-    }
-
+    
+<%@include file="/modules/allTests.js"%>
+    
+<%@include file="tests.js"%>
     $(function() {
-        allTestsDiv = $('#allTests');
-        updateAllTests();
-        testModule = new TestModule(model, $('#activeTestTemplate'), $('#activeTest'));
-        
-        $(window).hashchange(function() {
-            if (testModule) {
-                testModule.onHashChange();
-            }
-        });
-        $(window).hashchange();
+        new TestsPage($('#activeTest'), $('#activeTestTemplate'),
+                $('#allTests'), $('#allTestsTemplate')).start();
     });
 </script>
 

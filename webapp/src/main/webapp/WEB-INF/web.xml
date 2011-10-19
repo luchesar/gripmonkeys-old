@@ -37,7 +37,7 @@
   
   <servlet>
     <servlet-name>admin-tests</servlet-name>
-    <jsp-file>admin/tests.jsp</jsp-file>
+    <jsp-file>/admin/tests.jsp</jsp-file>
   </servlet>
 
   <servlet-mapping>

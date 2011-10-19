@@ -23,14 +23,14 @@
           <td>Description:</td>
           <td>
             <div>
-              <textarea class="xxlarge testDescription" id="testDescription" name="tstDescription" rows="2"></textarea>
+              <textarea class="xxlarge testDescription" id="testDescription" name="testDescription" rows="2"></textarea>
               <span class="help-block"> Block of help text to describe the field above if need be. </span>
             </div></td>
         </tr>
       </table>
     </div>
     <div>
-      <a id="testSubmit" href="#create" class="btn primary">Save changes</a>
+      <input type="button" id="testSubmit" class="btn primary" onclick="testModule.update()" value="Save changes"/>
       <a id="testCancel" href="#cancel" class="btn">Cancel</a>
     </div>
   </form>
