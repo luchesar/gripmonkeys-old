@@ -66,8 +66,8 @@ body {
     
 <%@include file="tests.js"%>
     $(function() {
-        new TestsPage($('#activeTest'), $('#activeTestTemplate'),
-                $('#allTests'), $('#allTestsTemplate')).start();
+        new TestsPage($('#container'), $('#activeTestTemplate'),
+                $('#allTestsTemplate')).start();
     });
 </script>
 
@@ -90,10 +90,7 @@ body {
           </div>
         </div>
       </div>
-      <div class="row">
-        <div id="activeTest" class="span10"></div>
-        <div id="allTests" class="span6"></div>
-      </div>
+      <div class="row" id="container"></div>
     </div>
     <footer>
       <p>&copy; Company 2011</p>

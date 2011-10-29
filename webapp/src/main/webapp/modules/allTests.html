@@ -1,8 +1,14 @@
-{{#allTests}}
-    <div>{{title}}</div>
-{{/allTests}} 
-{{^allTests}}
-<h3>
-  Existing tests <small>No tests yet</small>
-</h3>
-{{/allTests}}
+<div align="center">
+  <h3>Existing tests</h3>
+  {{#allTests}}
+  <p>
+  <div>Title: {{title}}</div>
+  <div>Description: {{description}}</div>
+  <div>Image: {{image}}</div>
+  </p>
+  {{/allTests}}
+  
+  {{^allTests}}
+    <small>No tests yet</small>
+  {{/allTests}}
+</div>

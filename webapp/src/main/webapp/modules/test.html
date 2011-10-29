@@ -16,7 +16,7 @@
           <td>Image:</td>
           <td>
             <div class="media-grid">
-<!--               <a id="testImage" href="#"> <img class="thumbnail" src="http://placehold.it/210x150" alt=""> </a> -->
+              <!--               <a id="testImage" href="#"> <img class="thumbnail" src="http://placehold.it/210x150" alt=""> </a> -->
             </div> <span class="help-block"> Block of help text to describe the field above if need be. </span></td>
         </tr>
         <tr>
@@ -30,13 +30,12 @@
       </table>
     </div>
     <div>
-      <input type="button" id="testSubmit" class="btn primary" onclick="testModule.update()" value="Save changes"/>
-      <a id="testCancel" href="#cancel" class="btn">Cancel</a>
+      <a id="testSubmit" class="btn primary" href="#doUpdate">Save changes</a> <a id="testCancel" href="#cancel"
+        class="btn">Cancel</a>
     </div>
   </form>
 </div>
-{{/activeTest}} 
-{{^activeTest}}
+{{/activeTest}} {{^activeTest}}
 <h3 align="center">
   <small>No test selected</small>
 </h3>
