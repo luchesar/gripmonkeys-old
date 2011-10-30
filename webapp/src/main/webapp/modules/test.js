@@ -28,7 +28,7 @@ function TestModule() {
     /** @public */
     this.getTest = function() {
         var test = { title : $("input[type=text][name=testTitle]").val(),
-            image : '', description : $("texarea[name=testDescription]").val() };
+            image : '', description : $("textarea[name=testDescription]").val() };
         return test;
     };
     

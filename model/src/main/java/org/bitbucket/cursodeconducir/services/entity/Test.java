@@ -91,5 +91,4 @@ public class Test extends TitledEntity {
                 + getImage() + "possibleAnswers=" + possibleAnswers + ", correctAnswerIndex="
                 + correctAnswerIndex + ", explanation=" + explanation + ", images=" + images + "]";
     }
-
 }
