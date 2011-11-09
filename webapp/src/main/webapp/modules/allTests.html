@@ -1,14 +1,24 @@
 <div align="center">
   <h3>Existing tests</h3>
   {{#allTests}}
-  <p>
-  <div>Title: {{title}}</div>
-  <div>Description: {{description}}</div>
-  <div>Image: {{image}}</div>
-  </p>
-  {{/allTests}}
-  
-  {{^allTests}}
-    <small>No tests yet</small>
-  {{/allTests}}
+  <div class="container">
+    <div class="container mini-layout">
+      <div class="row">
+        <div class="span3">
+          <div class="media-grid">
+            <a id="testImage"> <img class="thumbnail" src="http://placehold.it/140x100" alt=""> </a>
+          </div>
+        </div>
+        <div class="span13">
+          <h4>{{title}}</h4>
+          {{description}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{{/allTests}} {{^allTests}}
+<small>No tests yet</small>
+{{/allTests}}
 </div>

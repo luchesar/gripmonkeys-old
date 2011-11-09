@@ -7,15 +7,23 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var UPDATE = '#update';
     /** @private */
     var DO_UPDATE = '#doUpdate';
-    
+
     /** @private */
-    var model = { allTests : [], activeTest : null };
+    var model = {
+        allTests : [
+                {
+                    title : "Test 1 title. This is test title",
+                    description : "This test will be temporerale put here because I need testing info" },
+                {
+                    title : "Test 2 title. This is test title",
+                    description : "This test will be temporerale put here because I need testing info" } ],
+        activeTest : null };
 
     /** @private */
     var testModule = new TestModule();
     /** @private */
     var allTestsModule = new AllTestsModule();
-    
+
     /** @private */
     var doHashChanged = function() {
         if (window.location.hash == '' || window.location.hash == CANCEL) {
@@ -38,7 +46,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             allTestsModule.show(model, allTestsTemplate, testsContainer);
         }
     };
-    
+
     /** @public */
     this.start = function() {
         $(window).hashchange(function() {

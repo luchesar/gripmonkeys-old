@@ -73,6 +73,9 @@
           <buildcommands>
             <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
             <buildcommand>com.google.gdt.eclipse.core.webAppProjectValidator</buildcommand>
+	    <buildcommand>org.eclipse.wst.jsdt.core.javascriptValidator</buildcommand>
+            <buildcommand>org.eclipse.wst.common.project.facet.core.builder</buildcommand>
+            <buildcommand>org.eclipse.wst.validation.validationbuilder</buildcommand>	
           </buildcommands>
           <additionalProjectnatures>
             <projectnature>org.eclipse.jdt.core.javanature</projectnature>

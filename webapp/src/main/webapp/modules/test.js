@@ -17,7 +17,7 @@ function TestModule() {
      */
     this.show = function(model, template, container) {
         template.mustache(model).appendTo(container);
-        createEmptyHtmlEditor($('#testDescription'));
+//        createEmptyHtmlEditor($('#testDescription'));
     };
     
     /** @public */
