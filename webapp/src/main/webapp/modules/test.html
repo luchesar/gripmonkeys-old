@@ -4,6 +4,18 @@
 </h3>
 
 <div class="clear-fix info">
+  <div id="upload-modal" class="modal hide fade">
+    <div class="modal-header">
+      <a href="#" class="close">&times;</a>
+      <h3>Modal Heading</h3>
+    </div>
+    <div class="modal-body">
+      <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn primary">Primary</a> <a href="#" class="btn secondary">Secondary</a>
+    </div>
+  </div>
   <form>
     <div class="container">
       <div class="container mini-layout">
@@ -20,7 +32,8 @@
               <label for="testTitle">Image:</label>
               <div class="input">
                 <div class="media-grid">
-                  <a id="testImage" href="#"> <img class="thumbnail" src="/images/330x230.gif" alt=""> </a>
+                  <a id="testImage" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true" href="#"> <img
+                    class="thumbnail" src="/images/330x230.gif" alt=""> </a>
                 </div>
               </div>
             </div>
