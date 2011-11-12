@@ -32,13 +32,16 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     };
 
     /** @private */
-    var doHashChanged = function() {
-        if (window.location.hash == '' || window.location.hash == CANCEL) {
+    var doHashChanged = function(hash) {
+        if (!hash) {
+            hash = window.location.hash;
+        }
+        if ( hash == '' || hash == '#' || hash == CANCEL) {
             testsContainer.empty();
             model.activeTest = null;
             allTestsModule.show(model, allTestsTemplate, testsContainer);
             updateButtons($('#buttonsInitialTemplate'));
-        } else if (window.location.hash == CREATE) {
+        } else if (hash == CREATE) {
             testsContainer.empty();
             model.activeTest = createEmptyTest();
             testModule.show(model, activeTestTemplate, testsContainer);
@@ -54,9 +57,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             dataType : 'json', success : function(msg) {
                 alert("Data Saved: " + msg);
                 model.allTests[model.allTests.length] = templateTest;
-                testsContainer.empty();
-                allTestsModule.show(model, allTestsTemplate, testsContainer);
-                updateButtons($('#buttonsInitialTemplate'));
+                doHashChanged('#');
             }, error : function(xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
