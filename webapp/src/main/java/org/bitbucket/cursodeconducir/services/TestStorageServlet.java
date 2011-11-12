@@ -1,6 +1,8 @@
 package org.bitbucket.cursodeconducir.services;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.bitbucket.cursodeconducir.services.entity.Test;
 import org.bitbucket.cursodeconducir.services.storage.TestStorage;
 
@@ -37,7 +40,18 @@ public class TestStorageServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
-        final Test test = gson.fromJson(aReq.getReader(), Test.class);
+        doPost(aReq, aResp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest aReq, HttpServletResponse aResp)
+            throws ServletException, IOException {
+        String testJson = aReq.getParameter("json");
+        final Test test = gson.fromJson(testJson, Test.class);
+        if (test == null) {
+            aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            IOUtils.write("passed test JSON is not valid:" + testJson, aResp.getOutputStream());
+        }
         try {
             Set<Test> put = storage.put(test);
             aResp.addHeader(ID, put.iterator().next().toString());
@@ -59,7 +73,7 @@ public class TestStorageServlet extends HttpServlet {
         });
         super.doDelete(aReq, aResp);
     }
-    
+
     public TestStorage getStorage() {
         return storage;
     }

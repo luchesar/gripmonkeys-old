@@ -12,28 +12,48 @@ function TestModule() {
 
     /**
      * @public
-     * @param Test test
+     * @param Test
+     *            test
      * @return void
      */
     this.show = function(model, template, container) {
         template.mustache(model).appendTo(container);
-//        createEmptyHtmlEditor($('#testDescription'));
+        // createEmptyHtmlEditor($('#testDescription'));
     };
-    
+
     /** @public */
     this.isValid = function() {
         return true;
     };
-    
+
     /** @public */
     this.getTest = function() {
-        var test = { title : $("input[type=text][name=testTitle]").val(),
-            image : '', description : $("textarea[name=testDescription]").val() };
-        return test;
+        var testTemplate = {
+            title : $("input[type=text][name=testTitle]").val(),
+            image : $("#testImage").attr("src"),
+            description : $("textarea[name=testDescription]").val(),
+            possibleAnswers : [
+                    { title : 'Answer 1', index : 1,
+                        text : $("textarea[name=answer1]").val(),
+                        sel : false },
+                    { title : 'Answer 2', index : 2,
+                        text : $("textarea[name=answer2]").val(),
+                        sel : false },
+                    { title : 'Answer 3', index : 3,
+                        text : $("textarea[name=answer3]").val(),
+                        sel : false } ],
+            explanation : $("textarea[name=testExplanation]").val() };
+
+        var selectionOption=$("#correctAnswerIndex :selected");
+        var selectedIndex = selectionOption.attr('value');
+        testTemplate.possibleAnswers[selectedIndex].sel = true;
+        return testTemplate;
     };
-    
-    /** @private 
-     * @param textArea : HtmlElement
+
+    /**
+     * @private
+     * @param textArea :
+     *            HtmlElement
      */
     var createEmptyHtmlEditor = function(textArea) {
         textArea.wysiwyg(controls);

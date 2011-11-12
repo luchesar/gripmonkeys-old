@@ -14,6 +14,11 @@
     <servlet-name>BlobServe</servlet-name>
     <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.BlobServe</servlet-class>
   </servlet>
+  
+  <servlet>
+    <servlet-name>TestStorage</servlet-name>
+    <servlet-class>org.bitbucket.cursodeconducir.services.TestStorageServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>Upload</servlet-name>
@@ -23,6 +28,11 @@
   <servlet-mapping>
     <servlet-name>BlobServe</servlet-name>
     <url-pattern>/blob</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>TestStorage</servlet-name>
+    <url-pattern>/test-storage</url-pattern>
   </servlet-mapping>
 
   <servlet>

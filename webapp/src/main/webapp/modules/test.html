@@ -7,13 +7,13 @@
   <div id="upload-modal" class="modal hide fade">
     <div class="modal-header">
       <a href="#" class="close">&times;</a>
-      <h3>Modal Heading</h3>
+      <h3>Chose an image</h3>
     </div>
     <div class="modal-body">
       <p>One fine body…</p>
     </div>
     <div class="modal-footer">
-      <a href="#" class="btn primary">Primary</a> <a href="#" class="btn secondary">Secondary</a>
+      <a href="#" class="btn primary">Close</a> 
     </div>
   </div>
   <form>
@@ -25,60 +25,48 @@
               <label for="testTitle">Title:</label>
               <div class="input">
                 <input style="width: 420px;" placeholder="Test title" id="testTitle" name="testTitle" size="40"
-                  type="text" /> <span class="help-block">An meaningful identifier of the test </span>
+                  type="text" value="{{title}}"/> <span class="help-block">An meaningful identifier of the test </span>
               </div>
             </div>
             <div class="clearfix">
               <label for="testTitle">Image:</label>
               <div class="input">
                 <div class="media-grid">
-                  <a id="testImage" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true" href="#"> <img
-                    class="thumbnail" src="/images/330x230.gif" alt=""> </a>
+                  <a id="testImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true" href="#"> <img
+                    class="thumbnail" id="testImage" src="{{image}}" alt=""> </a>
                 </div>
               </div>
             </div>
             <div class="clearfix">
               <label for="testDescription">Test description:</label>
               <div class="input">
-                <textarea style="width: 410px;" id="testDescription" name="testDescription" rows="5"></textarea>
+                <textarea style="width: 410px;" id="testDescription" name="testDescription" rows="5">{{description}}</textarea>
                 <span class="help-block"> The introduction to the test and questions </span>
               </div>
             </div>
+            {{#possibleAnswers}}
             <div class="clearfix">
-              <label for="answer1">Answer 1:</label>
+              <label for="answer1">{{title}}</label>
               <div class="input">
-                <textarea style="width: 410px;" id="answer1" name="answer1" rows="2"></textarea>
+                <textarea style="width: 410px;" id="answer{{index}}" name="answer{{index}}" rows="2">{{text}}</textarea>
                 <span class="help-block"> The first possible answer of the test </span>
               </div>
             </div>
+            {{/possibleAnswers}}
             <div class="clearfix">
-              <label for="answer2">Answer 2:</label>
+              <label for="correctAnswerIndex">Correct answer:</label>
               <div class="input">
-                <textarea style="width: 410px;" id="answer2" name="answer2" rows="2"></textarea>
-                <span class="help-block"> The second possible answer of the test </span>
-              </div>
-            </div>
-            <div class="clearfix">
-              <label for="answer3">Answer 3:</label>
-              <div class="input">
-                <textarea style="width: 410px;" id="answer3" name="answer3" rows="2"></textarea>
-                <span class="help-block"> The third possible answer of the test </span>
-              </div>
-            </div>
-            <div class="clearfix">
-              <label for="correctAnswerIndex">Correct answer</label>
-              <div class="input">
-                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select> <span class="help-block">Select the correct answer index</span>
+                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex" >
+                   {{#possibleAnswers}}
+                       <option value="{{index}}" {{#sel}}selected{{/sel}}>{{title}}</option>
+                   {{/possibleAnswers}}
+                </select> <span class="help-block">Select the correct answer</span>
               </div>
             </div>
             <div class="clearfix">
               <label for="testExplanation">Test explanation:</label>
               <div class="input">
-                <textarea style="width: 410px;" id="testExplanation" name="testExplanation" rows="5"></textarea>
+                <textarea style="width: 410px;" id="testExplanation" name="testExplanation" rows="5">{{explanation}}</textarea>
                 <span class="help-block"> The explanation of the correct answer </span>
               </div>
             </div>

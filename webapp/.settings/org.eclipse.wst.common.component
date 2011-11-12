@@ -12,25 +12,10 @@
     <dependent-module archiveName="commons-io-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="datanucleus-core-1.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/datanucleus/datanucleus-core/1.1.5/datanucleus-core-1.1.5.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="datanucleus-jpa-1.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/datanucleus/datanucleus-jpa/1.1.5/datanucleus-jpa-1.1.5.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="geronimo-jpa_3.0_spec-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-jpa_3.0_spec/1.1.1/geronimo-jpa_3.0_spec-1.1.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="geronimo-jta_1.1_spec-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="gson-1.7.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/1.7.1/gson-1.7.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="guava-r08.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava/r08/guava-r08.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jdo2-api-2.3-eb.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="model.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/model/model">
@@ -39,7 +24,7 @@
     <dependent-module archiveName="objectify-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="transaction-api-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar">
+    <dependent-module archiveName="persistence-api-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
