@@ -57,6 +57,13 @@ body {
 <script id="allTestsTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/allTests.html"%>
 </script>
+<script id="buttonsInitialTemplate" type="x-tmpl-mustache">
+    <a id="createButton" class="btn large danger" href="#create">Create</a>
+</script>
+<script id="buttonsEditTestTemplate" type="x-tmpl-mustache">
+    <a id="testSubmit" class="btn large primary" onClick="testPage.updateCurrentEditedTest()">Save changes</a> 
+    <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
+</script>
 
 <script type="text/javascript">
     
@@ -65,9 +72,11 @@ body {
 <%@include file="/modules/allTests.js"%>
     
 <%@include file="tests.js"%>
-    $(function() {
-        new TestsPage($('#container'), $('#activeTestTemplate'),
-                $('#allTestsTemplate')).start();
+    var testPage;
+    $(function() {//window.testPage.updateCurrentEditedTest()
+        testPage = new TestsPage($('#container'), $('#activeTestTemplate'),
+                $('#allTestsTemplate'));
+        testPage.start();
     });
 </script>
 
@@ -84,13 +93,24 @@ body {
                 Manage Tests <small>Create new or modify old tests</small>
               </h1>
             </div>
-            <div class="span1">
-              <a id="createButton" class="btn large danger" href="#create">Create</a>
+            <div class="span4">
+              <div class="pull-right pageButtons"></div>
             </div>
           </div>
         </div>
       </div>
       <div class="row" id="container"></div>
+      <div class="container">
+        <div class="container">
+          <div class="row">
+            <div class="span12">&nbsp;</div>
+            <div class="span4">
+              <div class="pull-right pageButtons">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <footer>
       <p>&copy; Company 2011</p>

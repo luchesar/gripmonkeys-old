@@ -5,8 +5,6 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var CANCEL = '#cancel';
     /** @private */
     var UPDATE = '#update';
-    /** @private */
-    var DO_UPDATE = '#doUpdate';
 
     /** @private */
     var model = {
@@ -23,6 +21,15 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var testModule = new TestModule();
     /** @private */
     var allTestsModule = new AllTestsModule();
+    
+    /**public*/
+    this.updateCurrentEditedTest = function() {
+        if (!testModule.isValid()) {
+            return;
+        }
+        var templateTest = testModule.getTest();
+        postToServer(templateTest);
+    };
 
     /** @private */
     var doHashChanged = function() {
@@ -30,19 +37,16 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             testsContainer.empty();
             model.activeTest = null;
             allTestsModule.show(model, allTestsTemplate, testsContainer);
+            updateButtons($('#buttonsInitialTemplate'));
         } else if (window.location.hash == CREATE) {
             testsContainer.empty();
             model.activeTest = createEmptyTest();
             testModule.show(model, activeTestTemplate, testsContainer);
-        } else if (window.location.hash == DO_UPDATE) {
-            if (!testModule.isValid()) {
-                return;
-            }
-            var templateTest = testModule.getTest();
-            postToServer(templateTest);
-        }
+            updateButtons($('#buttonsEditTestTemplate'));
+        } 
     };
 
+    /** @private */
     var postToServer = function(templateTest) {
         test = code(templateTest);
         jsonData = {json: JSON.stringify(test)};
@@ -52,12 +56,14 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
                 model.allTests[model.allTests.length] = templateTest;
                 testsContainer.empty();
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
+                updateButtons($('#buttonsInitialTemplate'));
             }, error : function(xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
             } });
     };
 
+    /** @private */
     var createEmptyTest = function() {
         return {
             title : '',
@@ -70,6 +76,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             explanation : '' };
     };
 
+    /** @private */
     var code = function(template) {
         var possibleAnswers = [];
         var correctAnswerIndex = 0;
@@ -86,6 +93,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             explanation : template.explanation };
     };
 
+    /** @private */
     var deCode = function(jsonObject) {
         var possibleAnswers = [];
         for (i = 0; i < jsonObject.possibleAnswers.length; i++) {
@@ -96,6 +104,13 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             description : jsonObject.description,
             possibleAnswers : possibleAnswers,
             explanation : jsonObject.explanation };
+    };
+    
+    /** @private */
+    var updateButtons = function(template) {
+       var pageButtons=$('.pageButtons');
+       pageButtons.empty();
+       template.mustache(model).appendTo(pageButtons);
     };
 
     /** @public */

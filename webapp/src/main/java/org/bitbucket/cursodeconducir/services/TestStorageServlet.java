@@ -20,6 +20,7 @@ import com.googlecode.objectify.Objectify;
 
 @SuppressWarnings("serial")
 public class TestStorageServlet extends HttpServlet {
+    private static final String JSON_KEY = "json";
     private static final String ID = "key";
     private Gson gson;
     private TestStorage storage;
@@ -46,7 +47,7 @@ public class TestStorageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
-        String testJson = aReq.getParameter("json");
+        String testJson = aReq.getParameter(JSON_KEY);
         final Test test = gson.fromJson(testJson, Test.class);
         if (test == null) {
             aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
