@@ -51,16 +51,16 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
 
     /** @private */
     var postToServer = function(templateTest) {
+        hideFeedback();
         test = code(templateTest);
         jsonData = {json: JSON.stringify(test)};
         $.ajax({ type : "POST", url : '/test-storage', data : jsonData,
             dataType : 'json', success : function(msg) {
-                alert("Data Saved: " + msg);
                 model.allTests[model.allTests.length] = templateTest;
-                doHashChanged('#');
+                window.location.hash = '#';
             }, error : function(xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
+                showFeedback('the test did not get saved because server returned error ' 
+                        + xhr.status +' ' + thrownError);
             } });
     };
 
@@ -112,6 +112,23 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
        var pageButtons=$('.pageButtons');
        pageButtons.empty();
        template.mustache(model).appendTo(pageButtons);
+    };
+    
+    /** @private */
+    var showFeedback = function(string) {
+       var feedback=$('.feedback');
+       feedback.empty();
+       $('#feedbackTemplate').mustache(model).appendTo(feedback);
+       var feedbackContent=$('.testFeedbackContent');
+       feedbackContent.html(string);
+       feedback.removeClass('hide');
+    };
+    
+    /** @private */
+    var hideFeedback = function() {
+       var feedback=$('.feedback');
+       feedback.empty();
+       feedback.addClass('hide');
     };
 
     /** @public */

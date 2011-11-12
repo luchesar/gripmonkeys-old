@@ -13,7 +13,7 @@
       <p>One fine body…</p>
     </div>
     <div class="modal-footer">
-      <a href="#" class="btn primary">Close</a> 
+      <a href="#" class="btn primary">Close</a>
     </div>
   </div>
   <form>
@@ -25,15 +25,16 @@
               <label for="testTitle">Title:</label>
               <div class="input">
                 <input style="width: 420px;" placeholder="Test title" id="testTitle" name="testTitle" size="40"
-                  type="text" value="{{title}}"/> <span class="help-block">An meaningful identifier of the test </span>
+                  type="text" value="{{title}}" /> <span class="help-block">An meaningful identifier of the test
+                </span>
               </div>
             </div>
             <div class="clearfix">
               <label for="testTitle">Image:</label>
               <div class="input">
                 <div class="media-grid">
-                  <a id="testImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true" href="#"> <img
-                    class="thumbnail" id="testImage" src="{{image}}" alt=""> </a>
+                  <a id="testImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true"
+                    href="#"> <img class="thumbnail" id="testImage" src="{{image}}" alt=""> </a>
                 </div>
               </div>
             </div>
@@ -56,10 +57,8 @@
             <div class="clearfix">
               <label for="correctAnswerIndex">Correct answer:</label>
               <div class="input">
-                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex" >
-                   {{#possibleAnswers}}
-                       <option value="{{index}}" {{#sel}}selected{{/sel}}>{{title}}</option>
-                   {{/possibleAnswers}}
+                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex"> {{#possibleAnswers}}
+                  <option value="{{index}}"{{#sel}}selected{{/sel}}>{{title}}</option> {{/possibleAnswers}}
                 </select> <span class="help-block">Select the correct answer</span>
               </div>
             </div>
@@ -75,9 +74,8 @@
       </div>
     </div>
   </form>
-</div>
-{{/activeTest}} {{^activeTest}}
-<h3 align="center">
-  <small>No test selected</small>
-</h3>
-{{/activeTest}}
+  {{/activeTest}} {{^activeTest}}
+  <h3 align="center">
+    <small>No test selected</small>
+  </h3>
+  {{/activeTest}}

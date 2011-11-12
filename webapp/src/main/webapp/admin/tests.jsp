@@ -64,6 +64,9 @@ body {
     <a id="testSubmit" class="btn large primary" onClick="testPage.updateCurrentEditedTest()">Save changes</a> 
     <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
 </script>
+<script id="feedbackTemplate" type="x-tmpl-mustache">
+    <%@include file="/modules/feedback.html"%>
+</script>
 
 <script type="text/javascript">
     
@@ -99,7 +102,9 @@ body {
           </div>
         </div>
       </div>
+      <div class="container feedback hide"></div>
       <div class="row" id="container"></div>
+      <div class="container feedback hide"></div>
       <div class="container">
         <div class="container">
           <div class="row">
