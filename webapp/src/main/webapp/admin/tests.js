@@ -7,22 +7,14 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var UPDATE = '#update';
 
     /** @private */
-    var model = {
-        allTests : [
-                {
-                    title : "Test 1 title. This is test title",
-                    description : "This test will be temporerale put here because I need testing info" },
-                {
-                    title : "Test 2 title. This is test title",
-                    description : "This test will be temporerale put here because I need testing info" } ],
-        activeTest : null };
+    var model = { allTests : null, allTestsIdToIndex : [], activeTest : null };
 
     /** @private */
     var testModule = new TestModule();
     /** @private */
     var allTestsModule = new AllTestsModule();
-    
-    /**public*/
+
+    /** public */
     this.updateCurrentEditedTest = function() {
         if (!testModule.isValid()) {
             return;
@@ -36,32 +28,68 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
         if (!hash) {
             hash = window.location.hash;
         }
-        if ( hash == '' || hash == '#' || hash == CANCEL) {
-            testsContainer.empty();
+        if (hash == '' || hash == '#' || hash == CANCEL) {
             model.activeTest = null;
-            allTestsModule.show(model, allTestsTemplate, testsContainer);
-            updateButtons($('#buttonsInitialTemplate'));
+            testsContainer.empty();
+            if (initAllTests()) {
+                allTestsModule.show(model, allTestsTemplate, testsContainer);
+                updateButtons($('#buttonsInitialTemplate'));
+            }
         } else if (hash == CREATE) {
             testsContainer.empty();
             model.activeTest = createEmptyTest();
             testModule.show(model, activeTestTemplate, testsContainer);
             updateButtons($('#buttonsEditTestTemplate'));
-        } 
+        }
+    };
+
+    var initAllTests = function() {
+        if (model.allTests != null) {
+            return true;
+        }
+        hideFeedback();
+        $.ajax({
+            type : "GET",
+            url : '/test-storage?*',
+            data : {},
+            dataType : 'json',
+            success : function(data, textStatus, jqXHR) {
+                model.allTests = [];
+                for (var i =0 ; i < data.length; i++) {
+                    model.allTests[i] = decode(data[i]);
+                }
+            },
+            error : function(xhr, ajaxOptions, thrownError) {
+                showFeedback('Cannot fetch all test. Server returned error \''
+                        + xhr.status + ' ' + thrownError + '\'');
+            },
+            complete: function(jqXHR, textStatus) {
+                allTestsModule.show(model, allTestsTemplate, testsContainer);
+                updateButtons($('#buttonsInitialTemplate'));
+            }
+        });
+        return false;
     };
 
     /** @private */
     var postToServer = function(templateTest) {
         hideFeedback();
         test = code(templateTest);
-        jsonData = {json: JSON.stringify(test)};
-        $.ajax({ type : "POST", url : '/test-storage', data : jsonData,
-            dataType : 'json', success : function(msg) {
-                model.allTests[model.allTests.length] = templateTest;
-                window.location.hash = '#';
-            }, error : function(xhr, ajaxOptions, thrownError) {
-                showFeedback('the test did not get saved because server returned error ' 
-                        + xhr.status +' ' + thrownError);
-            } });
+        jsonData = { json : JSON.stringify(test) };
+        $
+                .ajax({
+                    type : "POST",
+                    url : '/test-storage',
+                    data : jsonData,
+                    dataType : 'json',
+                    success : function(data, textStatus, jqXHR) {
+                        model.allTests[model.allTests.length] = decode(data);
+                        window.location.hash = '#';
+                    },
+                    error : function(xhr, ajaxOptions, thrownError) {
+                        showFeedback('the test did not get saved because server returned error \''
+                                + xhr.status + ' ' + thrownError + '\'');
+                    } });
     };
 
     /** @private */
@@ -81,54 +109,54 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var code = function(template) {
         var possibleAnswers = [];
         var correctAnswerIndex = 0;
-        for (i = 0; i < template.possibleAnswers.length; i++) {
+        for (var i = 0; i < template.possibleAnswers.length; i++) {
             possibleAnswers[i] = template.possibleAnswers[i].text;
             if (template.possibleAnswers[i].sel) {
                 correctAnswerIndex = i;
             }
         }
-        return { title : template.title, image : template.image,
-            description : template.description,
+        return { id : template.id, title : template.title,
+            image : template.image, description : template.description,
             possibleAnswers : possibleAnswers,
             correctAnswerIndex : correctAnswerIndex,
             explanation : template.explanation };
     };
 
     /** @private */
-    var deCode = function(jsonObject) {
+    var decode = function(jsonObject) {
         var possibleAnswers = [];
-        for (i = 0; i < jsonObject.possibleAnswers.length; i++) {
+        for (var i = 0; i < jsonObject.possibleAnswers.length; i++) {
             possibleAnswers[i] = { title : "Answer " + i + 1, index : i + 1,
                 sel : i == jsonObject.correctAnswerIndex ? true : false };
         }
-        return { title : jsonObject.title, image : jsonObject.image,
-            description : jsonObject.description,
+        return { id : jsonObject.id, title : jsonObject.title,
+            image : jsonObject.image, description : jsonObject.description,
             possibleAnswers : possibleAnswers,
             explanation : jsonObject.explanation };
     };
-    
+
     /** @private */
     var updateButtons = function(template) {
-       var pageButtons=$('.pageButtons');
-       pageButtons.empty();
-       template.mustache(model).appendTo(pageButtons);
+        var pageButtons = $('.pageButtons');
+        pageButtons.empty();
+        template.mustache(model).appendTo(pageButtons);
     };
-    
+
     /** @private */
     var showFeedback = function(string) {
-       var feedback=$('.feedback');
-       feedback.empty();
-       $('#feedbackTemplate').mustache(model).appendTo(feedback);
-       var feedbackContent=$('.testFeedbackContent');
-       feedbackContent.html(string);
-       feedback.removeClass('hide');
+        var feedback = $('.feedback');
+        feedback.empty();
+        $('#feedbackTemplate').mustache(model).appendTo(feedback);
+        var feedbackContent = $('.testFeedbackContent');
+        feedbackContent.html(string);
+        feedback.removeClass('hide');
     };
-    
+
     /** @private */
     var hideFeedback = function() {
-       var feedback=$('.feedback');
-       feedback.empty();
-       feedback.addClass('hide');
+        var feedback = $('.feedback');
+        feedback.empty();
+        feedback.addClass('hide');
     };
 
     /** @public */

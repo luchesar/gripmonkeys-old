@@ -31,9 +31,14 @@ public class TestStorageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
-        String idString = aReq.getParameter(ID);
-        Long id = Long.parseLong(idString);
-        gson.toJson(storage.get(id), aResp.getWriter());
+        String all = aReq.getParameter("*");
+        if (all != null) {
+            gson.toJson(storage.getAll(), aResp.getWriter());
+        } else {
+            String idString = aReq.getParameter(ID);
+            Long id = Long.parseLong(idString);
+            gson.toJson(storage.get(id), aResp.getWriter());
+        }
     }
 
     @Override
@@ -53,7 +58,7 @@ public class TestStorageServlet extends HttpServlet {
         }
         try {
             Set<Test> put = storage.put(test);
-            aResp.addHeader(ID, put.iterator().next().toString());
+            aResp.getWriter().write(gson.toJson(put.iterator().next()));
         } catch (ServiceException e) {
             aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
