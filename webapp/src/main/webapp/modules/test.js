@@ -9,6 +9,7 @@ function TestModule() {
         copy : { visible : false }, paste : { visible : false },
         insertImage : { visible : false }, insertTable : { visible : false },
         createLink : { visible : false }, code : { visible : false } } };
+    var currentTest;
 
     /**
      * @public
@@ -18,6 +19,7 @@ function TestModule() {
      */
     this.show = function(model, template, container) {
         template.mustache(model).appendTo(container);
+        currentTest = model.activeTest;
         // createEmptyHtmlEditor($('#testDescription'));
     };
 
@@ -28,19 +30,24 @@ function TestModule() {
 
     /** @public */
     this.getTest = function() {
+        var currentTestId = undefined;
+        if (currentTest) {
+            currentTestId = currentTest.id;
+        }
         var testTemplate = {
+            id : currentTestId,
             title : $("input[type=text][name=testTitle]").val(),
             image : $("#testImage").attr("src"),
             description : $("textarea[name=testDescription]").val(),
             possibleAnswers : [
-                    { title : 'Answer 1', index : 1,
+                    { title : 'Answer 1', index : 0,
+                        text : $("textarea[name=answer0]").val(),
+                        sel : false },
+                    { title : 'Answer 2', index : 1,
                         text : $("textarea[name=answer1]").val(),
                         sel : false },
-                    { title : 'Answer 2', index : 2,
+                    { title : 'Answer 3', index : 2,
                         text : $("textarea[name=answer2]").val(),
-                        sel : false },
-                    { title : 'Answer 3', index : 3,
-                        text : $("textarea[name=answer3]").val(),
                         sel : false } ],
             explanation : $("textarea[name=testExplanation]").val() };
 

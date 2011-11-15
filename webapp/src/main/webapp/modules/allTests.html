@@ -4,14 +4,17 @@
   <div class="container">
     <div class="container mini-layout">
       <div class="row">
-        <div class="span3">
+        <div class="span2">
           <div class="media-grid">
-            <a id="testImage"> <img class="thumbnail" src="http://placehold.it/140x100" alt=""> </a>
+            <a id="testImage" style="margin: 0 0 0px 20px;"> <img class="thumbnail" src="http://placehold.it/80x50" alt=""> </a>
           </div>
         </div>
         <div class="span13">
-          <h4>{{title}}</h4>
+          <h4>{{title}}&nbsp;</h4>
           {{description}}
+        </div>
+        <div class="span1">
+          <a id="testCancel" href="#update?test={{id}}" class="btn small">Edit</a>
         </div>
       </div>
     </div>

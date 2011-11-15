@@ -5,9 +5,11 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var CANCEL = '#cancel';
     /** @private */
     var UPDATE = '#update';
+    /** @private */
+    var TEST_KEY = 'test';
 
     /** @private */
-    var model = { allTests : null, allTestsIdToIndex : [], activeTest : null };
+    var model = { allTests : null, activeTest : null };
 
     /** @private */
     var testModule = new TestModule();
@@ -25,27 +27,35 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
 
     /** @private */
     var doHashChanged = function(hash) {
+        hideFeedback();
+        testsContainer.empty();
         if (!hash) {
             hash = window.location.hash;
         }
         if (hash == '' || hash == '#' || hash == CANCEL) {
             model.activeTest = null;
-            testsContainer.empty();
-            if (initAllTests()) {
+            if (initAllTests(function() {
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
                 updateButtons($('#buttonsInitialTemplate'));
-            }
+            }));
         } else if (hash == CREATE) {
-            testsContainer.empty();
             model.activeTest = createEmptyTest();
             testModule.show(model, activeTestTemplate, testsContainer);
             updateButtons($('#buttonsEditTestTemplate'));
+        } else if (hash.indexOf(UPDATE) == 0) {
+            var testId = $.getQueryString(TEST_KEY);
+            findOrFetchTest(testId, function(test) {
+                model.activeTest = test;
+                testModule.show(model, activeTestTemplate, testsContainer);
+                updateButtons($('#buttonsEditTestTemplate'));
+            });
         }
     };
 
-    var initAllTests = function() {
+    var initAllTests = function(onComplate) {
         if (model.allTests != null) {
-            return true;
+            onComplate();
+            return;
         }
         hideFeedback();
         $.ajax({
@@ -55,41 +65,82 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             dataType : 'json',
             success : function(data, textStatus, jqXHR) {
                 model.allTests = [];
-                for (var i =0 ; i < data.length; i++) {
+                for ( var i = 0; i < data.length; i++) {
                     model.allTests[i] = decode(data[i]);
                 }
             },
             error : function(xhr, ajaxOptions, thrownError) {
                 showFeedback('Cannot fetch all test. Server returned error \''
                         + xhr.status + ' ' + thrownError + '\'');
-            },
-            complete: function(jqXHR, textStatus) {
-                allTestsModule.show(model, allTestsTemplate, testsContainer);
-                updateButtons($('#buttonsInitialTemplate'));
-            }
-        });
-        return false;
+            }, complete : onComplate });
     };
 
     /** @private */
-    var postToServer = function(templateTest) {
+    var postToServer = function(templateTest, onSuccess) {
         hideFeedback();
         test = code(templateTest);
         jsonData = { json : JSON.stringify(test) };
-        $
-                .ajax({
-                    type : "POST",
-                    url : '/test-storage',
-                    data : jsonData,
-                    dataType : 'json',
-                    success : function(data, textStatus, jqXHR) {
-                        model.allTests[model.allTests.length] = decode(data);
-                        window.location.hash = '#';
-                    },
-                    error : function(xhr, ajaxOptions, thrownError) {
-                        showFeedback('the test did not get saved because server returned error \''
-                                + xhr.status + ' ' + thrownError + '\'');
-                    } });
+        $.ajax({
+            type : "POST",
+            url : '/test-storage',
+            data : jsonData,
+            dataType : 'json',
+            success : function(data, textStatus, jqXHR) {
+                var testIndex = findTestIndexById(data.id);
+                if (!model.allTests) {
+                    model.allTests = [];
+                }
+                if (testIndex < 0) {
+                    testIndex = model.allTests.length;
+                }
+                model.allTests[testIndex] = decode(data);
+                window.location.hash = '#';
+            },
+            error : function(xhr, ajaxOptions, thrownError) {
+                showFeedback('the test did not get saved because server returned error \''
+                        + xhr.status + ' ' + thrownError + '\'');
+            } 
+        });
+    };
+    
+    var findOrFetchTest = function(testId, callback) {
+        if (model.allTests) {
+            var testIndex = findTestIndexById(testId);
+            if(testIndex > -1) {
+                callback(model.allTests[testIndex]);
+                return;
+            }
+        }
+        hideFeedback();
+        $.ajax({
+            type : "GET",
+            url : '/test-storage?key=' + testId,
+            data : {},
+            dataType : 'json',
+            success : function(test, textStatus, jqXHR) {
+                if (test && test.length > 0) {
+                    callback(decode(test[0]));
+                } else {
+                    showFeedback('No test found with id ' + testId);
+                }
+            },
+            error : function(xhr, ajaxOptions, thrownError) {
+                showFeedback('Cannot fetch a test. Server returned error \''
+                        + xhr.status + ' ' + thrownError + '\'');
+            }, complete : callback() });
+    };
+    
+    var findTestIndexById = function(testId) {
+        if (model.allTests == undefined || model.allTests == null) {
+            retrn -1;
+        }
+        var allTestsLength = model.allTests.length;
+        for (var i = 0; i < allTestsLength; i++) {
+            if (model.allTests[i].id == testId) {
+                return i;
+            }
+        }
+        return -1;
     };
 
     /** @private */
@@ -99,9 +150,9 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             image : '/images/330x230.gif',
             description : '',
             possibleAnswers : [
-                    { title : 'Answer 1', index : 1, text : '', sel : true },
-                    { title : 'Answer 2', index : 2, text : '' },
-                    { title : 'Answer 3', index : 3, text : '' } ],
+                    { title : 'Answer 1', index : 0, text : '', sel : true },
+                    { title : 'Answer 2', index : 1, text : '', sel : false },
+                    { title : 'Answer 3', index : 2, text : '', sel : false } ],
             explanation : '' };
     };
 
@@ -109,7 +160,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var code = function(template) {
         var possibleAnswers = [];
         var correctAnswerIndex = 0;
-        for (var i = 0; i < template.possibleAnswers.length; i++) {
+        for ( var i = 0; i < template.possibleAnswers.length; i++) {
             possibleAnswers[i] = template.possibleAnswers[i].text;
             if (template.possibleAnswers[i].sel) {
                 correctAnswerIndex = i;
@@ -125,8 +176,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     /** @private */
     var decode = function(jsonObject) {
         var possibleAnswers = [];
-        for (var i = 0; i < jsonObject.possibleAnswers.length; i++) {
-            possibleAnswers[i] = { title : "Answer " + i + 1, index : i + 1,
+        for ( var i = 0; i < jsonObject.possibleAnswers.length; i++) {
+            var visualIndex = i + 1;
+            possibleAnswers[i] = { title : "Answer " + visualIndex, index : i,
+                text : jsonObject.possibleAnswers[i],
                 sel : i == jsonObject.correctAnswerIndex ? true : false };
         }
         return { id : jsonObject.id, title : jsonObject.title,
@@ -143,12 +196,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     };
 
     /** @private */
-    var showFeedback = function(string) {
+    var showFeedback = function(errorMessage) {
         var feedback = $('.feedback');
         feedback.empty();
-        $('#feedbackTemplate').mustache(model).appendTo(feedback);
-        var feedbackContent = $('.testFeedbackContent');
-        feedbackContent.html(string);
+        $('#feedbackTemplate').mustache({errorMessage:errorMessage}).appendTo(feedback);
         feedback.removeClass('hide');
     };
 
