@@ -2,19 +2,22 @@
   <h3>Existing tests</h3>
   {{#allTests}}
   <div class="container">
-    <div class="container mini-layout">
+    <div class="container mini-layout span16">
       <div class="row">
         <div class="span2">
           <div class="media-grid">
-            <a id="testImage" style="margin: 0 0 0px 20px;"> <img class="thumbnail" src="http://placehold.it/80x50" alt=""> </a>
+            <a id="testImage" style="margin: 0 0 0px 20px;" href="#update?test={{id}}"> <img class="thumbnail"
+              src="http://placehold.it/80x50" alt=""> </a>
           </div>
         </div>
-        <div class="span13">
-          <h4>{{title}}&nbsp;</h4>
+        <div class="span13 pull-left">
+          <h4>
+            <a href="#update?test={{id}}" onclick="testPage.updateCurrentEditedTest({{id}})">{{title}}&nbsp;</a>
+          </h4>
           {{description}}
         </div>
         <div class="span1">
-          <a id="testCancel" href="#update?test={{id}}" class="btn small">Edit</a>
+          <a id="testCancel" class="btn small" href="#delete?test={{id}}">Del</a>
         </div>
       </div>
     </div>

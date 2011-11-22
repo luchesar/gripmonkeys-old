@@ -87,6 +87,7 @@ body {
 </head>
 <body>
   <%@include file="../modules/menu.html"%>
+  <div id="confirmDeleteContainer"></div>
   <div class="container">
     <div class="content">
       <div class="page-header">

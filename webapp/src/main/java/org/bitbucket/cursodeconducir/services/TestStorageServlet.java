@@ -68,14 +68,8 @@ public class TestStorageServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
         final String keyString = aReq.getParameter(ID);
-        Util.inTransaction(new Closures.Run() {
-
-            @Override
-            public void exec(Objectify objectify) {
-                objectify.delete(new Key<Test>(Test.class, keyString));
-            }
-        });
-        super.doDelete(aReq, aResp);
+        storage.delete(Long.parseLong(keyString));
+        aResp.getWriter().write(gson.toJson(true));
     }
 
     public TestStorage getStorage() {

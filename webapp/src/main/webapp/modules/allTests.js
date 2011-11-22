@@ -1,5 +1,5 @@
 function AllTestsModule(model, template, container) {
-    /** public*/
+    /** public */
     this.show = function(model, template, container) {
         template.mustache(model).appendTo(container);
     };
