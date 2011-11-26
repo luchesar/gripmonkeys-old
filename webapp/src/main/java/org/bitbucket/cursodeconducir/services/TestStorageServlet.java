@@ -13,8 +13,6 @@ import org.bitbucket.cursodeconducir.services.entity.Test;
 import org.bitbucket.cursodeconducir.services.storage.TestStorage;
 
 import com.google.gson.Gson;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Objectify;
 
 @SuppressWarnings("serial")
 public class TestStorageServlet extends HttpServlet {

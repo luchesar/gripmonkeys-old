@@ -7,6 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css" href="/css/jquery.wysiwyg.css" />
+<link rel="stylesheet" type="text/css" href="/css/fileuploader.css" />
 
 <%@include file="../modules/cssAndJs.html"%>
 <script type="text/javascript" src="/scripts/jquery.wysiwyg.js"></script>
@@ -48,7 +49,7 @@ body {
 }
 </style>
 
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="/favicon.ico">
 <link rel="placeholder" href="http://placehold.it/210x150">
 
 <script id="activeTestTemplate" type="x-tmpl-mustache">
@@ -87,7 +88,6 @@ body {
 </head>
 <body>
   <%@include file="../modules/menu.html"%>
-  <div id="confirmDeleteContainer"></div>
   <div class="container">
     <div class="content">
       <div class="page-header">

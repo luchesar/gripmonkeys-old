@@ -202,7 +202,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var createEmptyTest = function() {
         return {
             title : '',
-            image : '/images/330x230.gif',
+            image : null,
             description : '',
             possibleAnswers : [
                     { title : 'Answer 1', index : 0, text : '', sel : true },
@@ -283,5 +283,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             doHashChanged();
         });
         $(window).hashchange();
+    };
+    
+
+    this.editImage = function(imageElement) {
+        testModule.editImage(imageElement);
     };
 }
