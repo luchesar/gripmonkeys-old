@@ -15,7 +15,7 @@ function TestModule() {
     var imageElement;
     var doneButton;
     var cancelButton;
-    var uploadUrl;
+    var imageKey;
 
     /**
      * @public
@@ -32,7 +32,6 @@ function TestModule() {
         imageElement = $('#testImage');
         doneButton = $('#doneButton');
         cancelButton = $('#modalCancelButton');
-        uploadUrl = $("input[type=hidden][name=uploadCallback]").val();
 
         imageElement.click(function() {
             editImage();
@@ -65,7 +64,7 @@ function TestModule() {
         var testTemplate = {
             id : currentTestId,
             title : $("input[type=text][name=testTitle]").val(),
-            image : $("#testImage").attr("src"),
+            image : imageKey,
             description : $("textarea[name=testDescription]").val(),
             possibleAnswers : [
                     { title : 'Answer 1', index : 0,
@@ -130,7 +129,7 @@ function TestModule() {
         xhr.addEventListener("load", uploadComplete, false);
         xhr.addEventListener("error", uploadFailed, false);
         xhr.addEventListener("abort", uploadCanceled, false);
-        xhr.open("POST", uploadUrl);
+        xhr.open("POST", "/image");
         xhr.send(fd);
     }
 
@@ -144,9 +143,9 @@ function TestModule() {
     }
 
     function uploadComplete(evt) {
-        var uploadedImageId = evt.target.getResponseHeader('fileToUpload');
-        $('#currentTestImage').attr('src', '/blob?blob-key=' + uploadedImageId);
-        uploadUrl = evt.target.getResponseHeader('uploadCallback');
+        imageKey = evt.target.getResponseHeader('key');
+        var imageUrl = '/image?key=' + imageKey + '&falback=/images/330x230.gif';
+        $('#currentTestImage').attr('src', imageUrl);
     }
 
     function uploadFailed(evt) {

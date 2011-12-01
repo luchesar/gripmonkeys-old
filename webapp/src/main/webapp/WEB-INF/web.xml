@@ -6,13 +6,8 @@
   <display-name>'Curso de conducir' web app</display-name>
 
   <servlet>
-    <servlet-name>Upload</servlet-name>
-    <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.Upload</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>BlobServe</servlet-name>
-    <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.BlobServe</servlet-class>
+    <servlet-name>Image</servlet-name>
+    <servlet-class>org.bitbucket.cursodeconducir.services.fileupload.ImageServlet</servlet-class>
   </servlet>
   
   <servlet>
@@ -21,15 +16,10 @@
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>Upload</servlet-name>
-    <url-pattern>/upload</url-pattern>
+    <servlet-name>Image</servlet-name>
+    <url-pattern>/image</url-pattern>
   </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>BlobServe</servlet-name>
-    <url-pattern>/blob</url-pattern>
-  </servlet-mapping>
-  
   <servlet-mapping>
     <servlet-name>TestStorage</servlet-name>
     <url-pattern>/test-storage</url-pattern>

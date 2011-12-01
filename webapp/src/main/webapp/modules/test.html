@@ -28,8 +28,6 @@ BlobstoreServiceFactory.getBlobstoreService(); %> {{#activeTest}}
     <a id="modalCancelButton" class="btn">Cancel</a><a id="doneButton" class="btn primary">Done</a>
   </div>
 </div>
-<input name="uploadCallback" type="hidden" value="<%= blobstoreService.createUploadUrl("/upload")%>
-"/>
 <div class="clear-fix info">
   <form>
     <div class="container">
@@ -49,7 +47,7 @@ BlobstoreServiceFactory.getBlobstoreService(); %> {{#activeTest}}
               <div class="input">
                 <div class="media-grid">
                   <a id="testImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true"
-                    href="#"> <img class="thumbnail" id="testImage" src="{{image}}" alt=""> </a>
+                    href="#"> <img class="thumbnail" id="testImage" src="/image?key={{image}}&falback=/images/330x230.gif" alt=""> </a>
                 </div>
               </div>
             </div>
