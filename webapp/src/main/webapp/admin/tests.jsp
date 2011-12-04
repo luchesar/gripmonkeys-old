@@ -37,7 +37,7 @@ body {
 }
 
 /* Page header tweaks */
-.page-header {
+.page-header-ext {
 	background-color: #f5f5f5;
 	padding: 20px 20px 10px;
 	margin: -20px -20px 20px;
@@ -55,6 +55,9 @@ body {
 <script id="activeTestTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/test.html"%>
 </script>
+<script id="testPreviewTemplate" type="x-tmpl-mustache">
+    <%@include file="/modules/testPreview.html"%>
+</script>
 <script id="allTestsTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/allTests.html"%>
 </script>
@@ -62,7 +65,13 @@ body {
     <a id="createButton" class="btn large danger" href="#create">Create</a>
 </script>
 <script id="buttonsEditTestTemplate" type="x-tmpl-mustache">
+    <a id="testCancel" href="#preview" class="btn large">Preview</a>
     <a id="testSubmit" class="btn large primary" onClick="testPage.updateCurrentEditedTest()">Save changes</a> 
+    <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
+</script>
+<script id="buttonsPreviewTestTemplate" type="x-tmpl-mustache">
+    <a id="testCancel" href="#edit" class="btn large">Edit</a>
+    <a id="testSubmit" class="btn large primary" onClick="testPage.updateCurrentPreviewedTest()">Save changes</a> 
     <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
 </script>
 <script id="feedbackTemplate" type="x-tmpl-mustache">
@@ -80,7 +89,7 @@ body {
     var testPage;
     $(function() {//window.testPage.updateCurrentEditedTest()
         testPage = new TestsPage($('#container'), $('#activeTestTemplate'),
-                $('#allTestsTemplate'));
+                $('#allTestsTemplate'), $('#testPreviewTemplate'));
         testPage.start();
     });
 </script>
@@ -90,15 +99,15 @@ body {
   <%@include file="../modules/menu.html"%>
   <div class="container">
     <div class="content">
-      <div class="page-header">
+      <div class="page-header page-header-ext">
         <div class="container">
           <div class="row">
-            <div class="span12">
+            <div class="span10">
               <h1>
                 Manage Tests <small>Create new or modify old tests</small>
               </h1>
             </div>
-            <div class="span4">
+            <div class="span6">
               <div class="pull-right pageButtons"></div>
             </div>
           </div>
@@ -110,8 +119,8 @@ body {
       <div class="container">
         <div class="container">
           <div class="row">
-            <div class="span12">&nbsp;</div>
-            <div class="span4">
+            <div class="span10">&nbsp;</div>
+            <div class="span6">
               <div class="pull-right pageButtons">
               </div>
             </div>

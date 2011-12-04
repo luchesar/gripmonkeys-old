@@ -1,4 +1,5 @@
-function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
+function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
+        previewTestTemplate) {
     /** @private */
     var CREATE = '#create';
     /** @private */
@@ -9,6 +10,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
     var TEST_KEY = 'test';
     /** @private */
     var DELETE = '#delete';
+    /** @private */
+    var EDIT = '#edit';
+    /** @private */
+    var PREVIEW = '#preview';
 
     /** @private */
     var model = { allTests : null, activeTest : null };
@@ -26,6 +31,11 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
         var templateTest = testModule.getTest();
         postToServer(templateTest);
     };
+    
+    /** public */
+    this.updateCurrentPreviewedTest = function() {
+        postToServer(model.activeTest);
+    };
 
     /** @private */
     var doHashChanged = function(hash) {
@@ -39,11 +49,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             if (initAllTests(function() {
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
                 updateButtons($('#buttonsInitialTemplate'));
-            }))
-                ;
+            }));
         } else if (hash == CREATE) {
             testsContainer.empty();
-            model.activeTest = createEmptyTest();
+            model.activeTest = testModule.createEmptyTest();
             testModule.show(model, activeTestTemplate, testsContainer);
             updateButtons($('#buttonsEditTestTemplate'));
         } else if (hash.indexOf(UPDATE) == 0) {
@@ -61,7 +70,27 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
                     doDelete(test.id);
                 }
             });
+        } else if (hash.indexOf(PREVIEW) == 0) {
+            var testId = $.getQueryString(TEST_KEY);
+            if (testId) {
+                findOrFetchTest(testId, function(test) {
+                    previewTest(test);
+                });
+            } else {
+                previewTest(testModule.getTest());
+            }
+        } else if (hash == EDIT) {
+            testsContainer.empty();
+            testModule.show(model, activeTestTemplate, testsContainer);
+            updateButtons($('#buttonsEditTestTemplate'));
         }
+    };
+    
+    var previewTest = function(test) {
+        testsContainer.empty();
+        model.activeTest = test;
+        previewTestTemplate.mustache(model).appendTo(testsContainer);
+        updateButtons($('#buttonsPreviewTestTemplate'));
     };
 
     var initAllTests = function(onComplate) {
@@ -167,7 +196,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
 
     var findTestIndexById = function(testId) {
         if (model.allTests == undefined || model.allTests == null) {
-            return - 1;
+            return -1;
         }
         var allTestsLength = model.allTests.length;
         for ( var i = 0; i < allTestsLength; i++) {
@@ -177,7 +206,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
         }
         return -1;
     };
-    
+
     var removeTestById = function(testId) {
         if (model.allTests == undefined || model.allTests == null) {
             return;
@@ -195,20 +224,6 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             }
         }
         model.allTests[allTestsLength] = undefined;
-
-    };
-
-    /** @private */
-    var createEmptyTest = function() {
-        return {
-            title : '',
-            image : null,
-            description : '',
-            possibleAnswers : [
-                    { title : 'Answer 1', index : 0, text : '', sel : true },
-                    { title : 'Answer 2', index : 1, text : '', sel : false },
-                    { title : 'Answer 3', index : 2, text : '', sel : false } ],
-            explanation : '' };
     };
 
     /** @private */
@@ -243,7 +258,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
             explanation : jsonObject.explanation };
     };
 
-    /** @private*/
+    /** @private */
     var confirmDelete = function(test) {
         return window.confirm("Are you sure you want to delete '" + test.title
                 + "' ?");
@@ -284,7 +299,6 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate) {
         });
         $(window).hashchange();
     };
-    
 
     this.editImage = function(imageElement) {
         testModule.editImage(imageElement);

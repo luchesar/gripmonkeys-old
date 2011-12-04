@@ -1,5 +1,11 @@
 function TestModule() {
     /** @private constant */
+    var ANSWER1 = 'Answer 1';
+    /** @private constant */
+    var ANSWER2 = 'Answer 2';
+    /** @private constant */
+    var ANSWER3 = 'Answer 3';
+    /** @private constant */
     var controls = { controls : { separator00 : { visible : false },
         separator01 : { visible : false }, separator02 : { visible : false },
         separator03 : { visible : false }, undo : { visible : false },
@@ -32,6 +38,7 @@ function TestModule() {
         imageElement = $('#testImage');
         doneButton = $('#doneButton');
         cancelButton = $('#modalCancelButton');
+        imageKey = model.activeTest.image;
 
         imageElement.click(function() {
             editImage();
@@ -54,6 +61,19 @@ function TestModule() {
     this.isValid = function() {
         return true;
     };
+    
+    /** @private */
+    this.createEmptyTest = function() {
+        return {
+            title : '',
+            image : null,
+            description : '',
+            possibleAnswers : [
+                    { title : ANSWER1, index : 0, text : '', sel : true },
+                    { title : ANSWER2, index : 1, text : '', sel : false },
+                    { title : ANSWER3, index : 2, text : '', sel : false } ],
+            explanation : '' };
+    };
 
     /** @public */
     this.getTest = function() {
@@ -67,16 +87,17 @@ function TestModule() {
             image : imageKey,
             description : $("textarea[name=testDescription]").val(),
             possibleAnswers : [
-                    { title : 'Answer 1', index : 0,
+                    { title : ANSWER1, index : 0,
                         text : $("textarea[name=answer0]").val(), sel : false },
-                    { title : 'Answer 2', index : 1,
+                    { title : ANSWER2, index : 1,
                         text : $("textarea[name=answer1]").val(), sel : false },
-                    { title : 'Answer 3', index : 2,
+                    { title : ANSWER3, index : 2,
                         text : $("textarea[name=answer2]").val(), sel : false } ],
             explanation : $("textarea[name=testExplanation]").val() };
 
         var selectionOption = $("#correctAnswerIndex :selected");
         var selectedIndex = selectionOption.attr('value');
+        selectedIndex = selectedIndex ? selectedIndex : 0;
         testTemplate.possibleAnswers[selectedIndex].sel = true;
         return testTemplate;
     };
@@ -87,9 +108,9 @@ function TestModule() {
      *            HtmlElement
      */
     var createEmptyHtmlEditor = function(textArea) {
-        textArea.wysiwyg(controls);
-        textArea.wysiwyg('setContent', '');
-        textArea.wysiwyg({ iFrameClass : "testDescription-input" });
+//        textArea.wysiwyg(controls);
+//        textArea.wysiwyg('setContent', '');
+//        textArea.wysiwyg({ iFrameClass : "testDescription-input" });
     };
 
     var editImage = function() {
