@@ -1,11 +1,5 @@
 function TestModule() {
     /** @private constant */
-    var ANSWER1 = 'Answer 1';
-    /** @private constant */
-    var ANSWER2 = 'Answer 2';
-    /** @private constant */
-    var ANSWER3 = 'Answer 3';
-    /** @private constant */
     var controls = { controls : { separator00 : { visible : false },
         separator01 : { visible : false }, separator02 : { visible : false },
         separator03 : { visible : false }, undo : { visible : false },
@@ -69,9 +63,9 @@ function TestModule() {
             image : null,
             description : '',
             possibleAnswers : [
-                    { title : ANSWER1, index : 0, text : '', sel : true },
-                    { title : ANSWER2, index : 1, text : '', sel : false },
-                    { title : ANSWER3, index : 2, text : '', sel : false } ],
+                    { title : this.getTestLetter(0), index : 0, text : '', sel : true },
+                    { title : this.getTestLetter(1), index : 1, text : '', sel : false },
+                    { title : this.getTestLetter(2), index : 2, text : '', sel : false } ],
             explanation : '' };
     };
 
@@ -87,11 +81,11 @@ function TestModule() {
             image : imageKey,
             description : $("textarea[name=testDescription]").val(),
             possibleAnswers : [
-                    { title : ANSWER1, index : 0,
+                    { title : this.getTestLetter(0), index : 0,
                         text : $("textarea[name=answer0]").val(), sel : false },
-                    { title : ANSWER2, index : 1,
+                    { title : this.getTestLetter(1), index : 1,
                         text : $("textarea[name=answer1]").val(), sel : false },
-                    { title : ANSWER3, index : 2,
+                    { title : this.getTestLetter(2), index : 2,
                         text : $("textarea[name=answer2]").val(), sel : false } ],
             explanation : $("textarea[name=testExplanation]").val() };
 
@@ -100,6 +94,12 @@ function TestModule() {
         selectedIndex = selectedIndex ? selectedIndex : 0;
         testTemplate.possibleAnswers[selectedIndex].sel = true;
         return testTemplate;
+    };
+    
+    var indexes = {'0': 'A)', '1': 'B)', '2':'C)'};
+    /** public */
+    this.getTestLetter = function(index) {
+        return indexes[index];
     };
 
     /**

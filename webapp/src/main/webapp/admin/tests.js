@@ -22,6 +22,12 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var testModule = new TestModule();
     /** @private */
     var allTestsModule = new AllTestsModule();
+    
+    /** @private*/
+    var testPreviewModule = new TestPreviewModule();
+    
+    this.testPreview = testPreviewModule;
+    
 
     /** public */
     this.updateCurrentEditedTest = function() {
@@ -89,7 +95,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var previewTest = function(test) {
         testsContainer.empty();
         model.activeTest = test;
-        previewTestTemplate.mustache(model).appendTo(testsContainer);
+        testPreviewModule.show(model, previewTestTemplate, testsContainer);
         updateButtons($('#buttonsPreviewTestTemplate'));
     };
 
@@ -247,8 +253,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var decode = function(jsonObject) {
         var possibleAnswers = [];
         for ( var i = 0; i < jsonObject.possibleAnswers.length; i++) {
-            var visualIndex = i + 1;
-            possibleAnswers[i] = { title : "Answer " + visualIndex, index : i,
+            possibleAnswers[i] = { title : testModule.getTestLetter(i), index : i,
                 text : jsonObject.possibleAnswers[i],
                 sel : i == jsonObject.correctAnswerIndex ? true : false };
         }
@@ -302,5 +307,9 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
 
     this.editImage = function(imageElement) {
         testModule.editImage(imageElement);
+    };
+    
+    this.answer = function(answerIndex) {
+        testPreviewModule.answer(model.activeTest, answerIndex);
     };
 }

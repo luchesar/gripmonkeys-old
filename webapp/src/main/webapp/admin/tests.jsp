@@ -7,8 +7,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css" href="/css/jquery.wysiwyg.css" />
-<link rel="stylesheet" type="text/css" href="/css/fileuploader.css" />
-
 <%@include file="../modules/cssAndJs.html"%>
 <script type="text/javascript" src="/scripts/jquery.wysiwyg.js"></script>
 <style type="text/css">
@@ -80,12 +78,10 @@ body {
 <script src="/scripts/jquery.getQueryString.js"></script>
 
 <script type="text/javascript">
-    
 <%@include file="/modules/test.js"%>
-    
 <%@include file="/modules/allTests.js"%>
-    
 <%@include file="tests.js"%>
+<%@include file="/modules/testPreview.js"%>
     var testPage;
     $(function() {//window.testPage.updateCurrentEditedTest()
         testPage = new TestsPage($('#container'), $('#activeTestTemplate'),

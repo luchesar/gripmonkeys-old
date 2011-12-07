@@ -50,7 +50,7 @@
               </div>
             </div>
             <div class="clearfix">
-              <label for="testDescription">Test description:</label>
+              <label for="testDescription">Question:</label>
               <div class="input">
                 <textarea style="width: 410px;" id="testDescription" name="testDescription" rows="5">{{description}}</textarea>
                 <span class="help-block"> The introduction to the test and questions </span>
@@ -58,7 +58,7 @@
             </div>
             {{#possibleAnswers}}
             <div class="clearfix">
-              <label for="answer1">{{title}}</label>
+              <label for="answer1">Answer {{title}}</label>
               <div class="input">
                 <textarea style="width: 410px;" id="answer{{index}}" name="answer{{index}}" rows="2">{{text}}</textarea>
                 <span class="help-block"> The first possible answer of the test </span>
