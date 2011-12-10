@@ -109,6 +109,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             type : "GET",
             url : '/test-storage?*',
             data : {},
+            contentType: "application/json; charset=utf-8",
             dataType : 'json',
             success : function(data, textStatus, jqXHR) {
                 model.allTests = [];

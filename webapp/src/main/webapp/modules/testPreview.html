@@ -22,11 +22,11 @@
                 <td><div class="media-grid answer-radius">
                     <a class="btn small" id="answerLink{{index}}" onclick="testPage.answer({{index}})">{{title}}</a>
                   </div></td>
-                <td><div id="answerText{{index}}" class="testTextElement" >{{{text}}}</div></td>
+                <td><div id="answerText{{index}}" class="span8 testTextElement" >{{{text}}}</div></td>
               </tr>
               {{/activeTest.possibleAnswers}}
             </table>
-            <div class="testTextElement">{{{activeTest.explanation}}}</div>
+            <div class="span9 testTextElement">{{{activeTest.explanation}}}</div>
           </div>
         </div>
       </div>

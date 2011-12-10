@@ -29,6 +29,7 @@ public class TestStorageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
+        setResponseEnconding(aResp);
         String all = aReq.getParameter("*");
         if (all != null) {
             gson.toJson(storage.getAll(), aResp.getWriter());
@@ -48,6 +49,7 @@ public class TestStorageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
+        setResponseEnconding(aResp);
         String testJson = aReq.getParameter(JSON_KEY);
         final Test test = gson.fromJson(testJson, Test.class);
         if (test == null) {
@@ -65,6 +67,7 @@ public class TestStorageServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest aReq, HttpServletResponse aResp)
             throws ServletException, IOException {
+        setResponseEnconding(aResp);
         final String keyString = aReq.getParameter(ID);
         storage.delete(Long.parseLong(keyString));
         aResp.getWriter().write(gson.toJson(true));
@@ -72,5 +75,10 @@ public class TestStorageServlet extends HttpServlet {
 
     public TestStorage getStorage() {
         return storage;
+    }
+    
+    private void setResponseEnconding(HttpServletResponse aResp) {
+        aResp.setContentType("application/json; charset=utf-8");
+        aResp.setCharacterEncoding("UTF-8");
     }
 }

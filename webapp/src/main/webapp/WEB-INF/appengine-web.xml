@@ -10,11 +10,8 @@
 	</system-properties>
 
 	<static-files>
-		<include path="/VAADIN/**" />
         <include path="/**" />
 	</static-files>
 	<sessions-enabled>true</sessions-enabled>
 	<precompilation-enabled>true</precompilation-enabled>
-
-
 </appengine-web-app>
