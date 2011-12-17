@@ -83,10 +83,12 @@ body {
 <%@include file="tests.js"%>
 <%@include file="/modules/testPreview.js"%>
     var testPage;
+    var _page;
     $(function() {//window.testPage.updateCurrentEditedTest()
         testPage = new TestsPage($('#container'), $('#activeTestTemplate'),
                 $('#allTestsTemplate'), $('#testPreviewTemplate'));
         testPage.start();
+        _page = testPage;
     });
 </script>
 

@@ -1,6 +1,6 @@
 <div class="clear-fix info">
   <div class="container">
-    <div class="container mini-layout">
+    <div class="container mini-layout well">
       <div class="row">
         <div class="span6">
           <div class="media-grid">
@@ -11,29 +11,68 @@
         </div>
         <div class="span10">
           <div class="page-header">
-            <h2>{{activeTest.title}}</h2>
+            <div class="container">
+              <div class="row">
+                <div class="span1">
+                  <h1>{{activeTest.title}}</h1>
+                </div>
+                <div class="span9">
+                  <p>
+                    <b>{{{activeTest.description}}}</b>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class=testTextElement>{{{activeTest.description}}}</div>
 
           <div class="container">
             <table>
               {{#activeTest.possibleAnswers}}
               <tr>
                 <td><div class="media-grid answer-radius">
-                    <a class="btn small" id="answerLink{{index}}" onclick="testPage.answer({{index}})">{{title}}</a>
+                    <a class="btn small" id="answerLink{{index}}" onclick="_page.answer({{index}})">{{title}}&nbsp;</a>
                   </div></td>
-                <td><div id="answerText{{index}}" class="span8 testTextElement" >{{{text}}}</div></td>
+                <td><div id="answerText{{index}}" class="span8 testTextElement">{{{text}}}</div></td>
               </tr>
               {{/activeTest.possibleAnswers}}
+              <tr>
+                <td colspan="2">
+                    <div id="doTestHintContainer">
+                    <h4>
+                      <small>Responde A, B o C y lee la explicacion</small>
+                    </h4>
+                  </div>
+                </td>
+              </tr>
             </table>
-            <div class="span9 testTextElement">{{{activeTest.explanation}}}</div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="span16"></div>
+        <div>
+          <div id="explanationContainer" class="container hide">
+            <div class="mini-layout">
+              <div id="wrongAnswerContainer" class="hide">
+                <div class="span3">
+                  <div class="alert-message error" style="text-align: center">
+                    <strong>INCORRECTO</strong>
+                    <p>Por que?</p>
+                  </div>
+                </div>
+              </div>
+              <div id="correctAnswerContainer" class="hide">
+                <div class="span3">
+                  <div class="alert-message success" style="text-align: center">
+                    <strong>CORRECTO</strong>
+                    <p>Por que?</p>
+                  </div>
+                </div>
+              </div>
+              <div class="testTextElement">{{{activeTest.explanation}}}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

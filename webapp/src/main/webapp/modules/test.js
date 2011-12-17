@@ -63,9 +63,9 @@ function TestModule() {
             image : null,
             description : '',
             possibleAnswers : [
-                    { title : this.getTestLetter(0), index : 0, text : '', sel : true },
-                    { title : this.getTestLetter(1), index : 1, text : '', sel : false },
-                    { title : this.getTestLetter(2), index : 2, text : '', sel : false } ],
+                    { title : getTestLetter(0), index : 0, text : '', sel : true },
+                    { title : getTestLetter(1), index : 1, text : '', sel : false },
+                    { title : getTestLetter(2), index : 2, text : '', sel : false } ],
             explanation : '' };
     };
 
@@ -81,11 +81,11 @@ function TestModule() {
             image : imageKey,
             description : $("textarea[name=testDescription]").val(),
             possibleAnswers : [
-                    { title : this.getTestLetter(0), index : 0,
+                    { title : getTestLetter(0), index : 0,
                         text : $("textarea[name=answer0]").val(), sel : false },
-                    { title : this.getTestLetter(1), index : 1,
+                    { title : getTestLetter(1), index : 1,
                         text : $("textarea[name=answer1]").val(), sel : false },
-                    { title : this.getTestLetter(2), index : 2,
+                    { title : getTestLetter(2), index : 2,
                         text : $("textarea[name=answer2]").val(), sel : false } ],
             explanation : $("textarea[name=testExplanation]").val() };
 
@@ -96,12 +96,6 @@ function TestModule() {
         return testTemplate;
     };
     
-    var indexes = {'0': 'A)', '1': 'B)', '2':'C)'};
-    /** public */
-    this.getTestLetter = function(index) {
-        return indexes[index];
-    };
-
     /**
      * @private
      * @param textArea :

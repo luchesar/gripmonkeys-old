@@ -11,16 +11,21 @@ function TestPreviewModule(model, template, container) {
         if (done) {
             return;
         }
+        $('#doTestHintContainer').addClass('hide');
         for (var i = 0; i < activeTest.possibleAnswers.length; i++) {
             if (activeTest.possibleAnswers[i].sel === true) {
                 if (answerIndex === i) {
+                    $('#correctAnswerContainer').removeClass('hide');
                     $('#answerLink' + answerIndex).addClass('success');
                 } else {
+                    $('#wrongAnswerContainer').removeClass('hide');
                     $('#answerLink' + answerIndex).addClass('danger');
                 }
-                $('#answerText' + i).addClass('alert-message block-message success');
+                $('#answerLink' + i).addClass('success');
             } 
         }
+        
+        $('#explanationContainer').addClass('span16');
         done = true;
     };
 }

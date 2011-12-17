@@ -55,6 +55,7 @@ public class TestStorageServlet extends HttpServlet {
         if (test == null) {
             aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             IOUtils.write("passed test JSON is not valid:" + testJson, aResp.getOutputStream());
+            return;
         }
         try {
             Set<Test> put = storage.put(test);

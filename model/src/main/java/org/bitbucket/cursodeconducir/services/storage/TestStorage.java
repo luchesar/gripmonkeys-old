@@ -43,7 +43,7 @@ public class TestStorage {
         Query<Test> query = objectify.query(Test.class);
         return query.list();
     }
-
+    
     public List<Test> getAll(int offset, int limit) {
         Objectify objectify = Util.factory().begin();
         Query<Test> query = objectify.query(Test.class).offset(offset).limit(limit);

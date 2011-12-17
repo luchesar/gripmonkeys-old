@@ -234,37 +234,6 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     };
 
     /** @private */
-    var code = function(template) {
-        var possibleAnswers = [];
-        var correctAnswerIndex = 0;
-        for ( var i = 0; i < template.possibleAnswers.length; i++) {
-            possibleAnswers[i] = template.possibleAnswers[i].text;
-            if (template.possibleAnswers[i].sel) {
-                correctAnswerIndex = i;
-            }
-        }
-        return { id : template.id, title : template.title,
-            image : template.image, description : template.description,
-            possibleAnswers : possibleAnswers,
-            correctAnswerIndex : correctAnswerIndex,
-            explanation : template.explanation };
-    };
-
-    /** @private */
-    var decode = function(jsonObject) {
-        var possibleAnswers = [];
-        for ( var i = 0; i < jsonObject.possibleAnswers.length; i++) {
-            possibleAnswers[i] = { title : testModule.getTestLetter(i), index : i,
-                text : jsonObject.possibleAnswers[i],
-                sel : i == jsonObject.correctAnswerIndex ? true : false };
-        }
-        return { id : jsonObject.id, title : jsonObject.title,
-            image : jsonObject.image, description : jsonObject.description,
-            possibleAnswers : possibleAnswers,
-            explanation : jsonObject.explanation };
-    };
-
-    /** @private */
     var confirmDelete = function(test) {
         return window.confirm("Are you sure you want to delete '" + test.title
                 + "' ?");

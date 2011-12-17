@@ -17,12 +17,16 @@
 }
 
 .answer-radius a {
-	-webkit-border-radius: 17px;
-	-moz-border-radius: 17px;
-	border-radius: 17px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
 }
 
 .testTextElement {
 	margin: 0 0 18px;
 	padding: 7px 14px;
+}
+
+.grayed {
+	background-color: e7e7e7;
 }
