@@ -22,12 +22,11 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var testModule = new TestModule();
     /** @private */
     var allTestsModule = new AllTestsModule();
-    
-    /** @private*/
+
+    /** @private */
     var testPreviewModule = new TestPreviewModule();
-    
+
     this.testPreview = testPreviewModule;
-    
 
     /** public */
     this.updateCurrentEditedTest = function() {
@@ -37,7 +36,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
         var templateTest = testModule.getTest();
         postToServer(templateTest);
     };
-    
+
     /** public */
     this.updateCurrentPreviewedTest = function() {
         postToServer(model.activeTest);
@@ -55,7 +54,8 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             if (initAllTests(function() {
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
                 updateButtons($('#buttonsInitialTemplate'));
-            }));
+            }))
+                ;
         } else if (hash == CREATE) {
             testsContainer.empty();
             model.activeTest = testModule.createEmptyTest();
@@ -64,11 +64,25 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
         } else if (hash.indexOf(UPDATE) == 0) {
             testsContainer.empty();
             var testId = $.getQueryString(TEST_KEY);
-            findOrFetchTest(testId, function(test) {
-                model.activeTest = test;
+            if (model && model.activeTest && model.activeTest.id == testId) {
                 testModule.show(model, activeTestTemplate, testsContainer);
                 updateButtons($('#buttonsEditTestTemplate'));
-            });
+            } else {
+                findOrFetchTest(testId, function(test) {
+                    model.activeTest = test;
+                    testModule.show(model, activeTestTemplate, testsContainer);
+                    updateButtons($('#buttonsEditTestTemplate'));
+                });
+            }
+        } else if (hash.indexOf(PREVIEW) == 0) {
+            var testId = $.getQueryString(TEST_KEY);
+            if (model && model.activeTest && model.activeTest.id == testId) {
+                previewTest(testModule.getTest());
+            } else {
+                findOrFetchTest(testId, function(test) {
+                    previewTest(test);
+                });
+            } 
         } else if (hash.indexOf(DELETE) == 0) {
             var testId = $.getQueryString(TEST_KEY);
             findOrFetchTest(testId, function(test) {
@@ -76,22 +90,9 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                     doDelete(test.id);
                 }
             });
-        } else if (hash.indexOf(PREVIEW) == 0) {
-            var testId = $.getQueryString(TEST_KEY);
-            if (testId) {
-                findOrFetchTest(testId, function(test) {
-                    previewTest(test);
-                });
-            } else {
-                previewTest(testModule.getTest());
-            }
-        } else if (hash == EDIT) {
-            testsContainer.empty();
-            testModule.show(model, activeTestTemplate, testsContainer);
-            updateButtons($('#buttonsEditTestTemplate'));
-        }
+        } 
     };
-    
+
     var previewTest = function(test) {
         testsContainer.empty();
         model.activeTest = test;
@@ -109,7 +110,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             type : "GET",
             url : '/test-storage?*',
             data : {},
-            contentType: "application/json; charset=utf-8",
+            contentType : "application/json; charset=utf-8",
             dataType : 'json',
             success : function(data, textStatus, jqXHR) {
                 model.allTests = [];
@@ -128,8 +129,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
         hideFeedback();
         test = code(templateTest);
         jsonData = { json : JSON.stringify(test) };
-        $
-                .ajax({
+        $.ajax({
                     type : "POST",
                     url : '/test-storage',
                     data : jsonData,
@@ -278,7 +278,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     this.editImage = function(imageElement) {
         testModule.editImage(imageElement);
     };
-    
+
     this.answer = function(answerIndex) {
         testPreviewModule.answer(model.activeTest, answerIndex);
     };

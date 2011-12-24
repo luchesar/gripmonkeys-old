@@ -63,12 +63,12 @@ body {
     <a id="createButton" class="btn large danger" href="#create">Create</a>
 </script>
 <script id="buttonsEditTestTemplate" type="x-tmpl-mustache">
-    <a id="testCancel" href="#preview" class="btn large">Preview</a>
+    <a id="testCancel" href="#preview?test={{activeTest.id}}" class="btn large">Preview</a>
     <a id="testSubmit" class="btn large primary" onClick="testPage.updateCurrentEditedTest()">Save changes</a> 
     <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
 </script>
 <script id="buttonsPreviewTestTemplate" type="x-tmpl-mustache">
-    <a id="testCancel" href="#edit" class="btn large">Edit</a>
+    <a id="testCancel" href="#update?test={{activeTest.id}}" class="btn large">Edit</a>
     <a id="testSubmit" class="btn large primary" onClick="testPage.updateCurrentPreviewedTest()">Save changes</a> 
     <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
 </script>

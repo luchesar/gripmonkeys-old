@@ -26,6 +26,9 @@ function TestModule() {
     this.show = function(model, template, container) {
         template.mustache(model).appendTo(container);
         currentTest = model.activeTest;
+        if (currentTest == undefined) {
+            return;
+        }
         createEmptyHtmlEditor($('#testDescription'));
 
         modalContainer = $('#upload-image-modal');

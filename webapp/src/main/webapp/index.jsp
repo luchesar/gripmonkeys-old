@@ -46,7 +46,7 @@ body {
   <%@include file="modules/menu.html"%>
 
   <div class="container">
-    <div class="row">
+    <div id="headerHintContainer" class="row">
       <div class="span16">
         <h2>
           Aprueba el test del carnet dec coche a la primera
@@ -61,25 +61,37 @@ body {
     <div class="row">
       <div id="testContainer"></div>
     </div>
-
-    <div class="row">
+    <div id="nextTestLinkContainer" class="row hide">
+      <div class="span16">
+        <div class="pagination pull-right">
+          <ul>
+            <!-- <li class="prev disabled"><a href="#">&larr; Previous</a></li> -->
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li class="next"><a href="#">La siguiente prueba &rarr;</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="addThisContainer" class="row">
       <div class="span4">
         <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
           <a class="addthis_button_preferred_1"></a> <a class="addthis_button_preferred_2"></a> <a
-            class="addthis_button_preferred_3"></a> <a
-            class="addthis_button_google_plusone_badge"></a>
+            class="addthis_button_preferred_3"></a> <a class="addthis_button_google_plusone_badge"></a>
         </div>
       </div>
       <div class="span8">&nbsp;</div>
       <div class="span4">
         <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
-          <a class="addthis_button_facebook_like"></a> <a class="addthis_button_tweet"></a> 
+          <a class="addthis_button_facebook_like"></a> <a class="addthis_button_tweet"></a>
         </div>
       </div>
       <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31"></script>
     </div>
-
-    <div class="row">
+    <div id="threeTutorialsContainer" class="row">
       <div class="span16 page-header page-header-ext" align="center">
         <h3>Los 3 tutoriales 100% gratuitos</h3>
       </div>
