@@ -64,33 +64,35 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
         } else if (hash.indexOf(UPDATE) == 0) {
             testsContainer.empty();
             var testId = $.getQueryString(TEST_KEY);
-            if (model && model.activeTest && model.activeTest.id == testId) {
+            if ((model && model.activeTest && model.activeTest.id == testId)
+                    || testId == undefined || testId == "") {
                 testModule.show(model, activeTestTemplate, testsContainer);
                 updateButtons($('#buttonsEditTestTemplate'));
             } else {
-                findOrFetchTest(testId, function(test) {
+                findOrFetchTest(model, testId, function(test) {
                     model.activeTest = test;
                     testModule.show(model, activeTestTemplate, testsContainer);
                     updateButtons($('#buttonsEditTestTemplate'));
-                });
+                }, hideFeedback, showFeedback);
             }
         } else if (hash.indexOf(PREVIEW) == 0) {
             var testId = $.getQueryString(TEST_KEY);
-            if (model && model.activeTest && model.activeTest.id == testId) {
+            if ((model && model.activeTest && model.activeTest.id == testId)
+                    || testId == undefined || testId == "") {
                 previewTest(testModule.getTest());
             } else {
-                findOrFetchTest(testId, function(test) {
+                findOrFetchTest(model, testId, function(test) {
                     previewTest(test);
-                });
-            } 
+                }, hideFeedback, showFeedback);
+            }
         } else if (hash.indexOf(DELETE) == 0) {
             var testId = $.getQueryString(TEST_KEY);
-            findOrFetchTest(testId, function(test) {
+            findOrFetchTest(model, testId, function(test) {
                 if (confirmDelete(test)) {
                     doDelete(test.id);
                 }
-            });
-        } 
+            }, hideFeedback, showFeedback);
+        }
     };
 
     var previewTest = function(test) {
@@ -129,13 +131,14 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
         hideFeedback();
         test = code(templateTest);
         jsonData = { json : JSON.stringify(test) };
-        $.ajax({
+        $
+                .ajax({
                     type : "POST",
                     url : '/test-storage',
                     data : jsonData,
                     dataType : 'json',
                     success : function(data, textStatus, jqXHR) {
-                        var testIndex = findTestIndexById(data.id);
+                        var testIndex = findTestIndexById(model, data.id);
                         if (!model.allTests) {
                             model.allTests = [];
                         }
@@ -151,33 +154,6 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                     } });
     };
 
-    var findOrFetchTest = function(testId, callback) {
-        if (model.allTests) {
-            var testIndex = findTestIndexById(testId);
-            if (testIndex > -1) {
-                callback(model.allTests[testIndex]);
-                return;
-            }
-        }
-        hideFeedback();
-        $.ajax({
-            type : "GET",
-            url : '/test-storage?key=' + testId,
-            data : {},
-            dataType : 'json',
-            success : function(test, textStatus, jqXHR) {
-                if (test && test.length > 0) {
-                    callback(decode(test[0]));
-                } else {
-                    showFeedback('No test found with id ' + testId);
-                }
-            },
-            error : function(xhr, ajaxOptions, thrownError) {
-                showFeedback('Cannot fetch a test. Server returned error \''
-                        + xhr.status + ' ' + thrownError + '\'');
-            }, complete : callback() });
-    };
-
     var doDelete = function(testId) {
         hideFeedback();
         $.ajax({
@@ -187,7 +163,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             dataType : 'json',
             success : function(wasDeleted, textStatus, jqXHR) {
                 if (wasDeleted) {
-                    var spliceIndex = findTestIndexById(testId);
+                    var spliceIndex = findTestIndexById(model, testId);
                     model.allTests.splice(spliceIndex, 1);
                 }
             },
@@ -199,19 +175,6 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
                 updateButtons($('#buttonsInitialTemplate'));
             } });
-    };
-
-    var findTestIndexById = function(testId) {
-        if (model.allTests == undefined || model.allTests == null) {
-            return -1;
-        }
-        var allTestsLength = model.allTests.length;
-        for ( var i = 0; i < allTestsLength; i++) {
-            if (model.allTests[i].id == testId) {
-                return i;
-            }
-        }
-        return -1;
     };
 
     var removeTestById = function(testId) {

@@ -24,6 +24,19 @@ body {
 <script id="testPreviewTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/testPreview.html"%>
 </script>
+<script id="testNavigationTemplate" type="x-tmpl-mustache">
+<div class="pagination pull-right">
+    <ul>
+        {{#allTests}}
+            <li {{#active}}class="active"{{/active}}><a href="#preview?test={{id}}">{{title}}</a></li>
+        {{/allTests}}
+        
+        <li class="next {{^hasNext}}disabled{{/hasNext}}">
+             <a {{#hasNext}}href="#preview?test={{nextTestId}}"{{/hasNext}}>La siguiente prueba &rarr;</a>
+        </li>
+    </ul>
+</div>
+</script>
 <script>
     
 <%@include file="/index.js"%>
@@ -62,19 +75,7 @@ body {
       <div id="testContainer"></div>
     </div>
     <div id="nextTestLinkContainer" class="row hide">
-      <div class="span16">
-        <div class="pagination pull-right">
-          <ul>
-            <!-- <li class="prev disabled"><a href="#">&larr; Previous</a></li> -->
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li class="next"><a href="#">La siguiente prueba &rarr;</a></li>
-          </ul>
-        </div>
-      </div>
+      <div id="testNavigationContainer" class="span16"></div>
     </div>
     <div id="addThisContainer" class="row">
       <div class="span4">

@@ -75,7 +75,6 @@ body {
 <script id="feedbackTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/feedback.html"%>
 </script>
-<script src="/scripts/jquery.getQueryString.js"></script>
 
 <script type="text/javascript">
 <%@include file="/modules/test.js"%>
