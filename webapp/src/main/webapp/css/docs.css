@@ -30,3 +30,44 @@
 .grayed {
 	background-color: e7e7e7;
 }
+
+h1 hint,
+h2 hint,
+h3 hint,
+h4 hint,
+h5 hint,
+h6 hint {
+  color: #495961;
+}
+
+h1 hint {
+  font-size: 18px;
+  font-weight: normal;
+}
+h2 hint {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+h3 hint {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.highlightArea {
+    background-color: #ffffff;
+    padding: 0px 0px 10px 10px;
+    '
+}
+h4 hint {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+div.textAccent h1, 
+div.textAccent h2,
+div.textAccent h3,
+div.textAccent h4,
+div.textAccent h5 {
+	color: #124c7c;
+}

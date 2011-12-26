@@ -10,48 +10,51 @@
           </div>
         </div>
         <div class="span10">
-          <div class="page-header">
-            <div class="container">
-              <div class="row">
-                <div class="span1">
-                  <h1>{{activeTest.title}}</h1>
-                </div>
-                <div class="span9">
-                  <p>
-                    <b>{{{activeTest.description}}}</b>
-                  </p>
+          <div class="mini-layout highlightArea">
+            <div class="page-header">
+              <div class="container">
+                <div class="row">
+                  <div class="span1 textAccent">
+                    <h1>{{activeTest.title}}</h1>
+                  </div>
+                  <div class="span9">
+                    <p>
+                      <b>{{{activeTest.description}}}</b>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="container">
-            <table>
-              {{#activeTest.possibleAnswers}}
-              <tr>
-                <td><div class="media-grid answer-radius">
-                    <a class="btn small" id="answerLink{{index}}" onclick="_page.answer({{index}})">{{title}}&nbsp;</a>
-                  </div></td>
-                <td><div id="answerText{{index}}" class="span8 testTextElement">{{{text}}}</div></td>
-              </tr>
-              {{/activeTest.possibleAnswers}}
-              <tr>
-                <td colspan="2">
+
+            <div class="container">
+              <table>
+                {{#activeTest.possibleAnswers}}
+                <tr>
+                  <td><div class="media-grid answer-radius">
+                      <a class="btn small" id="answerLink{{index}}" onclick="_page.answer({{index}})">{{title}}&nbsp;</a>
+                    </div></td>
+                  <td><div id="answerText{{index}}" class="span8 testTextElement">{{{text}}}</div></td>
+                </tr>
+                {{/activeTest.possibleAnswers}}
+                <tr>
+                  <td colspan="2">
                     <div id="doTestHintContainer">
-                    <h4>
-                      <small>Responde A, B o C y lee la explicacion</small>
-                    </h4>
-                  </div>
-                </td>
-              </tr>
-            </table>
+                      <h4>
+                        <hint>Responde A, B o C y lee la explicacion</hint>
+                      </h4>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div>
           <div id="explanationContainer" class="container hide">
-            <div class="mini-layout">
+            <div class="mini-layout highlightArea">
               <div id="wrongAnswerContainer" class="hide">
                 <div class="span3">
                   <div class="alert-message error" style="text-align: center">

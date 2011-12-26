@@ -64,8 +64,8 @@ body {
         <h2>
           Aprueba el test del carnet dec coche a la primera
           <p>
-            <small>Test y cursos para preparar el test de la dgt de forma facil, amena, eficiente, divertid.
-              Éxito garantizado!!</small>
+            <hint>Test y cursos para preparar el test de la dgt de forma facil, amena, eficiente, divertid.
+              Éxito garantizado!!</hint>
           </p>
         </h2>
       </div>
