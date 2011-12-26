@@ -41,7 +41,7 @@ public class ImageServlet extends HttpServlet {
     private static final BlobstoreService blobstoreService = BlobstoreServiceFactory
             .getBlobstoreService();
     private static final float IMAGE_WIDTH = 320f;
-    private static final float IMAGE_HEIGHT = 220f;
+    private static final float IMAGE_HEIGHT = 420f;
 
     @Override
     protected void doGet(HttpServletRequest aReq, HttpServletResponse aResp)

@@ -14,6 +14,9 @@ var code = function(template) {
 };
 
 var decode = function(jsonObject) {
+    if (jsonObject.decode) {
+        return jsonObject;
+    }
     var possibleAnswers = [];
     for ( var i = 0; i < jsonObject.possibleAnswers.length; i++) {
         possibleAnswers[i] = { title : getTestLetter(i), index : i,
@@ -22,7 +25,10 @@ var decode = function(jsonObject) {
     }
     return { id : jsonObject.id, title : jsonObject.title,
         image : jsonObject.image, description : jsonObject.description,
-        possibleAnswers : possibleAnswers, explanation : jsonObject.explanation };
+        possibleAnswers : possibleAnswers,
+        explanation : jsonObject.explanation,
+        correctAnswerIndex : jsonObject.correctAnswerIndex,
+        decode: true};
 };
 
 var indexes = { '0' : 'A', '1' : 'B', '2' : 'C' };
@@ -34,9 +40,9 @@ var getTestLetter = function(index) {
 var findOrFetchTest = function(model, testId, callback, hideFeedback,
         showFeedback) {
     if (model.allTests) {
-        var testIndex = findTestIndexById(testId);
+        var testIndex = findTestIndexById(model, testId);
         if (testIndex > -1) {
-            callback(model.allTests[testIndex]);
+            callback(decode(model.allTests[testIndex]));
             return;
         }
     }

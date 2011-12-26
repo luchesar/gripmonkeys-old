@@ -59,7 +59,11 @@ function IndexPage(test) {
                 }
                 showNavigation();
             });
-        } 
+        } else if (hash.indexOf(ANSWER) > -1) {
+            hideExtras();
+            testPreviewModule.answer(model.activeTest, model.correctAnswerIndex);
+            showNavigation();
+        }
     };
 
     var hideExtras = function() {
@@ -103,6 +107,10 @@ function IndexPage(test) {
 
     this.answer = function(answerIndex) {
         model.answerIndex = answerIndex;
-        window.location.hash = window.location.hash + "&" + ANSWER;
+        if (window.location.hash.indexOf(PREVIEW) > -1) {
+            window.location.hash = window.location.hash + "&" + ANSWER;
+        } else {
+            window.location.hash = "#" + ANSWER;
+        }
     };
 }

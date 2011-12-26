@@ -32,7 +32,7 @@ body {
         {{/allTests}}
         
         <li class="next {{^hasNext}}disabled{{/hasNext}}">
-             <a {{#hasNext}}href="#preview?test={{nextTestId}}"{{/hasNext}}>La siguiente prueba &rarr;</a>
+             <a {{#hasNext}}href="#preview?test={{nextTestId}}"{{/hasNext}}>Siguiente &rarr;</a>
         </li>
     </ul>
 </div>
