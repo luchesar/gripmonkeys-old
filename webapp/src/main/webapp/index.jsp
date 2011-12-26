@@ -28,11 +28,11 @@ body {
 <div class="pagination pull-right">
     <ul>
         {{#allTests}}
-            <li {{#active}}class="active"{{/active}}><a href="#preview?test={{id}}">{{title}}</a></li>
+            <li {{#active}}class="active"{{/active}}><a href="#preview?test={{id}}&hide">{{title}}</a></li>
         {{/allTests}}
         
         <li class="next {{^hasNext}}disabled{{/hasNext}}">
-             <a {{#hasNext}}href="#preview?test={{nextTestId}}"{{/hasNext}}>Siguiente &rarr;</a>
+             <a {{#hasNext}}href="#preview?test={{nextTestId}}&hide"{{/hasNext}}>Siguiente &rarr;</a>
         </li>
     </ul>
 </div>

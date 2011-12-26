@@ -7,8 +7,10 @@ function IndexPage(test) {
     var PREVIEW = "#preview";
     /** @private */
     var TEST_NAVIGATION_LENGTH = 20;
-
+    /** @private */
     var TEST_KEY = "test";
+    /** @private */
+    var HIDE = "hide";
 
     /** @private */
     var testPreviewModule = new TestPreviewModule();
@@ -60,7 +62,11 @@ function IndexPage(test) {
                 showNavigation();
             });
         } else if (hash.indexOf(ANSWER) > -1) {
-            hideExtras();
+            var hide = $.getQueryString(HIDE);
+            if (hide != undefined) {
+                hideExtras();
+            } 
+            $('#nextTestLinkContainer').removeClass('hide');
             testPreviewModule.answer(model.activeTest, model.correctAnswerIndex);
             showNavigation();
         }
