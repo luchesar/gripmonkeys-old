@@ -67,7 +67,7 @@ function IndexPage(test) {
                 hideExtras();
             } 
             $('#nextTestLinkContainer').removeClass('hide');
-            testPreviewModule.answer(model.activeTest, model.correctAnswerIndex);
+            testPreviewModule.answer(model.activeTest, model.answerIndex);
             showNavigation();
         }
     };

@@ -52,7 +52,6 @@ body {
         _page = indexPage;
     });
 </script>
-
 </head>
 
 <body>
@@ -62,10 +61,9 @@ body {
     <div id="headerHintContainer" class="row">
       <div class="span16">
         <h2>
-          Aprueba el test del carnet dec coche a la primera
+          Aprueba el examen teórico del permiso B de la dgt a la primera
           <p>
-            <hint>Test y cursos para preparar el test de la dgt de forma facil, amena, eficiente, divertid.
-              Éxito garantizado!!</hint>
+            <hint>50 años formando buenos conductores que aprueban a la primera. Éxito garantizado!</hint>
           </p>
         </h2>
       </div>
@@ -96,8 +94,8 @@ body {
       <div class="span16 page-header page-header-ext" align="center">
         <h3>Los 3 tutoriales 100% gratuitos</h3>
       </div>
-      <div class="span6">
-        <div class="span3">
+      <div class="span5">
+        <div class="span4" align="center">
           <h2>Seminario</h2>
           <div class="content">
             <div class="media-grid">
@@ -111,14 +109,13 @@ body {
         </div>
       </div>
       <div class="span6">
-        <div class="span3">
-          <h2>Trucos</h2>
-          <div class="content">
+        <div class="span5" align="center">
+          <h2>Trucos Test dgt</h2>
+          <div class="content" align="center">
             <div class="media-grid">
               <a><img src="/images/homePage1.jpg" /> </a>
             </div>
-            <p>Trucos del examen tipo test de la dgt
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p>Aprende la diferencia entre Norma y Excepción y comete menos errores en el examen teórico</p>
             <div align="right">
               <a class="btn small info">leer más >></a>
             </div>
@@ -126,14 +123,16 @@ body {
         </div>
       </div>
       <div class="inner">
-        <div class="span3">
-          <h2 class="title">Tests</h2>
+        <div class="span5" align="center">
+          <h2 class="title">Test Especiales dgt</h2>
           <div class="content">
-            <div class="media-grid">
-              <a><img src="/images/homePage2.png" /> </a>
+            <div >
+              <div class="media-grid">
+                <a><img src="/images/homePage2.png" /> </a>
+              </div>
             </div>
-            <p>Test de la dgt 2012 con
-              explicaciones&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p>Las preguntas de los test especiales han sido seleccionadas entre todas las preguntas de trafico por
+              su dificultad. Realice los test especiales y aprenda de sus errores leyendo la explicación a la respuesta.</p>
             <div align="right">
               <a class="btn small info">leer más >></a>
             </div>
@@ -142,7 +141,7 @@ body {
       </div>
     </div>
     <footer>
-    <p>&copy; Company 2011</p>
+    <p>&copy; CursoConducir 2011</p>
     </footer>
   </div>
 </body>
