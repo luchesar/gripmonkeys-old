@@ -62,11 +62,12 @@ function IndexPage(test) {
                 showNavigation();
             });
         } else if (hash.indexOf(ANSWER) > -1) {
+            $('#courceExplanationContainer').addClass('hide');
+            $('#nextTestLinkContainer').addClass('hide');
             var hide = $.getQueryString(HIDE);
             if (hide != undefined) {
                 hideExtras();
             } 
-            $('#nextTestLinkContainer').removeClass('hide');
             testPreviewModule.answer(model.activeTest, model.answerIndex);
             showGoToNextButton();
         }
