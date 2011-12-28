@@ -6,6 +6,18 @@ function TestPreviewModule(model, template, container) {
         done = false;
     };
     
+    /** public */
+    this.showGoToNextButton = function(url) {
+        $('#goToNextButtonContainer').removeClass('hide');
+        $('#goToNextButton').attr('href', url);
+    };
+    
+    /** public */
+    this.hideGoToNextButton = function() {
+        $('#goToNextButtonContainer').addClass('hide');
+        $('#goToNextButton').attr('href', undefined);
+    };
+    
     /** public*/
     this.answer = function(activeTest, answerIndex) {
         if (done) {

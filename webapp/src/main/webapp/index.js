@@ -68,7 +68,7 @@ function IndexPage(test) {
             } 
             $('#nextTestLinkContainer').removeClass('hide');
             testPreviewModule.answer(model.activeTest, model.answerIndex);
-            showNavigation();
+            showGoToNextButton();
         }
     };
 
@@ -77,6 +77,8 @@ function IndexPage(test) {
         $('#addThisContainer').addClass('hide');
         $('#threeTutorialsContainer').addClass('hide');
         $('#nextTestLinkContainer').removeClass('hide');
+        $('#courceExplanationContainer').removeClass('hide');
+        testPreviewModule.hideGoToNextButton();
     };
 
     var showNavigation = function() {
@@ -85,6 +87,12 @@ function IndexPage(test) {
         var templateSubstitute = $('#testNavigationTemplate').mustache(
                 convertedModel);
         templateSubstitute.appendTo($('#testNavigationContainer'));
+    };
+    
+    var showGoToNextButton = function() {
+        var convertedModel = convertModel();
+        var goToNextUrl = "#preview?test=" + convertedModel.nextTestId + "&hide";
+        testPreviewModule.showGoToNextButton(goToNextUrl);
     };
 
     var convertModel = function() {
