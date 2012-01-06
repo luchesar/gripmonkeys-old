@@ -39,6 +39,7 @@ public class TestStorageTest {
     public void testStore() throws Exception {
         Test test1 = new Test("title", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        test1.setPublished(false);
         Test storedTest = putAndGet(test1);
 
         assertNotSame(test1, storedTest);
@@ -178,20 +179,56 @@ public class TestStorageTest {
 
     @org.junit.Test
     public void testGetAllOffsetLimit() throws Exception {
-        Test test1 = new Test("title1", "image", "description", Lists.newArrayList("question1",
+        Test test1 = new Test("A_title1", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("title2", "image", "description", Lists.newArrayList("question1",
+        Test test2 = new Test("Z_title2", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test3 = new Test("title3", "image", "description", Lists.newArrayList("question1",
+        Test test3 = new Test("a_title3", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test4 = new Test("title4", "image", "description", Lists.newArrayList("question1",
+        Test test4 = new Test("z_title4", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
-        storage.put(test1, test2, test3, test4);
+        storage.put(test4, test1, test3, test2);
         assertEquals(Lists.newArrayList(test1, test2, test3, test4), storage.getAll(0, 4));
         assertEquals(Lists.newArrayList(test2, test3, test4), storage.getAll(1, 3));
         assertEquals(Lists.newArrayList(test2, test3), storage.getAll(1, 2));
         assertEquals(Lists.newArrayList(test3), storage.getAll(2, 1));
+    }
+
+    @org.junit.Test
+    public void testGetAllSorted() throws Exception {
+        Test test1 = new Test("A_title1", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test2 = new Test("Z_title2", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test3 = new Test("a_title3", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test4 = new Test("z_title4", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+
+        storage.put(test4, test1, test3, test2);
+        assertEquals(Lists.newArrayList(test1, test2, test3, test4), storage.getAll());
+    }
+
+    @org.junit.Test
+    public void testGetAllPublished() throws Exception {
+        Test test1 = new Test("A_title1", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test2 = new Test("Z_title2", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test3 = new Test("a_title3", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test4 = new Test("z_title4", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        
+        test1.setPublished(true);
+        test2.setPublished(true);
+        test3.setPublished(false);
+        test4.setPublished(false);
+        
+        storage.put(test4, test1, test3, test2);
+        assertEquals(Lists.newArrayList(test1, test2), storage.getAll(true));
+        assertEquals(Lists.newArrayList(test3, test4), storage.getAll(false));
     }
 
     @org.junit.Test

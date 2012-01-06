@@ -10,7 +10,7 @@ var code = function(template) {
     return { id : template.id, title : template.title, image : template.image,
         description : template.description, possibleAnswers : possibleAnswers,
         correctAnswerIndex : correctAnswerIndex,
-        explanation : template.explanation };
+        explanation : template.explanation, published : template.published };
 };
 
 var decode = function(jsonObject) {
@@ -28,7 +28,7 @@ var decode = function(jsonObject) {
         possibleAnswers : possibleAnswers,
         explanation : jsonObject.explanation,
         correctAnswerIndex : jsonObject.correctAnswerIndex,
-        decode: true};
+        published : jsonObject.published, decode : true };
 };
 
 var indexes = { '0' : 'A', '1' : 'B', '2' : 'C' };

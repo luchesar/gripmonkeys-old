@@ -23,7 +23,7 @@ public class TestStorage {
 
     public Set<Test> put(final Test... tests) throws ServiceException {
         Objectify objectify = Util.factory().begin();
-        
+
         Map<Key<Test>, Test> putResult = objectify.put(Arrays.asList(tests));
         return Sets.newLinkedHashSet(putResult.values());
     }
@@ -40,13 +40,20 @@ public class TestStorage {
 
     public List<Test> getAll() {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class);
+        Query<Test> query = objectify.query(Test.class).order("title");
         return query.list();
     }
-    
+
+    public List<Test> getAll(boolean published) {
+        Objectify objectify = Util.factory().begin();
+        Query<Test> query = objectify.query(Test.class).filter("published", published)
+                .order("title");
+        return query.list();
+    }
+
     public List<Test> getAll(int offset, int limit) {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class).offset(offset).limit(limit);
+        Query<Test> query = objectify.query(Test.class).offset(offset).limit(limit).order("title");
         return query.list();
     }
 
@@ -63,7 +70,7 @@ public class TestStorage {
         }
         return query.get();
     }
-    
+
     public List<Test> find(final String... titles) {
         Objectify objectify = Util.factory().begin();
         Query<Test> query = objectify.query(Test.class).filter("title in", titles);

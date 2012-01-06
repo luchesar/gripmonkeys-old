@@ -14,6 +14,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var EDIT = '#edit';
     /** @private */
     var PREVIEW = '#preview';
+    /** @private */
+    var PUBLISH = '#publish';
+    /** @private */
+    var UNPUBLISH = '#unpublish';
 
     /** @private */
     var model = { allTests : null, activeTest : null };
@@ -92,7 +96,21 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                     doDelete(test.id);
                 }
             }, hideFeedback, showFeedback);
+        } else if (hash.indexOf(PUBLISH) == 0) {
+            publish(true);
+        } else if (hash.indexOf(UNPUBLISH) == 0) {
+            publish(false);
         }
+    };
+    
+    var publish = function(published) {
+        var testId = $.getQueryString(TEST_KEY);
+        findOrFetchTest(model, testId, function(test) {
+            test.published = published;
+            var testIndex = findTestIndexById(model, test.id);
+            model.allTests[testIndex] = code(test);
+            postToServer(test);
+        }, hideFeedback, showFeedback);
     };
 
     var previewTest = function(test) {

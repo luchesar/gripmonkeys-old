@@ -25,17 +25,21 @@ body {
     <%@include file="/modules/testPreview.html"%>
 </script>
 <script id="testNavigationTemplate" type="x-tmpl-mustache">
-<div class="pagination pull-right">
-    <ul>
+<table class="noSpacingOrMargin" width="100%"><tr>
+    <td>
+        <div class="noSpacingOrMargin pagination pull-right">
+            <ul>
         {{#allTests}}
-            <li {{#active}}class="active"{{/active}}><a href="#preview?test={{id}}&hide">{{title}}</a></li>
+                <li class="{{#active}} active{{/active}}"><a href="#preview?test={{id}}&hide">{{title}}</a></li>
         {{/allTests}}
-        
-        <li class="next {{^hasNext}}disabled{{/hasNext}}">
-             <a {{#hasNext}}href="#preview?test={{nextTestId}}&hide"{{/hasNext}}>Siguiente &rarr;</a>
-        </li>
-    </ul>
-</div>
+            </ul>
+        </div>
+    </td>
+    <td>
+        <a class="btn large danger pull-right {{^hasNext}}disabled{{/hasNext}}" {{#hasNext}}href="#preview?test={{nextTestId}}&hide"{{/hasNext}}><strong>Siguiente &rarr;</strong> </a>
+    </td>
+</tr></table>
+
 </script>
 <script>
     
@@ -45,7 +49,7 @@ body {
     var _page;
     $(function() {
         var allTests =
-<%=gson.toJson(storage.getAll())%>
+<%=gson.toJson(storage.getAll(true))%>
     ;
         var indexPage = new IndexPage();
         indexPage.start(allTests);
@@ -111,12 +115,12 @@ body {
         <div class="span4" align="center">
           <h2>Seminario</h2>
           <div class="content">
-            <div class="media-grid">
+            <div class="framed-image" align="center">
               <a><img src="/images/homePage2.png" /> </a>
             </div>
-            <p>Completo tutorial Tests, conceptos importantes y video animaciones</p>
-            <div align="right">
-              <a class="btn small info">leer más >></a>
+            <p>Completo tutorial Tests, conceptos importantes y video animaciones.</p>
+            <div>
+              <a href="">leer más sobre tutoriales</a>
             </div>
           </div>
         </div>
@@ -124,13 +128,13 @@ body {
       <div class="span6">
         <div class="span5" align="center">
           <h2>Trucos Test dgt</h2>
-          <div class="content" align="center">
-            <div class="media-grid">
+          <div class="content">
+            <div class="framed-image" align="center">
               <a><img src="/images/homePage1.jpg" /> </a>
             </div>
-            <p>Aprende la diferencia entre Norma y Excepción y comete menos errores en el examen teórico</p>
-            <div align="right">
-              <a class="btn small info">leer más >></a>
+            <p>Aprende la diferencia entre Norma y Excepción y comete menos errores en el examen teórico.</p>
+            <div>
+              <a href="">leer más sobre trucos</a>
             </div>
           </div>
         </div>
@@ -140,21 +144,21 @@ body {
           <h2 class="title">Test Especiales dgt</h2>
           <div class="content">
             <div>
-              <div class="media-grid">
+              <div class="framed-image" align="center">
                 <a><img src="/images/homePage2.png" /> </a>
               </div>
             </div>
             <p>Las preguntas de los test especiales han sido seleccionadas entre todas las preguntas de trafico por
               su dificultad. Realice los test especiales y aprenda de sus errores leyendo la explicación a la respuesta.</p>
-            <div align="right">
-              <a class="btn small info">leer más >></a>
+            <div>
+              <a href="">leer más sobre test especiales</a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <footer>
-    <p>&copy; CursoConducir 2011</p>
+    <p>&copy; CursoConducir 2012</p>
     </footer>
   </div>
 </body>

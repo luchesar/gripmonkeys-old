@@ -52,36 +52,37 @@
         </div>
       </div>
       <div class="row">
-        <div>
-          <div id="explanationContainer" class="container hide">
-            <div class="mini-layout highlightArea">
-              <div id="wrongAnswerContainer" class="hide">
-                <div class="span3">
-                  <div class="alert-message error" style="text-align: center">
-                    <strong>INCORRECTO</strong>
-                    <p>Por que?</p>
-                  </div>
-                </div>
-              </div>
-              <div id="correctAnswerContainer" class="hide">
-                <div class="span3">
-                  <div class="alert-message success" style="text-align: center">
-                    <strong>CORRECTO</strong>
-                    <p>Por que?</p>
-                  </div>
-                </div>
-              </div>
-              <div class="testTextElement">{{{activeTest.explanation}}}</div>
+        <div id="wrongAnswerContainer" class="hide">
+          <div class="span16" align="center">
+            <div class="alert-message error" style="text-align: center">
+              <p>
+                <strong>INCORRECTO</strong> Por que?
+              </p>
             </div>
+          </div>
+        </div>
+        <div id="correctAnswerContainer" class="hide">
+          <div class="span16" align="center">
+            <div class="alert-message success" style="text-align: center">
+              <p>
+                <strong>CORRECTO</strong> Por que?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="explanationContainer" class="hide">
+          <div class="mini-layout highlightArea">
+            {{{activeTest.explanation}}}
           </div>
         </div>
       </div>
       <div id="goToNextButtonContainer" class="row hide">
         <div class="span16">
-            <a id="goToNextButton" class="btn large danger pull-right" >Siguiente &rarr;</a>
+          <a id="goToNextButton" class="btn large danger pull-right"><strong>Siguiente &rarr;</strong> </a>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </div>

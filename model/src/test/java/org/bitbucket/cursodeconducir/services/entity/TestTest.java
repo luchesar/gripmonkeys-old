@@ -60,5 +60,12 @@ public class TestTest {
                 Lists.newArrayList("image23", "image8776"));
         assertFalse(test.equals(differentImages));
         assertFalse(test.hashCode() == differentImages.hashCode());
+        
+        Test differentIsPublished = new Test(test.getTitle(), test.getTitleImage(), test.getDescription(),
+                test.getPossibleAnswers(), test.getCorrectAnswerIndex(), test.getExplanation(),
+                test.getImages());
+        differentIsPublished.setPublished(false);
+        assertFalse(test.equals(differentIsPublished));
+        assertFalse(test.hashCode() == differentIsPublished.hashCode());
     }
 }

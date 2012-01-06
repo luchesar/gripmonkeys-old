@@ -77,7 +77,7 @@ public class TestStorageServlet extends HttpServlet {
     public TestStorage getStorage() {
         return storage;
     }
-    
+
     private void setResponseEnconding(HttpServletResponse aResp) {
         aResp.setContentType("application/json; charset=utf-8");
         aResp.setCharacterEncoding("UTF-8");
