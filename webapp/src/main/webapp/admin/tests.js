@@ -38,12 +38,12 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             return;
         }
         var templateTest = testModule.getTest();
-        postToServer(templateTest);
+        postToServer(templateTest, postToServerDefaultSuccess);
     };
 
     /** public */
     this.updateCurrentPreviewedTest = function() {
-        postToServer(model.activeTest);
+        postToServer(model.activeTest, postToServerDefaultSuccess);
     };
 
     /** @private */
@@ -102,15 +102,22 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             publish(false);
         }
     };
-    
+
     var publish = function(published) {
         var testId = $.getQueryString(TEST_KEY);
-        findOrFetchTest(model, testId, function(test) {
-            test.published = published;
-            var testIndex = findTestIndexById(model, test.id);
-            model.allTests[testIndex] = code(test);
-            postToServer(test);
-        }, hideFeedback, showFeedback);
+        initAllTests(function() {
+            findOrFetchTest(model, testId, function(test) {
+                test.published = published;
+                var testIndex = findTestIndexById(model, test.id);
+                model.allTests[testIndex] = code(test);
+                postToServer(test, function() {
+                    testsContainer.empty();
+                    allTestsModule
+                            .show(model, allTestsTemplate, testsContainer);
+                    updateButtons($('#buttonsInitialTemplate'));
+                });
+            }, hideFeedback, showFeedback);
+        });
     };
 
     var previewTest = function(test) {
@@ -155,21 +162,23 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                     url : '/test-storage',
                     data : jsonData,
                     dataType : 'json',
-                    success : function(data, textStatus, jqXHR) {
-                        var testIndex = findTestIndexById(model, data.id);
-                        if (!model.allTests) {
-                            model.allTests = [];
-                        }
-                        if (testIndex < 0) {
-                            testIndex = model.allTests.length;
-                        }
-                        model.allTests[testIndex] = decode(data);
-                        window.location.hash = '#';
-                    },
+                    success : onSuccess,
                     error : function(xhr, ajaxOptions, thrownError) {
                         showFeedback('the test did not get saved because server returned error \''
                                 + xhr.status + ' ' + thrownError + '\'');
                     } });
+    };
+
+    var postToServerDefaultSuccess = function(data, textStatus, jqXHR) {
+        var testIndex = findTestIndexById(model, data.id);
+        if (!model.allTests) {
+            model.allTests = [];
+        }
+        if (testIndex < 0) {
+            testIndex = model.allTests.length;
+        }
+        model.allTests[testIndex] = decode(data);
+        window.location.hash = '#';
     };
 
     var doDelete = function(testId) {

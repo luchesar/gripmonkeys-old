@@ -116,7 +116,7 @@ body {
           <h2>Seminario</h2>
           <div class="content">
             <div class="framed-image" align="center">
-              <a><img src="/images/homePage2.png" /> </a>
+              <a><img src="/images/homePage1.png" /> </a>
             </div>
             <p>Completo tutorial Tests, conceptos importantes y video animaciones.</p>
             <div>
@@ -130,7 +130,7 @@ body {
           <h2>Trucos Test dgt</h2>
           <div class="content">
             <div class="framed-image" align="center">
-              <a><img src="/images/homePage1.jpg" /> </a>
+              <a><img src="/images/homePage2.png" /> </a>
             </div>
             <p>Aprende la diferencia entre Norma y Excepción y comete menos errores en el examen teórico.</p>
             <div>
@@ -145,7 +145,7 @@ body {
           <div class="content">
             <div>
               <div class="framed-image" align="center">
-                <a><img src="/images/homePage2.png" /> </a>
+                <a><img src="/images/homePage3.png" /> </a>
               </div>
             </div>
             <p>Las preguntas de los test especiales han sido seleccionadas entre todas las preguntas de trafico por
