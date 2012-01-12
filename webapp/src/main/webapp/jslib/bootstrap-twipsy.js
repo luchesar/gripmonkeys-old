@@ -1,3 +1,5 @@
+goog.provide("bootstrap.twipsy");
+
 /* ==========================================================
  * bootstrap-twipsy.js v1.3.0
  * http://twitter.github.com/bootstrap/javascript.html#twipsy

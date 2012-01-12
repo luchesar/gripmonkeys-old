@@ -1,4 +1,13 @@
-function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
+goog.provide('cursoconducir.admin.TestsPage');
+
+goog.require('hashchange');
+goog.require('jquery.querystring');
+goog.require('cursoconducir.utils');
+goog.require('cursoconducir.TestModule');
+goog.require('cursoconducir.AllTestsModule');
+goog.require('cursoconducir.TestPreviewModule');
+
+cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, allTestsTemplate,
         previewTestTemplate) {
     /** @private */
     var CREATE = '#create';
@@ -23,12 +32,12 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var model = { allTests : null, activeTest : null };
 
     /** @private */
-    var testModule = new TestModule();
+    var testModule = new cursoconducir.TestModule();
     /** @private */
-    var allTestsModule = new AllTestsModule();
+    var allTestsModule = new cursoconducir.AllTestsModule();
 
     /** @private */
-    var testPreviewModule = new TestPreviewModule();
+    var testPreviewModule = new cursoconducir.TestPreviewModule();
 
     this.testPreview = testPreviewModule;
 
@@ -73,7 +82,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                 testModule.show(model, activeTestTemplate, testsContainer);
                 updateButtons($('#buttonsEditTestTemplate'));
             } else {
-                findOrFetchTest(model, testId, function(test) {
+                cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                     model.activeTest = test;
                     testModule.show(model, activeTestTemplate, testsContainer);
                     updateButtons($('#buttonsEditTestTemplate'));
@@ -85,13 +94,13 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
                     || testId == undefined || testId == "") {
                 previewTest(testModule.getTest());
             } else {
-                findOrFetchTest(model, testId, function(test) {
+                cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                     previewTest(test);
                 }, hideFeedback, showFeedback);
             }
         } else if (hash.indexOf(DELETE) == 0) {
             var testId = $.getQueryString(TEST_KEY);
-            findOrFetchTest(model, testId, function(test) {
+            cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                 if (confirmDelete(test)) {
                     doDelete(test.id);
                 }
@@ -106,10 +115,10 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     var publish = function(published) {
         var testId = $.getQueryString(TEST_KEY);
         initAllTests(function() {
-            findOrFetchTest(model, testId, function(test) {
+            cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                 test.published = published;
-                var testIndex = findTestIndexById(model, test.id);
-                model.allTests[testIndex] = code(test);
+                var testIndex = cursoconducir.utils.findTestIndexById(model, test.id);
+                model.allTests[testIndex] = cursoconducir.utils.code(test);
                 postToServer(test, function() {
                     testsContainer.empty();
                     allTestsModule
@@ -142,7 +151,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             success : function(data, textStatus, jqXHR) {
                 model.allTests = [];
                 for ( var i = 0; i < data.length; i++) {
-                    model.allTests[i] = decode(data[i]);
+                    model.allTests[i] = cursoconducir.utils.decode(data[i]);
                 }
             },
             error : function(xhr, ajaxOptions, thrownError) {
@@ -154,7 +163,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     /** @private */
     var postToServer = function(templateTest, onSuccess) {
         hideFeedback();
-        test = code(templateTest);
+        test = cursoconducir.utils.code(templateTest);
         jsonData = { json : JSON.stringify(test) };
         $
                 .ajax({
@@ -170,14 +179,14 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
     };
 
     var postToServerDefaultSuccess = function(data, textStatus, jqXHR) {
-        var testIndex = findTestIndexById(model, data.id);
+        var testIndex = cursoconducir.utils.findTestIndexById(model, data.id);
         if (!model.allTests) {
             model.allTests = [];
         }
         if (testIndex < 0) {
             testIndex = model.allTests.length;
         }
-        model.allTests[testIndex] = decode(data);
+        model.allTests[testIndex] = cursoconducir.utils.decode(data);
         window.location.hash = '#';
     };
 
@@ -190,7 +199,7 @@ function TestsPage(testsContainer, activeTestTemplate, allTestsTemplate,
             dataType : 'json',
             success : function(wasDeleted, textStatus, jqXHR) {
                 if (wasDeleted) {
-                    var spliceIndex = findTestIndexById(model, testId);
+                    var spliceIndex = cursoconducir.utils.findTestIndexById(model, testId);
                     model.allTests.splice(spliceIndex, 1);
                 }
             },

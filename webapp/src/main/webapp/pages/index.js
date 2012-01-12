@@ -1,4 +1,12 @@
-function IndexPage(test) {
+goog.provide('cursoconducir.IndexPage');
+
+goog.require('jquery');
+goog.require('hashchange');
+goog.require('jquery.querystring');
+goog.require('cursoconducir.utils');
+goog.require('cursoconducir.TestPreviewModule');
+
+cursoconducir.IndexPage = function(test) {
     var model = { allTests : null, activeTest : test, answerIndex : null };
 
     /** @private */
@@ -13,7 +21,7 @@ function IndexPage(test) {
     var HIDE = "hide";
 
     /** @private */
-    var testPreviewModule = new TestPreviewModule();
+    var testPreviewModule = new cursoconducir.TestPreviewModule();
 
     this.start = function(allTests) {
         model.allTests = allTests;
@@ -35,7 +43,7 @@ function IndexPage(test) {
             $('#threeTutorialsContainer').removeClass('hide');
             $('#nextTestLinkContainer').addClass('hide');
             if (model.allTests.length > 0) {
-                model.activeTest = decode(model.allTests[0]);
+                model.activeTest = cursoconducir.utils.decode(model.allTests[0]);
                 testPreviewModule.show(model, $('#testPreviewTemplate'),
                         $('#testContainer'));
             }
@@ -49,7 +57,7 @@ function IndexPage(test) {
             }
             $('#testContainer').empty();
             model.activeTestIndex = testId;
-            findOrFetchTest(model, testId, function(test) {
+            cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                 if (test == undefined) {
                     return;
                 }
@@ -102,13 +110,13 @@ function IndexPage(test) {
         var testArray = [];
 
         if (model.allTests && model.allTests.length > 0) {
-            var activeTestIndex = findTestIndexById(model, model.activeTest.id);
+            var activeTestIndex = cursoconducir.utils.findTestIndexById(model, model.activeTest.id);
             if (model.allTests.length - 1 > activeTestIndex) {
                 truncatedModel.nextTestId = model.allTests[activeTestIndex + 1].id;
                 truncatedModel.hasNext = true;
             }
             for ( var i = 0; i < model.allTests.length; i++) {
-                var test = decode(model.allTests[i]);
+                var test = cursoconducir.utils.decode(model.allTests[i]);
                 if (test.id == model.activeTest.id) {
                     test.active = true;
                 }

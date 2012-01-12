@@ -1,4 +1,9 @@
-﻿// jQuery Mustache Plug-In 
+﻿goog.provide("jquery.mustache");
+
+goog.require("jquery");
+goog.require("mustache");
+
+// jQuery Mustache Plug-In 
 // Version: 1.0.0, Last updated: 2/17/2011
 //
 // GitHub       - https://github.com/thinkdevcode/jQuery-Mustache

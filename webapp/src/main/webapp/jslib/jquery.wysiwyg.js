@@ -1,3 +1,7 @@
+goog.provide("jquery.wysiwyg");
+
+goog.require("jquery");
+
 /**
  * WYSIWYG - jQuery plugin 0.97
  * (0.97.2 - From infinity)

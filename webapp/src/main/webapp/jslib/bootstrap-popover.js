@@ -1,3 +1,5 @@
+goog.provide("bootstrap.popover");
+
 /* ===========================================================
  * bootstrap-popover.js v1.3.0
  * http://twitter.github.com/bootstrap/javascript.html#popover

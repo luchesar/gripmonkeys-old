@@ -1,3 +1,5 @@
+goog.provide("mustache");
+
 /*
   mustache.js — Logic-less templates in JavaScript
 

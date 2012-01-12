@@ -8,7 +8,6 @@
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css" href="/css/jquery.wysiwyg.css" />
 <%@include file="../../modules/cssAndJs.html"%>
-<script type="text/javascript" src="/scripts/jquery.wysiwyg.js"></script>
 <style type="text/css">
 /* Override some defaults */
 html,body {
@@ -76,16 +75,18 @@ body {
     <%@include file="/modules/feedback.html"%>
 </script>
 
+<script>goog.require('cursoconducir.admin.TestsPage');</script>
 <script type="text/javascript">
-<%@include file="/modules/test.js"%>
-<%@include file="/modules/allTests.js"%>
-<%@include file="tests.js"%>
-<%@include file="/modules/testPreview.js"%>
+    
     var testPage;
     var _page;
-    $(function() {//window.testPage.updateCurrentEditedTest()
-        testPage = new TestsPage($('#container'), $('#activeTestTemplate'),
-                $('#allTestsTemplate'), $('#testPreviewTemplate'));
+    $(function() {
+        var contanier = $('#container');
+        var activeTestTemplate = $('#activeTestTemplate');
+        var allTestsTemplate = $('#allTestsTemplate');
+        var testPreviewTemplate = $('#testPreviewTemplate');
+        testPage = new cursoconducir.admin.TestsPage(contanier, activeTestTemplate,
+                allTestsTemplate, testPreviewTemplate);
         testPage.start();
         _page = testPage;
     });

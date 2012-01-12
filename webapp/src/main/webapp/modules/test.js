@@ -1,4 +1,11 @@
-function TestModule() {
+goog.provide('cursoconducir.TestModule');
+
+goog.require('cursoconducir.utils');
+goog.require('jquery.wysiwyg');
+goog.require('bootstrap.modal');
+goog.require('portableJson');
+
+cursoconducir.TestModule = function() {
     /** @private constant */
     var controls = { controls : { separator00 : { visible : false },
         separator01 : { visible : false }, separator02 : { visible : false },
@@ -66,9 +73,9 @@ function TestModule() {
             image : null,
             description : '',
             possibleAnswers : [
-                    { title : getTestLetter(0), index : 0, text : '', sel : true },
-                    { title : getTestLetter(1), index : 1, text : '', sel : false },
-                    { title : getTestLetter(2), index : 2, text : '', sel : false } ],
+                    { title : cursoconducir.utils.getTestLetter(0), index : 0, text : '', sel : true },
+                    { title : cursoconducir.utils.getTestLetter(1), index : 1, text : '', sel : false },
+                    { title : cursoconducir.utils.getTestLetter(2), index : 2, text : '', sel : false } ],
             explanation : '' };
     };
 
@@ -84,11 +91,11 @@ function TestModule() {
             image : imageKey,
             description : $("textarea[name=testDescription]").val(),
             possibleAnswers : [
-                    { title : getTestLetter(0), index : 0,
+                    { title : cursoconducir.utils.getTestLetter(0), index : 0,
                         text : $("textarea[name=answer0]").val(), sel : false },
-                    { title : getTestLetter(1), index : 1,
+                    { title : cursoconducir.utils.getTestLetter(1), index : 1,
                         text : $("textarea[name=answer1]").val(), sel : false },
-                    { title : getTestLetter(2), index : 2,
+                    { title : cursoconducir.utils.getTestLetter(2), index : 2,
                         text : $("textarea[name=answer2]").val(), sel : false } ],
             explanation : $("textarea[name=testExplanation]").val() };
 
@@ -173,4 +180,4 @@ function TestModule() {
     function uploadCanceled(evt) {
         alert("The upload has been canceled by the user or the browser dropped the connection.");
     }
-}
+};

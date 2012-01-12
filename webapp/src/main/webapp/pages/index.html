@@ -1,11 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="org.bitbucket.cursodeconducir.services.storage.TestStorage"%>
-<%@ page import="com.google.gson.Gson"%>
-
-<%
-    TestStorage storage = new TestStorage();
-			Gson gson = new Gson();
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ page
+import="org.bitbucket.cursodeconducir.services.storage.TestStorage"%> <%@ page import="com.google.gson.Gson"%> <%
+TestStorage storage = new TestStorage(); Gson gson = new Gson(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
@@ -41,17 +36,12 @@ body {
 </tr></table>
 
 </script>
+<script>goog.require('cursoconducir.IndexPage');</script>
 <script>
-    
-<%@include file="/pages/index.js"%>
-    
-<%@include file="/modules/testPreview.js"%>
     var _page;
     $(function() {
-        var allTests =
-<%=gson.toJson(storage.getAll(true))%>
-    ;
-        var indexPage = new IndexPage();
+        var allTests = <%=gson.toJson(storage.getAll(true))%>;
+        var indexPage = new cursoconducir.IndexPage();
         indexPage.start(allTests);
         _page = indexPage;
     });

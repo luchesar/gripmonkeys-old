@@ -1,4 +1,7 @@
-﻿;
+﻿goog.provide("jquery.querystring");
+
+goog.require("jquery");
+
 (function($) {
     $.extend({ getQueryString : function(name) {
         function parseParams() {

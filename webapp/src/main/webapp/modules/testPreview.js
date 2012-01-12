@@ -1,4 +1,8 @@
-function TestPreviewModule(model, template, container) {
+goog.provide('cursoconducir.TestPreviewModule');
+
+goog.require('jquery.mustache');
+
+cursoconducir.TestPreviewModule = function(model, template, container) {
     var done = false;
     /** public */
     this.show = function(model, template, container) {
@@ -40,4 +44,4 @@ function TestPreviewModule(model, template, container) {
         $('#explanationContainer').addClass('span16');
         done = true;
     };
-}
+};

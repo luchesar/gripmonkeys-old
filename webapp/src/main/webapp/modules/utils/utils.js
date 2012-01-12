@@ -1,4 +1,6 @@
-var code = function(template) {
+goog.provide('cursoconducir.utils');
+
+cursoconducir.utils.code = function(template) {
     var possibleAnswers = [];
     var correctAnswerIndex = 0;
     for ( var i = 0; i < template.possibleAnswers.length; i++) {
@@ -13,13 +15,13 @@ var code = function(template) {
         explanation : template.explanation, published : template.published };
 };
 
-var decode = function(jsonObject) {
+cursoconducir.utils.decode = function(jsonObject) {
     if (jsonObject.decode) {
         return jsonObject;
     }
     var possibleAnswers = [];
     for ( var i = 0; i < jsonObject.possibleAnswers.length; i++) {
-        possibleAnswers[i] = { title : getTestLetter(i), index : i,
+        possibleAnswers[i] = { title : cursoconducir.utils.getTestLetter(i), index : i,
             text : jsonObject.possibleAnswers[i],
             sel : i == jsonObject.correctAnswerIndex ? true : false };
     }
@@ -31,18 +33,18 @@ var decode = function(jsonObject) {
         published : jsonObject.published, decode : true };
 };
 
-var indexes = { '0' : 'A', '1' : 'B', '2' : 'C' };
+cursoconducir.utils.indexes = { '0' : 'A', '1' : 'B', '2' : 'C' };
 /** public */
-var getTestLetter = function(index) {
-    return indexes[index];
+cursoconducir.utils.getTestLetter = function(index) {
+    return cursoconducir.utils.indexes[index];
 };
 
-var findOrFetchTest = function(model, testId, callback, hideFeedback,
+cursoconducir.utils.findOrFetchTest = function(model, testId, callback, hideFeedback,
         showFeedback) {
     if (model.allTests) {
-        var testIndex = findTestIndexById(model, testId);
+        var testIndex = cursoconducir.utils.findTestIndexById(model, testId);
         if (testIndex > -1) {
-            callback(decode(model.allTests[testIndex]));
+            callback(cursoconducir.utils.decode(model.allTests[testIndex]));
             return;
         }
     }
@@ -56,7 +58,7 @@ var findOrFetchTest = function(model, testId, callback, hideFeedback,
         dataType : 'json',
         success : function(test, textStatus, jqXHR) {
             if (test && test.length > 0) {
-                callback(decode(test[0]));
+                callback(cursoconducir.utils.decode(test[0]));
             } else {
                 if (showFeedback) {
                     showFeedback('No test found with id ' + testId);
@@ -71,7 +73,7 @@ var findOrFetchTest = function(model, testId, callback, hideFeedback,
         }, complete : callback() });
 };
 
-var findTestIndexById = function(model, testId) {
+cursoconducir.utils.findTestIndexById = function(model, testId) {
     if (model.allTests == undefined || model.allTests == null) {
         return -1;
     }
