@@ -5,6 +5,7 @@ goog.require('hashchange');
 goog.require('jquery.querystring');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
+goog.require("bootstrap.modal");
 
 cursoconducir.IndexPage = function(test) {
     var model = { allTests : null, activeTest : test, answerIndex : null };

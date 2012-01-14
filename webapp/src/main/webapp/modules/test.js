@@ -22,6 +22,7 @@ cursoconducir.TestModule = function() {
     var imageElement;
     var doneButton;
     var cancelButton;
+    var fileToUpload;
     var imageKey;
 
     /**
@@ -41,7 +42,8 @@ cursoconducir.TestModule = function() {
         modalContainer = $('#upload-image-modal');
         imageElement = $('#testImage');
         doneButton = $('#doneButton');
-        cancelButton = $('#modalCancelButton');
+        cancelButton = $('#imageUploadmodalCancelButton');
+        fileToUpload=$('#fileToUpload');
         imageKey = model.activeTest.image;
 
         imageElement.click(function() {
@@ -55,7 +57,7 @@ cursoconducir.TestModule = function() {
             modalContainer.hide();
         });
 
-        $('#fileToUpload').change(function() {
+        fileToUpload.change(function() {
             fileSelected();
             uploadFile();
         });
@@ -148,7 +150,8 @@ cursoconducir.TestModule = function() {
 
     function uploadFile() {
         var fd = new FormData();
-        fd.append("fileToUpload", $('#fileToUpload')[0].files[0]);
+        var firstFileToUpload = $('#fileToUpload')[0].files[0];
+        fd.append("fileToUpload", firstFileToUpload);
         var xhr = new XMLHttpRequest();
         xhr.upload.addEventListener("progress", uploadProgress, false);
         xhr.addEventListener("load", uploadComplete, false);

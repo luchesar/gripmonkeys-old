@@ -16,4 +16,4 @@ goog.addDependency('../../../modules/test.js', ['cursoconducir.TestModule'], ['b
 goog.addDependency('../../../modules/testPreview.js', ['cursoconducir.TestPreviewModule'], ['jquery.mustache']);
 goog.addDependency('../../../modules/utils/utils.js', ['cursoconducir.utils'], []);
 goog.addDependency('../../../pages/admin/tests.js', ['cursoconducir.admin.TestsPage'], ['cursoconducir.AllTestsModule', 'cursoconducir.TestModule', 'cursoconducir.TestPreviewModule', 'cursoconducir.utils', 'hashchange', 'jquery.querystring']);
-goog.addDependency('../../../pages/index.js', ['cursoconducir.IndexPage'], ['cursoconducir.TestPreviewModule', 'cursoconducir.utils', 'hashchange', 'jquery', 'jquery.querystring']);
+goog.addDependency('../../../pages/index.js', ['cursoconducir.IndexPage'], ['bootstrap.modal', 'cursoconducir.TestPreviewModule', 'cursoconducir.utils', 'hashchange', 'jquery', 'jquery.querystring']);
