@@ -1,1 +1,0 @@
-closure/depswriter.py --root_with_prefix="../src/main/webapp ../../../" --output_file ../src/main/webapp/deps.js

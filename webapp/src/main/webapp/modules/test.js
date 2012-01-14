@@ -173,7 +173,8 @@ cursoconducir.TestModule = function() {
     function uploadComplete(evt) {
         imageKey = evt.target.getResponseHeader('key');
         var imageUrl = '/image?key=' + imageKey + '&falback=/images/330x230.gif';
-        $('#currentTestImage').attr('src', imageUrl);
+        var currectTestImage = $('#currentTestImage');
+        currectTestImage.attr('src', imageUrl);
     }
 
     function uploadFailed(evt) {

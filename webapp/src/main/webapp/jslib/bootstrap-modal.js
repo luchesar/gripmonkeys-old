@@ -1,4 +1,6 @@
 goog.provide("bootstrap.modal");
+
+goog.require("jquery");
 /* =========================================================
  * bootstrap-modal.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#modal
