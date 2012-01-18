@@ -10,4 +10,6 @@ public interface EditTestBot extends AdminBot {
     AdminTestsBot save();
     
     Test getTest();
+    
+    EditTestImageBot editImage();
 }
