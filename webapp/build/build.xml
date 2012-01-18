@@ -3,9 +3,9 @@
     </target>
 
     <target name="deps">
-        <property name="deps.js.file" value="${basedir}/../src/main/webapp/deps.js"/>
+        <property name="deps.js.file" value="${basedir}/../src/main/webapp/deps.js" />
         <exec executable="python" dir="${basedir}" failonerror="true">
-            <arg line="${basedir}/closure/depswriter.py"/>
+            <arg line="${basedir}/closure/depswriter.py" />
             <arg line="--root_with_prefix='../src/main/webapp ../../../'" />
             <arg line="--output_file ${deps.js.file}" />
         </exec>
@@ -13,7 +13,28 @@
     </target>
 
     <target name="compile">
+        <compile namespace="cursoconducir.IndexPage" outputfile="${basedir}/../src/main/webapp/pages/index.compiled.js"/>
+        <compile namespace="cursoconducir.admin.TestsPage" outputfile="${basedir}/../src/main/webapp/pages/admin/adminTests.compiled.js"/>
     </target>
+
+    <macrodef name="compile">
+        <attribute name="namespace" />
+        <attribute name="outputFile" />
+        <sequential>
+            <exec executable="python" dir="${basedir}/.." failonerror="true">
+                <arg line="${basedir}/closure/closurebuilder.py" />
+                <arg line="--root=${basedir}/../src/main/webapp/jslib" />
+                <arg line="--root=${basedir}/../src/main/webapp/modules" />
+                <arg line="--root=${basedir}/../src/main/webapp/pages" />
+                <arg line="--namespace='@{namespace}'" />
+                <arg line="--output_mode=compiled" />
+                <arg line="--compiler_jar=${basedir}/closure/compiler.jar" />
+                <arg line="--compiler_flags='--compilation_level=WHITESPACE_ONLY'" />
+                <arg line="--output_file=@{outputFile}" />
+            </exec>
+            <echo>@{namespace} compiled to @{outputFile}</echo>
+        </sequential>
+    </macrodef>
 
     <target name="plovr">
     </target>

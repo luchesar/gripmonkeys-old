@@ -1,4 +1,5 @@
 goog.provide('cursoconducir.IndexPage');
+goog.provide('cursoconducir.index');
 
 goog.require('jquery');
 goog.require('hashchange');
@@ -6,6 +7,14 @@ goog.require('jquery.querystring');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require("bootstrap.modal");
+
+cursoconducir.index.init = function(allTestJson) {
+    $(function() {
+        var indexPage = new cursoconducir.IndexPage();
+        indexPage.start(allTestJson);
+        window._cursoConducirPage = indexPage;
+    });
+};
 
 cursoconducir.IndexPage = function(test) {
     var model = { allTests : null, activeTest : test, answerIndex : null };

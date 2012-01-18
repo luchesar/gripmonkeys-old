@@ -32,7 +32,7 @@
                 {{#activeTest.possibleAnswers}}
                 <tr>
                   <td><div class="media-grid answer-radius">
-                      <a class="btn small" id="answerLink{{index}}" onclick="_page.answer({{index}})">{{title}}&nbsp;</a>
+                      <a class="btn small" id="answerLink{{index}}" onclick="window._cursoConducirPage.answer({{index}})">{{title}}&nbsp;</a>
                     </div></td>
                   <td><div id="answerText{{index}}" class="span8 testTextElement">{{{text}}}</div></td>
                 </tr>

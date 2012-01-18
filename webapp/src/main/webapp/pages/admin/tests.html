@@ -75,21 +75,10 @@ body {
     <%@include file="/modules/feedback.html"%>
 </script>
 
-<script>goog.require('cursoconducir.admin.TestsPage');</script>
+<!-- <script>goog.require('cursoconducir.admin.TestsPage');</script> -->
+<script src="/pages/admin/adminTests.compiled.js"></script>
 <script type="text/javascript">
-    
-    var testPage;
-    var _page;
-    $(function() {
-        var contanier = $('#container');
-        var activeTestTemplate = $('#activeTestTemplate');
-        var allTestsTemplate = $('#allTestsTemplate');
-        var testPreviewTemplate = $('#testPreviewTemplate');
-        testPage = new cursoconducir.admin.TestsPage(contanier, activeTestTemplate,
-                allTestsTemplate, testPreviewTemplate);
-        testPage.start();
-        _page = testPage;
-    });
+cursoconducir.admin.tests.init();
 </script>
 
 </head>

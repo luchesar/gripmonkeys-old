@@ -16,6 +16,7 @@ body {
 }
 </style>
 <link rel="" href="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31" />
+<link href="/images/logo.png"/>
 <script id="testPreviewTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/testPreview.html"%>
 </script>
@@ -36,15 +37,10 @@ body {
 </tr></table>
 
 </script>
-<script>goog.require('cursoconducir.IndexPage');</script>
+<!-- <script>goog.require('cursoconducir.IndexPage');</script> -->
+<script src="/pages/index.compiled.js"></script>
 <script>
-    var _page;
-    $(function() {
-        var allTests = <%=gson.toJson(storage.getAll(true))%>;
-        var indexPage = new cursoconducir.IndexPage();
-        indexPage.start(allTests);
-        _page = indexPage;
-    });
+cursoconducir.index.init(<%=gson.toJson(storage.getAll(true))%>);
 </script>
 </head>
 
@@ -117,7 +113,7 @@ body {
       </div>
       <div class="span6">
         <div class="span5" align="center">
-          <h2>Trucos Test dgt</h2>
+          <h2>Trucos Test</h2>
           <div class="content">
             <div class="framed-image" align="center">
               <a><img src="/images/homePage2.png" /> </a>
@@ -131,15 +127,14 @@ body {
       </div>
       <div class="inner">
         <div class="span5" align="center">
-          <h2 class="title">Test Especiales dgt</h2>
+          <h2 class="title">Test Especiales</h2>
           <div class="content">
             <div>
               <div class="framed-image" align="center">
                 <a><img src="/images/homePage3.png" /> </a>
               </div>
             </div>
-            <p>Las preguntas de los test especiales han sido seleccionadas entre todas las preguntas de trafico por
-              su dificultad. Realice los test especiales y aprenda de sus errores leyendo la explicación a la respuesta.</p>
+            <p> Seleccion de los test mas complicados de la dgt con explicación de la respuesta.</p>
             <div>
               <a href="">leer más sobre test especiales</a>
             </div>

@@ -1,4 +1,5 @@
 goog.provide('cursoconducir.admin.TestsPage');
+goog.provide('cursoconducir.admin.tests')
 
 goog.require('hashchange');
 goog.require('jquery.querystring');
@@ -6,6 +7,20 @@ goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestModule');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
+
+cursoconducir.admin.tests.init = function() {
+    var testPage;
+    $(function() {
+        var contanier = $('#container');
+        var activeTestTemplate = $('#activeTestTemplate');
+        var allTestsTemplate = $('#allTestsTemplate');
+        var testPreviewTemplate = $('#testPreviewTemplate');
+        testPage = new cursoconducir.admin.TestsPage(contanier, activeTestTemplate,
+                allTestsTemplate, testPreviewTemplate);
+        testPage.start();
+        window._cursoConducirPage = testPage;
+    });
+};
 
 cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, allTestsTemplate,
         previewTestTemplate) {
@@ -40,7 +55,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, all
     var testPreviewModule = new cursoconducir.TestPreviewModule();
 
     this.testPreview = testPreviewModule;
-
+    
     /** public */
     this.updateCurrentEditedTest = function() {
         if (!testModule.isValid()) {

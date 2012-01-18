@@ -105,11 +105,23 @@
       <plugin>
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>
-        <version>0.8.1</version>
-        <configuration>
-          <serverId>appengine.google.com</serverId>
-          <sdkDir>${gae.home}</sdkDir>
-        </configuration>
+        <version>0.9.2</version>
+        <executions>
+          <execution>
+            <id>start-gae-server</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-gae-server</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <!-- A simple Jetty test server at http://localhost:8080/cursodeconducir can be launched with the Maven goal jetty:run 
@@ -134,11 +146,39 @@
           </webAppConfig>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/integration/*Test.java
+                        </exclude>
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-tests</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <skip>false</skip>
+              <excludes>
+                <exclude>none</exclude>
+              </excludes>
+              <includes>
+                <include>**/integration/*Test.java
+                                </include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
   <dependencies>
-
     <dependency>
       <groupId>org.bitbucket.cursodeconducir</groupId>
       <artifactId>model</artifactId>
@@ -160,6 +200,11 @@
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>1.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>2.16.1</version>
     </dependency>
   </dependencies>
 </project>
