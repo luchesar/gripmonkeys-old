@@ -1,0 +1,108 @@
+package org.bitbucket.cursodeconducir.integration.test.bot.impl.admin;
+
+import java.util.List;
+
+import static junit.framework.Assert.*;
+
+import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
+import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class AdminTestsBotImpl implements AdminTestsBot {
+    private static final String CREATE_LINK_TEXT = "Create";
+    
+    private final WebDriver driver;
+    private final String webAppUrl;
+    private WebElement createButton;
+    private WebElement footer;
+    
+    public AdminTestsBotImpl(WebDriver aDriver, String aWebAppUrl) {
+        webAppUrl = aWebAppUrl;
+        driver = aDriver;
+
+        String url = webAppUrl + "/admin/tests";
+        if (!url.equals(driver.getCurrentUrl())) {
+            driver.get(url);
+        }
+
+        footer = driver.findElement(By.tagName("footer"));
+
+        List<WebElement> createButtons = driver.findElements(By.linkText(CREATE_LINK_TEXT));
+        assertEquals(2, createButtons.size());
+        assertEquals(createButtons.get(0).getAttribute("href"),
+                createButtons.get(1).getAttribute("href"));
+        
+        createButton = createButtons.get(0);
+    }
+
+    @Override
+    public MainMenuBot getMainMenu() {
+        return null;
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
+    }
+
+    @Override
+    public String getCopyRight() {
+        return footer.getText();
+    }
+
+    @Override
+    public EditTestBot create() {
+        createButton.click();
+        return null;
+    }
+
+    @Override
+    public List<Test> getAllTests() {
+        return null;
+    }
+
+    @Override
+    public EditTestBot clickTestImage(String aTitle) {
+        return null;
+    }
+
+    @Override
+    public EditTestBot clickTestTitle(String aTitle) {
+        return null;
+    }
+
+    @Override
+    public List<Test> deleteTest(String aTitle) {
+        return null;
+    }
+
+    @Override
+    public boolean isPublished(String aTitle) {
+        return false;
+    }
+
+    @Override
+    public boolean publish(String aTitle) throws BotException {
+        return false;
+    }
+
+    @Override
+    public boolean unpublish(String aTitle) throws BotException {
+        return false;
+    }
+
+    @Override
+    public String getPageTitle() {
+        return null;
+    }
+}

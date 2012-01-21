@@ -1,13 +1,10 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.api.admin;
 
-import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.PageBot;
 
-public interface AdminBot {
-    MainMenuBot getMainMenu();
-    
+public interface AdminBot extends PageBot {
     String getTitle();
     
     String getSubTitle();
     
-    String getCopyRight();
 }

@@ -1,5 +1,7 @@
 package org.bitbucket.cursodeconducir.integration;
 
+import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.impl.admin.AdminTestsBotImpl;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,8 +15,8 @@ public class TestManagementTest extends TestCase {
     @Test
     public void testOne() throws Exception {
         WebDriver driver = new HtmlUnitDriver(true);
-
-        driver.get("http://localhost:8080/");
+        
+        AdminTestsBot admitTestsBot = new AdminTestsBotImpl(driver, "http://localhost:8080");
         
         driver.close();
     }

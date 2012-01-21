@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ page
-import="org.bitbucket.cursodeconducir.services.storage.TestStorage"%> <%@ page import="com.google.gson.Gson"%> <%
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="org.bitbucket.cursodeconducir.services.storage.TestStorage"%>
+<%@ page import="com.google.gson.Gson"%>
+<%
 TestStorage storage = new TestStorage(); Gson gson = new Gson(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
@@ -16,7 +18,8 @@ body {
 }
 </style>
 <link rel="" href="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31" />
-<link href="/images/logo.png"/>
+<link href="/images/logo.png" />
+
 <script id="testPreviewTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/testPreview.html"%>
 </script>
@@ -32,7 +35,8 @@ body {
         </div>
     </td>
     <td>
-        <a class="btn large danger pull-right {{^hasNext}}disabled{{/hasNext}}" {{#hasNext}}href="#preview?test={{nextTestId}}&hide"{{/hasNext}}><strong>Siguiente &rarr;</strong> </a>
+        <a class="btn large danger pull-right" {{^hasNext}}data-controls-modal="end-of-test-modal" data-keyboard="true"
+            data-backdrop="static"{{/hasNext}} {{#hasNext}}href="#preview?test={{nextTestId}}&hide"{{/hasNext}}><strong>Siguiente &rarr;</strong> </a>
     </td>
 </tr></table>
 
@@ -40,12 +44,39 @@ body {
 <!-- <script>goog.require('cursoconducir.IndexPage');</script> -->
 <script src="/pages/index.compiled.js"></script>
 <script>
-cursoconducir.index.init(<%=gson.toJson(storage.getAll(true))%>);
+    cursoconducir.index.init(
+<%=gson.toJson(storage.getAll(true))%>
+    );
 </script>
 </head>
 
 <body>
   <%@include file="../modules/menu.html"%>
+  <div id="end-of-test-modal" class="modal hide fade">
+    <div class="modal-header">
+      <a href="#" class="close">&times;</a>
+      <h2>CursoConducir beta</h2>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <div class="framed-image">
+              <a class="pull-left"><img class="thumbnail" src="/images/cursoconducir-com.png" /> </a>
+            </div>
+          </div>
+          <div class="span3">
+            Has realizado las primeras preguntas de los Test Especiales de Cursoconducir. Puedes realizar más
+            descargando el power point completo a traves del siguiente enlace <a
+              href="http://cursoconducir.com/semi/index.html" target="_blank"> Más Test Especiales</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="pull-right" href="mailto:admin@cursoconducir.es">Sugerencias: admin@cursoconducir.es</a>
+    </div>
+  </div>
 
   <div class="container">
     <div id="headerHintContainer" class="row">
@@ -106,7 +137,8 @@ cursoconducir.index.init(<%=gson.toJson(storage.getAll(true))%>);
             </div>
             <p>Completo tutorial Tests, conceptos importantes y video animaciones.</p>
             <div>
-              <a href="">leer más sobre tutoriales</a>
+              <a href="" data-controls-modal="under-construction-modal" data-keyboard="true" data-backdrop="static">leer
+                más sobre tutoriales</a>
             </div>
           </div>
         </div>
@@ -120,7 +152,8 @@ cursoconducir.index.init(<%=gson.toJson(storage.getAll(true))%>);
             </div>
             <p>Aprende la diferencia entre Norma y Excepción y comete menos errores en el examen teórico.</p>
             <div>
-              <a href="">leer más sobre trucos</a>
+              <a href="" data-controls-modal="under-construction-modal" data-keyboard="true" data-backdrop="static">leer
+                más sobre trucos</a>
             </div>
           </div>
         </div>
@@ -134,9 +167,10 @@ cursoconducir.index.init(<%=gson.toJson(storage.getAll(true))%>);
                 <a><img src="/images/homePage3.png" /> </a>
               </div>
             </div>
-            <p> Seleccion de los test mas complicados de la dgt con explicación de la respuesta.</p>
+            <p>Seleccion de los test mas complicados de la dgt con explicación de la respuesta.</p>
             <div>
-              <a href="">leer más sobre test especiales</a>
+              <a href="" data-controls-modal="under-construction-modal" data-keyboard="true" data-backdrop="static">leer
+                más sobre test especiales</a>
             </div>
           </div>
         </div>

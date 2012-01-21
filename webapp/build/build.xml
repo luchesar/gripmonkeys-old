@@ -12,9 +12,12 @@
         <echo>${deps.js.file} regenerated</echo>
     </target>
 
-    <target name="compile">
-        <compile namespace="cursoconducir.IndexPage" outputfile="${basedir}/../src/main/webapp/pages/index.compiled.js"/>
-        <compile namespace="cursoconducir.admin.TestsPage" outputfile="${basedir}/../src/main/webapp/pages/admin/adminTests.compiled.js"/>
+    <target name="soy">
+    </target>
+
+    <target name="compile" depends="soy">
+        <compile namespace="cursoconducir.IndexPage" outputfile="${basedir}/../src/main/webapp/pages/index.compiled.js" />
+        <compile namespace="cursoconducir.admin.TestsPage" outputfile="${basedir}/../src/main/webapp/pages/admin/adminTests.compiled.js" />
     </target>
 
     <macrodef name="compile">
