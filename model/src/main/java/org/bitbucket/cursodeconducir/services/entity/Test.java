@@ -2,7 +2,7 @@ package org.bitbucket.cursodeconducir.services.entity;
 
 import java.util.List;
 
-import com.google.appengine.repackaged.com.google.common.base.Objects;
+import com.google.common.base.Objects;
 import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;

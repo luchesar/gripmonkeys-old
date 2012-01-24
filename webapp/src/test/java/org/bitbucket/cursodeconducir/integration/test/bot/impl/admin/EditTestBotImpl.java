@@ -1,16 +1,17 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.impl.admin;
 
-import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.PreviewTestBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.impl.PageBotImpl;
 import org.bitbucket.cursodeconducir.services.entity.Test;
 import org.openqa.selenium.WebDriver;
 
 public class EditTestBotImpl extends PageBotImpl implements EditTestBot {
 
     public EditTestBotImpl(String aWebAppUrl, WebDriver aDriver) {
+        super(aDriver);
     }
 
     @Override
@@ -20,16 +21,6 @@ public class EditTestBotImpl extends PageBotImpl implements EditTestBot {
 
     @Override
     public String getSubTitle() {
-        return null;
-    }
-
-    @Override
-    public String getPageTitle() {
-        return null;
-    }
-
-    @Override
-    public MainMenuBot getMainMenu() {
         return null;
     }
 
@@ -55,11 +46,6 @@ public class EditTestBotImpl extends PageBotImpl implements EditTestBot {
 
     @Override
     public EditTestImageBot editImage() {
-        return null;
-    }
-    
-    @Override
-    public String getCopyRight() {
         return null;
     }
 }

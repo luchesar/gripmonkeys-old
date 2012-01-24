@@ -1,5 +1,7 @@
 package org.bitbucket.cursodeconducir.integration;
 
+import java.util.concurrent.TimeUnit;
+
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.impl.admin.AdminTestsBotImpl;
 import org.junit.Test;
@@ -15,7 +17,7 @@ public class TestManagementTest extends TestCase {
     @Test
     public void testOne() throws Exception {
         WebDriver driver = new HtmlUnitDriver(true);
-        
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         AdminTestsBot admitTestsBot = new AdminTestsBotImpl(driver, "http://localhost:8080");
         
         driver.close();

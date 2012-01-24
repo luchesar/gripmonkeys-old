@@ -2,7 +2,7 @@ package org.bitbucket.cursodeconducir.services.entity;
 
 import static junit.framework.Assert.*;
 
-import com.google.appengine.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 
 public class TestTest {
     @org.junit.Test
