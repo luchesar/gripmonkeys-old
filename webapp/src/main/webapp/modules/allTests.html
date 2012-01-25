@@ -1,11 +1,9 @@
-<div>
+<div id="allTestsContainer">
   {{#allTests}}
-  <div class="container">
+  <div id="testInAList" class="container">
     <div class="container mini-layout">
       <div class="row">
         <div class="span2">
-          
-          
           <div class="media-grid">
             <a id="testImage" style="margin: 0 0 0px 20px;" href="#update?test={{id}}"> <img class="thumbnail"
               src="/image?key={{image}}&s=80&falback=/images/80x50.gif" alt=""> </a>
@@ -13,9 +11,11 @@
         </div>
         <div class="span12 pull-left">
           <h4>
-            <a href="#update?test={{id}}">{{title}}&nbsp;</a>
+            <a id="testTitleLink" href="#update?test={{id}}">{{title}}&nbsp;</a>
           </h4>
+          <div id="testDescription">
           {{description}}
+          </div>
         </div>
         <div class="span2">
           <a id="testCancel" class="btn small" href="#delete?test={{id}}">Delete</a>
@@ -28,8 +28,6 @@
       </div>
     </div>
   </div>
-
-</div>
 {{/allTests}} {{^allTests}}
 <small>No tests yet</small>
 {{/allTests}}

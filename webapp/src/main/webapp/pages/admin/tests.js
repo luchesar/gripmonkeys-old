@@ -82,8 +82,8 @@ cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, all
             if (initAllTests(function() {
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
                 updateButtons($('#buttonsInitialTemplate'));
-            }))
-                ;
+                $("#footer").addClass("loaded");
+            }));
         } else if (hash == CREATE) {
             testsContainer.empty();
             model.activeTest = testModule.createEmptyTest();

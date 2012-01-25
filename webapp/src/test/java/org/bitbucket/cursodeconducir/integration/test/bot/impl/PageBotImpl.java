@@ -15,11 +15,21 @@ public class PageBotImpl implements PageBot {
     private MainMenuBotImpl mainMenuBot;
     private WebElement footer;
 
-    public PageBotImpl(WebDriver driver) {
+    public PageBotImpl(WebDriver driver, String webAppUrl, String pageFragment) {
+        String url = webAppUrl + pageFragment;
+        if (!url.equals(driver.getCurrentUrl())) {
+            driver.get(url);
+        }
+
         pageTitle = driver.getTitle();
         mainMenuBot = new MainMenuBotImpl(driver);
-        footer = driver.findElement(By.tagName("footer"));
-        
+
+        footer = (new WebDriverWait(driver, 25)).until(new ExpectedCondition<WebElement>() {
+            @Override
+            public WebElement apply(WebDriver d) {
+                return d.findElement(By.cssSelector("footer.loaded"));
+            }
+        });
         assertNotNull(pageTitle);
         assertNotNull(mainMenuBot);
         assertNotNull(footer);

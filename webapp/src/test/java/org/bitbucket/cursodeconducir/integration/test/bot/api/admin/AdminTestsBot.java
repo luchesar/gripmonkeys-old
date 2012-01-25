@@ -8,11 +8,13 @@ import org.bitbucket.cursodeconducir.services.entity.Test;
 public interface AdminTestsBot extends AdminBot {
     EditTestBot create();
     
-    List<Test> getAllTests();
+    List<String> getAllTestTitles();
     
     EditTestBot clickTestImage(String title);
     
     EditTestBot clickTestTitle(String title);
+    
+    String getTestDescription(String aTitle);
     
     List<Test> deleteTest(String title);
     

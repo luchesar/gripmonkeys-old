@@ -10,8 +10,8 @@ import org.openqa.selenium.WebDriver;
 
 public class EditTestBotImpl extends PageBotImpl implements EditTestBot {
 
-    public EditTestBotImpl(String aWebAppUrl, WebDriver aDriver) {
-        super(aDriver);
+    public EditTestBotImpl(WebDriver aDriver, String aWebAppUrl) {
+        super(aDriver, aWebAppUrl, "admin/tests#create");
     }
 
     @Override

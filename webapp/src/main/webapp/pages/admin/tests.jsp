@@ -75,8 +75,10 @@ body {
     <%@include file="/modules/feedback.html"%>
 </script>
 
-<!-- <script>goog.require('cursoconducir.admin.TestsPage');</script> -->
-<script src="/pages/admin/adminTests.compiled.js"></script>
+<script src="../../jslib/closure/goog/base.js"></script>
+<script src="../../deps.js"></script>
+ <script>goog.require('cursoconducir.admin.TestsPage');</script>
+<!-- <script src="/pages/admin/adminTests.compiled.js"></script> -->
 <script type="text/javascript">
 cursoconducir.admin.tests.init();
 </script>
@@ -115,7 +117,7 @@ cursoconducir.admin.tests.init();
         </div>
       </div>
     </div>
-    <footer>
+    <footer id="footer">
       <p>&copy; Company 2011</p>
     </footer>
   </div>
