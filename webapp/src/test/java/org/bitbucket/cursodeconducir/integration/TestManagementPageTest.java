@@ -5,6 +5,7 @@ import static junit.framework.Assert.*;
 import java.util.Collections;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.impl.admin.AdminTestsBotImpl;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -12,13 +13,20 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.google.common.collect.Lists;
+
 public class TestManagementPageTest {
     private static final String WEB_APP_URL = "webAppUrl";
     private static WebDriver driver;
+    private static String webAppUrl;
 
     @BeforeClass
     public static void initDriver() throws Exception {
         driver = new FirefoxDriver();
+        webAppUrl = System.getProperty(WEB_APP_URL);
+        if (webAppUrl == null) {
+            webAppUrl = "http://localhost:8080";
+        }
     }
 
     @AfterClass
@@ -29,10 +37,6 @@ public class TestManagementPageTest {
 
     @Test
     public void testNavigate() throws Exception {
-        String webAppUrl = System.getProperty(WEB_APP_URL);
-        if (webAppUrl == null) {
-            webAppUrl = "http://localhost:8080";
-        }
         AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
 
         assertEquals("Wrong page title", "Test management", adminTestsBot.getPageTitle());
@@ -45,33 +49,54 @@ public class TestManagementPageTest {
                 adminTestsBot.getAllTestTitles());
     }
 
-//    @Test
-    public void _testCreatePreviewDeleteATest() throws Exception {
-        fail();
+    @Test
+    public void testCreatePreviewDeleteATest() throws Exception {
+        AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
+        assertEquals("No tests expected in the beginning", Collections.emptyList(),
+                adminTestsBot.getAllTestTitles());
+        
+        EditTestBot editTestBot = adminTestsBot.create();
+        String testTitle = "test1";
+        String description = "test1 desription";
+        
+        editTestBot.setTestTitle(testTitle);
+        editTestBot.setTestDescription(description);
+        
+        adminTestsBot = editTestBot.save();
+        try {
+            assertEquals("The test did not get saved", Lists.newArrayList(testTitle),
+                    adminTestsBot.getAllTestTitles());
+            
+            assertEquals(description, adminTestsBot.getTestDescription(testTitle));
+        } finally {
+            adminTestsBot.deleteTest(testTitle).accept();
+        }
+//        assertEquals("Did not clean up the test properly", Collections.emptyList(),
+//                adminTestsBot.getAllTestTitles());
     }
 
-//    @Test
-    public void _testCreateMultipleAndListThem() throws Exception {
+    @Test
+    public void testCreateMultipleAndListThem() throws Exception {
         fail();
     }
     
-//    @Test
-    public void _testEditImageWithoutReload() throws Exception {
+    @Test
+    public void testEditImageWithoutReload() throws Exception {
         fail();
     }
 
-//    @Test
-    public void _testNavigateCancel() throws Exception {
+    @Test
+    public void testNavigateCancel() throws Exception {
         fail();
     }
 
-//    @Test
-    public void _testNavigateCreate() throws Exception {
+    @Test
+    public void testNavigateCreate() throws Exception {
         fail();
     }
 
-//    @Test
-    public void _testNavigateEdit() throws Exception {
+    @Test
+    public void testNavigateEdit() throws Exception {
         fail();
     }
 }

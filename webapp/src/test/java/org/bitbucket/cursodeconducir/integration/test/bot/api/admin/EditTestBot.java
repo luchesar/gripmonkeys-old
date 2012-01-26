@@ -11,5 +11,9 @@ public interface EditTestBot extends AdminBot {
     
     Test getTest();
     
+    void setTestTitle(String title);
+    
     EditTestImageBot editImage();
+    
+    void setTestDescription(String description);
 }

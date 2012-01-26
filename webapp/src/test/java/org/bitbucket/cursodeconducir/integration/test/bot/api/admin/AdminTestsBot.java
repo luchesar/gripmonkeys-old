@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
 import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.openqa.selenium.Alert;
 
 public interface AdminTestsBot extends AdminBot {
     EditTestBot create();
@@ -16,7 +17,7 @@ public interface AdminTestsBot extends AdminBot {
     
     String getTestDescription(String aTitle);
     
-    List<Test> deleteTest(String title);
+    Alert deleteTest(String title);
     
     boolean isPublished(String title);
     

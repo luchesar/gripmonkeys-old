@@ -1,5 +1,6 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.impl;
 
+import static org.bitbucket.cursodeconducir.integration.test.bot.WebDriverUtils.*;
 import static junit.framework.Assert.*;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;
@@ -11,12 +12,18 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageBotImpl implements PageBot {
-    private String pageTitle;
-    private MainMenuBotImpl mainMenuBot;
-    private WebElement footer;
+    protected final String pageTitle;
+    protected final MainMenuBotImpl mainMenuBot;
+    protected final WebElement footer;
+    protected final WebDriver driver;
+    protected final String webAppUrl;
+    protected final String pagePath;
 
-    public PageBotImpl(WebDriver driver, String webAppUrl, String pageFragment) {
-        String url = webAppUrl + pageFragment;
+    public PageBotImpl(WebDriver aDriver, String aWebAppUrl, String aPagePath) {
+        driver = aDriver;
+        webAppUrl = aWebAppUrl;
+        pagePath = aPagePath;
+        String url = aWebAppUrl + aPagePath;
         if (!url.equals(driver.getCurrentUrl())) {
             driver.get(url);
         }
@@ -24,12 +31,7 @@ public class PageBotImpl implements PageBot {
         pageTitle = driver.getTitle();
         mainMenuBot = new MainMenuBotImpl(driver);
 
-        footer = (new WebDriverWait(driver, 25)).until(new ExpectedCondition<WebElement>() {
-            @Override
-            public WebElement apply(WebDriver d) {
-                return d.findElement(By.cssSelector("footer.loaded"));
-            }
-        });
+        footer = findElement(driver, By.cssSelector("footer.loaded"), 25);
         assertNotNull(pageTitle);
         assertNotNull(mainMenuBot);
         assertNotNull(footer);

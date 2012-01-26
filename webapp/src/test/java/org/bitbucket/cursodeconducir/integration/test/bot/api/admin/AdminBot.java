@@ -6,5 +6,4 @@ public interface AdminBot extends PageBot {
     String getTitle();
     
     String getSubTitle();
-    
 }
