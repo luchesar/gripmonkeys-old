@@ -15,6 +15,7 @@ import org.bitbucket.cursodeconducir.services.entity.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import com.google.common.collect.Lists;
 
@@ -24,11 +25,12 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
     protected final WebElement cancelButton;
     protected final WebElement testTitle;
     protected final WebElement testImageLink;
+    protected final WebElement testImage;
     protected final WebElement testDescription;
     protected final WebElement answer0;
     protected final WebElement answer1;
     protected final WebElement answer2;
-    protected final WebElement correctAnswerIndex;
+    protected final WebElement correctAnswerSelect;
     protected final WebElement testExplanation;
 
     public EditTestBotImpl(WebDriver aDriver, String aWebAppUrl) {
@@ -37,34 +39,22 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
 
     protected EditTestBotImpl(WebDriver aDriver, String aWebAppUrl, String hash) {
         super(aDriver, aWebAppUrl, "/admin/tests#" + hash);
-        
+
         testExplanation = findElement(driver, By.name("testExplanation"), 25);
-        assertNotNull(testExplanation);
-        
         previewButton = driver.findElement(By.linkText("Preview"));
-        assertNotNull(previewButton);
-
         saveChangesButton = driver.findElement(By.linkText("Save changes"));
-        assertNotNull(saveChangesButton);
-
         cancelButton = driver.findElement(By.linkText("Cancel"));
-        assertNotNull(cancelButton);
 
         testTitle = driver.findElement(By.name("testTitle"));
-        assertNotNull(testTitle);
         testImageLink = driver.findElement(By.id("testImageLink"));
-        assertNotNull(testImageLink);
+        testImage = driver.findElement(By.id("testImage"));
         testDescription = driver.findElement(By.name("testDescription"));
-        assertNotNull(testDescription);
         answer0 = driver.findElement(By.name("answer0"));
-        assertNotNull(answer0);
         answer1 = driver.findElement(By.name("answer1"));
-        assertNotNull(answer1);
         answer2 = driver.findElement(By.name("answer2"));
-        assertNotNull(answer2);
 
-        correctAnswerIndex = driver.findElement(By.name("correctAnswerIndex"));
-        assertNotNull(correctAnswerIndex);
+        correctAnswerSelect = driver.findElement(By.name("correctAnswerIndex"));
+        assertNotNull(correctAnswerSelect);
     }
 
     @Override
@@ -89,25 +79,55 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
     public Test getTest() {
         List<String> possibleAnswers = Lists.newArrayList(answer0.getText(), answer1.getText(),
                 answer2.getText());
-        int selectedIndex = Integer.parseInt(WebDriverUtils.getSelectedValue(correctAnswerIndex));
+        int selectedIndex = Integer.parseInt(WebDriverUtils.getSelectedValue(correctAnswerSelect));
 
-        return new Test(testTitle.getText(), testImageLink.getAttribute("href"),
+        return new Test(testTitle.getAttribute("value"), testImage.getAttribute("src"),
                 testDescription.getText(), possibleAnswers, selectedIndex,
-                testExplanation.getText(), Collections.<String>emptyList());
+                testExplanation.getText(), Collections.<String> emptyList());
     }
 
     @Override
     public EditTestImageBot editImage() {
-        return null;
+        testImage.click();
+        return new EditTestImageBotImpl(driver);
     }
-    
+
     @Override
     public void setTestTitle(String aTitle) {
         testTitle.sendKeys(aTitle);
     }
-    
+
     @Override
     public void setTestDescription(String aDescription) {
         testDescription.sendKeys(aDescription);
+    }
+
+    @Override
+    public void setPossibleAnswer(int aIndex, String aAnswer) {
+        switch (aIndex) {
+        case 0:
+            answer0.sendKeys(aAnswer);
+            break;
+        case 1:
+            answer1.sendKeys(aAnswer);
+            break;
+        case 2:
+            answer2.sendKeys(aAnswer);
+            break;
+
+        default:
+            throw new IllegalArgumentException("No aswer with index " + aIndex);
+        }
+    }
+
+    @Override
+    public void setCorrectAnswer(String aCorrectAnswer) {
+        Select select = new Select(correctAnswerSelect);
+        select.selectByVisibleText(aCorrectAnswer);
+    }
+
+    @Override
+    public void setExplanation(String aExplanation) {
+        testExplanation.sendKeys(aExplanation);
     }
 }

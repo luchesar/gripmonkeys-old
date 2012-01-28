@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 public class AdminBotImpl extends PageBotImpl implements AdminBot {
     protected final WebElement titleElement;
     protected final WebElement titleHintElement;
+    protected final WebElement testFeedbackContent;
 
     public AdminBotImpl(WebDriver aDriver, String aWebAppUrl, String aPagePath) {
         super(aDriver, aWebAppUrl, aPagePath);
@@ -21,6 +22,8 @@ public class AdminBotImpl extends PageBotImpl implements AdminBot {
         assertNotNull(titleElement);
         titleHintElement = titleElement.findElement(By.tagName(SMALL));
         assertNotNull(titleHintElement);
+        
+        testFeedbackContent = driver.findElement(By.className("feedback"));
     }
 
     @Override

@@ -12,8 +12,11 @@ import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.services.entity.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
     private static final String ID_TEST_DESCRIPTION = "testDescription";
@@ -39,13 +42,13 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         assertNotNull(createButton);
 
         initTestElements();
+        assertFalse(testFeedbackContent.isDisplayed());
     }
 
     private void initTestElements() {
         allTestsContainer = driver.findElement(By.id(ID_ALL_TESTS_CONTAINER));
         assertNotNull(allTestsContainer);
-        testContainers = allTestsContainer.findElements(By
-                .id("testInAList"));
+        testContainers = allTestsContainer.findElements(By.id("testInAList"));
         assertNotNull(testContainers);
     }
 
@@ -75,18 +78,38 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         findTestTitle(findTestElement(aTitle)).click();
         return new EditTestBotImpl(driver, webAppUrl);
     }
-    
+
     @Override
     public String getTestDescription(String aTitle) {
         return getTestDescription(findTestElement(aTitle));
     }
 
     @Override
-    public Alert deleteTest(String aTitle) {
+    public void deleteTest(final String aTitle, boolean accept) {
         WebElement deleteButton = findTestElement(aTitle).findElement(By.linkText("Delete"));
         deleteButton.click();
-        initTestElements();
-        return driver.switchTo().alert();
+
+        Alert alert = driver.switchTo().alert();
+        if (accept) {
+            alert.accept();
+
+            // wait for the element to be deleted from the dom
+            (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver d) {
+                    try {
+                        initTestElements();
+                        return findTestElement(aTitle) == null;
+                    } catch (StaleElementReferenceException e) {
+                        return true;
+                    }
+                }
+            });
+            assertFalse(testFeedbackContent.isDisplayed());
+            initTestElements();
+        } else {
+            alert.dismiss();
+        }
     }
 
     @Override
@@ -96,14 +119,16 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
 
     @Override
     public boolean publish(String aTitle) throws BotException {
+        assertFalse(testFeedbackContent.isDisplayed());
         return false;
     }
 
     @Override
     public boolean unpublish(String aTitle) throws BotException {
+        assertFalse(testFeedbackContent.isDisplayed());
         return false;
     }
-    
+
     private WebElement findTestElement(String title) {
         for (WebElement element : testContainers) {
             WebElement titleLink = findTestTitle(element);
@@ -111,18 +136,18 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
                 return element;
             }
         }
-        
+
         return null;
     }
-    
+
     private WebElement findTestImage(WebElement testElement) {
         return testElement.findElement(By.id(ID_TEST_IMAGE));
     }
-    
+
     private WebElement findTestTitle(WebElement testElement) {
         return testElement.findElement(By.id(ID_TEST_TITLE_LINK));
     }
-    
+
     private String getTestDescription(WebElement testElement) {
         return testElement.findElement(By.id(ID_TEST_DESCRIPTION)).getText();
     }

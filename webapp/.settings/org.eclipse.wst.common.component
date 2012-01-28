@@ -1,4 +1,5 @@
-<project-modules id="moduleCoreId" project-version="2.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
   <wb-module deploy-name="webapp">
     <property name="context-root" value="webapp"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
@@ -21,7 +22,7 @@
     <dependent-module archiveName="guava-r08.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava/r08/guava-r08.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="model-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/bitbucket/cursodeconducir/model/1.0.0/model-1.0.0.jar">
+    <dependent-module archiveName="model.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/model/model">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="objectify-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/objectify/objectify/3.0/objectify-3.0.jar">
@@ -31,5 +32,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
   </wb-module>
 </project-modules>
