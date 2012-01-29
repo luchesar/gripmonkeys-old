@@ -1,15 +1,13 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.impl;
 
-import static org.bitbucket.cursodeconducir.integration.test.bot.WebDriverUtils.*;
 import static junit.framework.Assert.*;
+import static org.bitbucket.cursodeconducir.integration.test.bot.WebDriverUtils.*;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.PageBot;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageBotImpl implements PageBot {
     protected final String pageTitle;
@@ -29,7 +27,7 @@ public class PageBotImpl implements PageBot {
         }
 
         pageTitle = driver.getTitle();
-        mainMenuBot = new MainMenuBotImpl(driver);
+        mainMenuBot = new MainMenuBotImpl(driver, webAppUrl);
 
         footer = findElement(driver, By.cssSelector("footer.loaded"), 25);
         assertNotNull(pageTitle);

@@ -57,6 +57,7 @@ cursoconducir.IndexPage = function(test) {
                 testPreviewModule.show(model, $('#testPreviewTemplate'),
                         $('#testContainer'));
             }
+            $("#footer").addClass("loaded");
         } else if (hash.indexOf(PREVIEW) == 0) {
             hideExtras();
             var testId = $.getQueryString(TEST_KEY);

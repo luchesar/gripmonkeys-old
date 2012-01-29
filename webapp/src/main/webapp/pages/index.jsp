@@ -7,7 +7,7 @@ TestStorage storage = new TestStorage(); Gson gson = new Gson(); %>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Curso de conducir</title>
+<title>Curso Conducir</title>
 <meta name="description"
   content="autoescuela, auto escuela, auto escuela online, autoescuela online,  test dgt, tests dgt, test de conducir, carnet de conducir, carne de conducir, test de trafico, curso conducir, cursoconducir, todotest, todo test, test dgt 2011, tests dgt 2011" />
 <meta name="author" content="" />
@@ -190,7 +190,7 @@ body {
         </div>
       </div>
     </div>
-    <footer>
+    <footer id="footer">
     <p>&copy; CursoConducir 2012</p>
     </footer>
   </div>

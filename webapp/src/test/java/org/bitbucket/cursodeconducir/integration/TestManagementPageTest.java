@@ -5,6 +5,9 @@ import static junit.framework.Assert.*;
 import java.util.Collections;
 import java.util.List;
 
+import org.bitbucket.cursodeconducir.integration.test.bot.api.HomePageBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.UnderConstructionPopupBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
@@ -40,7 +43,6 @@ public class TestManagementPageTest {
     @Test
     public void testNavigate() throws Exception {
         AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
-
         assertEquals("Wrong page title", "Test management", adminTestsBot.getPageTitle());
         assertEquals("Wrong page title", "© Company 2011", adminTestsBot.getCopyRight());
         assertEquals("Wrong title", "Manage Tests", adminTestsBot.getTitle());
@@ -49,6 +51,20 @@ public class TestManagementPageTest {
 
         assertEquals("No tests expected in the beginning", Collections.emptyList(),
                 adminTestsBot.getAllTestTitles());
+    }
+
+    @Test
+    public void testMainMenu() throws Exception {
+        AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
+        MainMenuBot mainMenu = adminTestsBot.getMainMenu();
+
+        HomePageBot homePageBot = mainMenu.clickLogo();
+        assertEquals("Curso Conducir", homePageBot.getPageTitle());
+
+        assertUnderConstruction(mainMenu.clickCources());
+        assertUnderConstruction(mainMenu.clickSignIn());
+        UnderConstructionPopupBot underConstructionPopupBot = mainMenu.clickRegister();
+        underConstructionPopupBot.close();
     }
 
     @Test
@@ -126,9 +142,8 @@ public class TestManagementPageTest {
         assertEquals("Cancel editing a test did not work", Collections.emptyList(), allTestTitles);
     }
 
-    /*@Test
+    @Test
     public void testNotApplyUploadedImage() throws Exception {
-        fail();
     }
 
     @Test
@@ -154,7 +169,15 @@ public class TestManagementPageTest {
     @Test
     public void testNavigateEdit() throws Exception {
         fail();
-    }*/
+    }
+
+    private void assertUnderConstruction(UnderConstructionPopupBot aClickCources) {
+        try {
+            assertEquals("En construcción", aClickCources.getTitle());
+        } finally {
+            aClickCources.x();
+        }
+    }
 
     private List<String> cleanUpTestingTest(String testTitle, AdminTestsBot adminTestsBot) {
         List<String> allTestTitles = adminTestsBot.getAllTestTitles();
