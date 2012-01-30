@@ -18,11 +18,11 @@
           </div>
         </div>
         <div class="span2">
-          <a id="testCancel" class="btn small" href="#delete?test={{id}}">Delete</a>
+          <a id="deleteTest" class="btn small" href="#delete?test={{id}}">Delete</a>
           {{^published}}
-          <a class="btn small" href="#publish?test={{id}}">Publish</a>
+          <a id="changeTestPublishment" class="btn small" href="#publish?test={{id}}">Publish</a>
           {{/published}}{{#published}}
-          <a class="btn small" href="#unpublish?test={{id}}">Unpublish</a>
+          <a id="changeTestPublishment" class="btn small" href="#unpublish?test={{id}}">Unpublish</a>
           {{/published}}
         </div>
       </div>

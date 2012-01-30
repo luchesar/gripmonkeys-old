@@ -20,14 +20,18 @@ public class EditTestImageBotImpl implements EditTestImageBot {
     private WebElement fileSize;
     private WebElement fileType;
     private WebElement progressNumber;
+    private WebElement uploadImageModalContainer;
 
     public EditTestImageBotImpl(WebDriver aDriver) {
         driver = aDriver;
+        uploadImageModalContainer = driver.findElement(By.id("upload-image-modal"));
+        waitForPopUp();
+        
+        cancelButton = uploadImageModalContainer.findElement(By.linkText("Cancel"));
+        doneButton = uploadImageModalContainer.findElement(By.linkText("Done"));
 
-        cancelButton = WebDriverUtils.findElement(driver, By.linkText("Cancel"), 25);
-        doneButton = WebDriverUtils.findElement(driver, By.linkText("Done"), 25);
-
-        WebElement modalHeader = driver.findElement(By.id("upload-image-modal")).findElement(
+        
+        WebElement modalHeader = uploadImageModalContainer.findElement(
                 By.className("modal-header"));
         title = modalHeader.findElement(By.tagName("h3"));
         closeButton = modalHeader.findElement(By.className("close"));
@@ -95,15 +99,38 @@ public class EditTestImageBotImpl implements EditTestImageBot {
     @Override
     public void done() {
         doneButton.click();
+        waitForClose();
     }
 
     @Override
     public void cancel() {
         cancelButton.click();
+        waitForClose();
     }
 
     @Override
     public void close() {
         closeButton.click();
+        waitForClose();
+    }
+    
+    private void waitForPopUp() {
+        (new WebDriverWait(driver, 10))
+        .until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver d) {
+                return uploadImageModalContainer.isDisplayed();
+            }
+        });
+    }
+    
+    private void waitForClose() {
+        (new WebDriverWait(driver, 10))
+        .until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver d) {
+                return !uploadImageModalContainer.isDisplayed();
+            }
+        });
     }
 }

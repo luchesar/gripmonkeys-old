@@ -10,10 +10,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class PageBotImpl implements PageBot {
-    protected final String pageTitle;
-    protected final MainMenuBotImpl mainMenuBot;
-    protected final WebElement footer;
-    protected final WebDriver driver;
+    protected String pageTitle;
+    protected MainMenuBotImpl mainMenuBot;
+    protected WebElement footer;
+    protected WebDriver driver;
     protected final String webAppUrl;
     protected final String pagePath;
 
@@ -26,6 +26,10 @@ public class PageBotImpl implements PageBot {
             driver.get(url);
         }
 
+        initPage();
+    }
+
+    private final void initPage() {
         pageTitle = driver.getTitle();
         mainMenuBot = new MainMenuBotImpl(driver, webAppUrl);
 
@@ -33,6 +37,10 @@ public class PageBotImpl implements PageBot {
         assertNotNull(pageTitle);
         assertNotNull(mainMenuBot);
         assertNotNull(footer);
+    }
+    
+    protected void init() {
+        initPage();
     }
 
     @Override

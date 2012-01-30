@@ -21,5 +21,7 @@ public interface EditTestBot extends AdminBot {
     
     void setCorrectAnswer(String correctAnswer);
     
+    void setCorrectAnswer(int correctAnswerIndex);
+    
     void setExplanation(String explanation);
 }

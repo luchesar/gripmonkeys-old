@@ -43,7 +43,7 @@ cursoconducir.TestModule = function() {
         imageElement = $('#testImage');
         doneButton = $('#doneButton');
         cancelButton = $('#imageUploadmodalCancelButton');
-        fileToUpload=$('#fileToUpload');
+        fileToUpload = $('#fileToUpload');
         imageKey = model.activeTest.image;
 
         imageElement.click(function() {
@@ -56,7 +56,7 @@ cursoconducir.TestModule = function() {
         cancelButton.click(function() {
             modalContainer.hide();
         });
-
+        
         fileToUpload.change(function() {
             fileSelected();
             uploadFile();
@@ -67,7 +67,7 @@ cursoconducir.TestModule = function() {
     this.isValid = function() {
         return true;
     };
-    
+
     /** @private */
     this.createEmptyTest = function() {
         return {
@@ -75,10 +75,12 @@ cursoconducir.TestModule = function() {
             image : null,
             description : '',
             possibleAnswers : [
-                    { title : cursoconducir.utils.getTestLetter(0), index : 0, text : '', sel : true },
-                    { title : cursoconducir.utils.getTestLetter(1), index : 1, text : '', sel : false },
-                    { title : cursoconducir.utils.getTestLetter(2), index : 2, text : '', sel : false } ],
-            explanation : '' };
+                    { title : cursoconducir.utils.getTestLetter(0), index : 0,
+                        text : '', sel : true },
+                    { title : cursoconducir.utils.getTestLetter(1), index : 1,
+                        text : '', sel : false },
+                    { title : cursoconducir.utils.getTestLetter(2), index : 2,
+                        text : '', sel : false } ], explanation : '' };
     };
 
     /** @public */
@@ -107,19 +109,21 @@ cursoconducir.TestModule = function() {
         testTemplate.possibleAnswers[selectedIndex].sel = true;
         return testTemplate;
     };
-    
+
     /**
      * @private
      * @param textArea :
      *            HtmlElement
      */
     var createEmptyHtmlEditor = function(textArea) {
-//        textArea.wysiwyg(controls);
-//        textArea.wysiwyg('setContent', '');
-//        textArea.wysiwyg({ iFrameClass : "testDescription-input" });
+        // textArea.wysiwyg(controls);
+        // textArea.wysiwyg('setContent', '');
+        // textArea.wysiwyg({ iFrameClass : "testDescription-input" });
     };
 
     var editImage = function() {
+        var fileToUpload = $('#fileToUpload');
+        fileToUpload[0].files = null;
         $('#fileName').empty();
         $('#fileSize').empty();
         $('#fileType').empty();
@@ -172,7 +176,8 @@ cursoconducir.TestModule = function() {
 
     function uploadComplete(evt) {
         imageKey = evt.target.getResponseHeader('key');
-        var imageUrl = '/image?key=' + imageKey + '&falback=/images/330x230.gif';
+        var imageUrl = '/image?key=' + imageKey
+                + '&falback=/images/330x230.gif';
         var currectTestImage = $('#currentTestImage');
         currectTestImage.attr('src', imageUrl);
     }

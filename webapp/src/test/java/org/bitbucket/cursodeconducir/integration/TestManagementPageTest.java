@@ -103,6 +103,7 @@ public class TestManagementPageTest {
             assertEquals("The test did not get saved", Lists.newArrayList(testTitle), allTestTitles);
 
             assertEquals(description, adminTestsBot.getTestDescription(testTitle));
+            assertTrue(adminTestsBot.isPublished(testTitle));
 
             editTestBot = adminTestsBot.clickTestTitle(testTitle);
 
@@ -110,7 +111,8 @@ public class TestManagementPageTest {
 
             assertEquals(testTitle, pageTest.getTitle());
 
-            assertFalse(oldImage.equals(pageTest.getImage()));
+            assertFalse("old image '" + oldImage + "' did not get changed ",
+                    oldImage.equals(pageTest.getImage()));
             assertEquals(description, pageTest.getDescription());
             assertEquals(Lists.newArrayList(answer0, answer1, answer2),
                     pageTest.getPossibleAnswers());
@@ -122,6 +124,51 @@ public class TestManagementPageTest {
                 adminTestsBot.deleteTest(testTitle, true);
                 assertEquals("Did not clean up the test properly", Collections.emptyList(),
                         adminTestsBot.getAllTestTitles());
+            } catch (Exception e) {
+                // Swallow it because we want to see the real error
+            }
+        }
+    }
+
+    @Test
+    public void testEditExistingTest() throws Exception {
+        AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
+        assertEquals("No tests expected in the beginning", Collections.emptyList(),
+                adminTestsBot.getAllTestTitles());
+
+        String imageFile = getClass().getResource("testImage.jpg").getFile();
+        String imageFile1 = getClass().getResource("testImage1.png").getFile();
+        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+                "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
+                        "answer13"), 2, "explanation1", Lists.<String> newArrayList());
+
+        org.bitbucket.cursodeconducir.services.entity.Test test2 = new org.bitbucket.cursodeconducir.services.entity.Test(
+                "title2", imageFile1, "description2", Lists.newArrayList("asnwer21", "answer22",
+                        "answer23"), 1, "explanation2", Lists.<String> newArrayList());
+
+        org.bitbucket.cursodeconducir.services.entity.Test createdTest = adminTestsBot
+                .createTest(test1);
+        try {
+            adminTestsBot.updateTest(test1.getTitle(), test2);
+            assertEquals(Lists.newArrayList(test2.getTitle()), adminTestsBot.getAllTestTitles());
+            assertEquals(test2.getDescription(), adminTestsBot.getTestDescription(test2.getTitle()));
+
+            EditTestBot editTestBot = adminTestsBot.clickTestTitle(test2.getTitle());
+
+            org.bitbucket.cursodeconducir.services.entity.Test updatedTest = editTestBot.getTest();
+
+            assertEquals(test2.getTitle(), updatedTest.getTitle());
+
+            assertFalse("old image '" + createdTest.getImage() + "' did not get changed ",
+                    createdTest.getImage().equals(updatedTest.getImage()));
+            assertEquals(test2.getDescription(), updatedTest.getDescription());
+            assertEquals(test2.getPossibleAnswers(), updatedTest.getPossibleAnswers());
+            assertEquals(test2.getCorrectAnswerIndex(), updatedTest.getCorrectAnswerIndex());
+            assertEquals(test2.getExplanation(), updatedTest.getExplanation());
+            adminTestsBot = editTestBot.cancel();
+        } finally {
+            try {
+                adminTestsBot.deleteTest(test2.getTitle(), true);
             } catch (Exception e) {
                 // Swallow it because we want to see the real error
             }
@@ -144,15 +191,90 @@ public class TestManagementPageTest {
 
     @Test
     public void testNotApplyUploadedImage() throws Exception {
+        String testTitle = "test1";
+
+        AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
+        List<String> allTestTitles = cleanUpTestingTest(testTitle, adminTestsBot);
+
+        assertEquals("No tests expected in the beginning", Collections.emptyList(), allTestTitles);
+
+        EditTestBot editTestBot = adminTestsBot.create();
+
+        editTestBot.setTestTitle(testTitle);
+        String oldImage = editTestBot.getTest().getImage();
+
+        EditTestImageBot testImageBot = editTestBot.editImage();
+        assertEquals(oldImage, testImageBot.getImageUrl());
+        testImageBot.uploadImage(getClass().getResource("testImage.jpg").getFile(), false);
+        assertFalse(oldImage.equals(testImageBot.getImageUrl()));
+
+        assertEquals(oldImage, editTestBot.getTest().getImage());
     }
 
     @Test
     public void testCreateMultipleAndListThem() throws Exception {
-        fail();
-    }
+        AdminTestsBot adminTestsBot = new AdminTestsBotImpl(driver, webAppUrl);
+        assertEquals("No tests expected in the beginning", Collections.emptyList(),
+                adminTestsBot.getAllTestTitles());
 
+        String imageFile = getClass().getResource("testImage.jpg").getFile();
+        String imageFile1 = getClass().getResource("testImage1.png").getFile();
+        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+                "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
+                        "answer13"), 2, "explanation1", Lists.<String> newArrayList());
+
+        org.bitbucket.cursodeconducir.services.entity.Test test2 = new org.bitbucket.cursodeconducir.services.entity.Test(
+                "title2", imageFile1, "description2", Lists.newArrayList("asnwer21", "answer22",
+                        "answer23"), 1, "explanation2", Lists.<String> newArrayList());
+
+        adminTestsBot.createTest(test1);
+        try {
+            adminTestsBot.createTest(test2);
+            try {
+                assertEquals(Lists.newArrayList(test1.getTitle(), test2.getTitle()),
+                        adminTestsBot.getAllTestTitles());
+
+                assertEquals(test1.getDescription(),
+                        adminTestsBot.getTestDescription(test1.getTitle()));
+                assertEquals(test2.getDescription(),
+                        adminTestsBot.getTestDescription(test2.getTitle()));
+
+                assertTrue(adminTestsBot.isPublished(test1.getTitle()));
+                assertTrue(adminTestsBot.isPublished(test2.getTitle()));
+
+                adminTestsBot.unpublish(test1.getTitle());
+                assertFalse(adminTestsBot.isPublished(test1.getTitle()));
+                assertTrue(adminTestsBot.isPublished(test2.getTitle()));
+
+                adminTestsBot.unpublish(test2.getTitle());
+                assertFalse(adminTestsBot.isPublished(test1.getTitle()));
+                assertFalse(adminTestsBot.isPublished(test2.getTitle()));
+
+                adminTestsBot.publish(test1.getTitle());
+                assertTrue(adminTestsBot.isPublished(test1.getTitle()));
+                assertFalse(adminTestsBot.isPublished(test2.getTitle()));
+
+                adminTestsBot.publish(test2.getTitle());
+                assertTrue(adminTestsBot.isPublished(test1.getTitle()));
+                assertTrue(adminTestsBot.isPublished(test2.getTitle()));
+            } finally {
+                try {
+                    adminTestsBot.deleteTest(test2.getTitle(), true);
+                } catch (Exception e) {
+                    // Swallow it because we want to see the real error
+                }
+            }
+        } finally {
+            try {
+                adminTestsBot.deleteTest(test1.getTitle(), true);
+            } catch (Exception e) {
+                // Swallow it because we want to see the real error
+            }
+        }
+    }
+    
     @Test
-    public void testEditImageWithoutReload() throws Exception {
+    public void testPreviewATest() throws Exception {
         fail();
     }
 
@@ -168,6 +290,11 @@ public class TestManagementPageTest {
 
     @Test
     public void testNavigateEdit() throws Exception {
+        fail();
+    }
+    
+    @Test
+    public void testBackForthNavigation() throws Exception {
         fail();
     }
 

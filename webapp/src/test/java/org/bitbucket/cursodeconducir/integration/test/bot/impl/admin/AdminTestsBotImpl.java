@@ -9,6 +9,7 @@ import java.util.List;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
 import org.bitbucket.cursodeconducir.services.entity.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -24,7 +25,7 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
     private static final String ID_TEST_IMAGE = "testImage";
     private static final String ID_ALL_TESTS_CONTAINER = "allTestsContainer";
 
-    private final WebElement createButton;
+    private WebElement createButton;
 
     private WebElement allTestsContainer;
 
@@ -33,6 +34,16 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
     public AdminTestsBotImpl(WebDriver aDriver, String aWebAppUrl) {
         super(aDriver, aWebAppUrl, PAGE_PATH);
 
+        initAdminTestsBot();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        initAdminTestsBot();
+    }
+
+    private final void initAdminTestsBot() {
         List<WebElement> createButtons = driver.findElements(By.linkText(CREATE_LINK_TEXT));
         assertEquals(2, createButtons.size());
         assertEquals(createButtons.get(0).getAttribute(HREF),
@@ -41,15 +52,11 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         createButton = createButtons.get(0);
         assertNotNull(createButton);
 
-        initTestElements();
-        assertFalse(testFeedbackContent.isDisplayed());
-    }
-
-    private void initTestElements() {
         allTestsContainer = driver.findElement(By.id(ID_ALL_TESTS_CONTAINER));
         assertNotNull(allTestsContainer);
         testContainers = allTestsContainer.findElements(By.id("testInAList"));
         assertNotNull(testContainers);
+        assertFalse("Server error '" + testFeedbackContent + "'", testFeedbackContent.isDisplayed());
     }
 
     @Override
@@ -98,15 +105,14 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
                 @Override
                 public Boolean apply(WebDriver d) {
                     try {
-                        initTestElements();
+                        initAdminTestsBot();
                         return findTestElement(aTitle) == null;
                     } catch (StaleElementReferenceException e) {
                         return true;
                     }
                 }
             });
-            assertFalse(testFeedbackContent.isDisplayed());
-            initTestElements();
+            init();
         } else {
             alert.dismiss();
         }
@@ -114,19 +120,93 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
 
     @Override
     public boolean isPublished(String aTitle) {
-        return false;
+        WebElement publishmentButton = findTestPublishmentButton(findTestElement(aTitle));
+
+        if ("Publish".equals(publishmentButton.getText())) {
+            return false;
+        } else if ("Unpublish".equals(publishmentButton.getText())) {
+            return true;
+        }
+        throw new IllegalStateException();
     }
 
     @Override
-    public boolean publish(String aTitle) throws BotException {
-        assertFalse(testFeedbackContent.isDisplayed());
-        return false;
+    public void publish(final String aTitle) throws BotException {
+        assertFalse("Server error '" + testFeedbackContent + "'", testFeedbackContent.isDisplayed());
+
+        if (isPublished(aTitle)) {
+            throw new BotException("'" + aTitle + "' is already published");
+        }
+        WebElement publishmentButton = findTestPublishmentButton(findTestElement(aTitle));
+        publishmentButton.click();
+        (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver d) {
+                try {
+                    return isPublished(aTitle);
+                } catch (StaleElementReferenceException e) {
+                    return true;
+                }
+            }
+        });
+        init();
     }
 
     @Override
-    public boolean unpublish(String aTitle) throws BotException {
-        assertFalse(testFeedbackContent.isDisplayed());
-        return false;
+    public void unpublish(final String aTitle) throws BotException {
+        assertFalse("Server error '" + testFeedbackContent + "'", testFeedbackContent.isDisplayed());
+
+        if (!isPublished(aTitle)) {
+            throw new BotException("'" + aTitle + "' is already unpublished");
+        }
+        WebElement publishmentButton = findTestPublishmentButton(findTestElement(aTitle));
+        publishmentButton.click();
+        (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver d) {
+                try {
+                    return !isPublished(aTitle);
+                } catch (StaleElementReferenceException e) {
+                    return true;
+                }
+            }
+        });
+        init();
+    }
+
+    @Override
+    public Test createTest(Test aTest) {
+        EditTestBot editTestBot = create();
+        return setTestValues(aTest, editTestBot);
+    }
+
+    @Override
+    public Test updateTest(String aTitle, Test aTest) {
+        EditTestBot editTestBot = clickTestTitle(aTitle);
+        return setTestValues(aTest, editTestBot);
+    }
+
+    private Test setTestValues(Test aTest, EditTestBot editTestBot) {
+        editTestBot.setTestTitle(aTest.getTitle());
+        editTestBot.setTestDescription(aTest.getDescription());
+        List<String> possibleAnswers = aTest.getPossibleAnswers();
+        for (int i = 0; i < possibleAnswers.size(); i++) {
+            editTestBot.setPossibleAnswer(i, possibleAnswers.get(i));
+        }
+
+        editTestBot.setCorrectAnswer(aTest.getCorrectAnswerIndex());
+        editTestBot.setExplanation(aTest.getExplanation());
+        String oldImage = editTestBot.getTest().getImage();
+
+        EditTestImageBot testImageBot = editTestBot.editImage();
+        assertEquals(oldImage, testImageBot.getImageUrl());
+        testImageBot.uploadImage(aTest.getImage(), true);
+        assertFalse(oldImage.equals(testImageBot.getImageUrl()));
+
+        Test createdTest = editTestBot.getTest();
+        editTestBot.save();
+        init();
+        return createdTest;
     }
 
     private WebElement findTestElement(String title) {
@@ -150,5 +230,9 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
 
     private String getTestDescription(WebElement testElement) {
         return testElement.findElement(By.id(ID_TEST_DESCRIPTION)).getText();
+    }
+
+    private WebElement findTestPublishmentButton(WebElement testElement) {
+        return testElement.findElement(By.id("changeTestPublishment"));
     }
 }

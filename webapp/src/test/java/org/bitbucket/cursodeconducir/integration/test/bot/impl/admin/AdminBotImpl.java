@@ -11,19 +11,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class AdminBotImpl extends PageBotImpl implements AdminBot {
-    protected final WebElement titleElement;
-    protected final WebElement titleHintElement;
-    protected final WebElement testFeedbackContent;
+    protected WebElement titleElement;
+    protected WebElement titleHintElement;
+    protected WebElement testFeedbackContent;
 
     public AdminBotImpl(WebDriver aDriver, String aWebAppUrl, String aPagePath) {
         super(aDriver, aWebAppUrl, aPagePath);
-        
+        initAdminBot();
+    }
+
+    private final void initAdminBot() {
         titleElement = driver.findElement(By.tagName(H1));
         assertNotNull(titleElement);
         titleHintElement = titleElement.findElement(By.tagName(SMALL));
         assertNotNull(titleHintElement);
         
         testFeedbackContent = driver.findElement(By.className("feedback"));
+    }
+    
+    protected void init() {
+        super.init();
+        initAdminBot();
     }
 
     @Override

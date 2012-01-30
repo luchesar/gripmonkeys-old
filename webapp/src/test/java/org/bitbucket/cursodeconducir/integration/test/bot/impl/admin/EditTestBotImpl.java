@@ -94,11 +94,13 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
 
     @Override
     public void setTestTitle(String aTitle) {
+        testTitle.clear();
         testTitle.sendKeys(aTitle);
     }
 
     @Override
     public void setTestDescription(String aDescription) {
+        testDescription.clear();
         testDescription.sendKeys(aDescription);
     }
 
@@ -106,12 +108,15 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
     public void setPossibleAnswer(int aIndex, String aAnswer) {
         switch (aIndex) {
         case 0:
+            answer0.clear();
             answer0.sendKeys(aAnswer);
             break;
         case 1:
+            answer1.clear();
             answer1.sendKeys(aAnswer);
             break;
         case 2:
+            answer2.clear();
             answer2.sendKeys(aAnswer);
             break;
 
@@ -125,9 +130,16 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
         Select select = new Select(correctAnswerSelect);
         select.selectByVisibleText(aCorrectAnswer);
     }
+    
+    @Override
+    public void setCorrectAnswer(int aCorrectAnswerIndex) {
+        Select select = new Select(correctAnswerSelect);
+        select.selectByValue(aCorrectAnswerIndex + "");
+    }
 
     @Override
     public void setExplanation(String aExplanation) {
+        testExplanation.clear();
         testExplanation.sendKeys(aExplanation);
     }
 }
