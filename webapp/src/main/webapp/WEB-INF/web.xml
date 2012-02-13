@@ -3,7 +3,7 @@
   xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   id="WebApp_ID" version="2.5"
 >
-  <display-name>'Curso de conducir' web app</display-name>
+  <display-name>'Curso Conducir' web app</display-name>
 
   <welcome-file-list>
     <welcome-file>pages/index.jsp</welcome-file>

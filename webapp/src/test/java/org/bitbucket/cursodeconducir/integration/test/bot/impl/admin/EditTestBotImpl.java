@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.WebDriverUtils;
+import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
@@ -58,9 +59,13 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
     }
 
     @Override
-    public PreviewTestBot preview() {
+    public PreviewTestBot preview() throws BotException {
         previewButton.click();
-        return new PreviewTestBotImpl(driver, webAppUrl);
+        try {
+            return new PreviewTestBotImpl(driver, webAppUrl);
+        } catch (Exception e) {
+            throw new BotException(e);
+        }
     }
 
     @Override
@@ -130,7 +135,7 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
         Select select = new Select(correctAnswerSelect);
         select.selectByVisibleText(aCorrectAnswer);
     }
-    
+
     @Override
     public void setCorrectAnswer(int aCorrectAnswerIndex) {
         Select select = new Select(correctAnswerSelect);

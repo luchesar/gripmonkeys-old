@@ -13,6 +13,12 @@
     </target>
 
     <target name="soy">
+        <java jar="${basedir}/closure/SoyToJsSrcCompiler.jar" fork="true" failonerror="true">
+            <arg line="--outputPathFormat"/>
+            <arg line="menu.js"/>
+            <arg line="${basedir}/../src/main/webapp/soy/menu.soy" />
+            <arg line="${basedir}/../src/main/webapp/soy/allTests.soy" />
+        </java>
     </target>
 
     <target name="compile" depends="soy">

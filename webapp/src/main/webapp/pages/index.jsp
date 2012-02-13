@@ -43,9 +43,9 @@ body {
 
 <script src="../../jslib/closure/goog/base.js"></script>
 <script src="../../deps.js"></script>
-<script>goog.require('cursoconducir.IndexPage');</script>
+<script>goog.require('cursoconducir.IndexPage');</script> 
 
-<!-- <script src="/pages/index.compiled.js"></script> -->
+<!-- <script src="/pages/index.compiled.js"></script>-->
 <script>
     cursoconducir.index.init(
 <%=gson.toJson(storage.getAll(true))%>

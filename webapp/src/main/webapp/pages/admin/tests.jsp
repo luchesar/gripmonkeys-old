@@ -75,10 +75,10 @@ body {
     <%@include file="/modules/feedback.html"%>
 </script>
 
-<script src="../../jslib/closure/goog/base.js"></script>
+<!-- <script src="../../jslib/closure/goog/base.js"></script>
 <script src="../../deps.js"></script>
- <script>goog.require('cursoconducir.admin.TestsPage');</script>
-<!-- <script src="/pages/admin/adminTests.compiled.js"></script> -->
+<script>goog.require('cursoconducir.admin.TestsPage');</script> -->
+<script src="/pages/admin/adminTests.compiled.js"></script>
 <script type="text/javascript">
 cursoconducir.admin.tests.init();
 </script>

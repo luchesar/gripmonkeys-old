@@ -42,6 +42,12 @@ public class PageBotImpl implements PageBot {
     protected void init() {
         initPage();
     }
+    
+    @Override
+    public void reload() {
+        driver.navigate().refresh();
+        init();
+    }
 
     @Override
     public String getPageTitle() {

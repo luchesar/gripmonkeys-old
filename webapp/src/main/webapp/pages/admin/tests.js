@@ -1,5 +1,5 @@
 goog.provide('cursoconducir.admin.TestsPage');
-goog.provide('cursoconducir.admin.tests')
+goog.provide('cursoconducir.admin.tests');
 
 goog.require('hashchange');
 goog.require('jquery.querystring');
@@ -7,6 +7,7 @@ goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestModule');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
+goog.require('goog.net.Cookies');
 
 cursoconducir.admin.tests.init = function() {
     var testPage;
@@ -108,9 +109,11 @@ cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, all
             if ((model && model.activeTest && model.activeTest.id == testId)
                     || testId == undefined || testId == "") {
                 previewTest(testModule.getTest());
+                $("#footer").addClass("loaded");
             } else {
                 cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                     previewTest(test);
+                    $("#footer").addClass("loaded");
                 }, hideFeedback, showFeedback);
             }
         } else if (hash.indexOf(DELETE) == 0) {

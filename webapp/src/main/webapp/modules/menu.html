@@ -1,11 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div id="under-construction-modal" class="modal hide fade" style="width: 375px; left: 56%">
+<div id="under-construction-modal" class="modal hide fade" style="width: 600px; left: 47%">
   <div class="modal-header">
     <a href="#" class="close">&times;</a>
     <h2>En construcción</h2>
   </div>
   <div id="under-construction-modal-body" class="modal-body">
-    <a> <img class="thumbnail" src="/images/under-construction.jpg" /> </a>
+    <div class="container">
+      <div class="row">
+        <div class="span4">
+          <a> <img class="thumbnail pull-left" src="/images/under-construction.jpg" /> </a>
+        </div>
+        <div class="span6">
+          <p>
+            La web Cursoconducir.com está siendo mejorada. <a href="http://www.CursoConducir.es">CursoConducir.es</a> es la
+            nueva página web a la que usted ha sido redirigido.
+          </p>
+          <p>En estos momentos <a href="http://www.CursoConducir.es">CursoConducir.es</a> esta en fase de desarrollo, puedes realizar las primeras preguntas
+            de los Test Especiales, el resto de contenidos de <a href="http://www.CursoConducir.com">CursoConducir.com</a> seran anadidos pronto.</p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <a class="btn close">Cerrar</a>
@@ -14,15 +28,14 @@
 <div class="topbar">
   <div class="fill">
     <div class="container">
-      <a class="brand pull-right" href="/"><img src="/images/logo.png"/></img></a>
+      <a class="brand pull-right" href="/"><img src="/images/logo.png" /></img>
+      </a>
       <div class="pull-right">
         <ul class="nav">
           <li><a href="#" data-controls-modal="under-construction-modal" data-keyboard="true"
-            data-backdrop="static">Cursos</a>
-          </li>
+            data-backdrop="static">Cursos</a></li>
           <li><a href="/login" data-controls-modal="under-construction-modal" data-keyboard="true"
-            data-backdrop="static">Acceder</a>
-          </li>
+            data-backdrop="static">Acceder</a></li>
         </ul>
         <form action="">
           <input class="input-small" type="text" placeholder="Email"> <input class="input-small" type="password"
@@ -32,8 +45,7 @@
         </form>
         <ul class="nav">
           <li><a href="#" data-controls-modal="under-construction-modal" data-keyboard="true"
-            data-backdrop="static">Regístrate</a>
-          </li>
+            data-backdrop="static">Regístrate</a></li>
         </ul>
       </div>
     </div>

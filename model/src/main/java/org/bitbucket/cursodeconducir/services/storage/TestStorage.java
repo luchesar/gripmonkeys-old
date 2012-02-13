@@ -9,8 +9,8 @@ import org.bitbucket.cursodeconducir.services.ServiceException;
 import org.bitbucket.cursodeconducir.services.Util;
 import org.bitbucket.cursodeconducir.services.entity.Test;
 
-import com.google.appengine.repackaged.com.google.common.collect.Lists;
-import com.google.appengine.repackaged.com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Query;

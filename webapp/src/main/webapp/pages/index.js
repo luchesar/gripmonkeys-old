@@ -6,14 +6,25 @@ goog.require('hashchange');
 goog.require('jquery.querystring');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
-goog.require("bootstrap.modal");
+goog.require('bootstrap.modal');
+goog.require('goog.net.Cookies');
 
 cursoconducir.index.init = function(allTestJson) {
     $(function() {
         var indexPage = new cursoconducir.IndexPage();
         indexPage.start(allTestJson);
         window._cursoConducirPage = indexPage;
+        cursoconducir.index.showInConstruction();
     });
+};
+
+cursoconducir.index.showInConstruction = function() {
+    var visitedCookie = "cursoconducirInConstruction";
+    var cookies = new goog.net.Cookies(document); 
+    if (!cookies.containsKey(visitedCookie)) {
+        $('#under-construction-modal').modal({ keyboard : true, backdrop : true, show : true });
+        cookies.set(visitedCookie, true, 864000);
+    }
 };
 
 cursoconducir.IndexPage = function(test) {

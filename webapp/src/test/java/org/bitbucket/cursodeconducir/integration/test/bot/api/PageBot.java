@@ -6,4 +6,6 @@ public interface PageBot {
     MainMenuBot getMainMenu();
     
     String getCopyRight();
+    
+    void reload();
 }
