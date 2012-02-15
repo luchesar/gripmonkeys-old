@@ -1,10 +1,10 @@
-{namespace cursoconducir}
+{namespace cursoconducir.allTests}
 
 /**
  * The template for all tests.
  * @param allTests
  */
-{template .allTests}
+{template .template}
 <div id="allTestsContainer">
   {foreach $test in $allTests}
   <div id="testInAList" class="container">
@@ -18,10 +18,10 @@
         </div>
         <div class="span12 pull-left">
           <h4>
-            <a id="testTitleLink" href="#update?test={$test.id}">{test.title}&nbsp;</a>
+            <a id="testTitleLink" href="#update?test={$test.id}">{$test.title}&nbsp;</a>
           </h4>
           <div id="testDescription">
-          {test.description}
+          {$test.description}
           </div>
         </div>
         <div class="span2">

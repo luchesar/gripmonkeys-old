@@ -64,7 +64,7 @@ public class TestTest {
         Test differentIsPublished = new Test(test.getTitle(), test.getTitleImage(), test.getDescription(),
                 test.getPossibleAnswers(), test.getCorrectAnswerIndex(), test.getExplanation(),
                 test.getImages());
-        differentIsPublished.setPublished(false);
+        differentIsPublished.setPublished(true);
         assertFalse(test.equals(differentIsPublished));
         assertFalse(test.hashCode() == differentIsPublished.hashCode());
     }

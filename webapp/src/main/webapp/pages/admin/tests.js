@@ -14,16 +14,15 @@ cursoconducir.admin.tests.init = function() {
     $(function() {
         var contanier = $('#container');
         var activeTestTemplate = $('#activeTestTemplate');
-        var allTestsTemplate = $('#allTestsTemplate');
         var testPreviewTemplate = $('#testPreviewTemplate');
         testPage = new cursoconducir.admin.TestsPage(contanier, activeTestTemplate,
-                allTestsTemplate, testPreviewTemplate);
+                 testPreviewTemplate);
         testPage.start();
         window._cursoConducirPage = testPage;
     });
 };
 
-cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, allTestsTemplate,
+cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, 
         previewTestTemplate) {
     /** @private */
     var CREATE = '#create';
@@ -81,7 +80,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, all
             testsContainer.empty();
             model.activeTest = null;
             if (initAllTests(function() {
-                allTestsModule.show(model, allTestsTemplate, testsContainer);
+                allTestsModule.show(model, testsContainer);
                 updateButtons($('#buttonsInitialTemplate'));
                 $("#footer").addClass("loaded");
             }));
@@ -140,7 +139,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, activeTestTemplate, all
                 postToServer(test, function() {
                     testsContainer.empty();
                     allTestsModule
-                            .show(model, allTestsTemplate, testsContainer);
+                            .show(model, testsContainer);
                     updateButtons($('#buttonsInitialTemplate'));
                 });
             }, hideFeedback, showFeedback);

@@ -15,7 +15,7 @@ public class Test extends TitledEntity {
     private String explanation;
     private List<String> images;
     @Indexed
-    private boolean published = true;
+    private boolean published = false;
 
     public Test() {
         super();
