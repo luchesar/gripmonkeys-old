@@ -1,11 +1,12 @@
 goog.provide('cursoconducir.TestModule');
 
+goog.require('cursoconducir.template.test');
 goog.require('cursoconducir.utils');
 goog.require('jquery.wysiwyg');
 goog.require('bootstrap.modal');
 goog.require('portableJson');
 
-cursoconducir.TestModule = function() {
+cursoconducir.TestModule = function(container) {
     /** @private constant */
     var controls = { controls : { separator00 : { visible : false },
         separator01 : { visible : false }, separator02 : { visible : false },
@@ -31,8 +32,9 @@ cursoconducir.TestModule = function() {
      *            test
      * @return void
      */
-    this.show = function(model, template, container) {
-        template.mustache(model).appendTo(container);
+    this.show = function(model) {
+        var templateHtml = cursoconducir.template.test.template(model);
+        container.html(templateHtml);
         currentTest = model.activeTest;
         if (currentTest == undefined) {
             return;

@@ -49,14 +49,8 @@ body {
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="placeholder" href="http://placehold.it/210x150">
 
-<script id="activeTestTemplate" type="x-tmpl-mustache">
-    <%@include file="/modules/test.html"%>
-</script>
 <script id="testPreviewTemplate" type="x-tmpl-mustache">
     <%@include file="/modules/testPreview.html"%>
-</script>
-<script id="allTestsTemplate" type="x-tmpl-mustache">
-    <%@include file="/modules/allTests.html"%>
 </script>
 <script id="buttonsInitialTemplate" type="x-tmpl-mustache">
     <a id="createButton" class="btn large danger" href="#create">Create</a>
@@ -75,10 +69,10 @@ body {
     <%@include file="/modules/feedback.html"%>
 </script>
 
-<!-- <script src="../../jslib/closure/goog/base.js"></script>
+<script src="../../jslib/closure/goog/base.js"></script>
 <script src="../../deps.js"></script>
-<script>goog.require('cursoconducir.admin.TestsPage');</script>--> 
-<script src="/jsgen/adminTests.compiled.js"></script>
+<script>goog.require('cursoconducir.admin.TestsPage');</script> 
+<!-- <script src="/jsgen/adminTests.compiled.js"></script>-->
 <script type="text/javascript">
 cursoconducir.admin.tests.init();
 </script>

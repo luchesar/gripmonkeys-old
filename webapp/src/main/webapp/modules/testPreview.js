@@ -1,12 +1,13 @@
 goog.provide('cursoconducir.TestPreviewModule');
 
-goog.require('jquery.mustache');
+goog.require('cursoconducir.template.testPreview');
 
-cursoconducir.TestPreviewModule = function(model, template, container) {
+cursoconducir.TestPreviewModule = function(container) {
     var done = false;
     /** public */
-    this.show = function(model, template, container) {
-        template.mustache(model).appendTo(container);
+    this.show = function(model) {
+        var templateHtml = cursoconducir.template.testPreview.template(model);
+        container.html(templateHtml);
         done = false;
     };
     

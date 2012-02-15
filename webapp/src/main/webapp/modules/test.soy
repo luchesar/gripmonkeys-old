@@ -1,4 +1,11 @@
-{{#activeTest}}
+{namespace cursoconducir.template.test}
+
+/**
+ * The template for all tests.
+ * @param activeTest
+ */
+{template .template}
+{if $activeTest}
 <h3 align="center">
   Create new test <small>enter new test fields</small>
 </h3>
@@ -35,7 +42,7 @@
               <label for="testTitle">Title:</label>
               <div class="input">
                 <input style="width: 420px;" placeholder="Test title" id="testTitle" name="testTitle" size="40"
-                  type="text" value="{{title}}" /> <span class="help-block">An meaningful identifier of the test
+                  type="text" value="{$activeTest.title}" /> <span class="help-block">An meaningful identifier of the test
                 </span>
               </div>
             </div>
@@ -45,38 +52,40 @@
                 <div class="media-grid">
                   <a id="testImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true"
                     href="#"> <img class="thumbnail" id="testImage"
-                    src="/image?key={{image}}&falback=/images/330x230.gif" alt=""> </a>
+                    src="/image?key={$activeTest.image}&falback=/images/330x230.gif" alt=""> </a>
                 </div>
               </div>
             </div>
             <div class="clearfix">
               <label for="testDescription">Question:</label>
               <div class="input">
-                <textarea style="width: 410px;" id="testDescription" name="testDescription" rows="5">{{description}}</textarea>
+                <textarea style="width: 410px;" id="testDescription" name="testDescription" rows="5">{$activeTest.description}</textarea>
                 <span class="help-block"> The introduction to the test and questions </span>
               </div>
             </div>
-            {{#possibleAnswers}}
+            {foreach $possibleAnswer in $activeTest.possibleAnswers}
             <div class="clearfix">
-              <label for="answer1">Answer {{title}}</label>
+              <label for="answer1">Answer {$possibleAnswer.title}</label>
               <div class="input">
-                <textarea style="width: 410px;" id="answer{{index}}" name="answer{{index}}" rows="2">{{text}}</textarea>
+                <textarea style="width: 410px;" id="answer{$possibleAnswer.index}" name="answer{$possibleAnswer.index}" rows="2">{$possibleAnswer.text}</textarea>
                 <span class="help-block"> The first possible answer of the test </span>
               </div>
             </div>
-            {{/possibleAnswers}}
+            {/foreach}
             <div class="clearfix">
               <label for="correctAnswerIndex">Correct answer:</label>
               <div class="input">
-                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex"> {{#possibleAnswers}}
-                  <option value="{{index}}"{{#sel}}selected{{/sel}}>{{title}}</option> {{/possibleAnswers}}
+                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex"> 
+                {foreach $possibleAnswer in $activeTest.possibleAnswers}
+                  <option value="{$possibleAnswer.index}"{if $possibleAnswer.sel}selected{/if}>{$possibleAnswer.title}</option> 
+                {/foreach}
                 </select> <span class="help-block">Select the correct answer</span>
               </div>
             </div>
             <div class="clearfix">
               <label for="testExplanation">Test explanation:</label>
               <div class="input">
-                <textarea style="width: 610px;" id="testExplanation" name="testExplanation" rows="12">{{explanation}}</textarea>
+                <textarea style="width: 610px;" id="testExplanation" name="testExplanation" rows="12">{$activeTest.explanation}</textarea>
                 <span class="help-block"> The explanation of the correct answer </span>
               </div>
             </div>
@@ -86,8 +95,9 @@
     </div>
   </form>
 </div>
-{{/activeTest}} {{^activeTest}}
+{else}
 <h3 align="center">
   <small>No test selected</small>
 </h3>
-{{/activeTest}}
+{/if}
+{/template}

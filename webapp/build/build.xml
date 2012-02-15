@@ -23,6 +23,8 @@
             <arg line="--outputPathFormat"/>
             <arg line="${templates.js.file}"/>
             <arg line="${basedir}/../src/main/webapp/modules/menu.soy" />
+            <arg line="${basedir}/../src/main/webapp/modules/test.soy" />
+            <arg line="${basedir}/../src/main/webapp/modules/testPreview.soy" />
             <arg line="${basedir}/../src/main/webapp/modules/allTests.soy" />
         </java>
         <echo>${templates.js.file} regenerated</echo>
