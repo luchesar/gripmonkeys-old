@@ -49,26 +49,6 @@ body {
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="placeholder" href="http://placehold.it/210x150">
 
-<script id="testPreviewTemplate" type="x-tmpl-mustache">
-    <%@include file="/modules/testPreview.html"%>
-</script>
-<script id="buttonsInitialTemplate" type="x-tmpl-mustache">
-    <a id="createButton" class="btn large danger" href="#create">Create</a>
-</script>
-<script id="buttonsEditTestTemplate" type="x-tmpl-mustache">
-    <a id="testCancel" href="#preview?test={{activeTest.id}}" class="btn large">Preview</a>
-    <a id="testSubmit" class="btn large primary" onClick="window._cursoConducirPage.updateCurrentEditedTest()">Save changes</a> 
-    <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
-</script>
-<script id="buttonsPreviewTestTemplate" type="x-tmpl-mustache">
-    <a id="testCancel" href="#update?test={{activeTest.id}}" class="btn large">Edit</a>
-    <a id="testSubmit" class="btn large primary" onClick="window._cursoConducirPage.updateCurrentPreviewedTest()">Save changes</a> 
-    <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
-</script>
-<script id="feedbackTemplate" type="x-tmpl-mustache">
-    <%@include file="/modules/feedback.html"%>
-</script>
-
 <script src="../../jslib/closure/goog/base.js"></script>
 <script src="../../deps.js"></script>
 <script>goog.require('cursoconducir.admin.TestsPage');</script> 

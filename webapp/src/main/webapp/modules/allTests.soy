@@ -26,10 +26,10 @@
         </div>
         <div class="span2">
           <a id="deleteTest" class="btn small disabled" >Delete</a><!-- href="#delete?test={$test.id}" -->
-          {if $test.published}
-          <a id="changeTestPublishment" class="btn small disabled" >Publish</a><!-- href="#publish?test={$test.id}" -->
+          {if not($test.published)}
+          <a id="changeTestPublishment" class="btn small " href="#publish?test={$test.id}">Publish</a><!-- href="#publish?test={$test.id}" -->
           {else}
-          <a id="changeTestPublishment" class="btn small disabled"> Unpublish</a> 
+          <a id="changeTestPublishment" class="btn small" href="#unpublish?test={$test.id}"> Unpublish</a> 
           <!-- href="#unpublish?test={$test.id}" -->
           {/if}
         </div>

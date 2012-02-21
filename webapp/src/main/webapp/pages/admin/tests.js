@@ -8,6 +8,7 @@ goog.require('cursoconducir.TestModule');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
+goog.require('cursoconducir.template.tests.buttons');
 
 cursoconducir.admin.tests.init = function() {
     var testPage;
@@ -76,26 +77,26 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
             model.activeTest = null;
             if (initAllTests(function() {
                 allTestsModule.show(model);
-                updateButtons($('#buttonsInitialTemplate'));
+                updateButtons(cursoconducir.template.tests.buttons.initial);
                 $("#footer").addClass("loaded");
             }))
                 ;
         } else if (hash == CREATE) {
             model.activeTest = testModule.createEmptyTest();
             testModule.show(model);
-            updateButtons($('#buttonsEditTestTemplate'));
+            updateButtons(cursoconducir.template.tests.buttons.edited);
         } else if (hash.indexOf(UPDATE) == 0) {
             var testId = $.getQueryString(TEST_KEY);
             if ((model && model.activeTest && model.activeTest.id == testId)
                     || testId == undefined || testId == "") {
                 testModule.show(model);
-                updateButtons($('#buttonsEditTestTemplate'));
+                updateButtons(cursoconducir.template.tests.buttons.edit);
             } else {
                 cursoconducir.utils.findOrFetchTest(model, testId, function(
                         test) {
                     model.activeTest = test;
                     testModule.show(model);
-                    updateButtons($('#buttonsEditTestTemplate'));
+                    updateButtons(cursoconducir.template.tests.buttons.edit);
                 }, hideFeedback, showFeedback);
             }
         } else if (hash.indexOf(PREVIEW) == 0) {
@@ -128,23 +129,30 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
     var publish = function(published) {
         var testId = $.getQueryString(TEST_KEY);
         initAllTests(function() {
-            cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
-                test.published = published;
-                var testIndex = cursoconducir.utils.findTestIndexById(model,
-                        test.id);
-                model.allTests[testIndex] = cursoconducir.utils.code(test);
-                postToServer(test, function() {
-                    allTestsModule.show(model);
-                    updateButtons($('#buttonsInitialTemplate'));
-                });
-            }, hideFeedback, showFeedback);
+            cursoconducir.utils
+                    .findOrFetchTest(
+                            model,
+                            testId,
+                            function(test) {
+                                test.published = published;
+                                var testIndex = cursoconducir.utils
+                                        .findTestIndexById(model, test.id);
+                                model.allTests[testIndex] = cursoconducir.utils
+                                        .code(test);
+                                postToServer(
+                                        test,
+                                        function() {
+                                            allTestsModule.show(model);
+                                            updateButtons(cursoconducir.template.tests.buttons.initial);
+                                        });
+                            }, hideFeedback, showFeedback);
         });
     };
 
     var previewTest = function(test) {
         model.activeTest = test;
         testPreviewModule.show(model);
-        updateButtons($('#buttonsPreviewTestTemplate'));
+        updateButtons(cursoconducir.template.tests.buttons.preview);
     };
 
     var initAllTests = function(onComplate) {
@@ -221,7 +229,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
             }, complete : function() {
                 testsContainer.empty();
                 allTestsModule.show(model, allTestsTemplate, testsContainer);
-                updateButtons($('#buttonsInitialTemplate'));
+                updateButtons(cursoconducir.template.tests.buttons.initial);
             } });
     };
 
@@ -258,16 +266,16 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
     /** @private */
     var updateButtons = function(template) {
         var pageButtons = $('.pageButtons');
-        pageButtons.empty();
-        template.mustache(model).appendTo(pageButtons);
+        var templateHtml = template(model);
+        pageButtons.html(templateHtml);
     };
 
     /** @private */
     var showFeedback = function(errorMessage) {
         var feedback = $('.feedback');
-        feedback.empty();
-        $('#feedbackTemplate').mustache({ errorMessage : errorMessage })
-                .appendTo(feedback);
+        var templateHtml = cursoconducir.template.tests.buttons
+                .feedback({ errorMessage : errorMessage });
+        feedback.html(templateHtml);
         feedback.removeClass('hide');
     };
 

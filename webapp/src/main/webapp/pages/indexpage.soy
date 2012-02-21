@@ -1,0 +1,25 @@
+{namespace cursoconducir.indexpage.template}
+
+/**
+ * The template for all tests.
+ * @param allTests
+ * @param hasNext
+ * @param nextTestId
+ */
+{template .navigation}
+<table class="noSpacingOrMargin" width="100%"><tr>
+    <td>
+        <div class="noSpacingOrMargin pagination pull-right">
+            <ul>
+        {foreach $test in $allTests}
+                <li class="{if $test.active} active{{/if}}"><a href="#preview?test={$test.id}&hide">{$test.title}</a></li>
+        {/foreach}
+            </ul>
+        </div>
+    </td>
+    <td>
+        <a class="btn large danger pull-right" {if not($hasNext)}data-controls-modal="end-of-test-modal" data-keyboard="true"
+            data-backdrop="static"{else}href="#preview?test={$nextTestId}&hide"{/if}><strong>Siguiente &rarr;</strong> </a>
+    </td>
+</tr></table>
+{/template}

@@ -1,0 +1,44 @@
+{namespace cursoconducir.template.tests.buttons}
+
+/**
+ * The test management initial buttons template.
+ */
+{template .initial}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>
+{/template}
+
+/**
+ * The test management edit buttons template.
+ * @param activeTest
+ */
+{template .edit}
+    <a id="testCancel" href="#preview?test={$activeTest.id}" class="btn large">Preview</a>
+    <a id="testSubmit" class="btn large primary" onClick="window._cursoConducirPage.updateCurrentEditedTest()">Save changes</a> 
+    <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
+{/template}
+
+/**
+ * The test management preview buttons template.
+ * @param activeTest
+ */
+{template .preview}
+    <a id="testCancel" href="#update?test={$activeTest.id}" class="btn large">Edit</a>
+    <a id="testSubmit" class="btn large primary" onClick="window._cursoConducirPage.updateCurrentPreviewedTest()">Save changes</a> 
+    <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
+{/template}
+
+/**
+ * The feedback template.
+ * @param errorMessage
+ */
+{template .feedback}
+<div class="container">
+  <div class="row">
+    <div class="span16" class="center testFeedbackContent">
+      <div class="alert-message error">
+        <strong>Oww, snap!</strong>&nbsp;{$errorMessage}
+      </div>
+    </div>
+  </div>
+</div>
+{/template}

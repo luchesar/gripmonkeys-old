@@ -19,28 +19,6 @@ body {
 </style>
 <link rel="" href="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31" />
 <link href="/images/logo.png" />
-<script id="testPreviewTemplate" type="x-tmpl-mustache">
-    <%@include file="/modules/testPreview.html"%>
-</script>
-<script id="testNavigationTemplate" type="x-tmpl-mustache">
-<table class="noSpacingOrMargin" width="100%"><tr>
-    <td>
-        <div class="noSpacingOrMargin pagination pull-right">
-            <ul>
-        {{#allTests}}
-                <li class="{{#active}} active{{/active}}"><a href="#preview?test={{id}}&hide">{{title}}</a></li>
-        {{/allTests}}
-            </ul>
-        </div>
-    </td>
-    <td>
-        <a class="btn large danger pull-right" {{^hasNext}}data-controls-modal="end-of-test-modal" data-keyboard="true"
-            data-backdrop="static"{{/hasNext}} {{#hasNext}}href="#preview?test={{nextTestId}}&hide"{{/hasNext}}><strong>Siguiente &rarr;</strong> </a>
-    </td>
-</tr></table>
-
-</script>
-
 <script src="../../jslib/closure/goog/base.js"></script>
 <script src="../../deps.js"></script>
 <script>goog.require('cursoconducir.IndexPage');</script> 

@@ -8,6 +8,7 @@ goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('bootstrap.modal');
 goog.require('goog.net.Cookies');
+goog.require('cursoconducir.indexpage.template');
 
 cursoconducir.index.init = function(allTestJson) {
     $(function() {
@@ -42,7 +43,7 @@ cursoconducir.IndexPage = function(test) {
     var HIDE = "hide";
 
     /** @private */
-    var testPreviewModule = new cursoconducir.TestPreviewModule();
+    var testPreviewModule = new cursoconducir.TestPreviewModule($('#testContainer'));
 
     this.start = function(allTests) {
         model.allTests = allTests;
@@ -65,8 +66,7 @@ cursoconducir.IndexPage = function(test) {
             $('#nextTestLinkContainer').addClass('hide');
             if (model.allTests.length > 0) {
                 model.activeTest = cursoconducir.utils.decode(model.allTests[0]);
-                testPreviewModule.show(model, $('#testPreviewTemplate'),
-                        $('#testContainer'));
+                testPreviewModule.show(model);
             }
             $("#footer").addClass("loaded");
         } else if (hash.indexOf(PREVIEW) == 0) {
@@ -115,9 +115,8 @@ cursoconducir.IndexPage = function(test) {
     var showNavigation = function() {
         $('#testNavigationContainer').empty();
         var convertedModel = convertModel();
-        var templateSubstitute = $('#testNavigationTemplate').mustache(
-                convertedModel);
-        templateSubstitute.appendTo($('#testNavigationContainer'));
+        var templateHtml = cursoconducir.indexpage.template.navigation(convertedModel);
+        $('#testNavigationContainer').html(templateHtml);
     };
     
     var showGoToNextButton = function() {

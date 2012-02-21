@@ -26,6 +26,8 @@
             <arg line="${basedir}/../src/main/webapp/modules/test.soy" />
             <arg line="${basedir}/../src/main/webapp/modules/testPreview.soy" />
             <arg line="${basedir}/../src/main/webapp/modules/allTests.soy" />
+            <arg line="${basedir}/../src/main/webapp/pages/admin/testsButtons.soy" />
+            <arg line="${basedir}/../src/main/webapp/pages/indexpage.soy" />
         </java>
         <echo>${templates.js.file} regenerated</echo>
         <antcall target="deps"/>
