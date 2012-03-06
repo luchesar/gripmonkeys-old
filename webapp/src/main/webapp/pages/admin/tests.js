@@ -1,4 +1,4 @@
-goog.provide('cursoconducir.admin.TestsPage');
+ goog.provide('cursoconducir.admin.TestsPage');
 goog.provide('cursoconducir.admin.tests');
 
 goog.require('hashchange');
@@ -84,7 +84,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
         } else if (hash == CREATE) {
             model.activeTest = testModule.createEmptyTest();
             testModule.show(model);
-            updateButtons(cursoconducir.template.tests.buttons.edited);
+            updateButtons(cursoconducir.template.tests.buttons.edit);
         } else if (hash.indexOf(UPDATE) == 0) {
             var testId = $.getQueryString(TEST_KEY);
             if ((model && model.activeTest && model.activeTest.id == testId)
@@ -228,7 +228,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
                         + xhr.status + ' ' + thrownError + '\'');
             }, complete : function() {
                 testsContainer.empty();
-                allTestsModule.show(model, allTestsTemplate, testsContainer);
+                allTestsModule.show(model);
                 updateButtons(cursoconducir.template.tests.buttons.initial);
             } });
     };
