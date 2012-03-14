@@ -49,10 +49,8 @@ body {
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="placeholder" href="http://placehold.it/210x150">
 
-<script src="../../jslib/closure/goog/base.js"></script>
-<script src="../../deps.js"></script>
-<script>goog.require('cursoconducir.admin.TestsPage');</script> 
-<!-- <script src="/jsgen/adminTests.compiled.js"></script>-->
+
+<script src="http://localhost:9810/compile?id=admin-tests&mode=raw&level=verbose"></script>
 <script type="text/javascript">
 cursoconducir.admin.tests.init();
 </script>

@@ -1,63 +1,55 @@
 <project name="cursoconducir" default="none">
+    <property name="builddir" value="${basedir}" />
+    <property name="webapp" value="${builddir}/../src/main/webapp" />
+    <property name="warDir" value="${builddir}/../target/tmpwar" />
+    <property name="compiledJs" value="${warDir}/jsgen/" />
+
     <target name="none">
     </target>
 
-    <target name="deps">
-        <property name="deps.js.file" value="${basedir}/../src/main/webapp/deps.js" />
-        <exec executable="python" dir="${basedir}" failonerror="true">
-            <arg line="${basedir}/closure/depswriter.py" />
-            <arg line="--root_with_prefix='../src/main/webapp/pages ../../../pages'" />
-            <arg line="--root_with_prefix='../src/main/webapp/jsgen ../../../jsgen'" />
-            <arg line="--root_with_prefix='../src/main/webapp/modules ../../../modules'" />
-            <arg line="--root_with_prefix='../src/main/webapp/jslib/lib ../../../jslib/lib'" />
-            <arg line="--output_file ${deps.js.file}" />
-        </exec>
-        <echo>${deps.js.file} regenerated</echo>
-    </target>
-
-    <target name="soy">
-       <property name="templates.js.file" value="'${basedir}/../src/main/webapp/jsgen/{INPUT_FILE_NAME}.js'" />
-        <java jar="${basedir}/closure/SoyToJsSrcCompiler.jar" fork="true" failonerror="true">
-            <arg line="--shouldGenerateJsdoc"/>
-            <arg line="--shouldProvideRequireSoyNamespaces"/>
-            <arg line="--outputPathFormat"/>
-            <arg line="${templates.js.file}"/>
-            <arg line="${basedir}/../src/main/webapp/modules/menu.soy" />
-            <arg line="${basedir}/../src/main/webapp/modules/test.soy" />
-            <arg line="${basedir}/../src/main/webapp/modules/testPreview.soy" />
-            <arg line="${basedir}/../src/main/webapp/modules/allTests.soy" />
-            <arg line="${basedir}/../src/main/webapp/pages/admin/testsButtons.soy" />
-            <arg line="${basedir}/../src/main/webapp/pages/indexpage.soy" />
-        </java>
-        <echo>${templates.js.file} regenerated</echo>
-        <antcall target="deps"/>
-    </target>
-
-    <target name="compile" depends="soy">
-        <compile namespace="cursoconducir.IndexPage" outputfile="${basedir}/../src/main/webapp/jsgen/index.compiled.js" />
-        <compile namespace="cursoconducir.admin.TestsPage" outputfile="${basedir}/../src/main/webapp/jsgen/adminTests.compiled.js" />
+    <target name="compile-js">
+        <mkdir dir="${compiledJs}" />
+        <compile plovrConfigFile="${builddir}/plovr-index-config.js" />
+        <compile plovrConfigFile="${builddir}/plovr-admin-tests-config.js" />
     </target>
 
     <macrodef name="compile">
-        <attribute name="namespace" />
-        <attribute name="outputFile" />
+        <attribute name="plovrConfigFile" />
         <sequential>
-            <exec executable="python" dir="${basedir}/.." failonerror="true">
-                <arg line="${basedir}/closure/closurebuilder.py" />
-                <arg line="--root=${basedir}/../src/main/webapp/jslib" />
-                <arg line="--root=${basedir}/../src/main/webapp/jsgen" />
-                <arg line="--root=${basedir}/../src/main/webapp/modules" />
-                <arg line="--root=${basedir}/../src/main/webapp/pages" />
-                <arg line="--namespace='@{namespace}'" />
-                <arg line="--output_mode=compiled" />
-                <arg line="--compiler_jar=${basedir}/closure/compiler.jar" />
-                <arg line="--compiler_flags='--compilation_level=WHITESPACE_ONLY'" />
-                <arg line="--output_file=@{outputFile}" />
-            </exec>
-            <echo>@{namespace} compiled to @{outputFile}</echo>
+            <echo>compiling JS for config @{plovrConfigFile}</echo>
+            <java jar="${builddir}/plovr-4b3caf2b7d84.jar" fork="true" failonerror="true">
+                <arg line="build @{plovrConfigFile}" />
+            </java>
         </sequential>
     </macrodef>
 
+    <target name="copyWebappResources">
+        <mkdir dir="${warDir}"/>
+        <copy todir="${warDir}" includeemptydirs="false">
+            <fileset dir="${webapp}">
+                <exclude name="**/jslib/**/*.*" />
+                <exclude name="**/*_test.html" />
+                <exclude name="**/*_tests.html" />
+                <exclude name="**/*.soy" />
+                <exclude name="**/*.js" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="jspPatch">
+        <antcall target="copyWebappResources"/>
+        <replace file="${warDir}/pages/index.jsp">
+            <replacefilter token="http://localhost:9810/compile?id=index&amp;mode=raw&amp;level=verbose" value="/jsgen/index.compiled.js" />
+        </replace>
+        <replace file="${warDir}/pages/admin/tests.jsp">
+            <replacefilter token="http://localhost:9810/compile?id=admin-tests&amp;mode=raw&amp;level=verbose" value="/jsgen/adminTests.compiled.js" />
+        </replace>
+    </target>
+
     <target name="plovr">
+        <java jar="plovr-4b3caf2b7d84.jar" fork="true">
+            <arg line=" serve
+                plovr-index-config.js plovr-admin-tests-config.js" />
+        </java>
     </target>
 </project>

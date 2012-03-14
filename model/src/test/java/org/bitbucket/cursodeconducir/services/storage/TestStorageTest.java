@@ -209,6 +209,20 @@ public class TestStorageTest {
         storage.put(test4, test1, test3, test2);
         assertEquals(Lists.newArrayList(test1, test2, test3, test4), storage.getAll());
     }
+    
+    public void _testGetAllSortedNumbers() throws Exception {
+        Test test1 = new Test("1.", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test2 = new Test("10.", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test3 = new Test("11.", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+        Test test4 = new Test("100.", "image", "description", Lists.newArrayList("question1",
+                "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+
+        storage.put(test4, test1, test3, test2);
+        assertEquals(Lists.newArrayList(test1, test2, test3, test4), storage.getAll());
+    }
 
     @org.junit.Test
     public void testGetAllPublished() throws Exception {

@@ -2,7 +2,9 @@
 <%@ page import="org.bitbucket.cursodeconducir.services.storage.TestStorage"%>
 <%@ page import="com.google.gson.Gson"%>
 <%
-TestStorage storage = new TestStorage(); Gson gson = new Gson(); %>
+    TestStorage storage = new TestStorage();
+			Gson gson = new Gson();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
@@ -19,26 +21,27 @@ body {
 </style>
 <link rel="" href="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31" />
 <link href="/images/logo.png" />
-<script src="../../jslib/closure/goog/base.js"></script>
-<script src="../../deps.js"></script>
-<script>goog.require('cursoconducir.IndexPage');</script> 
-
-<!-- <script src="/jsgen/index.compiled.js"></script>-->
+<script src="http://localhost:9810/compile?id=index&mode=raw&level=verbose" charset="utf-8"></script>
 <script>
     cursoconducir.index.init(
 <%=gson.toJson(storage.getAll(true))%>
     );
 </script>
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-27699376-1']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push([ '_setAccount', 'UA-27699376-1' ]);
+    _gaq.push([ '_trackPageview' ]);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+                : 'http://www')
+                + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 </head>
 

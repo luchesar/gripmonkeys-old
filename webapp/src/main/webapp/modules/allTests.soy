@@ -25,9 +25,9 @@
           </div>
         </div>
         <div class="span2">
-          <a id="deleteTest" href="#delete?test={$test.id}" class="btn small" >Delete</a><!-- href="#delete?test={$test.id}" -->
+          <a id="deleteTest" class="btn small" href="#delete?test={$test.id}">Delete</a><!-- href="#delete?test={$test.id}" -->
           {if not($test.published)}
-          <a id="changeTestPublishment" class="btn small " href="#publish?test={$test.id}">Publish</a><!-- href="#publish?test={$test.id}" -->
+          <a id="changeTestPublishment" class="btn small" href="#publish?test={$test.id}">Publish</a><!-- href="#publish?test={$test.id}" -->
           {else}
           <a id="changeTestPublishment" class="btn small" href="#unpublish?test={$test.id}"> Unpublish</a> 
           <!-- href="#unpublish?test={$test.id}" -->
