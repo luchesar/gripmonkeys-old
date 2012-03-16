@@ -113,7 +113,6 @@
               <goal>run</goal>
             </goals>
           </execution>
-
           <execution>
             <id>jspPatch</id>
             <phase>prepare-package</phase>
@@ -139,7 +138,6 @@
           <packagingExcludes>**/jslib/**/*.*, **/*_test.html, **/*_tests.html, **/*.soy, pages/*.js, modules/*.js</packagingExcludes>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>

@@ -9,10 +9,12 @@ goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
+goog.require('cursoconducir.Question');
 
 cursoconducir.admin.tests.init = function() {
     var testPage;
     $(function() {
+        cursoconducir.Question.create({});
         var contanier = $('#container');
         testPage = new cursoconducir.admin.TestsPage(contanier);
         testPage.start();
