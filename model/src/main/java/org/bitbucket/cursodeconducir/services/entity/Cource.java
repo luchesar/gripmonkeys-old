@@ -4,5 +4,5 @@ import java.util.List;
 
 public class Cource extends TitledEntity {
     private Lesson topic;
-    private List<Test> tests;
+    private List<Question> tests;
 }

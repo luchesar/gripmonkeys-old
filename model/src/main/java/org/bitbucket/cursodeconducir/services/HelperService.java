@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.bitbucket.cursodeconducir.services.entity.Asignment;
 import org.bitbucket.cursodeconducir.services.entity.Cource;
-import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 import org.bitbucket.cursodeconducir.services.entity.Lesson;
 import org.bitbucket.cursodeconducir.services.entity.User;
 
@@ -25,5 +25,5 @@ public interface HelperService {
     
     List<Lesson> getTopics(Cource asignment);
     
-    List<Test> getTests(Lesson asignment);
+    List<Question> getTests(Lesson asignment);
 }

@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.bitbucket.cursodeconducir.services.entity.Test;
-import org.bitbucket.cursodeconducir.services.storage.TestStorage;
+import org.bitbucket.cursodeconducir.services.entity.Question;
+import org.bitbucket.cursodeconducir.services.storage.QuestionStorage;
 
 import com.google.gson.Gson;
 
 @SuppressWarnings("serial")
-public class TestStorageServlet extends HttpServlet {
+public class QuestionStorageServlet extends HttpServlet {
     private static final String JSON_KEY = "json";
     private static final String ID = "key";
     private Gson gson;
-    private TestStorage storage;
+    private QuestionStorage storage;
 
-    public TestStorageServlet() {
+    public QuestionStorageServlet() {
         gson = new Gson();
-        storage = new TestStorage();
+        storage = new QuestionStorage();
     }
 
     @Override
@@ -51,14 +51,14 @@ public class TestStorageServlet extends HttpServlet {
             throws ServletException, IOException {
         setResponseEnconding(aResp);
         String testJson = aReq.getParameter(JSON_KEY);
-        final Test test = gson.fromJson(testJson, Test.class);
+        final Question test = gson.fromJson(testJson, Question.class);
         if (test == null) {
             aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             IOUtils.write("passed test JSON is not valid:" + testJson, aResp.getOutputStream());
             return;
         }
         try {
-            Set<Test> put = storage.put(test);
+            Set<Question> put = storage.put(test);
             aResp.getWriter().write(gson.toJson(put.iterator().next()));
         } catch (ServiceException e) {
             aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -74,7 +74,7 @@ public class TestStorageServlet extends HttpServlet {
         aResp.getWriter().write(gson.toJson(true));
     }
 
-    public TestStorage getStorage() {
+    public QuestionStorage getStorage() {
         return storage;
     }
 

@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.bitbucket.cursodeconducir.services.ServiceException;
 import org.bitbucket.cursodeconducir.services.Util;
-import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -15,51 +15,51 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Query;
 
-public class TestStorage {
+public class QuestionStorage {
 
     static {
-        Util.factory().register(Test.class);
+        Util.factory().register(Question.class);
     }
 
-    public Set<Test> put(final Test... tests) throws ServiceException {
+    public Set<Question> put(final Question... questions) throws ServiceException {
         Objectify objectify = Util.factory().begin();
 
-        Map<Key<Test>, Test> putResult = objectify.put(Arrays.asList(tests));
+        Map<Key<Question>, Question> putResult = objectify.put(Arrays.asList(questions));
         return Sets.newLinkedHashSet(putResult.values());
     }
 
-    public Set<Test> get(final long... ids) {
+    public Set<Question> get(final long... ids) {
         Objectify objectify = Util.factory().begin();
-        List<Key<Test>> keys = Lists.newArrayList();
+        List<Key<Question>> keys = Lists.newArrayList();
         for (long id : ids) {
-            keys.add(new Key<Test>(Test.class, id));
+            keys.add(new Key<Question>(Question.class, id));
         }
-        Map<Key<Test>, Test> map = objectify.get(keys);
+        Map<Key<Question>, Question> map = objectify.get(keys);
         return Sets.newLinkedHashSet(map.values());
     }
 
-    public List<Test> getAll() {
+    public List<Question> getAll() {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class).order("title");
+        Query<Question> query = objectify.query(Question.class).order("title");
         return query.list();
     }
 
-    public List<Test> getAll(boolean published) {
+    public List<Question> getAll(boolean published) {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class).filter("published", published)
+        Query<Question> query = objectify.query(Question.class).filter("published", published)
                 .order("title");
         return query.list();
     }
 
-    public List<Test> getAll(int offset, int limit) {
+    public List<Question> getAll(int offset, int limit) {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class).offset(offset).limit(limit).order("title");
+        Query<Question> query = objectify.query(Question.class).offset(offset).limit(limit).order("title");
         return query.list();
     }
 
-    public Test find(final String title) {
+    public Question find(final String title) {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class).filter("title", title);
+        Query<Question> query = objectify.query(Question.class).filter("title", title);
 
         if (query.count() < 1) {
             return null;
@@ -71,17 +71,17 @@ public class TestStorage {
         return query.get();
     }
 
-    public List<Test> find(final String... titles) {
+    public List<Question> find(final String... titles) {
         Objectify objectify = Util.factory().begin();
-        Query<Test> query = objectify.query(Test.class).filter("title in", titles);
+        Query<Question> query = objectify.query(Question.class).filter("title in", titles);
         return query.list();
     }
 
     public void delete(final long... ids) {
         Objectify objectify = Util.factory().begin();
-        List<Key<Test>> keys = Lists.newArrayList();
+        List<Key<Question>> keys = Lists.newArrayList();
         for (long id : ids) {
-            keys.add(new Key<Test>(Test.class, id));
+            keys.add(new Key<Question>(Question.class, id));
         }
         objectify.delete(keys);
     }

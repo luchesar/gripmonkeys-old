@@ -10,7 +10,7 @@ import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
-import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -175,18 +175,18 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
     }
 
     @Override
-    public Test createTest(Test aTest) {
+    public Question createTest(Question aTest) {
         EditTestBot editTestBot = create();
         return setTestValues(aTest, editTestBot);
     }
 
     @Override
-    public Test updateTest(String aTitle, Test aTest) {
+    public Question updateTest(String aTitle, Question aTest) {
         EditTestBot editTestBot = clickTestTitle(aTitle);
         return setTestValues(aTest, editTestBot);
     }
 
-    private Test setTestValues(Test aTest, EditTestBot editTestBot) {
+    private Question setTestValues(Question aTest, EditTestBot editTestBot) {
         editTestBot.setTestTitle(aTest.getTitle());
         editTestBot.setTestDescription(aTest.getDescription());
         List<String> possibleAnswers = aTest.getPossibleAnswers();
@@ -203,7 +203,7 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         testImageBot.uploadImage(aTest.getImage(), true);
         assertFalse(oldImage.equals(testImageBot.getImageUrl()));
 
-        Test createdTest = editTestBot.getTest();
+        Question createdTest = editTestBot.getTest();
         editTestBot.save();
         init();
         return createdTest;

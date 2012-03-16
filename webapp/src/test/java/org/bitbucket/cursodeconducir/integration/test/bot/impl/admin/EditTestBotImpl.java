@@ -12,7 +12,7 @@ import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.AdminTestsBo
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.PreviewTestBot;
-import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -81,12 +81,12 @@ public class EditTestBotImpl extends AdminBotImpl implements EditTestBot {
     }
 
     @Override
-    public Test getTest() {
+    public Question getTest() {
         List<String> possibleAnswers = Lists.newArrayList(answer0.getText(), answer1.getText(),
                 answer2.getText());
         int selectedIndex = Integer.parseInt(WebDriverUtils.getSelectedValue(correctAnswerSelect));
 
-        return new Test(testTitle.getAttribute("value"), testImage.getAttribute("src"),
+        return new Question(testTitle.getAttribute("value"), testImage.getAttribute("src"),
                 testDescription.getText(), possibleAnswers, selectedIndex,
                 testExplanation.getText(), Collections.<String> emptyList());
     }

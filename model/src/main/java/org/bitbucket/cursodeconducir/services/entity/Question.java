@@ -9,7 +9,7 @@ import com.googlecode.objectify.annotation.Unindexed;
 
 @Cached
 @Unindexed
-public class Test extends TitledEntity {
+public class Question extends TitledEntity {
     private List<String> possibleAnswers;
     private int correctAnswerIndex;
     private String explanation;
@@ -17,11 +17,11 @@ public class Test extends TitledEntity {
     @Indexed
     private boolean published = false;
 
-    public Test() {
+    public Question() {
         super();
     }
 
-    public Test(String aTitle, String aImage, String aDescription, List<String> aPossibleAnswers,
+    public Question(String aTitle, String aImage, String aDescription, List<String> aPossibleAnswers,
             int aCorrectAnswerIndex, String aExplanation, List<String> aImageRelativePaths) {
         super(aTitle, aImage, aDescription);
         possibleAnswers = aPossibleAnswers;
@@ -75,13 +75,13 @@ public class Test extends TitledEntity {
         if (this == aObj) {
             return true;
         }
-        if (!(aObj instanceof Test)) {
+        if (!(aObj instanceof Question)) {
             return false;
         }
         if (!super.equals(aObj)) {
             return false;
         }
-        Test other = (Test) aObj;
+        Question other = (Question) aObj;
 
         return Objects.equal(possibleAnswers, other.possibleAnswers)
                 && Objects.equal(correctAnswerIndex, other.correctAnswerIndex)

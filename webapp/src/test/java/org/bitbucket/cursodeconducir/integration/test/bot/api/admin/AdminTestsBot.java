@@ -3,7 +3,7 @@ package org.bitbucket.cursodeconducir.integration.test.bot.api.admin;
 import java.util.List;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
-import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 
 public interface AdminTestsBot extends AdminBot {
     EditTestBot create();
@@ -24,7 +24,7 @@ public interface AdminTestsBot extends AdminBot {
     
     void unpublish(String title) throws BotException;
     
-    Test createTest(Test test);
+    Question createTest(Question test);
     
-    Test updateTest(String title, Test test);
+    Question updateTest(String title, Question test);
 }

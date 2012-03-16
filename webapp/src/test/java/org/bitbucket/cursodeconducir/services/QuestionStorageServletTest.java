@@ -5,8 +5,8 @@ import static junit.framework.Assert.*;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.bitbucket.cursodeconducir.services.entity.Test;
-import org.bitbucket.cursodeconducir.services.storage.TestStorage;
+import org.bitbucket.cursodeconducir.services.entity.Question;
+import org.bitbucket.cursodeconducir.services.storage.QuestionStorage;
 import org.junit.After;
 import org.junit.Before;
 
@@ -17,18 +17,18 @@ import com.google.appengine.tools.development.testing.LocalTaskQueueTestConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-public abstract class TestStorageServletTest {
+public abstract class QuestionStorageServletTest {
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
             new LocalDatastoreServiceTestConfig(), new LocalMemcacheServiceTestConfig(),
             new LocalTaskQueueTestConfig());
 
-    protected TestStorage storage;
-    protected TestStorageServlet servlet;
+    protected QuestionStorage storage;
+    protected QuestionStorageServlet servlet;
 
     @Before
     public void setUp() throws Exception {
         helper.setUp();
-        servlet = new TestStorageServlet();
+        servlet = new QuestionStorageServlet();
         storage = servlet.getStorage();
     }
 
@@ -39,20 +39,20 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testStore() throws Exception {
-        Test test1 = new Test("title", "image", "description", Lists.newArrayList("question1",
+        Question test1 = new Question("title", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
         
     }
 
     @org.junit.Test
     public void testStoreBatch() throws Exception {
-        Test test1 = new Test("title1", "image", "description", Lists.newArrayList("question1",
+        Question test1 = new Question("title1", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("title2", "image", "description", Lists.newArrayList("question1",
+        Question test2 = new Question("title2", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test3 = new Test("title3", "image", "description", Lists.newArrayList("question1",
+        Question test3 = new Question("title3", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test4 = new Test("title4", "image", "description", Lists.newArrayList("question1",
+        Question test4 = new Question("title4", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
     }
 
@@ -61,7 +61,7 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testUpdate() throws Exception {
-        Test test1 = new Test("title", "image", "description", Lists.newArrayList("question1",
+        Question test1 = new Question("title", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         test1 = storage.put(test1).iterator().next();
@@ -74,9 +74,9 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testStoreAndGetMultiple() throws Exception {
-        Test test1 = new Test("test1", "image1", "description1", Lists.newArrayList("question1",
+        Question test1 = new Question("test1", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("test2", "image1", "description1", Lists.newArrayList("question1",
+        Question test2 = new Question("test2", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         storage.put(test1, test2);
@@ -90,9 +90,9 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testFindByTitle() throws Exception {
-        Test test1 = new Test("test1", "image1", "description1", Lists.newArrayList("question1",
+        Question test1 = new Question("test1", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("test2", "image1", "description1", Lists.newArrayList("question1",
+        Question test2 = new Question("test2", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         storage.put(test1, test2);
@@ -105,13 +105,13 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testFindMultipleByTitle() throws Exception {
-        Test test1 = new Test("title1", "image", "description", Lists.newArrayList("question1",
+        Question test1 = new Question("title1", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("title2", "image", "description", Lists.newArrayList("question1",
+        Question test2 = new Question("title2", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test3 = new Test("title3", "image", "description", Lists.newArrayList("question1",
+        Question test3 = new Question("title3", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test4 = new Test("title4", "image", "description", Lists.newArrayList("question1",
+        Question test4 = new Question("title4", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         storage.put(test1, test2, test3, test4);
@@ -130,9 +130,9 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testDeleteBatch() throws Exception {
-        Test test1 = new Test("test1", "image1", "description1", Lists.newArrayList("question1",
+        Question test1 = new Question("test1", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("test2", "image1", "description1", Lists.newArrayList("question1",
+        Question test2 = new Question("test2", "image1", "description1", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         storage.put(test1, test2);
@@ -150,13 +150,13 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testGetAllOffsetLimit() throws Exception {
-        Test test1 = new Test("title1", "image", "description", Lists.newArrayList("question1",
+        Question test1 = new Question("title1", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("title2", "image", "description", Lists.newArrayList("question1",
+        Question test2 = new Question("title2", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test3 = new Test("title3", "image", "description", Lists.newArrayList("question1",
+        Question test3 = new Question("title3", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test4 = new Test("title4", "image", "description", Lists.newArrayList("question1",
+        Question test4 = new Question("title4", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         storage.put(test1, test2, test3, test4);
@@ -168,13 +168,13 @@ public abstract class TestStorageServletTest {
 
     @org.junit.Test
     public void testBatchGet() throws Exception {
-        Test test1 = new Test("title1", "image", "description", Lists.newArrayList("question1",
+        Question test1 = new Question("title1", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test2 = new Test("title2", "image", "description", Lists.newArrayList("question1",
+        Question test2 = new Question("title2", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test3 = new Test("title3", "image", "description", Lists.newArrayList("question1",
+        Question test3 = new Question("title3", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Test test4 = new Test("title4", "image", "description", Lists.newArrayList("question1",
+        Question test4 = new Question("title4", "image", "description", Lists.newArrayList("question1",
                 "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
 
         storage.put(test1, test2, test3, test4);

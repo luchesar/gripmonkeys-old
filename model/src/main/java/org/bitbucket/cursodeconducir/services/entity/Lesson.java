@@ -12,5 +12,5 @@ public class Lesson {
     private String description;
     private Lesson topic;
     @Transient
-    private List<Test> tests;
+    private List<Question> tests;
 }

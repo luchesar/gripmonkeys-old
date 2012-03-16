@@ -1,7 +1,7 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.api.admin;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.BotException;
-import org.bitbucket.cursodeconducir.services.entity.Test;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 
 public interface EditTestBot extends AdminBot {
     PreviewTestBot preview() throws BotException;
@@ -10,7 +10,7 @@ public interface EditTestBot extends AdminBot {
     
     AdminTestsBot save();
     
-    Test getTest();
+    Question getTest();
     
     void setTestTitle(String title);
     

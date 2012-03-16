@@ -7,16 +7,16 @@ import javax.persistence.Id;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Unindexed;
 
-public class TestAnswer {
+public class QuestionAnswer {
     @Id
     private Long id;
     private Date date;
     private boolean isCorrect;
     @Unindexed
-    private Test test;
+    private Question test;
     private int answer;
 
-    public TestAnswer(Test aTest, Date aDate, int aAnswer, boolean aIsCorrect) {
+    public QuestionAnswer(Question aTest, Date aDate, int aAnswer, boolean aIsCorrect) {
         date = aDate;
         test = aTest;
         answer = aAnswer;
@@ -31,7 +31,7 @@ public class TestAnswer {
         return date;
     }
 
-    public Test getTest() {
+    public Question getTest() {
         return test;
     }
 
@@ -43,20 +43,20 @@ public class TestAnswer {
         return isCorrect;
     }
 
-    public static class TestAnswerDao extends TestAnswer {
-        private Key<Test> testKey;
+    public static class TestAnswerDao extends QuestionAnswer {
+        private Key<Question> testKey;
 
-        public TestAnswerDao(TestAnswer aTestAnswer) {
+        public TestAnswerDao(QuestionAnswer aTestAnswer) {
             this(aTestAnswer.getTest(), aTestAnswer.getDate(), aTestAnswer.getAnswer(), aTestAnswer
                     .isCorrect());
         }
 
-        public TestAnswerDao(Test aTest, Date aDate, int aAnswer, boolean isCorrect) {
+        public TestAnswerDao(Question aTest, Date aDate, int aAnswer, boolean isCorrect) {
             super(aTest, aDate, aAnswer, isCorrect);
-            testKey = new Key<Test>(Test.class, aTest.getId());
+            testKey = new Key<Question>(Question.class, aTest.getId());
         }
 
-        public Key<Test> getTestKey() {
+        public Key<Question> getTestKey() {
             return testKey;
         }
     }
