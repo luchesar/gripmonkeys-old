@@ -338,9 +338,9 @@ goog.require('jquery');
           // (yes, very useful) wrap this with a try/catch block.
           doc.onpropertychange = function(){
             try {
-              if ( event.propertyName === 'title' ) {
+//              if ( event.propertyName === 'title' ) {
                 iframe.document.title = doc.title;
-              }
+//              }
             } catch(e) {}
           };
           

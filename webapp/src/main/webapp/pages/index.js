@@ -10,6 +10,9 @@ goog.require('bootstrap.modal');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.indexpage.template');
 
+/**
+ * @param {string} allTestJson
+ */
 cursoconducir.index.init = function(allTestJson) {
     $(function() {
         var indexPage = new cursoconducir.IndexPage();

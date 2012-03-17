@@ -9,22 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.bitbucket.cursodeconducir.services.entity.Question;
-import org.bitbucket.cursodeconducir.services.storage.QuestionStorage;
+import org.bitbucket.cursodeconducir.services.entity.Lesson;
+import org.bitbucket.cursodeconducir.services.storage.LessonStorage;
 
 import com.google.gson.Gson;
 
 @SuppressWarnings("serial")
-public class QuestionStorageServlet extends HttpServlet {
+public class LessonStorageServlet extends HttpServlet {
     public static final String JSON_KEY = "json";
     public static final String ID = "key";
     public static final String INVALID_JSON = "passed test JSON is not valid:";
     private Gson gson;
-    private QuestionStorage storage;
+    private LessonStorage storage;
 
-    public QuestionStorageServlet() {
+    public LessonStorageServlet() {
         gson = new Gson();
-        storage = new QuestionStorage();
+        storage = new LessonStorage();
     }
 
     @Override
@@ -37,11 +37,11 @@ public class QuestionStorageServlet extends HttpServlet {
         } else {
             String idString = aReq.getParameter(ID);
             Long id = Long.parseLong(idString);
-            Set<Question> foundQuestions = storage.get(id);
-            if (foundQuestions.isEmpty()) {
+            Set<Lesson> foundLesson = storage.get(id);
+            if (foundLesson.isEmpty()) {
                 aResp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             } else {
-                gson.toJson(foundQuestions.iterator().next(), aResp.getWriter());
+                gson.toJson(foundLesson.iterator().next(), aResp.getWriter());
             }
         }
     }
@@ -57,14 +57,14 @@ public class QuestionStorageServlet extends HttpServlet {
             throws ServletException, IOException {
         setResponseEnconding(aResp);
         String testJson = aReq.getParameter(JSON_KEY);
-        final Question test = gson.fromJson(testJson, Question.class);
-        if (test == null) {
+        final Lesson lesson = gson.fromJson(testJson, Lesson.class);
+        if (lesson == null) {
             aResp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             IOUtils.write(INVALID_JSON + testJson, aResp.getOutputStream());
             return;
         }
         try {
-            Set<Question> put = storage.put(test);
+            Set<Lesson> put = storage.put(lesson);
             aResp.getWriter().write(gson.toJson(put.iterator().next()));
             aResp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (ServiceException e) {
@@ -81,7 +81,7 @@ public class QuestionStorageServlet extends HttpServlet {
         aResp.getWriter().write(gson.toJson(true));
     }
 
-    public QuestionStorage getStorage() {
+    public LessonStorage getStorage() {
         return storage;
     }
 
@@ -90,3 +90,4 @@ public class QuestionStorageServlet extends HttpServlet {
         aResp.setCharacterEncoding("UTF-8");
     }
 }
+

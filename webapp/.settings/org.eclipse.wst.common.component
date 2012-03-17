@@ -1,7 +1,7 @@
 <project-modules id="moduleCoreId" project-version="2.0">
   <wb-module deploy-name="webapp">
     <property name="context-root" value="webapp"/>
-    <wb-resource deploy-path="/" source-path="src/main/webapp"/>
+    <wb-resource deploy-path="/" source-path="target/tmpwar"/>
     <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>
     <dependent-module archiveName="appengine-api-labs-1.6.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/appengine/appengine-api-labs/1.6.1/appengine-api-labs-1.6.1.jar">
       <dependency-type>uses</dependency-type>
