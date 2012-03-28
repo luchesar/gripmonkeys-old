@@ -50,7 +50,7 @@ body {
 <link rel="placeholder" href="http://placehold.it/210x150">
 
 
-<script src="http://localhost:9810/compile?id=admin-tests&mode=raw&level=verbose"></script>
+<script src="http://localhost:9810/compile?id=admin-tests&mode=simple&level=verbose"></script>
 <script type="text/javascript">
 cursoconducir.admin.tests.init();
 </script>

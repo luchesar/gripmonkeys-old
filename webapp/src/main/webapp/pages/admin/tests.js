@@ -1,4 +1,4 @@
- goog.provide('cursoconducir.admin.TestsPage');
+goog.provide('cursoconducir.admin.TestsPage');
 goog.provide('cursoconducir.admin.tests');
 
 goog.require('hashchange');
@@ -43,7 +43,10 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
     var UNPUBLISH = '#unpublish';
 
     /** @private */
-    var model = { allTests : null, activeTest : null };
+    var model = {
+        allTests : null,
+        activeTest : null
+    };
 
     /** @private */
     var testModule = new cursoconducir.TestModule(testsContainer);
@@ -89,13 +92,11 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
             updateButtons(cursoconducir.template.tests.buttons.edit);
         } else if (hash.indexOf(UPDATE) == 0) {
             var testId = $.getQueryString(TEST_KEY);
-            if ((model && model.activeTest && model.activeTest.id == testId)
-                    || testId == undefined || testId == "") {
+            if ((model && model.activeTest && model.activeTest.id == testId) || testId == undefined || testId == "") {
                 testModule.show(model);
                 updateButtons(cursoconducir.template.tests.buttons.edit);
             } else {
-                cursoconducir.utils.findOrFetchTest(model, testId, function(
-                        test) {
+                cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                     model.activeTest = test;
                     testModule.show(model);
                     updateButtons(cursoconducir.template.tests.buttons.edit);
@@ -103,13 +104,11 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
             }
         } else if (hash.indexOf(PREVIEW) == 0) {
             var testId = $.getQueryString(TEST_KEY);
-            if ((model && model.activeTest && model.activeTest.id == testId)
-                    || testId == undefined || testId == "") {
+            if ((model && model.activeTest && model.activeTest.id == testId) || testId == undefined || testId == "") {
                 previewTest(testModule.getTest());
                 $("#footer").addClass("loaded");
             } else {
-                cursoconducir.utils.findOrFetchTest(model, testId, function(
-                        test) {
+                cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
                     previewTest(test);
                     $("#footer").addClass("loaded");
                 }, hideFeedback, showFeedback);
@@ -131,23 +130,15 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
     var publish = function(published) {
         var testId = $.getQueryString(TEST_KEY);
         initAllTests(function() {
-            cursoconducir.utils
-                    .findOrFetchTest(
-                            model,
-                            testId,
-                            function(test) {
-                                test.published = published;
-                                var testIndex = cursoconducir.utils
-                                        .findTestIndexById(model, test.id);
-                                model.allTests[testIndex] = cursoconducir.utils
-                                        .code(test);
-                                postToServer(
-                                        test,
-                                        function() {
-                                            allTestsModule.show(model);
-                                            updateButtons(cursoconducir.template.tests.buttons.initial);
-                                        });
-                            }, hideFeedback, showFeedback);
+            cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
+                test.published = published;
+                var testIndex = cursoconducir.utils.findTestIndexById(model, test.id);
+                model.allTests[testIndex] = cursoconducir.utils.code(test);
+                postToServer(test, function() {
+                    allTestsModule.show(model);
+                    updateButtons(cursoconducir.template.tests.buttons.initial);
+                });
+            }, hideFeedback, showFeedback);
         });
     };
 
@@ -176,27 +167,29 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
                 }
             },
             error : function(xhr, ajaxOptions, thrownError) {
-                showFeedback('Cannot fetch all test. Server returned error \''
-                        + xhr.status + ' ' + thrownError + '\'');
-            }, complete : onComplate });
+                showFeedback('Cannot fetch all test. Server returned error \'' + xhr.status + ' ' + thrownError + '\'');
+            },
+            complete : onComplate
+        });
     };
 
     /** @private */
     var postToServer = function(templateTest, onSuccess) {
         hideFeedback();
-        test = cursoconducir.utils.code(templateTest);
-        jsonData = { json : JSON.stringify(test) };
-        $
-                .ajax({
-                    type : "POST",
-                    url : '/test-storage',
-                    data : jsonData,
-                    dataType : 'json',
-                    success : onSuccess,
-                    error : function(xhr, ajaxOptions, thrownError) {
-                        showFeedback('the test did not get saved because server returned error \''
-                                + xhr.status + ' ' + thrownError + '\'');
-                    } });
+        var test = cursoconducir.utils.code(templateTest);
+        var jsonData = {
+            json : JSON.stringify(test)
+        };
+        $.ajax({
+            type : "POST",
+            url : '/test-storage',
+            data : jsonData,
+            dataType : 'json',
+            success : onSuccess,
+            error : function(xhr, ajaxOptions, thrownError) {
+                showFeedback('the test did not get saved because server returned error \'' + xhr.status + ' ' + thrownError + '\'');
+            }
+        });
     };
 
     var postToServerDefaultSuccess = function(data, textStatus, jqXHR) {
@@ -220,19 +213,19 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
             dataType : 'json',
             success : function(wasDeleted, textStatus, jqXHR) {
                 if (wasDeleted) {
-                    var spliceIndex = cursoconducir.utils.findTestIndexById(
-                            model, testId);
+                    var spliceIndex = cursoconducir.utils.findTestIndexById(model, testId);
                     model.allTests.splice(spliceIndex, 1);
                 }
             },
             error : function(xhr, ajaxOptions, thrownError) {
-                showFeedback('Cannot delete a test. Server returned error \''
-                        + xhr.status + ' ' + thrownError + '\'');
-            }, complete : function() {
+                showFeedback('Cannot delete a test. Server returned error \'' + xhr.status + ' ' + thrownError + '\'');
+            },
+            complete : function() {
                 testsContainer.empty();
                 allTestsModule.show(model);
                 updateButtons(cursoconducir.template.tests.buttons.initial);
-            } });
+            }
+        });
     };
 
     var removeTestById = function(testId) {
@@ -256,8 +249,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
 
     /** @private */
     var confirmDelete = function(test) {
-        return window.confirm("Are you sure you want to delete '" + test.title
-                + "' ?");
+        return window.confirm("Are you sure you want to delete '" + test.title + "' ?");
         // var modalContainer = $('#confirmDeleteContainer');
         // modalContainer.empty();
         // $('#confirmDeleteTemplate').mustache(test).appendTo(modalContainer);
@@ -275,8 +267,9 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
     /** @private */
     var showFeedback = function(errorMessage) {
         var feedback = $('.feedback');
-        var templateHtml = cursoconducir.template.tests.buttons
-                .feedback({ errorMessage : errorMessage });
+        var templateHtml = cursoconducir.template.tests.buttons.feedback({
+            errorMessage : errorMessage
+        });
         feedback.html(templateHtml);
         feedback.removeClass('hide');
     };
