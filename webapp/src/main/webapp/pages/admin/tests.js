@@ -9,6 +9,7 @@ goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
+goog.require('goog.json');
 //goog.require('cursoconducir.Question');
 
 cursoconducir.admin.tests.init = function() {
@@ -178,7 +179,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
         hideFeedback();
         var test = cursoconducir.utils.code(templateTest);
         var jsonData = {
-            json : JSON.stringify(test)
+            json : goog.json.serialize(test)
         };
         $.ajax({
             type : "POST",
