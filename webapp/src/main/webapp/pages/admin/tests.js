@@ -9,12 +9,12 @@ goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
-goog.require('cursoconducir.Question');
+//goog.require('cursoconducir.Question');
 
 cursoconducir.admin.tests.init = function() {
     var testPage;
     $(function() {
-        cursoconducir.Question.create({});
+//        cursoconducir.Question.create({});
         var contanier = $('#container');
         testPage = new cursoconducir.admin.TestsPage(contanier);
         testPage.start();
@@ -156,7 +156,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
         hideFeedback();
         $.ajax({
             type : "GET",
-            url : '/test-storage?*',
+            url : '/question-storage?*',
             data : {},
             contentType : "application/json; charset=utf-8",
             dataType : 'json',
@@ -182,7 +182,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
         };
         $.ajax({
             type : "POST",
-            url : '/test-storage',
+            url : '/question-storage',
             data : jsonData,
             dataType : 'json',
             success : onSuccess,
@@ -208,7 +208,7 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
         hideFeedback();
         $.ajax({
             type : "DELETE",
-            url : '/test-storage?key=' + testId,
+            url : '/question-storage?key=' + testId,
             data : {},
             dataType : 'json',
             success : function(wasDeleted, textStatus, jqXHR) {

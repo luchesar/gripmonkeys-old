@@ -14,6 +14,7 @@ import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.PreviewTestBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.impl.admin.AdminTestsBotImpl;
+import org.bitbucket.cursodeconducir.services.entity.Question;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -84,7 +85,7 @@ public class TestManagementPageTest {
         HomePageBot homePageBot = mainMenu.clickLogo();
         assertEquals("Curso Conducir", homePageBot.getPageTitle());
     }
-    /*@Test
+
     @Test
     public void testCreatePreviewDeleteATest() throws Exception {
         String testTitle = "test1";
@@ -124,7 +125,7 @@ public class TestManagementPageTest {
 
             editTestBot = adminTestsBot.clickTestTitle(testTitle);
 
-            org.bitbucket.cursodeconducir.services.entity.Test pageTest = editTestBot.getTest();
+            Question pageTest = editTestBot.getTest();
 
             assertEquals(testTitle, pageTest.getTitle());
 
@@ -151,15 +152,15 @@ public class TestManagementPageTest {
     public void testEditExistingTest() throws Exception {
         String imageFile = getClass().getResource("testImage.jpg").getFile();
         String imageFile1 = getClass().getResource("testImage1.png").getFile();
-        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test1 = new Question(
                 "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
                         "answer13"), 2, "explanation1", Lists.<String> newArrayList());
 
-        org.bitbucket.cursodeconducir.services.entity.Test test2 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test2 = new Question(
                 "title2", imageFile1, "description2", Lists.newArrayList("asnwer21", "answer22",
                         "answer23"), 1, "explanation2", Lists.<String> newArrayList());
 
-        org.bitbucket.cursodeconducir.services.entity.Test createdTest = adminTestsBot
+        Question createdTest = adminTestsBot
                 .createTest(test1);
         try {
             adminTestsBot.updateTest(test1.getTitle(), test2);
@@ -168,7 +169,7 @@ public class TestManagementPageTest {
 
             EditTestBot editTestBot = adminTestsBot.clickTestTitle(test2.getTitle());
 
-            org.bitbucket.cursodeconducir.services.entity.Test updatedTest = editTestBot.getTest();
+            Question updatedTest = editTestBot.getTest();
 
             assertEquals(test2.getTitle(), updatedTest.getTitle());
 
@@ -226,11 +227,11 @@ public class TestManagementPageTest {
     public void testCreateMultipleAndListThem() throws Exception {
         String imageFile = getClass().getResource("testImage.jpg").getFile();
         String imageFile1 = getClass().getResource("testImage1.png").getFile();
-        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test1 = new Question(
                 "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
                         "answer13"), 2, "explanation1", Lists.<String> newArrayList());
 
-        org.bitbucket.cursodeconducir.services.entity.Test test2 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test2 = new Question(
                 "title2", imageFile1, "description2", Lists.newArrayList("asnwer21", "answer22",
                         "answer23"), 1, "explanation2", Lists.<String> newArrayList());
 
@@ -275,7 +276,7 @@ public class TestManagementPageTest {
     @Test
     public void testPreviewATest() throws Exception {
         String imageFile = getClass().getResource("testImage.jpg").getFile();
-        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test1 = new Question(
                 "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
                         "answer13"), 2, "explanation1", Lists.<String> newArrayList());
 
@@ -321,7 +322,7 @@ public class TestManagementPageTest {
     @Test
     public void testSaveTestFromPreview() throws Exception {
         String imageFile = getClass().getResource("testImage.jpg").getFile();
-        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test1 = new Question(
                 "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
                         "answer13"), 2, "explanation1", Lists.<String> newArrayList());
 
@@ -348,7 +349,7 @@ public class TestManagementPageTest {
     @Test
     public void testAnswerTest() throws Exception {
         String imageFile = getClass().getResource("testImage.jpg").getFile();
-        org.bitbucket.cursodeconducir.services.entity.Test test1 = new org.bitbucket.cursodeconducir.services.entity.Test(
+        Question test1 = new Question(
                 "title1", imageFile, "description1", Lists.newArrayList("asnwer11", "answer12",
                         "answer13"), 1, "explanation1", Lists.<String> newArrayList());
 

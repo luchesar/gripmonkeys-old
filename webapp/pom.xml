@@ -254,5 +254,12 @@
       <version>1.9.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-stubs</artifactId>
+      <version>${appengine.version}</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

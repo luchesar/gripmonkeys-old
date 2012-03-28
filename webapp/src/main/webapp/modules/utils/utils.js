@@ -53,7 +53,7 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback, hideFeed
     }
     $.ajax({
         type : "GET",
-        url : '/test-storage?key=' + testId,
+        url : '/question-storage?key=' + testId,
         data : {},
         dataType : 'json',
         success : function(test, textStatus, jqXHR) {

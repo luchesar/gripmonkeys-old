@@ -14,17 +14,17 @@ goog.provide('cursoconducir.Question');
 cursoconducir.Question = function(id, title, imageKey, description,
         possibleAnswers, explanation) {
     /** @define {string} */
-    this.id = id;
+    var id = id;
     /** @define {string} */
-    this.title = title;
+    var title = title;
     /** @define {string} */
-    this.image = imageKey;
+    var image = imageKey;
     /** @define {string} */
-    this.description = description;
+    var description = description;
     /** @define {Array.<Object.<string, number,string, boolean>} */
-    this.possibleAnswers = possibleAnswers;
+    var possibleAnswers = possibleAnswers;
     /** @define {string} */
-    this.explanation = explanation;
+    var explanation = explanation;
 };
 
 /**

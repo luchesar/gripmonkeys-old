@@ -15,8 +15,13 @@
   </servlet>
 
   <servlet>
-    <servlet-name>TestStorage</servlet-name>
-    <servlet-class>org.bitbucket.cursodeconducir.services.TestStorageServlet</servlet-class>
+    <servlet-name>QuestionStorage</servlet-name>
+    <servlet-class>org.bitbucket.cursodeconducir.services.QuestionStorageServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>LessonStorage</servlet-name>
+    <servlet-class>org.bitbucket.cursodeconducir.services.LessonStorageServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -25,8 +30,13 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>TestStorage</servlet-name>
-    <url-pattern>/test-storage</url-pattern>
+    <servlet-name>QuestionStorage</servlet-name>
+    <url-pattern>/question-storage</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>LessonStorage</servlet-name>
+    <url-pattern>/lesson-storage</url-pattern>
   </servlet-mapping>
 
   <servlet>
