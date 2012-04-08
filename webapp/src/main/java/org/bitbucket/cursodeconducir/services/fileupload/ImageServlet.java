@@ -127,6 +127,4 @@ public class ImageServlet extends HttpServlet {
         res.setHeader(IMAGE_KEY, blobKey.getKeyString());
         return blobKey;
     }
-
-
 }
