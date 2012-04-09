@@ -22,7 +22,8 @@ var question1 = {
 		text : "answer2text",
 		sel : false
 	} ],
-	explanation : "explanation"
+	explanation : "explanation",
+	published : true
 };
 var question2 = {
 	id : "test2",
@@ -40,7 +41,8 @@ var question2 = {
 		text : "answer22text",
 		sel : false
 	} ],
-	explanation : "explanation2"
+	explanation : "explanation2",
+	published : false
 };
 
 var setUp = function() {
@@ -87,18 +89,21 @@ var testGetSelection = function() {
 	});
 	var checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
 	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
-	
+
 	assertTrue(goog.array.equals([], allTestsModule.getSelection()));
-	
+
 	checkBox1.click();
-	assertTrue(goog.array.equals([question1.id], allTestsModule.getSelection()));
-	
+	assertTrue(goog.array.equals([ question1.id ], allTestsModule
+			.getSelection()));
+
 	checkBox2.click();
-	assertTrue(goog.array.equals([question1.id, question2.id], allTestsModule.getSelection()));
-	
+	assertTrue(goog.array.equals([ question1.id, question2.id ], allTestsModule
+			.getSelection()));
+
 	checkBox1.click();
-	assertTrue(goog.array.equals([question2.id], allTestsModule.getSelection()));
-	
+	assertTrue(goog.array.equals([ question2.id ], allTestsModule
+			.getSelection()));
+
 	checkBox2.click();
 	assertTrue(goog.array.equals([], allTestsModule.getSelection()));
 };
@@ -109,31 +114,31 @@ var testSelectionChanged = function() {
 		activeTest : null,
 		answerIndex : null
 	});
-	
+
 	var selection = null;
 	var selectionChangeCount = 0;
 	var selectionChangeCallback = function(sel) {
 		selection = sel;
 		selectionChangeCount++;
 	};
-	
+
 	allTestsModule.addSelectionChangeCallback(selectionChangeCallback);
-	
+
 	var checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
 	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
-	
+
 	checkBox1.click();
 	assertEquals(1, selectionChangeCount);
-	assertTrue(goog.array.equals([question1.id], selection));
-	
+	assertTrue(goog.array.equals([ question1.id ], selection));
+
 	checkBox2.click();
 	assertEquals(2, selectionChangeCount);
-	assertTrue(goog.array.equals([question1.id, question2.id], selection));
-	
+	assertTrue(goog.array.equals([ question1.id, question2.id ], selection));
+
 	checkBox2.click();
 	assertEquals(3, selectionChangeCount);
-	assertTrue(goog.array.equals([question1.id], selection));
-	
+	assertTrue(goog.array.equals([ question1.id ], selection));
+
 	checkBox1.click();
 	assertEquals(4, selectionChangeCount);
 	assertTrue(goog.array.equals([], selection));
@@ -154,4 +159,12 @@ var assertTestPresent = function(question, isSelected) {
 	var checkBox = $("input[type='checkbox'][name='" + question.id + "']");
 	assertNotNullNorUndefined(checkBox[0]);
 	assertEquals(isSelected, checkBox.attr('checked'));
+
+	var publishedIndication = $("img[src='/images/published.png'][id='publishedIndication"
+			+ question.id + "']");
+	if (question.published) {
+		assertNotNullNorUndefined(publishedIndication[0]);
+	} else {
+		assertUndefined(publishedIndication[0]);
+	}
 };

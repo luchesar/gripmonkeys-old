@@ -1,5 +1,9 @@
 goog.provide('cursoconducir.Question');
 
+goog.require('jquery');
+goog.require('goog.array');
+goog.require('goog.json');
+
 /**
  * A Question.
  * 
@@ -13,18 +17,12 @@ goog.provide('cursoconducir.Question');
  */
 cursoconducir.Question = function(id, title, imageKey, description,
         possibleAnswers, explanation) {
-    /** @define {string} */
-    var id = id;
-    /** @define {string} */
-    var title = title;
-    /** @define {string} */
-    var image = imageKey;
-    /** @define {string} */
-    var description = description;
-    /** @define {Array.<Object.<string, number,string, boolean>} */
-    var possibleAnswers = possibleAnswers;
-    /** @define {string} */
-    var explanation = explanation;
+    this.id = id;
+    this.title = title;
+    this.image = imageKey;
+    this.description = description;
+    this.possibleAnswers = possibleAnswers;
+    this.explanation = explanation;
 };
 
 /**
@@ -33,4 +31,89 @@ cursoconducir.Question = function(id, title, imageKey, description,
  */
 cursoconducir.Question.create = function(q) {
     return new cursoconducir.Question(q.id, q.title, q.image, q.description, q.possibleAnswers, q.explanation);
+};
+
+/**
+ * Gets all the question object from the server
+ * @param {function(Array.<Question>, string=,Object|undefined)} success
+ * @param {function(XMLHttpRequest, Object, Object)} error
+ * @param {function()} complete
+ */
+cursoconducir.Question.getAll = function(success, error, complate) {
+	$.ajax({
+		type : "GET",
+		url : '/question-storage?*',
+		contentType : "application/json; charset=utf-8",
+		data : {},
+		dataType : 'json',
+		success : success,
+		error :error,
+		complete : complate
+	});
+};
+
+/**
+ * Gets question object from the server with the corresponding IDs
+ * @param {Array.<String>} ids
+ * @param {function(Array.<Question>, string=,Object|undefined)} success
+ * @param {function(XMLHttpRequest, Object, Object)} error
+ * @param {function()} complete
+ */
+cursoconducir.Question.get = function(ids, success, error, complete) {
+	$.ajax({
+		type : "GET",
+		url : '/question-storage?*',
+		contentType : "application/json; charset=utf-8",
+		data : {},
+		dataType : 'json',
+		success : success,
+		error :error,
+		complete : complete
+	});
+};
+
+/**
+ * Stores question objects on the server
+ * @param {Array.<Question>} questions
+ * @param {function(Array.<Question>, string=,Object|undefined)} success
+ * @param {function(XMLHttpRequest, Object, Object)} error
+ * @param {function()} complete
+ */
+cursoconducir.Question.store = function(questions, success, error, complete) {
+	var jsonData = {
+        json : goog.json.serialize(questions)
+    };
+	$.ajax({
+        type : "POST",
+        url : '/question-storage',
+        data : jsonData,
+        dataType : 'json',
+        success : success,
+        error : error,
+        complate: complete
+    });    
+};
+
+/**
+ * Deletes question object from the server with the corresponding IDs
+ * @param {Array.<string>} questions
+ * @param {function(Array.<Question>, string=,Object|undefined)} success
+ * @param {function(XMLHttpRequest, Object, Object)=} error
+ * @param {function()=} complete
+ */
+cursoconducir.Question.del = function(ids, success, error, complete) {
+	var idsString = "";
+	$(ids).each(function(){
+		idsString += this + ",";
+	});
+	$.ajax({
+        type : "DELETE",
+        url : '/question-storage?key=' + idsString,
+        contentType : "application/json; charset=utf-8",
+        data : {},
+        dataType : 'json',
+        success : success,
+        error : error,
+        complete : complete
+    });
 };

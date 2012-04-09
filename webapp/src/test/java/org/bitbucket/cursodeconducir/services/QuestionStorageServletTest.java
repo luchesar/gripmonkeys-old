@@ -4,8 +4,10 @@ import static junit.framework.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -28,119 +30,200 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
 public class QuestionStorageServletTest {
-    private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
-            new LocalDatastoreServiceTestConfig(), new LocalMemcacheServiceTestConfig(),
-            new LocalTaskQueueTestConfig());
+	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
+			new LocalDatastoreServiceTestConfig(),
+			new LocalMemcacheServiceTestConfig(),
+			new LocalTaskQueueTestConfig());
 
-    protected QuestionStorage storage;
-    protected QuestionStorageServlet servlet;
-    private Gson gson;
+	protected QuestionStorage storage;
+	protected QuestionStorageServlet servlet;
+	private Gson gson;
 
-    @Mock
-    private HttpServletRequest request;
-    @Mock
-    private HttpServletResponse response;
-    @Mock
-    private ServletOutputStream responseOutputStream;
-    private StringWriter responseWriter = new StringWriter();
+	@Mock
+	private HttpServletRequest request;
+	@Mock
+	private HttpServletResponse response;
+	@Mock
+	private ServletOutputStream responseOutputStream;
+	private StringWriter responseWriter = new StringWriter();
 
-    @Before
-    public void setUp() throws Exception {
-        helper.setUp();
-        gson = new Gson();
-        
+	private Question question1;
 
-        MockitoAnnotations.initMocks(this);
-        when(response.getOutputStream()).thenReturn(responseOutputStream);
-        when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
+	private Question question2;
 
-        servlet = new QuestionStorageServlet();
-        storage = servlet.getStorage();
-    }
+	@Before
+	public void setUp() throws Exception {
+		helper.setUp();
+		gson = new Gson();
 
-    @After
-    public void tearDown() throws Exception {
-        helper.tearDown();
-    }
+		MockitoAnnotations.initMocks(this);
+		resetResponse();
 
-    @Test
-    public void testDoPut() throws Exception {
-        Question test1 = new Question("title", "image", "description", Lists.newArrayList(
-                "question1", "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
+		servlet = new QuestionStorageServlet();
+		storage = servlet.getStorage();
 
-        when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(null);
-        servlet.doPut(request, response);
+		question1 = new Question("question1", "image", "description",
+				Lists.newArrayList("question1", "question2"), 0, "explanation",
+				Lists.newArrayList("image1", "image2"));
+		question2 = new Question("question2", "image", "description",
+				Lists.newArrayList("question1", "question2"), 0, "explanation",
+				Lists.newArrayList("image1", "image2"));
+	}
 
-        verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
-        verify(responseOutputStream).write((QuestionStorageServlet.INVALID_JSON + null).getBytes());
+	private void resetResponse() throws IOException {
+		reset(response);
+		when(response.getOutputStream()).thenReturn(responseOutputStream);
+		when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
+	}
 
-        when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(gson.toJson(test1));
-        servlet.doPut(request, response);
+	@After
+	public void tearDown() throws Exception {
+		helper.tearDown();
+	}
 
-        List<Question> allTests = storage.getAll();
-        assertEquals(1, allTests.size());
+	@Test
+	public void testDoPut() throws Exception {
+		when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(
+				null);
+		servlet.doPut(request, response);
 
-        Question storedQuestion = allTests.iterator().next();
-        test1.setId(storedQuestion.getId());
+		verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+		verify(responseOutputStream).write(
+				(QuestionStorageServlet.INVALID_JSON + null).getBytes());
 
-        assertEquals(storedQuestion, test1);
+		when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(
+				gson.toJson(Lists.newArrayList(question1)));
+		servlet.doPut(request, response);
 
-        assertEquals(gson.toJson(storedQuestion), responseWriter.toString());
-        verify(response).setStatus(HttpServletResponse.SC_CREATED);
-    }
-    
-    @Test
-    public void testDoGet() throws Exception {
-        Question question1 = new Question("question1", "image", "description", Lists.newArrayList(
-                "question1", "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Question question2 = new Question("question2", "image", "description", Lists.newArrayList(
-                "question1", "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        
-        question1 = storage.put(question1).iterator().next();
-        question2 = storage.put(question2).iterator().next();
-        
-        when(request.getParameter("*")).thenReturn("*");
-        servlet.doGet(request, response);
-        assertEquals(gson.toJson(Lists.newArrayList(question1, question2)), responseWriter.toString());
-        verify(response, never()).setStatus(anyInt());
-        
-        when(request.getParameter("*")).thenReturn(null);
-        when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(question2.getId() + "");
-        responseWriter.getBuffer().delete(0, responseWriter.getBuffer().length());
-        servlet.doGet(request, response);
-        verify(response, never()).setStatus(anyInt());
-        assertEquals(gson.toJson(question2), responseWriter.toString());
-        
-        when(request.getParameter(QuestionStorageServlet.ID)).thenReturn("11111111");
-        responseWriter.getBuffer().delete(0, responseWriter.getBuffer().length());
-        servlet.doGet(request, response);
-        
-        assertEquals("", responseWriter.toString());
-        verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
-    }
-    
-    @Test
-    public void testDoDelete() throws Exception {
-        Question question1 = new Question("question1", "image", "description", Lists.newArrayList(
-                "question1", "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        Question question2 = new Question("question2", "image", "description", Lists.newArrayList(
-                "question1", "question2"), 0, "explanation", Lists.newArrayList("image1", "image2"));
-        
-        question1 = storage.put(question1).iterator().next();
-        question2 = storage.put(question2).iterator().next();
-        
-        when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(question2.getId() + "");
-        servlet.doDelete(request, response);
-        
-        verify(response, never()).setStatus(anyInt());
-        assertEquals(gson.toJson(true), responseWriter.toString());
-        
-        assertEquals(Lists.newArrayList(question1), storage.getAll());
-        
-        when(request.getParameter(QuestionStorageServlet.ID)).thenReturn("1111");
-        responseWriter.getBuffer().delete(0, responseWriter.getBuffer().length());
-        servlet.doDelete(request, response);
-        verify(response, never()).setStatus(anyInt());
-        assertEquals(gson.toJson(true), responseWriter.toString());
-    }
+		List<Question> allTests = storage.getAll();
+		assertEquals(1, allTests.size());
+
+		Question storedQuestion = allTests.iterator().next();
+		question1.setId(storedQuestion.getId());
+
+		assertEquals(storedQuestion, question1);
+
+		assertEquals(gson.toJson(Lists.newArrayList(storedQuestion)), responseWriter.toString());
+		verify(response).setStatus(HttpServletResponse.SC_CREATED);
+	}
+
+	@Test
+	public void testDoPutMultiple() throws Exception {
+		when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(
+				gson.toJson(Lists.newArrayList(question1, question2)));
+		servlet.doPut(request, response);
+
+		List<Question> allTests = storage.getAll();
+		assertEquals(2, allTests.size());
+
+		Iterator<Question> iterator = allTests.iterator();
+		Question storedQuestion1 = iterator.next();
+		Question storedQuestion2 = iterator.next();
+		question1.setId(storedQuestion1.getId());
+		question2.setId(storedQuestion2.getId());
+
+		assertEquals(storedQuestion1, question1);
+		assertEquals(storedQuestion2, question2);
+
+		assertEquals(gson.toJson(Lists.newArrayList(storedQuestion1,
+				storedQuestion2)), responseWriter.toString());
+	}
+
+	@Test
+	public void testDoGet() throws Exception {
+		question1 = storage.put(question1).iterator().next();
+		question2 = storage.put(question2).iterator().next();
+
+		when(request.getParameter("*")).thenReturn("*");
+		servlet.doGet(request, response);
+		assertEquals(gson.toJson(Lists.newArrayList(question1, question2)),
+				responseWriter.toString());
+		verify(response, never()).setStatus(anyInt());
+
+		when(request.getParameter("*")).thenReturn(null);
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				question2.getId() + "");
+		responseWriter.getBuffer().delete(0,
+				responseWriter.getBuffer().length());
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(question2), responseWriter.toString());
+
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				"11111111");
+		responseWriter.getBuffer().delete(0,
+				responseWriter.getBuffer().length());
+		servlet.doGet(request, response);
+
+		assertEquals("", responseWriter.toString());
+		verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				question1.getId() + "," + question2.getId());
+		responseWriter.getBuffer().delete(0,
+				responseWriter.getBuffer().length());
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question1, question2 }),
+				responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				question2.getId() + "," + question1.getId());
+		responseWriter.getBuffer().delete(0,
+				responseWriter.getBuffer().length());
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question2, question1 }),
+				responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				question1.getId() + ",768," + question2.getId());
+		responseWriter.getBuffer().delete(0,
+				responseWriter.getBuffer().length());
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question1, question2 }),
+				responseWriter.toString());
+	}
+
+	@Test
+	public void testDoDelete() throws Exception {
+		question1 = storage.put(question1).iterator().next();
+		question2 = storage.put(question2).iterator().next();
+
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				question2.getId() + "");
+		servlet.doDelete(request, response);
+
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(true), responseWriter.toString());
+
+		assertEquals(Lists.newArrayList(question1), storage.getAll());
+
+		when(request.getParameter(QuestionStorageServlet.ID))
+				.thenReturn("1111");
+		responseWriter.getBuffer().delete(0,
+				responseWriter.getBuffer().length());
+		servlet.doDelete(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(true), responseWriter.toString());
+	}
+
+	@Test
+	public void testDoDeleteMultiple() throws Exception {
+		question1 = storage.put(question1).iterator().next();
+		question2 = storage.put(question2).iterator().next();
+
+		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+				question1.getId() + "," + question2.getId());
+		servlet.doDelete(request, response);
+
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(true), responseWriter.toString());
+
+		assertEquals(Lists.newArrayList(), storage.getAll());
+	}
 }
