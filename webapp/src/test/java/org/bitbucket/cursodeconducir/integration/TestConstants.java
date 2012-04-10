@@ -6,4 +6,7 @@ public interface TestConstants {
     String HREF = "href";
     String PAGE_PATH = "/admin/tests";
     String CREATE_LINK_TEXT = "Create";
+    String DELETE_LINK_TEXT = "Delete";
+    String PUBLISH_LINK_TEXT = "Publish";
+    String UNPUBLISH_LINK_TEXT = "Unpublish";
 }

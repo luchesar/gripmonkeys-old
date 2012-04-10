@@ -12,11 +12,10 @@
       <div class="row">
       	<div class="span1">
           <input type="checkbox" name="{$test.id}"/>
-          {if $test.published}
-          	<p>
-          		<img id="publishedIndication{$test.id}" src="/images/published.png"/>
-          	</p>
-          {/if}
+          <p>
+              <img id="publishedIndication{$test.id}" 
+                  src="{if $test.published}/images/published.png{else}/images/unpublished.png{/if}"/>
+          </p>
         </div>
         <div class="span2">
           <div class="media-grid">

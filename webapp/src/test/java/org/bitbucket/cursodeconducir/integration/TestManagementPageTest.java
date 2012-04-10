@@ -377,7 +377,7 @@ public class TestManagementPageTest {
             
             adminTestsBot = previewTestBot.cancel();
         } finally {
-            deleteTestQuitely(test1.getTitle());
+        	deleteTestQuitely(test1.getTitle());
         }
     }
 

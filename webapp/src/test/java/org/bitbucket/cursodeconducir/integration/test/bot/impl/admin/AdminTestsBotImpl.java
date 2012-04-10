@@ -93,8 +93,11 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
 
     @Override
     public void deleteTest(final String aTitle, boolean accept) {
-        WebElement deleteButton = findTestElement(aTitle).findElement(By.linkText("Delete"));
-        deleteButton.click();
+        WebElement checkboxButton = findTestCheckbox(findTestElement(aTitle));
+        checkboxButton.click();
+        
+        WebElement deleteButtons = driver.findElement(By.linkText(DELETE_LINK_TEXT));
+        deleteButtons.click();
 
         Alert alert = driver.switchTo().alert();
         if (accept) {
@@ -120,12 +123,13 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
 
     @Override
     public boolean isPublished(String aTitle) {
-        WebElement publishmentButton = findTestPublishmentButton(findTestElement(aTitle));
+        WebElement publishmentImage = findTestPublishmentImage(findTestElement(aTitle));
 
-        if ("Publish".equals(publishmentButton.getText())) {
-            return false;
-        } else if ("Unpublish".equals(publishmentButton.getText())) {
+        String publishImage = publishmentImage.getAttribute("src");
+		if (publishImage.endsWith("/images/published.png")) {
             return true;
+        } else if (publishImage.endsWith("/images/unpublished.png")) {
+            return false;
         }
         throw new IllegalStateException();
     }
@@ -137,8 +141,11 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         if (isPublished(aTitle)) {
             throw new BotException("'" + aTitle + "' is already published");
         }
-        WebElement publishmentButton = findTestPublishmentButton(findTestElement(aTitle));
-        publishmentButton.click();
+        WebElement checkboxButton = findTestCheckbox(findTestElement(aTitle));
+        checkboxButton.click();
+        
+        WebElement deleteButtons = driver.findElement(By.linkText(PUBLISH_LINK_TEXT));
+        deleteButtons.click();
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
@@ -159,8 +166,11 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         if (!isPublished(aTitle)) {
             throw new BotException("'" + aTitle + "' is already unpublished");
         }
-        WebElement publishmentButton = findTestPublishmentButton(findTestElement(aTitle));
-        publishmentButton.click();
+        WebElement checkboxButton = findTestCheckbox(findTestElement(aTitle));
+        checkboxButton.click();
+        
+        WebElement deleteButtons = driver.findElement(By.linkText(UNPUBLISH_LINK_TEXT));
+        deleteButtons.click();
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
@@ -232,7 +242,12 @@ public class AdminTestsBotImpl extends AdminBotImpl implements AdminTestsBot {
         return testElement.findElement(By.id(ID_TEST_DESCRIPTION)).getText();
     }
 
-    private WebElement findTestPublishmentButton(WebElement testElement) {
-        return testElement.findElement(By.id("changeTestPublishment"));
+    private WebElement findTestPublishmentImage(WebElement testElement) {
+    	String questionId = findTestCheckbox(testElement).getAttribute("name");
+        return testElement.findElement(By.id("publishedIndication" + questionId));
+    }
+    
+    private WebElement findTestCheckbox(WebElement testElement) {
+        return testElement.findElement(By.cssSelector("input[type='checkbox']"));
     }
 }

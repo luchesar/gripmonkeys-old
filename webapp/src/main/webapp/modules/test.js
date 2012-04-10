@@ -100,7 +100,8 @@ cursoconducir.TestModule = function(container) {
                     { title : cursoconducir.utils.getTestLetter(1), index : 1,
                         text : '', sel : false },
                     { title : cursoconducir.utils.getTestLetter(2), index : 2,
-                        text : '', sel : false } ], explanation : '' };
+                        text : '', sel : false } ], explanation : '',
+            published: true };
     };
 
     /** @public */
@@ -121,7 +122,8 @@ cursoconducir.TestModule = function(container) {
                         text : $("textarea[name=answer1]").val(), sel : false },
                     { title : cursoconducir.utils.getTestLetter(2), index : 2,
                         text : $("textarea[name=answer2]").val(), sel : false } ],
-            explanation : $("textarea[name=testExplanation]").val() };
+            explanation : $("textarea[name=testExplanation]").val(),
+            published: $("input[type=hidden][name=testPublished]").attr("value")};
 
         var selectionOption = $("#correctAnswerIndex :selected");
         var selectedIndex = selectionOption.attr('value');

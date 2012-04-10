@@ -1,6 +1,7 @@
 goog.provide('cursoconducir.utils');
 
 goog.require('goog.array');
+goog.require('cursoconducir.Question');
 
 cursoconducir.utils.code = function(template) {
 	var possibleAnswers = [];
@@ -69,27 +70,19 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 	if (hideFeedback) {
 		hideFeedback();
 	}
-	$.ajax({
-		type : "GET",
-		url : '/question-storage?key=' + testId,
-		data : {},
-		dataType : 'json',
-		success : function(test, textStatus, jqXHR) {
-			if (test && test.length > 0) {
-				callback(cursoconducir.utils.decode(test[0]));
-			} else {
-				if (showFeedback) {
-					showFeedback('No test found with id ' + testId);
-				}
-			}
-		},
-		error : function(xhr, ajaxOptions, thrownError) {
+	cursoconducir.Question.get([ testId ], function(test, textStatus, jqXHR) {
+		if (test && test.length > 0) {
+			callback(cursoconducir.utils.decode(test[0]));
+		} else {
 			if (showFeedback) {
-				showFeedback('Cannot fetch a test. Server returned error \''
-						+ xhr.status + ' ' + thrownError + '\'');
+				showFeedback('No test found with id ' + testId);
 			}
-		},
-		complete : callback()
+		}
+	}, function(xhr, ajaxOptions, thrownError) {
+		if (showFeedback) {
+			showFeedback('Cannot fetch a test. Server returned error \''
+					+ xhr.status + ' ' + thrownError + '\'');
+		}
 	});
 };
 
