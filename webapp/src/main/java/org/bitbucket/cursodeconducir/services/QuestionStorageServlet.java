@@ -85,7 +85,6 @@ public class QuestionStorageServlet extends HttpServlet {
 		} catch (ServiceException e) {
 			aResp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@Override
