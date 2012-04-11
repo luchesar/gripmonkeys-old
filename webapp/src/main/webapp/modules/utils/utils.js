@@ -60,6 +60,13 @@ cursoconducir.utils.getTestLetter = function(index) {
 	return cursoconducir.utils.indexes[index];
 };
 
+/**
+ * @param {Object} model
+ * @param {string} testId
+ * @param {function(Object)} callback
+ * @param {function()=} hideFeedback
+ * @param {function(string)=} showFeedback
+ */
 cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 		hideFeedback, showFeedback) {
 	var foundTest = cursoconducir.utils.findTestById(model, testId);

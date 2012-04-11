@@ -10,7 +10,6 @@ import com.googlecode.objectify.annotation.Unindexed;
 public class TitledEntity {
     @Id
     private Long id;
-    
     private String title;
     @Unindexed
     private String image;

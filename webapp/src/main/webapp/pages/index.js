@@ -25,14 +25,17 @@ cursoconducir.index.init = function(allTestJson) {
 cursoconducir.index.showInConstruction = function() {
     var visitedCookie = "cursoconducirInConstruction";
     var cookies = new goog.net.Cookies(document); 
-    if (!cookies.containsKey(visitedCookie)) {
+    if (!cookies.containsKey(visitedCookie) == "true") {
         $('#under-construction-modal').modal({ keyboard : true, backdrop : true, show : true });
-        cookies.set(visitedCookie, true, 864000);
+        cookies.set(visitedCookie, "true", 864000);
     }
 };
 
-cursoconducir.IndexPage = function(test) {
-    var model = { allTests : null, activeTest : test, answerIndex : null };
+/**
+ * @constructor
+ */
+cursoconducir.IndexPage = function() {
+    var model = { allTests : null, activeTest : null, answerIndex : null };
 
     /** @private */
     var ANSWER = "answer";

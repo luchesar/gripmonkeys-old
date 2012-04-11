@@ -3,7 +3,6 @@ package org.bitbucket.cursodeconducir.services.entity;
 import java.util.List;
 
 import com.google.common.base.Objects;
-import com.googlecode.objectify.Key;
 
 public class Lesson extends TitledEntity {
     /**
@@ -24,7 +23,6 @@ public class Lesson extends TitledEntity {
         return questionKeys;
     }
 
-
     public void setQuestionKeys(List<Integer> aQuestionKeys) {
         questionKeys = aQuestionKeys;
     }
@@ -39,7 +37,6 @@ public class Lesson extends TitledEntity {
         }
 
         Lesson other = (Lesson) aObj;
-
         return Objects.equal(questionKeys, other.questionKeys);
     }
 
@@ -55,5 +52,4 @@ public class Lesson extends TitledEntity {
                 + ", getDescription()=" + getDescription() + ", getImage()=" + getImage()
                 + ", questionKeys=" + questionKeys + "]";
     }
-
 }

@@ -1,10 +1,13 @@
 goog.provide('cursoconducir.AllTestsModule');
 
 goog.require('cursoconducir.template.allTests');
-goog.require("jquery.mustache");
 goog.require("goog.soy");
 goog.require("goog.array");
 
+/**
+ * @constructor
+ * @param {Object} container
+ */
 cursoconducir.AllTestsModule = function(container) {
 	var callbacks = [];
 	

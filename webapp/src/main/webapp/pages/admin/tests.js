@@ -22,7 +22,12 @@ cursoconducir.admin.tests.init = function() {
 	});
 };
 
-cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
+/**
+ * @constructor
+ * @param {Object} testsContainer
+ */
+
+cursoconducir.admin.TestsPage = function(testsContainer) {
 	/** @private */
 	var CREATE = '#create';
 	/** @private */
@@ -117,11 +122,11 @@ cursoconducir.admin.TestsPage = function(testsContainer, previewTestTemplate) {
 		}
 		if (hash == '' || hash == '#' || hash == CANCEL) {
 			model.activeTest = null;
-			if (initAllTests(function() {
+			initAllTests(function() {
 				allTestsModule.show(model);
 				updateButtons(cursoconducir.template.tests.buttons.initial);
 				$("#footer").addClass("loaded");
-			}));
+			});
 		} else if (hash == CREATE) {
 			model.activeTest = testModule.createEmptyTest();
 			testModule.show(model);

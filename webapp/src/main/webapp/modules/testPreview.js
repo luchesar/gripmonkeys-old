@@ -2,6 +2,10 @@ goog.provide('cursoconducir.TestPreviewModule');
 
 goog.require('cursoconducir.template.testPreview');
 
+/**
+ * @constructor
+ * @param {Object} container
+ */
 cursoconducir.TestPreviewModule = function(container) {
     var done = false;
     /** public */

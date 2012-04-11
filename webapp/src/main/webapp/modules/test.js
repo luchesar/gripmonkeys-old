@@ -4,8 +4,11 @@ goog.require('cursoconducir.template.test');
 goog.require('cursoconducir.utils');
 goog.require('jquery.wysiwyg');
 goog.require('bootstrap.modal');
-goog.require('portableJson');
 
+/**
+ * @constructor
+ * @param container
+ */
 cursoconducir.TestModule = function(container) {
     /** @private constant */
     var controls = { controls : { separator00 : { visible : false },
@@ -34,8 +37,7 @@ cursoconducir.TestModule = function(container) {
 
     /**
      * @public
-     * @param Test
-     *            test
+     * @param {Object} model
      * @return void
      */
     this.show = function(model) { 
