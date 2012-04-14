@@ -1,55 +1,59 @@
 <project name="cursoconducir" default="none">
-    <property name="builddir" value="${basedir}" />
-    <property name="webapp" value="${builddir}/../src/main/webapp" />
-    <property name="warDir" value="${builddir}/../target/tmpwar" />
-    <property name="compiledJs" value="${warDir}/jsgen/" />
+	<property name="builddir" value="${basedir}" />
+	<property name="webapp" value="${builddir}/../src/main/webapp" />
+	<property name="warDir" value="${builddir}/../target/tmpwar" />
+	<property name="compiledJs" value="${warDir}/jsgen/" />
 
-    <target name="none">
-    </target>
+	<target name="none">
+	</target>
 
-    <target name="compile-js">
-        <mkdir dir="${compiledJs}" />
-        <compile plovrConfigFile="${builddir}/plovr-index-config.js" />
-        <compile plovrConfigFile="${builddir}/plovr-admin-tests-config.js" />
-    </target>
+	<target name="compile-js">
+		<mkdir dir="${compiledJs}" />
+		<compile plovrConfigFile="${builddir}/plovr-index-config.js" />
+		<compile plovrConfigFile="${builddir}/plovr-admin-tests-config.js" />
+		<compile plovrConfigFile="${builddir}/plovr-admin-lessons-config.js" />
+	</target>
 
-    <macrodef name="compile">
-        <attribute name="plovrConfigFile" />
-        <sequential>
-            <echo>compiling JS for config @{plovrConfigFile}</echo>
-            <java jar="${builddir}/plovr-4b3caf2b7d84.jar" fork="true" failonerror="true">
-                <arg line="build @{plovrConfigFile}" />
-            </java>
-        </sequential>
-    </macrodef>
+	<macrodef name="compile">
+		<attribute name="plovrConfigFile" />
+		<sequential>
+			<echo>compiling JS for config @{plovrConfigFile}</echo>
+			<java jar="${builddir}/plovr-4b3caf2b7d84.jar" fork="true" failonerror="true">
+				<arg line="build @{plovrConfigFile}" />
+			</java>
+		</sequential>
+	</macrodef>
 
-    <target name="copyWebappResources">
-        <mkdir dir="${warDir}"/>
-        <copy todir="${warDir}" includeemptydirs="false">
-            <fileset dir="${webapp}">
-                <exclude name="**/jslib/**/*.*" />
-                <exclude name="**/*_test.html" />
-                <exclude name="**/*_tests.html" />
-                <exclude name="**/*.soy" />
-                <exclude name="**/*.js" />
-            </fileset>
-        </copy>
-    </target>
+	<target name="copyWebappResources">
+		<mkdir dir="${warDir}"/>
+		<copy todir="${warDir}" includeemptydirs="false">
+			<fileset dir="${webapp}">
+				<exclude name="**/jslib/**/*.*" />
+				<exclude name="**/*_test.html" />
+				<exclude name="**/*_tests.html" />
+				<exclude name="**/*.soy" />
+				<exclude name="**/*.js" />
+			</fileset>
+		</copy>
+	</target>
 
-    <target name="jspPatch">
-        <antcall target="copyWebappResources"/>
-        <replace file="${warDir}/pages/index.jsp">
-            <replacefilter token="http://localhost:9810/compile?id=index&amp;mode=raw&amp;level=verbose" value="/jsgen/index.compiled.js" />
-        </replace>
-        <replace file="${warDir}/pages/admin/tests.jsp">
-            <replacefilter token="http://localhost:9810/compile?id=admin-tests&amp;mode=raw&amp;level=verbose" value="/jsgen/adminTests.compiled.js" />
-        </replace>
-    </target>
+	<target name="jspPatch">
+		<antcall target="copyWebappResources"/>
+		<replace file="${warDir}/pages/index.jsp">
+			<replacefilter token="http://localhost:9810/compile?id=index&amp;mode=raw&amp;level=verbose" value="/jsgen/index.compiled.js" />
+		</replace>
+		<replace file="${warDir}/pages/admin/tests.jsp">
+			<replacefilter token="http://localhost:9810/compile?id=admin-tests&amp;mode=raw&amp;level=verbose" value="/jsgen/adminTests.compiled.js" />
+		</replace>
+		<replace file="${warDir}/pages/admin/lessons.jsp">
+			<replacefilter token="http://localhost:9810/compile?id=admin-lessons&amp;mode=raw&amp;level=verbose" value="/jsgen/adminLessons.compiled.js" />
+		</replace>
+	</target>
 
-    <target name="plovr">
-        <java jar="plovr-4b3caf2b7d84.jar" fork="true">
-            <arg line=" serve
-                plovr-index-config.js plovr-admin-tests-config.js" />
-        </java>
-    </target>
+	<target name="plovr">
+		<java jar="plovr-4b3caf2b7d84.jar" fork="true">
+			<arg line=" serve
+                plovr-index-config.js plovr-admin-tests-config.js plovr-admin-lessons-config.js" />
+		</java>
+	</target>
 </project>

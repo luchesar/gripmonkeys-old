@@ -17,6 +17,7 @@ goog.require('goog.json');
  */
 cursoconducir.Question = function(id, title, imageKey, description,
         possibleAnswers, explanation) {
+	/**@type {string}*/
     this.id = id;
     this.title = title;
     this.image = imageKey;

@@ -3,6 +3,9 @@ goog.provide('cursoconducir.utils');
 goog.require('goog.array');
 goog.require('cursoconducir.Question');
 
+/**
+ * @public
+ */
 cursoconducir.utils.code = function(template) {
 	var possibleAnswers = [];
 	var correctAnswerIndex = 0;
@@ -24,6 +27,9 @@ cursoconducir.utils.code = function(template) {
 	};
 };
 
+/**
+ * @public
+ */
 cursoconducir.utils.decode = function(jsonObject) {
 	if (jsonObject.decode) {
 		return jsonObject;
@@ -50,17 +56,22 @@ cursoconducir.utils.decode = function(jsonObject) {
 	};
 };
 
+/**
+ * @public
+ */
 cursoconducir.utils.indexes = {
 	'0' : 'A',
 	'1' : 'B',
 	'2' : 'C'
 };
+
 /** public */
 cursoconducir.utils.getTestLetter = function(index) {
 	return cursoconducir.utils.indexes[index];
 };
 
 /**
+ * @public
  * @param {Object} model
  * @param {string} testId
  * @param {function(Object)} callback
@@ -69,7 +80,7 @@ cursoconducir.utils.getTestLetter = function(index) {
  */
 cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 		hideFeedback, showFeedback) {
-	var foundTest = cursoconducir.utils.findTestById(model, testId);
+	var foundTest = cursoconducir.utils.findObjectById(model.allTests, testId);
 	if (foundTest) {
 		callback(foundTest);
 		return;
@@ -93,32 +104,51 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 	});
 };
 
+/**
+ * @public
+ * @param {Array.<cursoconducir.Question>} model
+ * @param {string} id
+ * @return {Array.<cursoconducir.Question>}
+ */
 cursoconducir.utils.findTests = function(model, testIds) {
+	/** @type {Array.<cursoconducir.Question>}*/
 	var foundTests = [];
 	for (var i = 0; i < testIds.length; i++) {
-		goog.array.insert(foundTests, cursoconducir.utils.findTestById(model, testIds[i]));
+		goog.array.insert(foundTests, cursoconducir.utils.findObjectById(model.allTests, testIds[i]));
 	}
 	return foundTests;
 };
 
-cursoconducir.utils.findTestIndexById = function(model, testId) {
-	if (model.allTests == undefined || model.allTests == null) {
+/**
+ * @public
+ * @param {Array.<cursoconducir.Question|cursoconducir.Lesson>} array
+ * @param {string} id
+ * @return {number}
+ */
+cursoconducir.utils.findObjectIndexById = function(array, id) {
+	if (array == undefined || array == null) {
 		return -1;
 	}
-	var allTestsLength = model.allTests.length;
+	var allTestsLength = array.length;
 	for ( var i = 0; i < allTestsLength; i++) {
-		if (model.allTests[i].id == testId) {
+		if (array[i].id == id) {
 			return i;
 		}
 	}
 	return -1;
 };
 
-cursoconducir.utils.findTestById = function(model, testId) {
-	if (model.allTests) {
-		var testIndex = cursoconducir.utils.findTestIndexById(model, testId);
-		if (testIndex > -1) {
-			return cursoconducir.utils.decode(model.allTests[testIndex]);
+/**
+ * @public
+ * @param {Array.<cursoconducir.Question|cursoconducir.Lesson>} array
+ * @param {string} id
+ * @return {cursoconducir.Question|cursoconducir.Lesson}
+ */
+cursoconducir.utils.findObjectById = function(array, id) {
+	if (array) {
+		var index = cursoconducir.utils.findObjectIndexById(array, id);
+		if (index > -1) {
+			return cursoconducir.utils.decode(array[index]);
 		}
 	}
 };

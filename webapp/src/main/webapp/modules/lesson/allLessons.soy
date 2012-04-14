@@ -1,0 +1,31 @@
+{namespace cursoconducir.template.allLessons}
+
+/**
+ * The template for all lessons.
+ * @param allLessons
+ */
+{template .template}
+<div id="allLessonsContainer">
+  {foreach $lesson in $allLessons}
+  <div id="lessonsInAList" class="container">
+    <div class="container mini-layout">
+      <div class="row">
+        <div class="span1">
+          <input type="checkbox" name="{$lesson.id}"/>
+        </div>
+        <div class="span13 pull-left">
+          <h4>
+            <a id="lessonTitleLink" href="#update?lesson={$lesson.id}">{$lesson.title}&nbsp;</a>
+          </h4>
+          <div id="testDescription">
+          {$lesson.description}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{ifempty}
+<small>No lessons yet</small>
+{/foreach}
+</div>
+{/template}

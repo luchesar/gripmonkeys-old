@@ -38,7 +38,6 @@ cursoconducir.TestModule = function(container) {
     /**
      * @public
      * @param {Object} model
-     * @return void
      */
     this.show = function(model) { 
         var templateHtml = cursoconducir.template.test.template(model);

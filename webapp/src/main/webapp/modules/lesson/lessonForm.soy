@@ -1,0 +1,54 @@
+{namespace cursoconducir.template.lessonForm}
+
+/**
+ * The template for a lesson.
+ * @param activeLesson
+ */
+{template .template}
+<div id="lessonContainer">
+    {if $activeLesson}
+    <h3 align="center">
+      Create new lesson <small>enter new lesson fields</small>
+    </h3>
+    <div class="clear-fix info">
+      <form>
+        <input type="hidden" name="lessonId" value="{$activeLesson.id}"/>
+        <div class="container">
+          <div class="container mini-layout">
+            <div class="row">
+              <div class="span16 center">
+                <div class="clearfix">
+                  <label for="lessonTitle">Title:</label>
+                  <div class="input">
+                    <input style="width: 420px;" placeholder="Lesson title" id="lessonTitle" name="lessonTitle" size="40"
+                      type="text" value="{$activeLesson.title}" /> <span class="help-block">An meaningful identifier of the lesson
+                    </span>
+                  </div>
+                </div>
+                <div class="clearfix">
+                  <label for="lessonDescription">Description:</label>
+                  <div class="input">
+                    <textarea style="width: 410px;" id="lessonDescription" name="lessonDescription" rows="5">{$activeLesson.description}</textarea>
+                    <span class="help-block"> Some more information about this lesson</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="questionsContainer" class="row">
+                <div class="container mini-layout">
+                    <div class="row"><div id="lessonQuestions" class="span8"/></div>
+                </div>
+                <div id="allQuestions" class="span8">
+                </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    {else}
+    <h3 align="center">
+      <small>No lessons selected</small>
+    </h3>
+    {/if}
+</div>
+{/template}

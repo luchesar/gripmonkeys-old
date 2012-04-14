@@ -137,7 +137,7 @@ cursoconducir.IndexPage = function() {
         var testArray = [];
 
         if (model.allTests && model.allTests.length > 0) {
-            var activeTestIndex = cursoconducir.utils.findTestIndexById(model, model.activeTest.id);
+            var activeTestIndex = cursoconducir.utils.findObjectIndexById(model.allTests, model.activeTest.id);
             if (model.allTests.length - 1 > activeTestIndex) {
                 truncatedModel.nextTestId = model.allTests[activeTestIndex + 1].id;
                 truncatedModel.hasNext = true;

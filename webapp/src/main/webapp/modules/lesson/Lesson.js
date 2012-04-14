@@ -8,10 +8,11 @@ goog.require('goog.json');
  * A Question.
  * 
  * @constructor
+ * @public
  * @param {string} id
  * @param {string} title
  * @param {string} description
- * @param {Array.<int>} questionIds
+ * @param {Array.<number>} questionIds
  */
 cursoconducir.Lesson = function(id, title, description, questionIds) {
     this.id = id;
@@ -30,11 +31,12 @@ cursoconducir.Lesson.create = function(lesson) {
 
 /**
  * Gets all the lessons object from the server
+ * @public
  * @param {function(Array.<Lesson>, string=,Object|undefined)} success
  * @param {function(XMLHttpRequest, Object, Object)} error
  * @param {function()} complete
  */
-cursoconducir.Lesson.getAll = function(success, error, complate) {
+cursoconducir.Lesson.getAll = function(success, error, complete) {
 	$.ajax({
 		type : "GET",
 		url : '/lesson-storage?*',
@@ -43,12 +45,13 @@ cursoconducir.Lesson.getAll = function(success, error, complate) {
 		dataType : 'json',
 		success : success,
 		error :error,
-		complete : complate
+		complete : complete
 	});
 };
 
 /**
  * Gets lesson object from the server with the corresponding IDs
+ * @public
  * @param {Array.<String>} ids
  * @param {function(Array.<Lesson>, string=,Object|undefined)} success
  * @param {function(XMLHttpRequest, Object, Object)} error
@@ -69,6 +72,7 @@ cursoconducir.Lesson.get = function(ids, success, error, complete) {
 
 /**
  * Stores lesson objects on the server
+ * @public
  * @param {Array.<Lesson>} lessons
  * @param {function(Array.<Question>, string=,Object|undefined)} success
  * @param {function(XMLHttpRequest, Object, Object)} error
@@ -91,6 +95,7 @@ cursoconducir.Lesson.store = function(lessons, success, error, complete) {
 
 /**
  * Deletes lesson object from the server with the corresponding IDs
+ * @public
  * @param {Array.<string>} lesson ids
  * @param {function(Array.<Lesson>, string=,Object|undefined)} success
  * @param {function(XMLHttpRequest, Object, Object)=} error

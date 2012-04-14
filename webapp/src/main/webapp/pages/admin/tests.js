@@ -43,7 +43,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	/** @private */
 	var model = {
+		/** @type {Array.<cursoconducir.Question>} */
 		allTests : null,
+		/** @type {cursoconducir.Question} */
 		activeTest : null
 	};
 
@@ -86,7 +88,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	
 	var postToServerDefaultSuccess = function(savetQuestions, textStatus, jqXHR) {
 		$(savetQuestions).each(function() {
-			var testIndex = cursoconducir.utils.findTestIndexById(model, this.id);
+			var testIndex = cursoconducir.utils.findObjectIndexById(model.allTests, this.id);
 	        if (!model.allTests) {
 	            model.allTests = [];
 	        }
@@ -114,7 +116,10 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		postToServer(model.activeTest, postToServerDefaultSuccess);
 	};
 	
-	/** @private */
+	/** 
+	 * @private 
+	 * @param {string=} hash
+	 */
 	var doHashChanged = function(hash) {
 		hideFeedback();
 		if (!hash) {
@@ -161,11 +166,15 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		}
 	};
 
+	/**
+	 * @private
+	 * @param {boolean} published
+	 */
 	var doPublish = function(published) {
 		var selectedTestsIds = allTestsModule.getSelection();
 		var selectedTests = [];
 		$(selectedTestsIds).each(function(){
-			var selectedTest = cursoconducir.utils.findTestById(model, this);
+			var selectedTest = cursoconducir.utils.findObjectById(model.allTests, this);
 			selectedTest.published = published;
 			goog.array.insert(selectedTests, cursoconducir.utils.code(selectedTest));
 		});
@@ -222,7 +231,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		var selectedTestsIds = allTestsModule.getSelection();
 		var selectedTests = '';
 		for ( var i = 0; i < selectedTestsIds.length; i++) {
-			var selectedTest = cursoconducir.utils.findTestById(model,
+			var selectedTest = cursoconducir.utils.findObjectById(model.allTests,
 					selectedTestsIds[i]);
 			selectedTests += selectedTest.title + ", ";
 		}
@@ -232,7 +241,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 				if (wasDeleted) {
 					for ( var i = 0; i < selectedTestsIds.length; i++) {
 						var spliceIndex = cursoconducir.utils
-								.findTestIndexById(model, selectedTestsIds[i]);
+								.findObjectIndexById(model, selectedTestsIds[i]);
 						model.allTests.splice(spliceIndex, 1);
 					}
 				}
