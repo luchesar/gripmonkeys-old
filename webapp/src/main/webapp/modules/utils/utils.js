@@ -81,6 +81,7 @@ cursoconducir.utils.getTestLetter = function(index) {
 cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 		hideFeedback, showFeedback) {
 	var foundTest = cursoconducir.utils.findObjectById(model.allTests, testId);
+	foundTest = cursoconducir.utils.decode(foundTest);
 	if (foundTest) {
 		callback(foundTest);
 		return;
@@ -114,7 +115,8 @@ cursoconducir.utils.findTests = function(model, testIds) {
 	/** @type {Array.<cursoconducir.Question>}*/
 	var foundTests = [];
 	for (var i = 0; i < testIds.length; i++) {
-		goog.array.insert(foundTests, cursoconducir.utils.findObjectById(model.allTests, testIds[i]));
+		var test = cursoconducir.utils.findObjectById(model.allTests, testIds[i]);
+		goog.array.insert(foundTests, cursoconducir.utils.decode(test));
 	}
 	return foundTests;
 };
@@ -148,7 +150,7 @@ cursoconducir.utils.findObjectById = function(array, id) {
 	if (array) {
 		var index = cursoconducir.utils.findObjectIndexById(array, id);
 		if (index > -1) {
-			return cursoconducir.utils.decode(array[index]);
+			return array[index];
 		}
 	}
 };

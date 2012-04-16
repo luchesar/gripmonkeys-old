@@ -15,8 +15,8 @@
         <input type="hidden" name="lessonId" value="{$activeLesson.id}"/>
         <div class="container">
           <div class="container mini-layout">
-            <div class="row">
-              <div class="span16 center">
+            <div class="row-fluid">
+              <div class="span12 center">
                 <div class="clearfix">
                   <label for="lessonTitle">Title:</label>
                   <div class="input">
@@ -34,13 +34,33 @@
                 </div>
               </div>
             </div>
-            <div id="questionsContainer" class="row">
-                <div class="container mini-layout">
-                    <div class="row"><div id="lessonQuestions" class="span8"/></div>
+            <div class="mini-layout">
+                <div id="questionsButtonsContainer" class="row-fluid">
+                        <div class="span12">
+                            <h3>Choose qustions for this lesson <small>From the list of all question choose the ones that are part of this lesson</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a id="addQuestionsButton" class="btn small disabled">&lt;&lt;</a>&nbsp;
+                                <a id="removeQuestionsButton" class="btn small disabled">&gt;&gt;</a>&nbsp;
+                            </h3>
+                        </div>
+                 </div>
+                 <div id="questionsContainer" class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div  class="span6">
+                                <h4>Lesson questions</h4>
+                                <div id="lessonQuestions">
+                            
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <h4>All questions</h4>
+                                <div id="allQuestions" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="allQuestions" class="span8">
-                </div>
-            </div>
+             </div>   
           </div>
         </div>
       </form>

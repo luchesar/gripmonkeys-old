@@ -68,13 +68,13 @@ public class LessonStorageServlet extends HttpServlet {
 			throws ServletException, IOException {
 		setResponseEnconding(aResp);
 		java.util.List<Lesson> questionsToStore = Lists.newArrayList();
-		String questionsJson = aReq.getParameter(JSON_KEY);
-		if (questionsJson == null) {
+		String lessonsJson = aReq.getParameter(JSON_KEY);
+		if (lessonsJson == null) {
 			aResp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			IOUtils.write(INVALID_JSON + questionsJson, aResp.getOutputStream());
+			IOUtils.write(INVALID_JSON + lessonsJson, aResp.getOutputStream());
 			return;
 		}
-		Lesson[] deserializedQuestions = gson.fromJson(questionsJson,
+		Lesson[] deserializedQuestions = gson.fromJson(lessonsJson,
 				new Lesson[0].getClass());
 		questionsToStore.addAll(Lists.newArrayList(deserializedQuestions));
 		try {

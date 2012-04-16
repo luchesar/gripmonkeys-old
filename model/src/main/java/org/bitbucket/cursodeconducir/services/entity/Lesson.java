@@ -9,22 +9,22 @@ public class Lesson extends TitledEntity {
      * Used only for storage purposes. Do not use for anything instead us the
      * questions!
      */
-    private List<Integer> questionKeys;
+    private List<Integer> questionIds;
 
     public Lesson() {
     }
 
-    public Lesson(String aTitle, String aImage, String aDescription, List<Integer> aQuestionKeys) {
+    public Lesson(String aTitle, String aImage, String aDescription, List<Integer> aQuestionIds) {
         super(aTitle, aImage, aDescription);
-        questionKeys = aQuestionKeys;
+        questionIds = aQuestionIds;
     }
 
-    public List<Integer> getQuestionKeys() {
-        return questionKeys;
+    public List<Integer> getQuestionIds() {
+        return questionIds;
     }
 
-    public void setQuestionKeys(List<Integer> aQuestionKeys) {
-        questionKeys = aQuestionKeys;
+    public void setQuestionIds(List<Integer> aQuestionIds) {
+        questionIds = aQuestionIds;
     }
 
     @Override
@@ -37,12 +37,12 @@ public class Lesson extends TitledEntity {
         }
 
         Lesson other = (Lesson) aObj;
-        return Objects.equal(questionKeys, other.questionKeys);
+        return Objects.equal(questionIds, other.questionIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(super.hashCode(), questionKeys);
+        return Objects.hashCode(super.hashCode(), questionIds);
     }
 
     @Override
@@ -50,6 +50,6 @@ public class Lesson extends TitledEntity {
         return "Lesson [getId()="
                 + getId() + ", getTitle()=" + getTitle() + ", getTitleImage()=" + getTitleImage()
                 + ", getDescription()=" + getDescription() + ", getImage()=" + getImage()
-                + ", questionKeys=" + questionKeys + "]";
+                + ", questionIds=" + questionIds + "]";
     }
 }

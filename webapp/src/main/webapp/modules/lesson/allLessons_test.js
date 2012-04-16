@@ -1,5 +1,4 @@
-goog.provide('cursoconducir.alllessons');
-
+goog.require('cursoconducir.alllessons');
 goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.AllLessons');
 goog.require('cursoconducir.Lesson');
@@ -117,20 +116,3 @@ var testSelectionChanged = function() {
 	assertEquals(4, selectionChangeCount);
 	assertTrue(goog.array.equals([], selection));
 };
-
-var assertLessonPresent = function(lesson) {
-	var lessonTitle = $("a[href='#update?lesson=" + lesson.id + "']");
-	assertNotNullNorUndefined(lessonTitle);
-	assertEquals(lesson.title, lessonTitle.text().trim());
-
-	assertNotNullNorUndefined($("div:contains('" + lesson.description + "')")
-			.text());
-
-	var checkBox = $("input[type='checkbox'][name='" + lesson.id + "']");
-	assertNotNullNorUndefined(checkBox[0]);
-};
-
-/**
- * @public
- */
-cursoconducir.alllessons.assertLessonPresent = assertLessonPresent;

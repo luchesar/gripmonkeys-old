@@ -1,66 +1,58 @@
 goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.Question');
+goog.require('cursoconducir.MockQuestion');
+goog.require('cursoconducir.allquestions');
 
 goog.require('jquery');
 
 var allTestsModule;
 var testContainer;
-var question1 = {
-	id : "test1",
-	title : "test1",
-	image : "http://imageKey",
-	description : "test1Description",
-	possibleAnswers : [ {
-		title : "answer1",
-		index : 0,
-		text : "answer1text",
-		sel : false
-	}, {
-		title : "answer2",
-		index : 0,
-		text : "answer2text",
-		sel : false
-	} ],
-	explanation : "explanation",
-	published : true
+var testContainer1;
+var createQuestion = function(index) {
+	return {
+		id : "test" + index,
+		title : "test" + index,
+		image : "http://imageKey" + index,
+		description : "test1Description" + index,
+		possibleAnswers : [ {
+			title : "answer" + index + "1",
+			index : 0,
+			text : "answer" + index + "1text",
+			sel : false
+		}, {
+			title : "answer" + index + "2",
+			index : 0,
+			text : "answer" + index + "2text",
+			sel : false
+		} ],
+		explanation : "explanation" + index,
+		published : false
+	};
 };
-var question2 = {
-	id : "test2",
-	title : "test2",
-	image : "http://imageKey2",
-	description : "test1Description2",
-	possibleAnswers : [ {
-		title : "answer21",
-		index : 0,
-		text : "answer21text",
-		sel : false
-	}, {
-		title : "answer22",
-		index : 0,
-		text : "answer22text",
-		sel : false
-	} ],
-	explanation : "explanation2",
-	published : false
-};
+
+var question1 = createQuestion(1);
+var question2 = createQuestion(2);
+var question3 = createQuestion(3);
+var question4 = createQuestion(4);
 
 var setUp = function() {
 	$('body').append("<div id='testContainer'/>");
+	$('body').append("<div id='testContainer1'/>");
 	init();
 };
 
 var init = function() {
 	testContainer = $('#testContainer');
+	testContainer1 = $('#testContainer1');
 	testContainer.empty();
+	testContainer1.empty();
 	allTestsModule = new cursoconducir.AllTestsModule(testContainer);
 };
 
 var testShowEmptyModel = function() {
 	allTestsModule.show({
-		allTests : [],
-		activeTest : null,
-		answerIndex : null
+		allTests : []
 	});
 	var allTestsContainer = $('#allTestsContainer');
 	assertNotNull(allTestsContainer);
@@ -71,21 +63,17 @@ var testShowEmptyModel = function() {
 var testShowSomeTests = function() {
 	allTestsModule.show({
 		allTests : [ question1, question2 ],
-		activeTest : null,
-		answerIndex : null
 	});
 	var allTestsContainer = $('#allTestsContainer');
 	assertNotNullNorUndefined(allTestsContainer);
 
-	assertTestPresent(question1);
-	assertTestPresent(question2);
+	cursoconducir.allquestions.assertQuestionPresent(allTestsContainer, question1);
+	cursoconducir.allquestions.assertQuestionPresent(allTestsContainer, question2);
 };
 
 var testGetSelection = function() {
 	allTestsModule.show({
 		allTests : [ question1, question2 ],
-		activeTest : null,
-		answerIndex : null
 	});
 	var checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
 	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
@@ -108,11 +96,36 @@ var testGetSelection = function() {
 	assertTrue(goog.array.equals([], allTestsModule.getSelection()));
 };
 
+var testGetSelectionWhenTwoInstancesPresent = function() {
+	var allTestsModule1 = new cursoconducir.AllTestsModule(testContainer1);
+
+	allTestsModule.show({
+		allTests : [ question1, question2 ]
+	});
+
+	allTestsModule1.show({
+		allTests : [ question3, question4 ]
+	});
+
+	var checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
+	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
+	var checkBox3 = $("input[type='checkbox'][name='" + question3.id + "']");
+	var checkBox4 = $("input[type='checkbox'][name='" + question4.id + "']");
+
+	checkBox1.click();
+	checkBox2.click();
+	checkBox3.click();
+	checkBox4.click();
+
+	assertTrue(goog.array.equals([ question1.id, question2.id ], allTestsModule
+			.getSelection()));
+	assertTrue(goog.array.equals([ question3.id, question4.id ],
+			allTestsModule1.getSelection()));
+};
+
 var testSelectionChanged = function() {
 	allTestsModule.show({
-		allTests : [ question1, question2 ],
-		activeTest : null,
-		answerIndex : null
+		allTests : [ question1, question2 ]
 	});
 
 	var selection = null;
@@ -144,27 +157,37 @@ var testSelectionChanged = function() {
 	assertTrue(goog.array.equals([], selection));
 };
 
-var assertTestPresent = function(question, isSelected) {
-	assertNotNullNorUndefined($("a[href='" + question.image + "']"));
-	var testTitle = $("a[href='#update?test=" + question.id + "']");
-	assertNotNullNorUndefined(testTitle);
-	assertEquals(question.title, testTitle.text().trim());
+var testSelectionChangedWhenTwoInstancesPresent = function() {
+	var allTestsModule1 = new cursoconducir.AllTestsModule(testContainer1);
 
-	assertNotNullNorUndefined($("div:contains('" + question.description + "')")
-			.text());
+	allTestsModule.show({
+		allTests : [ question1, question2 ]
+	});
 
-	assertUndefined($("a[href='#delete?test=" + question.id + "']")[0]);
-	assertUndefined($("a[href='#publish?test=" + question.id + "']")[0]);
+	allTestsModule1.show({
+		allTests : [ question3, question4 ]
+	});
 
-	var checkBox = $("input[type='checkbox'][name='" + question.id + "']");
-	assertNotNullNorUndefined(checkBox[0]);
-	assertEquals(isSelected, checkBox.attr('checked'));
+	var selection = null;
+	var selectionChangeCount = 0;
+	var selectionChangeCallback = function(sel) {
+		selection = sel;
+		selectionChangeCount++;
+	};
 
-	var publishedIndication = $("img[src='/images/published.png'][id='publishedIndication"
-			+ question.id + "']");
-	if (question.published) {
-		assertNotNullNorUndefined(publishedIndication[0]);
-	} else {
-		assertUndefined(publishedIndication[0]);
-	}
+	allTestsModule1.addSelectionChangeCallback(selectionChangeCallback);
+
+	$("input[type='checkbox'][name='" + question1.id + "']").click();
+	$("input[type='checkbox'][name='" + question2.id + "']").click();
+
+	assertNull(selection);
+	assertEquals(0, selectionChangeCount);
+};
+
+var testGetQuestionIds = function() {
+	allTestsModule.show({
+		allTests : [ question1, question2 ]
+	});
+	
+	assertTrue(goog.array.equals([ question1.id, question2.id], allTestsModule.getQuestionIds()));
 };

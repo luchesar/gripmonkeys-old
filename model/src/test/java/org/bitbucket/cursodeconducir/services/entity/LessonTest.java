@@ -39,22 +39,22 @@ public class LessonTest {
         assertEquals(lesson, lesson);
 
         Lesson same = new Lesson(lesson.getTitle(), lesson.getTitleImage(),
-                lesson.getDescription(), lesson.getQuestionKeys());
+                lesson.getDescription(), lesson.getQuestionIds());
         assertEquals(lesson, same);
         assertEquals(lesson.hashCode(), same.hashCode());
 
         Lesson differentTitle = new Lesson("differentTitle", lesson.getTitleImage(),
-                lesson.getDescription(), lesson.getQuestionKeys());
+                lesson.getDescription(), lesson.getQuestionIds());
         assertFalse(lesson.equals(differentTitle));
         assertFalse(lesson.hashCode() == differentTitle.hashCode());
 
         Lesson differentTitleImage = new Lesson(lesson.getTitle(), "differentTitleImage",
-                lesson.getDescription(), lesson.getQuestionKeys());
+                lesson.getDescription(), lesson.getQuestionIds());
         assertFalse(lesson.equals(differentTitleImage));
         assertFalse(lesson.hashCode() == differentTitleImage.hashCode());
 
         Lesson differentDescription = new Lesson(lesson.getTitle(), lesson.getTitleImage(),
-                "different description", lesson.getQuestionKeys());
+                "different description", lesson.getQuestionIds());
         assertFalse(lesson.equals(differentDescription));
         assertFalse(lesson.hashCode() == differentDescription.hashCode());
         
@@ -67,16 +67,16 @@ public class LessonTest {
     @Test
     public void testFillInKeys() throws Exception {
         Lesson lesson = new Lesson();
-        lesson.setQuestionKeys(Lists.newArrayList(q1, q2, q3));
+        lesson.setQuestionIds(Lists.newArrayList(q1, q2, q3));
 
 
-        assertEquals(Lists.newArrayList(q1, q2, q3), lesson.getQuestionKeys());
+        assertEquals(Lists.newArrayList(q1, q2, q3), lesson.getQuestionIds());
 
         lesson = new Lesson("title", "image", "description", Lists.newArrayList(q1, q2, q3));
 
-        assertEquals(Lists.newArrayList(q1, q2, q3), lesson.getQuestionKeys());
+        assertEquals(Lists.newArrayList(q1, q2, q3), lesson.getQuestionIds());
         
         lesson = new Lesson("title", "image", "description", null);
-        assertNull(lesson.getQuestionKeys());
+        assertNull(lesson.getQuestionIds());
     }
 }

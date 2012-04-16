@@ -175,6 +175,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		var selectedTests = [];
 		$(selectedTestsIds).each(function(){
 			var selectedTest = cursoconducir.utils.findObjectById(model.allTests, this);
+			selectedTest = cursoconducir.utils.decode(selectedTest);
 			selectedTest.published = published;
 			goog.array.insert(selectedTests, cursoconducir.utils.code(selectedTest));
 		});

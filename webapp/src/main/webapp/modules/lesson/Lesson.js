@@ -23,7 +23,7 @@ cursoconducir.Lesson = function(id, title, description, questionIds) {
 
 /**
  * Creates a new Lesson object from a js object
- * @param {Object.<string, string, string, Array.<int>} lesson
+ * @param {Object.<string, string, string, Array.<number>>} lesson
  */
 cursoconducir.Lesson.create = function(lesson) {
     return new cursoconducir.Lesson(lesson.id, lesson.title, lesson.description, lesson.questionIds);
@@ -32,7 +32,7 @@ cursoconducir.Lesson.create = function(lesson) {
 /**
  * Gets all the lessons object from the server
  * @public
- * @param {function(Array.<Lesson>, string=,Object|undefined)} success
+ * @param {function(Array.<cursoconducir.Lesson>, string=,Object=)} success
  * @param {function(XMLHttpRequest, Object, Object)} error
  * @param {function()} complete
  */
@@ -53,7 +53,7 @@ cursoconducir.Lesson.getAll = function(success, error, complete) {
  * Gets lesson object from the server with the corresponding IDs
  * @public
  * @param {Array.<String>} ids
- * @param {function(Array.<Lesson>, string=,Object|undefined)} success
+ * @param {function(Array.<cursoconducir.Lesson>, string=,Object=)} success
  * @param {function(XMLHttpRequest, Object, Object)} error
  * @param {function()} complete
  */
@@ -73,14 +73,14 @@ cursoconducir.Lesson.get = function(ids, success, error, complete) {
 /**
  * Stores lesson objects on the server
  * @public
- * @param {Array.<Lesson>} lessons
- * @param {function(Array.<Question>, string=,Object|undefined)} success
+ * @param {Array.<cursoconducir.Lesson>} lessons
+ * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
  * @param {function(XMLHttpRequest, Object, Object)} error
  * @param {function()} complete
  */
 cursoconducir.Lesson.store = function(lessons, success, error, complete) {
 	var jsonData = {
-        json : goog.json.serialize(questions)
+        json : goog.json.serialize(lessons)
     };
 	$.ajax({
         type : "POST",
@@ -96,8 +96,8 @@ cursoconducir.Lesson.store = function(lessons, success, error, complete) {
 /**
  * Deletes lesson object from the server with the corresponding IDs
  * @public
- * @param {Array.<string>} lesson ids
- * @param {function(Array.<Lesson>, string=,Object|undefined)} success
+ * @param {Array.<string>} ids
+ * @param {function(Array.<cursoconducir.Lesson>, string=,Object=)} success
  * @param {function(XMLHttpRequest, Object, Object)=} error
  * @param {function()=} complete
  */
