@@ -67,7 +67,7 @@ cursoconducir.LessonForm = function(container) {
         	removeQuestionsButton.click(function() {
         		$(lessonQuestions.getSelection()).each(function() {
         			goog.array.remove(model.activeLesson.questionIds, this.toString());
-        			goog.array.remove(model.activeLesson.questionIds, this+0);
+        			goog.array.remove(model.activeLesson.questionIds, parseInt(this));
         		});
         		updateQuestionPanels(model, questions);
         		removeQuestionsButton.addClass('disabled');

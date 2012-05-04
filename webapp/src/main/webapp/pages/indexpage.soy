@@ -23,3 +23,19 @@
     </td>
 </tr></table>
 {/template}
+
+/**
+ * The template for all tests.
+ * @param title
+ * @param explanation
+ */
+{template .explanation}
+    <div class="span16">
+        <h2>
+          {$title}
+          <p>
+            <hint>{$explanation}</hint>
+          </p>
+        </h2>
+      </div>
+{/template}

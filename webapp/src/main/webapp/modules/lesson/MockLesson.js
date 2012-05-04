@@ -5,6 +5,7 @@ goog.require('cursoconducir.Lesson');
 goog.require('goog.array');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('jquery');
+goog.require('cursoconducir.utils');
 
 /**
  * @public
@@ -30,7 +31,9 @@ cursoconducir.MockLesson = function(allLessons) {
 	this.setUp = function() {
 		stubs.set(cursoconducir.Lesson, "getAll", function(success, error, complete) {
 			success(lessons);
-			complete();
+			if (complete) {
+				complete();
+			}
 		});
 		
 		stubs.set(cursoconducir.Lesson, "get", function(ids, success, error, complete) {
@@ -41,17 +44,26 @@ cursoconducir.MockLesson = function(allLessons) {
 				}
 			});
 			success(foundLessons);
-			complete();
+			if (complete) {
+				complete();
+			}
 		});
 		
-		stubs.set(cursoconducir.Lesson, "store", function(lessons, success, error, complete) {
-			var storedLessons = [];
-			$(lessons).each(function() {
-				this.id = Math.random(); 
-				goog.array.insert(storedLessons, this);
+		stubs.set(cursoconducir.Lesson, "store", function(storeLessons, success, error, complete) {
+			$(storeLessons).each(function() {
+				if (!this.id) {
+					this.id = Math.random();
+				}
+				var foundLesson = cursoconducir.utils.findObjectById(lessons, this.id);
+				if (foundLesson) {
+					goog.array.remove(lessons, this);
+				} 
+				goog.array.insert(lessons, this);
 			});
-			success(storedLessons);
-			complete();
+			success(lessons);
+			if (complete) {
+				complete();
+			}
 		});
 		
 		stubs.set(cursoconducir.Lesson, "del", function(ids, success, error, complete) {

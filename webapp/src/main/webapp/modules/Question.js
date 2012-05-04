@@ -61,9 +61,13 @@ cursoconducir.Question.getAll = function(success, error, complete) {
  * @param {function()=} complete
  */
 cursoconducir.Question.get = function(ids, success, error, complete) {
+	var idsString = '';
+	$(ids).each(function(){
+		idsString += this + ",";
+	});
 	$.ajax({
 		type : "GET",
-		url : '/question-storage?*',
+		url : '/question-storage?key='+idsString,
 		contentType : "application/json; charset=utf-8",
 		data : {},
 		dataType : 'json',

@@ -85,16 +85,6 @@ body {
       </div>
     </div>
     <div id="courceExplanationContainer" class="row hide">
-      <div class="span16">
-        <h2>
-          Test Especiales
-          <p>
-            <hint>Las preguntas de los test especiales han sido seleccionadas entre todas las preguntas de
-            trafico por su dificultad . En un test normal de 30 preguntas de la dgt encontrara unas media de 5 preguntas
-            especiales como estas.</hint>
-          </p>
-        </h2>
-      </div>
     </div>
 
     <!-- Main hero unit for a primary marketing message or call to action -->

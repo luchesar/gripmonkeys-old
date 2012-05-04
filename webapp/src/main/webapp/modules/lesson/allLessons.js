@@ -46,7 +46,7 @@ cursoconducir.AllLessons = function(container) {
 		var selection = [];
 		$("input[type=checkbox]").each(function() {
 			if (this.checked) {
-				goog.array.insert(selection, this.name);
+				goog.array.insert(selection, this.name.toString());
 			}
 		});
 		return selection;

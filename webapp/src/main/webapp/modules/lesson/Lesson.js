@@ -58,9 +58,13 @@ cursoconducir.Lesson.getAll = function(success, error, complete) {
  * @param {function()} complete
  */
 cursoconducir.Lesson.get = function(ids, success, error, complete) {
+	var idsString = '';
+	$(ids).each(function(){
+		idsString += this + ",";
+	});
 	$.ajax({
 		type : "GET",
-		url : '/lesson-storage?*',
+		url : '/lesson-storage?key='+idsString,
 		contentType : "application/json; charset=utf-8",
 		data : {},
 		dataType : 'json',

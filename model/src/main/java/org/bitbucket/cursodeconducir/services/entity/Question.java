@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.google.common.base.Objects;
 import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;
 
 @Cached
 @Unindexed
+@Entity(name="Test")
 public class Question extends TitledEntity {
     private List<String> possibleAnswers;
     private int correctAnswerIndex;

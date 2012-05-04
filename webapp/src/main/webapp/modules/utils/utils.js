@@ -31,7 +31,10 @@ cursoconducir.utils.code = function(template) {
  * @public
  */
 cursoconducir.utils.decode = function(jsonObject) {
-	if (jsonObject.decode) {
+	if (!goog.isDefAndNotNull(jsonObject)) {
+		return undefined;
+	}
+	if (jsonObject.decode === true) {
 		return jsonObject;
 	}
 	var possibleAnswers = [];
