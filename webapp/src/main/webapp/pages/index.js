@@ -12,6 +12,7 @@ goog.require('cursoconducir.TestPreviewModule');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.indexpage.template');
+goog.require('cursoconducir.index.ShowLesson');
 
 /**
  * @param {string}
@@ -65,6 +66,9 @@ cursoconducir.IndexPage = function() {
 	/** @private */
 	var testPreviewModule = new cursoconducir.TestPreviewModule(
 			$('#testContainer'));
+	
+	var initial = new cursoconducir.index.Initial($('#indexContainer'));
+	var showALesson = new cursoconducir.index.ShowLesson($('#indexContainer'));
 
 	this.start = function(allTests) {
 		model.allTests = allTests;
@@ -99,15 +103,11 @@ cursoconducir.IndexPage = function() {
 	};
 
 	var doDefault = function() {
-		$('#testContainer').empty();
-		$('#headerHintContainer').removeClass('hide');
-		$('#addThisContainer').removeClass('hide');
-		$('#threeTutorialsContainer').removeClass('hide');
-		$('#nextTestLinkContainer').addClass('hide');
 		if (model.allTests.length > 0) {
 			model.activeTest = cursoconducir.utils.decode(model.allTests[0]);
-			testPreviewModule.show(model);
 		}
+		initial.show(model.activeTest);
+		
 		$("#footer").addClass("loaded");
 	};
 
@@ -148,6 +148,7 @@ cursoconducir.IndexPage = function() {
 
 	var doShowLesson = function() {
 		var lessonId = $.getQueryString(LESSON);
+//		var questionId = $.getQueryString(TEST_KEY)
 		cursoconducir.Lesson.get([ lessonId ], function(lessons) {
 			var foundLesson = lessons;
 			if (goog.isArray(lessons)) {
@@ -156,15 +157,7 @@ cursoconducir.IndexPage = function() {
 
 			cursoconducir.Question.get(foundLesson.questionIds, function(
 					questions) {
-				model = {
-					allTests : questions,
-					activeTest : questions[0],
-					answerIndex : null
-				};
-				var explanationHtml = cursoconducir.indexpage.template
-						.explanation(model.activeTest);
-				$('#courceExplanationContainer').html(explanationHtml);
-				doPreview(model.activeTest.id);
+				showALesson.show(foundLesson, questions);
 			});
 		});
 	};
@@ -229,4 +222,21 @@ cursoconducir.IndexPage = function() {
 			window.location.hash = "#" + ANSWER;
 		}
 	};
-}
+};
+
+/**
+ * @constructor
+ * @param {Object} container
+ */
+cursoconducir.index.Initial = function(container) {
+	var initialHtml = cursoconducir.indexpage.template.initial();
+	
+	this.show = function(activeTest) {
+		container.html(initialHtml);
+		var testPreviewModule = new cursoconducir.TestPreviewModule(
+				container.find('#testContainer'));
+		if (!goog.isNull(activeTest) && activeTest != undefined) {
+			testPreviewModule.show({activeTest: activeTest});
+		}
+	};
+};

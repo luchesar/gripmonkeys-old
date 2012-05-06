@@ -3,10 +3,11 @@
 /**
  * The template for all tests.
  * @param activeTest
+ * @param title
  */
 {template .template}
 
-<div class="clear-fix info">
+<div id="questionPreviewContainer{$activeTest.id}" class="clear-fix info">
   <div class="container">
     <div id="previewContainer" class="container mini-layout well">
       <div class="row">
@@ -23,7 +24,7 @@
               <div class="container">
                 <div class="row">
                   <div class="span1 textAccent">
-                    <h1 id="testPreviewTitle">{$activeTest.title}</h1>
+                    <h1 id="testPreviewTitle">{if $title}{$title} {else}{$activeTest.title}{/if}</h1>
                   </div>
                   <div class="span9">
                     <p>
@@ -45,15 +46,7 @@
                   <td><div id="answerText{$possibleAnswer.index}" class="span8 testTextElement">{$possibleAnswer.text|noAutoescape}</div></td>
                 </tr>
                 {/foreach}
-                <tr>
-                  <td colspan="2">
-                    <div id="doTestHintContainer">
-                      <h4>
-                        <hint>Responde A, B o C y lee la explicacion</hint>
-                      </h4>
-                    </div>
-                  </td>
-                </tr>
+                
               </table>
             </div>
           </div>
@@ -61,7 +54,6 @@
       </div>
       <div class="row">
         <div id="wrongAnswerContainer" class="hide">
-          <div class="span16" align="center">
             <div id="incorrectContainer" class="alert-message error" style="text-align: center">
               <p>
                 <strong>INCORRECTO</strong> Por que?

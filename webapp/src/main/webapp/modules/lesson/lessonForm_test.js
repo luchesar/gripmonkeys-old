@@ -112,6 +112,18 @@ var testShowALesson = function() {
 	cursoconducir.allquestions.assertQuestionPresent(allQuestions, question2);
 };
 
+var testShowLessonInTheRightOrder = function() {
+	lesson1.questionIds = [ question3.id, question1.id, question2.id ];
+	lessonForm.show({
+		allLessons : [],
+		activeLesson : lesson1,
+	});
+	var lessonContainer = $('#lessonContainer');
+	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question3, question1);
+	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question3, question2);
+	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question1, question2);
+};
+
 var testAddRemoveQuestions = function() {
 	lessonForm.show({
 		allLessons : [],
@@ -149,6 +161,47 @@ var testAddRemoveQuestions = function() {
 	cursoconducir.allquestions
 			.assertQuestionPresent(allQuestions, question3);
 	assertTrue(goog.array.equals([], lessonForm.getLesson().questionIds));
+};
+
+var testMoveQuestionUpDown = function() {
+	lesson1.questionIds = [question1.id, question2.id, question3.id];
+	lessonForm.show({
+		allLessons : [],
+		activeLesson : lesson1,
+	});
+
+	var moveQuestionUpButton = lessonContainer.find('#moveQuestionUpButton');
+	var moveQuestionDownButton = lessonContainer.find('#moveQuestionDownButton');
+	var lessonQuestions = lessonContainer.find("#lessonQuestions");
+	
+	lessonQuestions.find("input[type='checkbox'][name='" + question3.id + "']")
+	.click();
+	moveQuestionUpButton.click();
+	assertTrue(goog.array.equals([question1.id, question3.id, question2.id], lessonForm.getLesson().questionIds));
+	
+	moveQuestionUpButton.click();
+	assertTrue(goog.array.equals([question3.id, question1.id, question2.id], lessonForm.getLesson().questionIds));
+	moveQuestionUpButton.click();
+	assertTrue(goog.array.equals([question3.id, question1.id, question2.id], lessonForm.getLesson().questionIds));
+	
+	moveQuestionDownButton.click();
+	assertTrue(goog.array.equals([question1.id, question3.id, question2.id], lessonForm.getLesson().questionIds));
+	
+	moveQuestionDownButton.click();
+	assertTrue(goog.array.equals([question1.id, question2.id, question3.id], lessonForm.getLesson().questionIds));
+	
+	lessonQuestions.find("input[type='checkbox'][name='" + question2.id + "']")
+	.click();
+	
+	moveQuestionUpButton.click();
+	assertTrue(goog.array.equals([question2.id, question3.id, question1.id], lessonForm.getLesson().questionIds));
+	moveQuestionUpButton.click();
+	assertTrue(goog.array.equals([question2.id, question3.id, question1.id], lessonForm.getLesson().questionIds));
+	
+	moveQuestionDownButton.click();
+	assertTrue(goog.array.equals([question1.id, question2.id, question3.id], lessonForm.getLesson().questionIds));
+	moveQuestionDownButton.click();
+	assertTrue(goog.array.equals([question1.id, question2.id, question3.id], lessonForm.getLesson().questionIds));
 };
 
 var testGetLesson = function() {

@@ -13,6 +13,15 @@ cursoconducir.TestPreviewModule = function(container) {
         var templateHtml = cursoconducir.template.testPreview.template(model);
         container.html(templateHtml);
         done = false;
+        return container.find('#questionPreviewContainer' + model.activeTest.id);
+    };
+    
+    /** public */
+    this.add = function(model) {
+        var templateHtml = cursoconducir.template.testPreview.template(model);
+        container.append(templateHtml);
+        done = false;
+        return container.find('#questionPreviewContainer' + model.activeTest.id);
     };
     
     /** public */

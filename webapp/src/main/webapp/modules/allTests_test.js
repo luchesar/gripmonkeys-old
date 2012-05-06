@@ -9,36 +9,21 @@ goog.require('jquery');
 var allTestsModule;
 var testContainer;
 var testContainer1;
-var createQuestion = function(index) {
-	return {
-		id : "test" + index,
-		title : "test" + index,
-		image : "http://imageKey" + index,
-		description : "test1Description" + index,
-		possibleAnswers : [ {
-			title : "answer" + index + "1",
-			index : 0,
-			text : "answer" + index + "1text",
-			sel : false
-		}, {
-			title : "answer" + index + "2",
-			index : 0,
-			text : "answer" + index + "2text",
-			sel : false
-		} ],
-		explanation : "explanation" + index,
-		published : false
-	};
-};
 
-var question1 = createQuestion(1);
-var question2 = createQuestion(2);
-var question3 = createQuestion(3);
-var question4 = createQuestion(4);
+var question1;
+var question2;
+var question3;
+var question4;
 
 var setUp = function() {
 	$('body').append("<div id='testContainer'/>");
 	$('body').append("<div id='testContainer1'/>");
+	
+	question1 = cursoconducir.allquestions.createTestQuestion(1);
+	question2 = cursoconducir.allquestions.createTestQuestion(2);
+	question3 = cursoconducir.allquestions.createTestQuestion(3);
+	question4 = cursoconducir.allquestions.createTestQuestion(4);
+	
 	init();
 };
 
@@ -94,6 +79,39 @@ var testGetSelection = function() {
 
 	checkBox2.click();
 	assertTrue(goog.array.equals([], allTestsModule.getSelection()));
+};
+
+var testSetSelection = function() {
+	allTestsModule.show({
+		allTests : [ question1, question2 ],
+	});
+	allTestsModule.setSelection([question1.id]);
+	assertTrue(goog.array.equals([question1.id], allTestsModule.getSelection()));
+	var checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
+	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
+	assertNotNullNorUndefined(checkBox1.attr('checked'));
+	assertUndefined(checkBox2.attr('checked'));
+	
+	allTestsModule.setSelection([question1.id, question2.id]);
+	assertTrue(goog.array.equals([question1.id, question2.id], allTestsModule.getSelection()));
+	checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
+	checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
+	assertNotNullNorUndefined(checkBox1.attr('checked'));
+	assertNotNullNorUndefined(checkBox2.attr('checked'));
+	
+	allTestsModule.setSelection([question2.id]);
+	assertTrue(goog.array.equals([question2.id], allTestsModule.getSelection()));
+	checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
+	checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
+	assertUndefined(checkBox1.attr('checked'));
+	assertNotNullNorUndefined(checkBox2.attr('checked'));
+	
+	allTestsModule.setSelection([]);
+	assertTrue(goog.array.equals([], allTestsModule.getSelection()));
+	checkBox1 = $("input[type='checkbox'][name='" + question1.id + "']");
+	checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
+	assertUndefined(checkBox1.attr('checked'));
+	assertUndefined(checkBox2.attr('checked'));
 };
 
 var testGetSelectionWhenTwoInstancesPresent = function() {

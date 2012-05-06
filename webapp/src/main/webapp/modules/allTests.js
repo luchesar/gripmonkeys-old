@@ -28,6 +28,13 @@ cursoconducir.AllTestsModule = function(container) {
 	this.getSelection = function() {
 		return getQuestionsSelection();
 	};
+	
+	this.setSelection = function(selection) {
+		container.find("input[type=checkbox]").attr('checked', false);
+		$(selection).each(function() {
+			container.find("input[type=checkbox][name="+this+"]").attr('checked', true);
+		});
+	};
 
 	var getQuestionsSelection = function() {
 		var selection = [];
@@ -53,5 +60,5 @@ cursoconducir.AllTestsModule = function(container) {
 			goog.array.insert(selection, this.name);
 		});
 		return selection;
-	}
+	};
 };

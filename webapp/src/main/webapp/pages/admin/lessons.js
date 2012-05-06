@@ -158,8 +158,21 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			if (!model.allLessons) {
 				model.allLessons = [];
 			}
-			goog.array.insertArrayAt(model.allLessons, savedLessons,
-					model.allLessons.length);
+			
+			// we can only save one lesson
+			savedLesson = savedLessons[0];
+			
+
+			var lessonIndex = cursoconducir.utils.findObjectIndexById(
+							model.allLessons, savedLesson.id);
+			if (lessonIndex < 0) {
+				goog.array.insert(model.allLessons, savedLesson);
+			} else {
+				goog.array.removeAt(model.allLessons, lessonIndex);
+				goog.array.insertAt(model.allLessons, savedLesson,
+						lessonIndex);
+			}
+			model.activeLesson = savedLesson;
 			window.location.hash = '#';
 		});
 	};

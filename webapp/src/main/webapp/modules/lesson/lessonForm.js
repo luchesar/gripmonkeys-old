@@ -7,6 +7,7 @@ goog.require("bootstrap.twipsy");
 goog.require("bootstrap.popover");
 goog.require("bootstrap.tooltip");
 goog.require("goog.array");
+goog.require('cursoconducir.utils');
 
 /**
  * @constructor
@@ -38,18 +39,36 @@ cursoconducir.LessonForm = function(container) {
 	var removeQuestionsButton;
 	
 	/**
+	 * @private
+	 */
+	var moveQuestionUpButton;
+	
+	/**
+	 * @private
+	 */
+	var moveQuestionDownButton;
+	
+	/**
      * @public
      * @param {Object} model
      */
-    this.show = function(model) { 
+    this.show = function(model) {
         var templateHtml = cursoconducir.template.lessonForm.template(model);
         container.html(templateHtml);
-        
-        lessonQuestions = new cursoconducir.AllTestsModule($('#lessonQuestions'));
+        if (!goog.isNull(model.activeLesson) || model.activeLesson != undefined) {
+        	init(model);
+    	}
+    };
+    
+    var init = function(model) {
+    	lessonQuestions = new cursoconducir.AllTestsModule($('#lessonQuestions'));
         allQuestions = new cursoconducir.AllTestsModule($('#allQuestions'));
         
         addQuestionsButton = container.find("#addQuestionsButton");
     	removeQuestionsButton = container.find("#removeQuestionsButton");
+    	
+    	moveQuestionUpButton = container.find("#moveQuestionUpButton");
+    	moveQuestionDownButton = container.find("#moveQuestionDownButton");
         
         cursoconducir.Question.getAll(function(questions) {
         	updateQuestionPanels(model, questions);
@@ -74,6 +93,28 @@ cursoconducir.LessonForm = function(container) {
         		addQuestionsButton.addClass('disabled');
         	});
         	
+        	moveQuestionUpButton.click(function() {
+				var selection = lessonQuestions.getSelection();
+				var updatedLessonQuestions = moveUp(questions, lessonQuestions
+						.getQuestionIds(), selection);
+
+				lessonQuestions.show({
+					allTests : updatedLessonQuestions
+				});
+				lessonQuestions.setSelection(selection);
+			});
+        	
+        	moveQuestionDownButton.click(function() {
+        		var selection = lessonQuestions.getSelection();
+				var updatedLessonQuestions = moveDown(questions, lessonQuestions
+						.getQuestionIds(), selection);
+
+				lessonQuestions.show({
+					allTests : updatedLessonQuestions
+				});
+				lessonQuestions.setSelection(selection);
+        	});
+        	
         	lessonQuestions.addSelectionChangeCallback(function(selection) {
         		if (selection.length > 0) {
         			removeQuestionsButton.removeClass('disabled');
@@ -90,9 +131,61 @@ cursoconducir.LessonForm = function(container) {
         		}
         	});
         	
+        	lessonQuestions.addSelectionChangeCallback(function(selection) {
+        		if (selection.length > 0) {
+        			moveQuestionUpButton.removeClass('disabled');
+        			moveQuestionDownButton.removeClass('disabled');
+        		} else {
+        			moveQuestionUpButton.addClass('disabled');
+        			moveQuestionDownButton.addClass('disabled');
+        		}
+        	});
+        	
 //        	addQuestionsButton.popover({title:"Add selected questions to the lesson"});
 //        	removeQuestionsButton.popover({title:"Add questions", content:"Remove selected questions to the lesson"});
         });
+    }
+    
+    var moveUp = function(allQuestions, lessonQuestionIds, selectedIds) {
+    	var newQuestionOrder = [];
+    	var minIndex = 0;
+    	goog.array.forEach(lessonQuestionIds, function(id, index) {
+    		var question  = cursoconducir.utils.findObjectById(allQuestions, id);
+    		if (goog.array.contains(selectedIds, id)) {
+    			if (minIndex < index) {
+    				minIndex = index -1;
+        			goog.array.insertAt(newQuestionOrder, question, minIndex);
+    			} else {
+    				goog.array.insert(newQuestionOrder, question);
+    				minIndex = index + 1;
+    			}
+    		} else {
+    			goog.array.insert(newQuestionOrder, question);
+    		}
+    	});
+    	
+    	return newQuestionOrder;
+    };
+    
+    var moveDown = function(allQuestions, lessonQuestionIds, selectedIds) {
+    	var newQuestionOrder = [];
+    	var maxIndex = lessonQuestionIds.length - 1 ;
+    	goog.array.forEachRight(lessonQuestionIds, function(id, index) {
+    		var question  = cursoconducir.utils.findObjectById(allQuestions, id);
+    		if (goog.array.contains(selectedIds, id)) {
+    			if (maxIndex > index) {
+    				maxIndex = index + 1;
+    				goog.array.insertAt(newQuestionOrder, question, maxIndex);
+    			} else {
+    				goog.array.insertAt(newQuestionOrder, question, 0);
+    				maxIndex = index -1;
+    			}
+    		} else {
+    			goog.array.insertAt(newQuestionOrder, question, 0);
+    		}
+    	});
+    	
+    	return newQuestionOrder;
     };
     
     var updateQuestionPanels = function(model, questions) {
@@ -111,16 +204,12 @@ cursoconducir.LessonForm = function(container) {
     	/** @type {Array.<cursoconducir.Question>}*/
     	var allOtherQuestions = [];
     	
-    	$(questions).each(function() {
-    		var questionId=this.id.toString();
-			if (model.activeLesson && model.activeLesson.questionIds && 
-					(goog.array.contains(model.activeLesson.questionIds, questionId) || 
-							goog.array.contains(model.activeLesson.questionIds, this.id))) {
-    			goog.array.insert(lessonQuestions, this);
-    		} else {
-    			goog.array.insert(allOtherQuestions, this);
-    		}
-    	});
+    	goog.array.insertArrayAt(allOtherQuestions, questions);
+		goog.array.forEach(model.activeLesson.questionIds, function(id) {
+			var questionById = cursoconducir.utils.findObjectById(questions, id);
+	    	goog.array.insert(lessonQuestions, questionById);
+	    	goog.array.remove(allOtherQuestions, questionById);
+		});
     	
     	return {lessonQuestions: lessonQuestions, allOtherQuestions: allOtherQuestions}
     };

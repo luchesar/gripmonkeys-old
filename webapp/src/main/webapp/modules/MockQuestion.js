@@ -119,3 +119,39 @@ cursoconducir.allquestions.assertQuestionPresent = function(container,
 		assertUndefined(publishedIndication[0]);
 	}
 };
+
+cursoconducir.allquestions.createTestQuestion = function(index) {
+	return {
+		id : "test" + index,
+		title : "test" + index,
+		image : "http://imageKey" + index,
+		description : "test1Description" + index,
+		possibleAnswers : [ {
+			title : "answer" + index + "1",
+			index : 0,
+			text : "answer" + index + "1text",
+			sel : false
+		}, {
+			title : "answer" + index + "2",
+			index : 0,
+			text : "answer" + index + "2text",
+			sel : false
+		} ],
+		explanation : "explanation" + index,
+		published : false
+	};
+};
+
+var assertQuestionBefore = function(container, question1, question2) {
+	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
+	assertNotNullNorUndefined(checkBox2[0]);
+	var checkBox1 = checkBox2.closest("input[type='checkbox'][name='" + question1.id + "']");
+	assertNotNullNorUndefined(checkBox1[0]);
+};
+
+
+/**
+ * @public
+ */
+cursoconducir.allquestions.assertQuestionBefore = assertQuestionBefore;
+

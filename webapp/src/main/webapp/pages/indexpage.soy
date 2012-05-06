@@ -1,6 +1,102 @@
 {namespace cursoconducir.indexpage.template}
 
 /**
+*
+*/
+{template .initial}
+    <div id="end-of-test-modal-container">
+    </div>
+
+  <div class="container">
+    <div id="headerHintContainer" class="row">
+      <div class="span16">
+        <h2>
+          Aprueba el examen teórico del permiso B de la dgt a la primera
+          <p>
+            <hint>50 años formando buenos conductores que aprueban a la primera. Éxito garantizado!</hint>
+          </p>
+        </h2>
+      </div>
+    </div>
+    <div id="courceExplanationContainer" class="row hide">
+    </div>
+
+    <div class="row">
+      <div id="testContainer"></div>
+    </div>
+    <div id="nextTestLinkContainer" class="row hide">
+      <div id="testNavigationContainer" class="span16"></div>
+    </div>
+    <div id="addThisContainer" class="row">
+      <div class="span4">
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+          <a class="addthis_button_preferred_1"></a> <a class="addthis_button_preferred_2"></a> <a
+            class="addthis_button_preferred_3"></a> <a class="addthis_button_google_plusone_badge"></a>
+        </div>
+      </div>
+      <div class="span8">&nbsp;</div>
+      <div class="span4">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+          <a class="addthis_button_facebook_like"></a> <a class="addthis_button_tweet"></a>
+        </div>
+      </div>
+      <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31"></script>
+    </div>
+    <div id="threeTutorialsContainer" class="row">
+      <div class="span16 page-header page-header-ext" align="center">
+        <h3>Los 3 tutoriales 100% gratuitos</h3>
+      </div>
+      <div class="span5">
+        <div class="span4" align="center">
+          <h2>Seminario</h2>
+          <div class="content">
+            <div class="framed-image" align="center">
+              <a><img src="/images/homePage1.png" /> </a>
+            </div>
+            <p>Completo tutorial Tests, conceptos importantes y video animaciones.</p>
+            <div>
+              <a href="" data-controls-modal="under-construction-modal" data-keyboard="true" data-backdrop="static">leer
+                más sobre tutoriales</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span6">
+        <div class="span5" align="center">
+          <h2>Trucos Test</h2>
+          <div class="content">
+            <div class="framed-image" align="center">
+              <a><img src="/images/homePage2.png" /> </a>
+            </div>
+            <p>Aprende la diferencia entre Norma y Excepción y comete menos errores en el examen teórico.</p>
+            <div>
+              <a href="" data-controls-modal="under-construction-modal" data-keyboard="true" data-backdrop="static">leer
+                más sobre trucos</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inner">
+        <div class="span5" align="center">
+          <h2 class="title">Test Especiales</h2>
+          <div class="content">
+            <div>
+              <div class="framed-image" align="center">
+                <a><img src="/images/homePage3.png" /> </a>
+              </div>
+            </div>
+            <p>Seleccion de los test mas complicados de la dgt con explicación de la respuesta.</p>
+            <div>
+              <a href="" data-controls-modal="under-construction-modal" data-keyboard="true" data-backdrop="static">leer
+                más sobre test especiales</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{/template}
+
+/**
  * The template for all tests.
  * @param allTests
  * @param hasNext
@@ -27,15 +123,50 @@
 /**
  * The template for all tests.
  * @param title
- * @param explanation
+ * @param description
  */
 {template .explanation}
+  <div class="container">
+   <div class="row">
     <div class="span16">
-        <h2>
+        <h1>
           {$title}
           <p>
-            <hint>{$explanation}</hint>
+            <hint>{$description}</hint>
           </p>
-        </h2>
+        </h1>
       </div>
+    </div>
+  </div>
+{/template}
+
+/**
+ * The template for end of test modal.
+ */
+{template .endOfTestModal}
+<div id="end-of-test-modal" class="modal fade">
+    <div class="modal-header">
+      <a href="#" class="close">&times;</a>
+      <h2>CursoConducir beta</h2>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <div class="framed-image">
+              <a class="pull-left"><img class="thumbnail" src="/images/cursoconducir-com.png" /> </a>
+            </div>
+          </div>
+          <div class="span3">
+            Has realizado las primeras preguntas de los Test Especiales de Cursoconducir. Puedes realizar más
+            descargando el power point completo a traves del siguiente enlace <a
+              href="http://cursoconducir.com/semi/index.html" target="_blank"> Más Test Especiales</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="pull-right" href="mailto:admin@cursoconducir.es">Sugerencias: admin@cursoconducir.es</a>
+    </div>
+  </div>
 {/template}
