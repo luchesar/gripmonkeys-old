@@ -52,4 +52,18 @@ var testAdd = function() {
 	assertEquals(previewContainer2.html(), testContainer.find('#questionPreviewContainer' + question2.id).html());
 };
 
+var testMarkedIndex = function() {
+	var previewContainer1 = testPreviewModule.show({activeTest: question1});
+	
+	previewContainer1.find("#answerLink0").click();
+	assertEquals(0, testPreviewModule.getMarkedIndex());
+	
+	previewContainer1.find("#answerLink1").click();
+	assertEquals(1, testPreviewModule.getMarkedIndex());
+};
+
+var testAswer = function() {
+	
+};
+
 

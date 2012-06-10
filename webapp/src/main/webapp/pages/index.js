@@ -13,6 +13,9 @@ goog.require('cursoconducir.Question');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.indexpage.template');
 goog.require('cursoconducir.index.ShowLesson');
+goog.require('cursoconducir.index.Initial');
+goog.require('cursoconducir.index.LessonList');
+goog.require('cursoconducir.index.SigninForm');
 
 /**
  * @param {string}
@@ -22,7 +25,6 @@ cursoconducir.index.init = function(allTestJson) {
 	$(function() {
 		var indexPage = new cursoconducir.IndexPage();
 		indexPage.start(allTestJson);
-		window._cursoConducirPage = indexPage;
 		cursoconducir.index.showInConstruction();
 	});
 };
@@ -44,34 +46,34 @@ cursoconducir.index.showInConstruction = function() {
  * @constructor
  */
 cursoconducir.IndexPage = function() {
-	var model = {
-		allTests : null,
-		activeTest : null,
-		answerIndex : null
-	};
+	var allTests = null;
 
 	/** @private */
 	var ANSWER = "answer";
 	/** @private */
 	var PREVIEW = "#preview";
 	/** @private */
-	var TEST_NAVIGATION_LENGTH = 20;
-	/** @private */
 	var TEST_KEY = "test";
 	/** @private */
-	var HIDE = "hide";
-
 	var LESSON = "lesson";
-
 	/** @private */
-	var testPreviewModule = new cursoconducir.TestPreviewModule(
-			$('#testContainer'));
-	
-	var initial = new cursoconducir.index.Initial($('#indexContainer'));
-	var showALesson = new cursoconducir.index.ShowLesson($('#indexContainer'));
+	var LESSONS = "lessons";
+	/** @private */
+	var SIGNIN = "signin";
 
-	this.start = function(allTests) {
-		model.allTests = allTests;
+	var initial = null;
+	var showALesson = null;
+	var lessonList = null;
+	var signinForm = null;
+
+	this.start = function(allTestsParam) {
+		allTests = allTestsParam;
+		var indexContainer = $('#indexContainer');
+		initial = new cursoconducir.index.Initial(indexContainer, allTests);
+		showALesson = new cursoconducir.index.ShowLesson(indexContainer);
+		lessonList = new cursoconducir.index.LessonList(indexContainer);
+		signinForm = new cursoconducir.index.SigninForm(indexContainer);
+		
 		$(window).hashchange(function() {
 			doHashChanged();
 		});
@@ -86,69 +88,30 @@ cursoconducir.IndexPage = function() {
 		if (hash == '' || hash == '#') {
 			doDefault();
 		} else if (hash.indexOf(PREVIEW) == 0) {
-			var explanationHtml = cursoconducir.indexpage.template
-					.explanation({
-						title : 'Test Especiales',
-						explanation : 'Las preguntas de los test especiales han sido seleccionadas entre todas las preguntas de'
-								+ 'trafico por su dificultad . En un test normal de 30 preguntas de la dgt encontrara unas media de 5 preguntas'
-								+ 'especiales como estas.'
-					});
-			$('#courceExplanationContainer').html(explanationHtml);
-			doPreview($.getQueryString(TEST_KEY));
-		} else if (hash.indexOf(ANSWER) > -1) {
-			doAnswer();
+			initial.doPreview($.getQueryString(TEST_KEY));
+		} else if (hash.indexOf(LESSONS) > -1) {
+			cursoconducir.Lesson.getAll(function(allLessons){
+				lessonList.show(allLessons);
+			});
 		} else if (hash.indexOf(LESSON) > -1) {
 			doShowLesson();
+		} else if (hash.indexOf(SIGNIN) > -1) {
+			signinForm.show();
 		}
-	};
-
-	var doDefault = function() {
-		if (model.allTests.length > 0) {
-			model.activeTest = cursoconducir.utils.decode(model.allTests[0]);
-		}
-		initial.show(model.activeTest);
-		
 		$("#footer").addClass("loaded");
 	};
 
-	var doPreview = function(testId) {
-		hideExtras();
-		var answer = $.getQueryString(ANSWER);
-		if (answer != undefined && model.activeTest
-				&& model.activeTest.id == testId) {
-			testPreviewModule.answer(model.activeTest, model.answerIndex);
-			return;
+	var doDefault = function() {
+		var activeTest = null;
+		if (allTests.length > 0) {
+			activeTest = cursoconducir.utils.decode(allTests[0]);
 		}
-		$('#testContainer').empty();
-		model.activeTestIndex = testId;
-		cursoconducir.utils.findOrFetchTest(model, testId, function(test) {
-			if (test == undefined) {
-				return;
-			}
-			model.activeTest = test;
-			testPreviewModule.show(model, $('#testPreviewTemplate'),
-					$('#testContainer'));
-			if (answer != undefined) {
-				testPreviewModule.answer(model.activeTest, model.answerIndex);
-			}
-			showNavigation();
-		});
-	};
-
-	var doAnswer = function() {
-		$('#courceExplanationContainer').empty();
-		$('#nextTestLinkContainer').addClass('hide');
-		var hide = $.getQueryString(HIDE);
-		if (hide != undefined) {
-			hideExtras();
-		}
-		testPreviewModule.answer(model.activeTest, model.answerIndex);
-		showGoToNextButton();
+		initial.show(activeTest);
 	};
 
 	var doShowLesson = function() {
 		var lessonId = $.getQueryString(LESSON);
-//		var questionId = $.getQueryString(TEST_KEY)
+		// var questionId = $.getQueryString(TEST_KEY)
 		cursoconducir.Lesson.get([ lessonId ], function(lessons) {
 			var foundLesson = lessons;
 			if (goog.isArray(lessons)) {
@@ -157,86 +120,13 @@ cursoconducir.IndexPage = function() {
 
 			cursoconducir.Question.get(foundLesson.questionIds, function(
 					questions) {
-				showALesson.show(foundLesson, questions);
+				var foundQuestions = questions;
+				if (!goog.isArray(foundQuestions)) {
+					foundQuestions = [foundQuestions];
+				}
+				showALesson.show(foundLesson, foundQuestions);
 			});
 		});
 	};
-
-	var hideExtras = function() {
-		$('#headerHintContainer').addClass('hide');
-		$('#addThisContainer').addClass('hide');
-		$('#threeTutorialsContainer').addClass('hide');
-		$('#nextTestLinkContainer').removeClass('hide');
-		$('#courceExplanationContainer').removeClass('hide');
-		testPreviewModule.hideGoToNextButton();
-	};
-
-	var showNavigation = function() {
-		$('#testNavigationContainer').empty();
-		var convertedModel = convertModel();
-		var templateHtml = cursoconducir.indexpage.template
-				.navigation(convertedModel);
-		$('#testNavigationContainer').html(templateHtml);
-	};
-
-	var showGoToNextButton = function() {
-		var convertedModel = convertModel();
-		var goToNextUrl = "#preview?test=" + convertedModel.nextTestId
-				+ "&hide";
-		testPreviewModule.showGoToNextButton(goToNextUrl);
-	};
-
-	var convertModel = function() {
-		var truncatedModel = {
-			allTests : null,
-			activeTest : model.activeTest,
-			answerIndex : model.answerIndex
-		};
-		var testArray = [];
-
-		if (model.allTests && model.allTests.length > 0) {
-			var activeTestIndex = cursoconducir.utils.findObjectIndexById(
-					model.allTests, model.activeTest.id);
-			if (model.allTests.length - 1 > activeTestIndex) {
-				truncatedModel.nextTestId = model.allTests[activeTestIndex + 1].id;
-				truncatedModel.hasNext = true;
-			}
-			for ( var i = 0; i < model.allTests.length; i++) {
-				var test = cursoconducir.utils.decode(model.allTests[i]);
-				if (test.id == model.activeTest.id) {
-					test.active = true;
-				}
-				testArray[i] = test;
-			}
-		}
-		truncatedModel.allTests = testArray;
-
-		return truncatedModel;
-	};
-
-	this.answer = function(answerIndex) {
-		model.answerIndex = answerIndex;
-		if (window.location.hash.indexOf(PREVIEW) > -1) {
-			window.location.hash = window.location.hash + "&" + ANSWER;
-		} else {
-			window.location.hash = "#" + ANSWER;
-		}
-	};
 };
 
-/**
- * @constructor
- * @param {Object} container
- */
-cursoconducir.index.Initial = function(container) {
-	var initialHtml = cursoconducir.indexpage.template.initial();
-	
-	this.show = function(activeTest) {
-		container.html(initialHtml);
-		var testPreviewModule = new cursoconducir.TestPreviewModule(
-				container.find('#testContainer'));
-		if (!goog.isNull(activeTest) && activeTest != undefined) {
-			testPreviewModule.show({activeTest: activeTest});
-		}
-	};
-};

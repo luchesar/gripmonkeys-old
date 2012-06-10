@@ -21,10 +21,10 @@ body {
 </style>
 <link rel="" href="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31" />
 <link href="/images/logo.png" />
-<script src="http://localhost:9810/compile?id=index&mode=raw&level=verbose" charset="utf-8"></script>
+<script src="http://localhost:9810/compile?id=index&mode=raw&level=verbose" charset="UTF-8"></script>
 <script>
     cursoconducir.index.init(
-<%=gson.toJson(storage.getAll(true))%>
+<%=gson.toJson(storage.getAll(0, 15))%>
     );
 </script>
 <script type="text/javascript">
@@ -47,9 +47,15 @@ body {
 
 <body>
   <%@include file="../modules/menu.html"%>
-  <div id="indexContainer"/>
+  <div id="indexContainer"></div>
   <footer id="footer">
-    <p>&copy; CursoConducir 2012</p>
+    <div class="container">
+        <div class="row">
+            <div class="span6 offset7">
+                <p>&copy; CursoConducir 2012</p>
+            </div>
+        </div>    
+    </div>
   </footer>
 </body>
 </html>

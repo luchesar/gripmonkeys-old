@@ -34,14 +34,12 @@
                 </div>
               </div>
             </div>
-
-
             <div id="testPreviewAnswers" class="container">
               <table>
                 {foreach $possibleAnswer in $activeTest.possibleAnswers}
                 <tr>
                   <td><div class="media-grid answer-radius">
-                      <a class="btn small" id="answerLink{$possibleAnswer.index}" onclick="window._cursoConducirPage.answer({$possibleAnswer.index})">{$possibleAnswer.title}&nbsp;</a>
+                      <a possibleAnswer="true" class="btn small" id="answerLink{$possibleAnswer.index}" possibleAnswerIndex="{$possibleAnswer.index}">{$possibleAnswer.title}&nbsp;</a>
                     </div></td>
                   <td><div id="answerText{$possibleAnswer.index}" class="span8 testTextElement">{$possibleAnswer.text|noAutoescape}</div></td>
                 </tr>
@@ -54,9 +52,10 @@
       </div>
       <div class="row">
         <div id="wrongAnswerContainer" class="hide">
+          <div class="span16" align="center">
             <div id="incorrectContainer" class="alert-message error" style="text-align: center">
               <p>
-                <strong>INCORRECTO</strong> Por que?
+                <strong>INCORRECTO</strong>
               </p>
             </div>
           </div>
@@ -65,7 +64,7 @@
           <div class="span16" align="center">
             <div id="correctContainer" class="alert-message success" style="text-align: center">
               <p>
-                <strong>CORRECTO</strong> Por que?
+                <strong>CORRECTO</strong>
               </p>
             </div>
           </div>

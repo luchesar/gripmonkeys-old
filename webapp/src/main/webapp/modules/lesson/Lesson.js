@@ -50,6 +50,27 @@ cursoconducir.Lesson.getAll = function(success, error, complete) {
 };
 
 /**
+ * Gets a page of lessons from the server
+ * @param {number} offset
+ * @param {number} length
+ * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
+ * @param {function(XMLHttpRequest, Object, Object)=} error
+ * @param {function()=} complete
+ */
+cursoconducir.Lesson.getPaged = function(offset, length, success, error, complete) {
+	$.ajax({
+		type : "GET",
+		url : '/lesson-storage?offset='+offset+'&length=' + length,
+		contentType : "application/json; charset=utf-8",
+		data : {},
+		dataType : 'json',
+		success : success,
+		error :error,
+		complete : complete
+	});
+};
+
+/**
  * Gets lesson object from the server with the corresponding IDs
  * @public
  * @param {Array.<String>} ids

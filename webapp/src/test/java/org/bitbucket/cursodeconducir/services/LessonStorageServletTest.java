@@ -52,10 +52,10 @@ public class LessonStorageServletTest {
 
 	private Lesson lesson1;
 	private Lesson lesson2;
-	
+
 	private int k1 = 1;
-    private int k2 = 2;
-    private int k3 = 3;
+	private int k2 = 2;
+	private int k3 = 3;
 
 	@Before
 	public void setUp() throws Exception {
@@ -68,13 +68,16 @@ public class LessonStorageServletTest {
 		servlet = new LessonStorageServlet();
 		storage = servlet.getStorage();
 
-		lesson1 = new Lesson("lesson1", "image", "description", Lists.newArrayList(k1, k2, k3));
-        lesson2 = new Lesson("lesson2", "image", "description", Lists.newArrayList(k1, k2, k3));
+		lesson1 = new Lesson("lesson1", "image", "description",
+				Lists.newArrayList(k1, k2, k3));
+		lesson2 = new Lesson("lesson2", "image", "description",
+				Lists.newArrayList(k1, k2, k3));
 	}
 
 	private void resetResponse() throws IOException {
 		reset(response);
 		when(response.getOutputStream()).thenReturn(responseOutputStream);
+		responseWriter = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
 	}
 
@@ -85,15 +88,15 @@ public class LessonStorageServletTest {
 
 	@Test
 	public void testDoPut() throws Exception {
-		when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.JSON_KEY)).thenReturn(
 				null);
 		servlet.doPut(request, response);
 
 		verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
 		verify(responseOutputStream).write(
-				(QuestionStorageServlet.INVALID_JSON + null).getBytes());
+				(LessonStorageServlet.INVALID_JSON + null).getBytes());
 
-		when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.JSON_KEY)).thenReturn(
 				gson.toJson(Lists.newArrayList(lesson1)));
 		servlet.doPut(request, response);
 
@@ -105,13 +108,14 @@ public class LessonStorageServletTest {
 
 		assertEquals(storedQuestion, lesson1);
 
-		assertEquals(gson.toJson(Lists.newArrayList(storedQuestion)), responseWriter.toString());
+		assertEquals(gson.toJson(Lists.newArrayList(storedQuestion)),
+				responseWriter.toString());
 		verify(response).setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	@Test
 	public void testDoPutMultiple() throws Exception {
-		when(request.getParameter(QuestionStorageServlet.JSON_KEY)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.JSON_KEY)).thenReturn(
 				gson.toJson(Lists.newArrayList(lesson1, lesson2)));
 		servlet.doPut(request, response);
 
@@ -143,7 +147,7 @@ public class LessonStorageServletTest {
 		verify(response, never()).setStatus(anyInt());
 
 		when(request.getParameter("*")).thenReturn(null);
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				lesson2.getId() + "");
 		responseWriter.getBuffer().delete(0,
 				responseWriter.getBuffer().length());
@@ -151,7 +155,7 @@ public class LessonStorageServletTest {
 		verify(response, never()).setStatus(anyInt());
 		assertEquals(gson.toJson(lesson2), responseWriter.toString());
 
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				"11111111");
 		responseWriter.getBuffer().delete(0,
 				responseWriter.getBuffer().length());
@@ -161,7 +165,7 @@ public class LessonStorageServletTest {
 		verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 		resetResponse();
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				lesson1.getId() + "," + lesson2.getId());
 		responseWriter.getBuffer().delete(0,
 				responseWriter.getBuffer().length());
@@ -171,7 +175,7 @@ public class LessonStorageServletTest {
 				responseWriter.toString());
 
 		resetResponse();
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				lesson2.getId() + "," + lesson1.getId());
 		responseWriter.getBuffer().delete(0,
 				responseWriter.getBuffer().length());
@@ -181,7 +185,7 @@ public class LessonStorageServletTest {
 				responseWriter.toString());
 
 		resetResponse();
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				lesson1.getId() + ",768," + lesson2.getId());
 		responseWriter.getBuffer().delete(0,
 				responseWriter.getBuffer().length());
@@ -192,11 +196,96 @@ public class LessonStorageServletTest {
 	}
 
 	@Test
+	public void testDoGetPaged() throws Exception {
+		lesson1 = storage.put(lesson1).iterator().next();
+		lesson2 = storage.put(lesson2).iterator().next();
+		Lesson lesson3 = storage
+				.put(new Lesson("lesson3", "image", "description", Lists
+						.newArrayList(k1, k2, k3))).iterator().next();
+		Lesson lesson4 = storage
+				.put(new Lesson("lesson4", "image", "description", Lists
+						.newArrayList(k1, k2, k3))).iterator().next();
+		Lesson lesson5 = storage
+				.put(new Lesson("lesson5", "image", "description", Lists
+						.newArrayList(k1, k2, k3))).iterator().next();
+
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"-1");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"1");
+		servlet.doGet(request, response);
+		verify(response).setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+		resetResponse();
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"0");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"-1");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(
+				gson.toJson(new Lesson[] { lesson1, lesson2, lesson3,
+						lesson4, lesson5 }), responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"0");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"1");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Lesson[] { lesson1 }),
+				responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"1");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"1");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Lesson[] { lesson2 }),
+				responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"1");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"4");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(
+				gson.toJson(new Lesson[] { lesson2, lesson3, lesson4,
+						lesson5 }), responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"3");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"5");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Lesson[] { lesson4, lesson5 }),
+				responseWriter.toString());
+
+		resetResponse();
+		when(request.getParameter(LessonStorageServlet.OFFSET)).thenReturn(
+				"1");
+		when(request.getParameter(LessonStorageServlet.LENGTH)).thenReturn(
+				"3");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(
+				gson.toJson(new Lesson[] { lesson2, lesson3, lesson4 }),
+				responseWriter.toString());
+	}
+
+	@Test
 	public void testDoDelete() throws Exception {
 		lesson1 = storage.put(lesson1).iterator().next();
 		lesson2 = storage.put(lesson2).iterator().next();
 
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				lesson2.getId() + "");
 		servlet.doDelete(request, response);
 
@@ -205,7 +294,7 @@ public class LessonStorageServletTest {
 
 		assertEquals(Lists.newArrayList(lesson1), storage.getAll());
 
-		when(request.getParameter(QuestionStorageServlet.ID))
+		when(request.getParameter(LessonStorageServlet.ID))
 				.thenReturn("1111");
 		responseWriter.getBuffer().delete(0,
 				responseWriter.getBuffer().length());
@@ -219,7 +308,7 @@ public class LessonStorageServletTest {
 		lesson1 = storage.put(lesson1).iterator().next();
 		lesson2 = storage.put(lesson2).iterator().next();
 
-		when(request.getParameter(QuestionStorageServlet.ID)).thenReturn(
+		when(request.getParameter(LessonStorageServlet.ID)).thenReturn(
 				lesson1.getId() + "," + lesson2.getId());
 		servlet.doDelete(request, response);
 

@@ -1,0 +1,53 @@
+{namespace cursoconducir.lessonlist.template}
+
+/**
+ * The template for listing available lessons.
+ * @param allLessons
+ */
+{template .lessonList}
+<div id="lessonListContainer">
+  {foreach $lesson in $allLessons}
+  <div id="lessonInAList" class="container">
+  <div class="row">
+    <div class="span10 offset2 mini-layout">
+        <div class="container">
+          <div class="row">
+            <div class="span8">
+              <h2 class="pull-left"> 
+              <small>{index($lesson)}</small>&nbsp;{$lesson.title}
+              </h2>
+            </div>
+            <div class="span2">
+              <div class="pull-right">
+                    {if $lesson.questionIds}
+                        {length($lesson.questionIds)} 
+                       &nbsp;preguntas
+                    {else}
+                        no preguntas
+                    {/if}
+               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8 pull-right">
+                <div id="testDescription" class="pull-left">
+                    {$lesson.description|noAutoescape}
+                </div>
+            </div>
+            <div class="span2">
+                {if $lesson.questionIds}
+                    <a id="lessonTitleLink" class="btn success pull-right" href="#lesson?lesson={$lesson.id}">Iniciar</a>
+                {else}
+                    <a id="lessonTitleLink" class="btn success pull-right disabled" ">Iniciar</a>
+                {/if}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{ifempty}
+<small>No lessons yet</small>
+{/foreach}
+</div>
+{/template}

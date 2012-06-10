@@ -3,6 +3,7 @@
   "mode": "SIMPLE",
   "level": "VERBOSE",
    "externs": ["//jquery-1.6.js"]
+//   "output-charset": "UTF-8"
 //   "checks": {
 //	   "accessControls": "ERROR",
 //	   "visibility": "ERROR",

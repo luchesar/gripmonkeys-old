@@ -19,6 +19,8 @@ import com.google.gson.Gson;
 public class LessonStorageServlet extends HttpServlet {
 	public static final String JSON_KEY = "json";
 	public static final String ID = "key";
+	public static final String OFFSET = "offset";
+	public static final String LENGTH = "length";
 	public static final String INVALID_JSON = "passed test JSON is not valid:";
 	private Gson gson;
 	private LessonStorage storage;
@@ -33,10 +35,14 @@ public class LessonStorageServlet extends HttpServlet {
 			throws ServletException, IOException {
 		setResponseEnconding(aResp);
 		String all = aReq.getParameter("*");
+		String lessonIds = aReq.getParameter(ID);
+		String offset = aReq.getParameter(OFFSET);
+		String length = aReq.getParameter(LENGTH);
+		
 		if (all != null) {
 			gson.toJson(storage.getAll(), aResp.getWriter());
-		} else {
-			long[] ids = getIdArray(aReq.getParameter(ID));
+		} else if (lessonIds != null){
+			long[] ids = getIdArray(lessonIds);
 			Set<Lesson> foundQuestions = storage.get(ids);
 			if (foundQuestions.isEmpty()) {
 				aResp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -45,6 +51,21 @@ public class LessonStorageServlet extends HttpServlet {
 			} else {
 				gson.toJson(foundQuestions, aResp.getWriter());
 			}
+		} else if (offset != null) {
+			int offsetI = Integer.parseInt(offset);
+			int lengthI = Integer.MAX_VALUE;
+			if (length != null) {
+				lengthI = Integer.parseInt(length);
+				if (lengthI < 0) {
+					lengthI = Integer.MAX_VALUE;
+				}
+			}
+			if (offsetI < 0) {
+				aResp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				aResp.getWriter().write("OFFSET parameter must not be negative");
+				return;
+			}
+			gson.toJson(storage.getAll(offsetI, lengthI), aResp.getWriter());
 		}
 	}
 

@@ -73,6 +73,7 @@ public class QuestionStorageServletTest {
 	private void resetResponse() throws IOException {
 		reset(response);
 		when(response.getOutputStream()).thenReturn(responseOutputStream);
+		responseWriter = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
 	}
 
@@ -186,6 +187,75 @@ public class QuestionStorageServletTest {
 		servlet.doGet(request, response);
 		verify(response, never()).setStatus(anyInt());
 		assertEquals(gson.toJson(new Question[] { question1, question2 }),
+				responseWriter.toString());
+	}
+	
+	@Test
+	public void testDoGetPaged() throws Exception {
+		question1 = storage.put(question1).iterator().next();
+		question2 = storage.put(question2).iterator().next();
+		Question question3 = storage.put(new Question("question3", "image", "description",
+				Lists.newArrayList("question1", "question2"), 0, "explanation",
+				Lists.newArrayList("image1", "image2"))).iterator().next();
+		Question question4 = storage.put(new Question("question4", "image", "description",
+				Lists.newArrayList("question1", "question2"), 0, "explanation",
+				Lists.newArrayList("image1", "image2"))).iterator().next();
+		Question question5 = storage.put(new Question("question5", "image", "description",
+				Lists.newArrayList("question1", "question2"), 0, "explanation",
+				Lists.newArrayList("image1", "image2"))).iterator().next();
+		
+		
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("-1");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("1");
+		servlet.doGet(request, response);
+		verify(response).setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("0");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("-1");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question1, question2, question3, question4, question5}),
+				responseWriter.toString());
+		
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("0");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("1");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question1}),
+				responseWriter.toString());
+		
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("1");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("1");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question2}),
+				responseWriter.toString());
+		
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("1");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("4");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question2, question3, question4, question5}),
+				responseWriter.toString());
+		
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("3");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("5");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question4, question5}),
+				responseWriter.toString());
+		
+		resetResponse();
+		when(request.getParameter(QuestionStorageServlet.OFFSET)).thenReturn("1");
+		when(request.getParameter(QuestionStorageServlet.LENGTH)).thenReturn("3");
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		assertEquals(gson.toJson(new Question[] { question2, question3, question4}),
 				responseWriter.toString());
 	}
 

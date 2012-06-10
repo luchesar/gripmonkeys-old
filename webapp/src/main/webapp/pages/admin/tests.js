@@ -18,7 +18,6 @@ cursoconducir.admin.tests.init = function() {
 		var contanier = $('#container');
 		testPage = new cursoconducir.admin.TestsPage(contanier);
 		testPage.start();
-		window._cursoConducirPage = testPage;
 	});
 };
 
@@ -191,7 +190,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	var previewTest = function(test) {
 		model.activeTest = test;
-		testPreviewModule.show(model);
+		testPreviewModule.show(model, function(activeTest, markedIndex) {
+			testPreviewModule.answer(markedIndex);
+		});
 		updateButtons(cursoconducir.template.tests.buttons.preview);
 	};
 
@@ -318,6 +319,6 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	};
 
 	this.answer = function(answerIndex) {
-		testPreviewModule.answer(model.activeTest, answerIndex);
+		testPreviewModule.answer(answerIndex);
 	};
-}
+};

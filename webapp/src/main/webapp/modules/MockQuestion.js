@@ -133,9 +133,9 @@ cursoconducir.allquestions.createTestQuestion = function(index) {
 			sel : false
 		}, {
 			title : "answer" + index + "2",
-			index : 0,
+			index : 1,
 			text : "answer" + index + "2text",
-			sel : false
+			sel : true
 		} ],
 		explanation : "explanation" + index,
 		published : false
@@ -143,10 +143,18 @@ cursoconducir.allquestions.createTestQuestion = function(index) {
 };
 
 var assertQuestionBefore = function(container, question1, question2) {
-	var checkBox2 = $("input[type='checkbox'][name='" + question2.id + "']");
-	assertNotNullNorUndefined(checkBox2[0]);
-	var checkBox1 = checkBox2.closest("input[type='checkbox'][name='" + question1.id + "']");
-	assertNotNullNorUndefined(checkBox1[0]);
+	var checkBox1 = container.find("input[type='checkbox'][name='" + question1.id + "']");
+	var checkBox2 = container.find("input[type='checkbox'][name='" + question2.id + "']");
+	
+	var question1Container = checkBox1.parents('#testInAList');
+	var question2Container = checkBox2.parents('#testInAList');
+	assertNotNullNorUndefined(question1Container[0]);
+	assertNotNullNorUndefined(question2Container[0]);
+
+	assertEquals(question1Container.parent().html(), question2Container.parent().html());
+
+	var children=question1Container.parent().children();
+	assertTrue(children.index(question1Container) < children.index(question2Container));
 };
 
 

@@ -160,7 +160,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			}
 			
 			// we can only save one lesson
-			savedLesson = savedLessons[0];
+			var savedLesson = savedLessons[0];
 			
 
 			var lessonIndex = cursoconducir.utils.findObjectIndexById(

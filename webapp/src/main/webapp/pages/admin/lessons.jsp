@@ -48,7 +48,7 @@ body {
 
 <link rel="shortcut icon" href="/favicon.ico">
 
-<script src="http://localhost:9810/compile?id=admin-lessons&mode=raw&level=verbose"></script>
+<script src="http://localhost:9810/compile?id=admin-lessons&mode=raw&level=verbose" charset="utf-8"></script>
 <script type="text/javascript">
 cursoconducir.admin.lessons.init();
 </script>

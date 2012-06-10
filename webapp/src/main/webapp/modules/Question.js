@@ -54,6 +54,27 @@ cursoconducir.Question.getAll = function(success, error, complete) {
 };
 
 /**
+ * Gets a page of questions from the server
+ * @param {number} offset
+ * @param {number} length
+ * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
+ * @param {function(XMLHttpRequest, Object, Object)=} error
+ * @param {function()=} complete
+ */
+cursoconducir.Question.getPaged = function(offset, length, success, error, complete) {
+	$.ajax({
+		type : "GET",
+		url : '/question-storage?offset='+offset+'&length=' + length,
+		contentType : "application/json; charset=utf-8",
+		data : {},
+		dataType : 'json',
+		success : success,
+		error :error,
+		complete : complete
+	});
+};
+
+/**
  * Gets question object from the server with the corresponding IDs
  * @param {Array.<String>} ids
  * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success

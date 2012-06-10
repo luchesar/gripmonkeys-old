@@ -10,6 +10,7 @@
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" sourcepath="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-labs/1.6.1/appengine-api-labs-1.6.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-api-stubs/1.6.1/appengine-api-stubs-1.6.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-jsr107cache/1.6.1/appengine-jsr107cache-1.6.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/appengine/appengine-testing/1.6.1/appengine-testing-1.6.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar" sourcepath="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar"/>
@@ -107,6 +108,11 @@
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/w3c/css/sac/1.3/sac-1.3.jar" sourcepath="M2_REPO/org/w3c/css/sac/1.3/sac-1.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/scribe/scribe/1.3.0/scribe-1.3.0.jar" sourcepath="M2_REPO/org/scribe/scribe/1.3.0/scribe-1.3.0-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/lucho/.m2/repository/org/scribe/scribe/1.3.0/scribe-1.3.0-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/seleniumhq/selenium/selenium-android-driver/2.16.1/selenium-android-driver-2.16.1.jar" sourcepath="M2_REPO/org/seleniumhq/selenium/selenium-android-driver/2.16.1/selenium-android-driver-2.16.1-sources.jar">
     <attributes>
       <attribute value="jar:file:/home/lucho/.m2/repository/org/seleniumhq/selenium/selenium-android-driver/2.16.1/selenium-android-driver-2.16.1-javadoc.jar!/" name="javadoc_location"/>
