@@ -1,18 +1,17 @@
 package org.bitbucket.cursodeconducir.services.entity;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.base.Objects;
 
-public class Cource extends TitledEntity {
+public class Course extends TitledEntity {
 	private List<Integer> lessonIds;
 
-	public Cource() {
+	public Course() {
 		super();
 	}
 
-	public Cource(String aTitle, String aImage, String aDescription,
+	public Course(String aTitle, String aImage, String aDescription,
 			List<Integer> aLessonIds) {
 		super(aTitle, aImage, aDescription);
 		lessonIds = aLessonIds;
@@ -31,13 +30,13 @@ public class Cource extends TitledEntity {
 		if (this == aObj) {
 			return true;
 		}
-		if (!(aObj instanceof Cource)) {
+		if (!(aObj instanceof Course)) {
 			return false;
 		}
 		if (!super.equals(aObj)) {
             return false;
         }
-		Cource other = (Cource)aObj;
+		Course other = (Course)aObj;
 		return Objects.equal(lessonIds, other.lessonIds);
 	}
 	

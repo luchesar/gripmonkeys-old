@@ -11,6 +11,6 @@ public class Asignment {
     private boolean isComplate;
     @Parent
     private User user;
-    private Cource cource;
+    private Course cource;
     
 }

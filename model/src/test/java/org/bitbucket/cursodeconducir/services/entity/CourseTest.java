@@ -35,32 +35,32 @@ public class CourseTest extends TestCase {
     
     @Test
 	public void testEqualsAndHashCode() throws Exception {
-    	Cource cource = new Cource("title", "title image", "description", Lists.newArrayList(l1,
+    	Course cource = new Course("title", "title image", "description", Lists.newArrayList(l1,
                 l2, l3));
 
         assertEquals(cource, cource);
 
-        Cource same = new Cource(cource.getTitle(), cource.getTitleImage(),
+        Course same = new Course(cource.getTitle(), cource.getTitleImage(),
                 cource.getDescription(), cource.getLessonIds());
         assertEquals(cource, same);
         assertEquals(cource.hashCode(), same.hashCode());
 
-        Cource differentTitle = new Cource("differentTitle", cource.getTitleImage(),
+        Course differentTitle = new Course("differentTitle", cource.getTitleImage(),
                 cource.getDescription(), cource.getLessonIds());
         assertFalse(cource.equals(differentTitle));
         assertFalse(cource.hashCode() == differentTitle.hashCode());
 
-        Cource differentTitleImage = new Cource(cource.getTitle(), "differentTitleImage",
+        Course differentTitleImage = new Course(cource.getTitle(), "differentTitleImage",
                 cource.getDescription(), cource.getLessonIds());
         assertFalse(cource.equals(differentTitleImage));
         assertFalse(cource.hashCode() == differentTitleImage.hashCode());
 
-        Cource differentDescription = new Cource(cource.getTitle(), cource.getTitleImage(),
+        Course differentDescription = new Course(cource.getTitle(), cource.getTitleImage(),
                 "different description", cource.getLessonIds());
         assertFalse(cource.equals(differentDescription));
         assertFalse(cource.hashCode() == differentDescription.hashCode());
         
-        Cource differentQuestions = new Cource(cource.getTitle(), cource.getTitleImage(),
+        Course differentQuestions = new Course(cource.getTitle(), cource.getTitleImage(),
                 cource.getDescription(), Lists.newArrayList(l3, l2, l1));
         assertFalse(cource.equals(differentQuestions));
         assertFalse(cource.hashCode() == differentQuestions.hashCode());
@@ -68,17 +68,17 @@ public class CourseTest extends TestCase {
     
     @Test
     public void testFillInKeys() throws Exception {
-        Cource lesson = new Cource();
+        Course lesson = new Course();
         lesson.setLessonIds(Lists.newArrayList(l1, l2, l3));
 
 
         assertEquals(Lists.newArrayList(l1, l2, l3), lesson.getLessonIds());
 
-        lesson = new Cource("title", "image", "description", Lists.newArrayList(l1, l2, l3));
+        lesson = new Course("title", "image", "description", Lists.newArrayList(l1, l2, l3));
 
         assertEquals(Lists.newArrayList(l1, l2, l3), lesson.getLessonIds());
         
-        lesson = new Cource("title", "image", "description", null);
+        lesson = new Course("title", "image", "description", null);
         assertNull(lesson.getLessonIds());
     }
 }
