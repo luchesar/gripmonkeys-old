@@ -1,6 +1,7 @@
 package org.bitbucket.cursodeconducir.services.entity;
 
 import static junit.framework.Assert.*;
+
 import org.junit.Test;
 
 public class TitledEntityTest {
@@ -35,6 +36,11 @@ public class TitledEntityTest {
                 "differentDescription");
         assertFalse(first.equals(differentDescription));
         assertFalse(first.hashCode() == differentDescription.hashCode());
+        
+        TitledEntity differentIsPublished = new TitledEntity(first.getTitle(), first.getTitleImage(), first.getDescription());
+        differentIsPublished.setPublished(true);
+        assertFalse(first.equals(differentIsPublished));
+        assertFalse(first.hashCode() == differentIsPublished.hashCode());
 
         TitledEntity same = new TitledEntity(first.getTitle(), first.getTitleImage(),
                 first.getDescription());

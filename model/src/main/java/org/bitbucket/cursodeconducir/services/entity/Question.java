@@ -16,8 +16,6 @@ public class Question extends TitledEntity {
     private int correctAnswerIndex;
     private String explanation;
     private List<String> images;
-    @Indexed
-    private boolean published = false;
 
     public Question() {
         super();
@@ -64,14 +62,6 @@ public class Question extends TitledEntity {
         images = aImages;
     }
 
-    public boolean getPublished() {
-        return published;
-    }
-
-    public void setPublished(boolean aPublished) {
-        published = aPublished;
-    }
-
     @Override
     public boolean equals(Object aObj) {
         if (this == aObj) {
@@ -88,14 +78,13 @@ public class Question extends TitledEntity {
         return Objects.equal(possibleAnswers, other.possibleAnswers)
                 && Objects.equal(correctAnswerIndex, other.correctAnswerIndex)
                 && Objects.equal(explanation, other.explanation)
-                && Objects.equal(images, other.images)
-                && Objects.equal(published, other.published);
+                && Objects.equal(images, other.images);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(super.hashCode(), possibleAnswers, correctAnswerIndex, explanation,
-                images, published);
+                images);
     }
 
     @Override
@@ -103,7 +92,6 @@ public class Question extends TitledEntity {
         return "Test [getId()=" + getId() + ", getTitle()=" + getTitle() + ", getTitleImage()="
                 + getTitleImage() + ", getDescription()=" + getDescription() + ", getImage()="
                 + getImage() + "possibleAnswers=" + possibleAnswers + ", correctAnswerIndex="
-                + correctAnswerIndex + ", explanation=" + explanation + ", images=" + images
-                + " isPublished=" + published + "]";
+                + correctAnswerIndex + ", explanation=" + explanation + ", images=" + images + "]";
     }
 }
