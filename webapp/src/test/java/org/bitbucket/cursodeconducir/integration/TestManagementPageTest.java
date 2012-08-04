@@ -1,10 +1,11 @@
 package org.bitbucket.cursodeconducir.integration;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.bitbucket.cursodeconducir.integration.test.bot.api.HomePageBot;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.MainMenuBot;

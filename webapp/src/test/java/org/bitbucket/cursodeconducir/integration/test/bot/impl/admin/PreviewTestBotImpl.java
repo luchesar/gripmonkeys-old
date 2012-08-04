@@ -1,8 +1,7 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.impl.admin;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertNotNull;
 
-import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;

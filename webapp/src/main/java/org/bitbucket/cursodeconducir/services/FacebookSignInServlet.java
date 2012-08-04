@@ -18,8 +18,8 @@ import org.scribe.oauth.OAuthService;
 
 @SuppressWarnings("serial")
 public class FacebookSignInServlet extends HttpServlet {
-	private static final String APP_ID = "315440385198744";
-	private static final String APP_SECRET = "b7b3e5904aa685bd3570e3923e5632f4";
+//	private static final String APP_ID = "315440385198744";
+//	private static final String APP_SECRET = "b7b3e5904aa685bd3570e3923e5632f4";
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {

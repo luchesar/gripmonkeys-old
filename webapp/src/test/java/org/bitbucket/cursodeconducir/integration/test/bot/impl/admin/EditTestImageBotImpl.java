@@ -1,6 +1,5 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.impl.admin;
 
-import org.bitbucket.cursodeconducir.integration.test.bot.WebDriverUtils;
 import org.bitbucket.cursodeconducir.integration.test.bot.api.admin.EditTestImageBot;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

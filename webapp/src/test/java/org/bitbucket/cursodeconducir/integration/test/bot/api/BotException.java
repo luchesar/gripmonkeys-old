@@ -1,5 +1,6 @@
 package org.bitbucket.cursodeconducir.integration.test.bot.api;
 
+@SuppressWarnings("serial")
 public class BotException extends Exception {
     public BotException(String aMessage) {
         super(aMessage);
