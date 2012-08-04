@@ -8,7 +8,7 @@ import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;
 
 @Cached
-public class TitledEntity {
+public abstract class TitledEntity {
 	@Id
 	private Long id;
 	private String title;

@@ -17,8 +17,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
 import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
@@ -38,8 +36,6 @@ public class ImageServlet extends HttpServlet {
 
     private static final ImagesService imagesService = ImagesServiceFactory.getImagesService();
     private static final FileService fileService = FileServiceFactory.getFileService();
-    private static final BlobstoreService blobstoreService = BlobstoreServiceFactory
-            .getBlobstoreService();
     private static final float IMAGE_WIDTH = 320f;
     private static final float IMAGE_HEIGHT = 420f;
 

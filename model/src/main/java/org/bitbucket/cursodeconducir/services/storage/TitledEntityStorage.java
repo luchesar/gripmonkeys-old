@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.bitbucket.cursodeconducir.services.ServiceException;
 import org.bitbucket.cursodeconducir.services.Util;
+import org.bitbucket.cursodeconducir.services.entity.TitledEntity;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -14,17 +15,21 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Query;
 
-public class TitledEntityStorage<TE> {
+public abstract class TitledEntityStorage<TE extends TitledEntity> {
 	private final Class<TE> clazz;
 	
 	public TitledEntityStorage(Class<TE> aClazz) {
 		clazz = aClazz;
 	}
 	
-	public Set<TE> put(final TE... lessons) throws ServiceException {
+	public Set<TE> put(final TE... tes) throws ServiceException {
+        return put(Arrays.asList(tes));
+    }
+	
+	public Set<TE> put(final List<TE> tes) throws ServiceException {
         Objectify objectify = Util.factory().begin();
 
-        Map<Key<TE>, TE> putResult = objectify.put(Arrays.asList(lessons));
+        Map<Key<TE>, TE> putResult = objectify.put(tes);
         return Sets.newLinkedHashSet(putResult.values());
     }
 
