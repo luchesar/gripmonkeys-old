@@ -1,7 +1,7 @@
 ========== Infrastructure ===================
 1. Merge all plovr configs into one
 2. Split the javascript src into modules
-3. Make the compiler checks to mimic java
+3. Make the compiler checks mimic the java compiler
 4. Make the compiler require the annotations and fail if there are no annotations
 5. Integrate the JS unit tests into the build
 
@@ -12,7 +12,7 @@
     1.2. Course JS Client
 2. Refactor the lessons list to be reusable and with check boxes
 3. Course admin page - title, description, image and list of lessons
-4. Course user page - show all th lessons that belongs to this course
+4. Course user page - show all the lessons that belongs to this course
 5. Improve the user do lesson page. 
     5.1. Add navigation widget to all the user pages starting from the index and with back button
     5.2. Rethink and redo the do lesson page to make more sense 

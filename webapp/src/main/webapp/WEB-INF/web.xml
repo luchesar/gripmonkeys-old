@@ -23,6 +23,11 @@
     <servlet-name>LessonStorage</servlet-name>
     <servlet-class>org.bitbucket.cursodeconducir.services.LessonStorageServlet</servlet-class>
   </servlet>
+  
+  <servlet>
+    <servlet-name>CourseStorage</servlet-name>
+    <servlet-class>org.bitbucket.cursodeconducir.services.CoursesStorageServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>Image</servlet-name>
@@ -37,6 +42,11 @@
   <servlet-mapping>
     <servlet-name>LessonStorage</servlet-name>
     <url-pattern>/lesson-storage</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>CourseStorage</servlet-name>
+    <url-pattern>/course-storage</url-pattern>
   </servlet-mapping>
 
   <servlet>
