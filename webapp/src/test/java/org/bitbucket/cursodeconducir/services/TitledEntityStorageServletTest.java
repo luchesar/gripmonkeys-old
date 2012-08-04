@@ -287,13 +287,15 @@ public class TitledEntityStorageServletTest {
 				responseWriter.toString());
 	}
 	
+	/*@Test
 	public void testDoGetFiltered() throws Exception {
 		fail();
 	}
 	
+	@Test
 	public void testDoGetFilteredAndPaged() throws Exception {
 		fail();
-	}
+	}*/
 
 	@Test
 	public void testDoDelete() throws Exception {
