@@ -55,7 +55,7 @@ cursoconducir.LessonForm = function(container) {
     this.show = function(model) {
         var templateHtml = cursoconducir.template.lessonForm.template(model);
         container.html(templateHtml);
-        if (!goog.isNull(model.activeLesson) || model.activeLesson != undefined) {
+        if (goog.isDefAndNotNull(model.activeLesson)) {
         	init(model);
     	}
     };
@@ -86,7 +86,7 @@ cursoconducir.LessonForm = function(container) {
         	removeQuestionsButton.click(function() {
         		$(lessonQuestions.getSelection()).each(function() {
         			goog.array.remove(model.activeLesson.questionIds, this.toString());
-        			goog.array.remove(model.activeLesson.questionIds, parseInt(this));
+        			goog.array.remove(model.activeLesson.questionIds, parseInt(this, 10));
         		});
         		updateQuestionPanels(model, questions);
         		removeQuestionsButton.addClass('disabled');

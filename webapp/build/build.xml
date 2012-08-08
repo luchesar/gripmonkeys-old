@@ -10,8 +10,6 @@
 	<target name="compile-js">
 		<mkdir dir="${compiledJs}" />
 		<compile plovrConfigFile="${builddir}/plovr-index-config.js" />
-		<compile plovrConfigFile="${builddir}/plovr-admin-tests-config.js" />
-		<compile plovrConfigFile="${builddir}/plovr-admin-lessons-config.js" />
 	</target>
 
 	<macrodef name="compile">
@@ -52,8 +50,7 @@
 
 	<target name="plovr">
 		<java jar="plovr-4b3caf2b7d84.jar" fork="true">
-			<arg line=" serve
-                plovr-index-config.js plovr-admin-tests-config.js plovr-admin-lessons-config.js" />
+			<arg line=" serve plovr-index-config.js" />
 		</java>
 	</target>
 </project>

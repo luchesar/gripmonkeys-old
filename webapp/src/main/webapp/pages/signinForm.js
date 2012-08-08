@@ -1,7 +1,6 @@
 goog.provide('cursoconducir.index.SigninForm');
 
 goog.require('cursoconducir.template.signin');
-goog.require('jquery');
 goog.require('goog.array');
 /**
  * @constructor

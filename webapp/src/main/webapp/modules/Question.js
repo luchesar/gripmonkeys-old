@@ -1,6 +1,5 @@
 goog.provide('cursoconducir.Question');
 
-goog.require('jquery');
 goog.require('goog.array');
 goog.require('goog.json');
 
@@ -37,8 +36,8 @@ cursoconducir.Question.create = function(q) {
 /**
  * Gets all the question object from the server
  * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)=} error
- * @param {function()=} complete
+ * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
+ * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
  */
 cursoconducir.Question.getAll = function(success, error, complete) {
 	$.ajax({
@@ -58,8 +57,8 @@ cursoconducir.Question.getAll = function(success, error, complete) {
  * @param {number} offset
  * @param {number} length
  * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)=} error
- * @param {function()=} complete
+ * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
+ * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
  */
 cursoconducir.Question.getPaged = function(offset, length, success, error, complete) {
 	$.ajax({
@@ -78,8 +77,8 @@ cursoconducir.Question.getPaged = function(offset, length, success, error, compl
  * Gets question object from the server with the corresponding IDs
  * @param {Array.<String>} ids
  * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)=} error
- * @param {function()=} complete
+ * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
+ * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
  */
 cursoconducir.Question.get = function(ids, success, error, complete) {
 	var idsString = '';
@@ -102,8 +101,8 @@ cursoconducir.Question.get = function(ids, success, error, complete) {
  * Stores question objects on the server
  * @param {Array.<cursoconducir.Question>} questions
  * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)=} error
- * @param {function()=} complete
+ * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
+ * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
  */
 cursoconducir.Question.store = function(questions, success, error, complete) {
 	var jsonData = {
@@ -124,8 +123,8 @@ cursoconducir.Question.store = function(questions, success, error, complete) {
  * Deletes question object from the server with the corresponding IDs
  * @param {Array.<string>} questionIds
  * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)=} error
- * @param {function()=} complete
+ * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
+ * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
  */
 cursoconducir.Question.del = function(questionIds, success, error, complete) {
 	var idsString = "";

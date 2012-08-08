@@ -1,6 +1,5 @@
 goog.provide('cursoconducir.Course');
 
-goog.require('jquery');
 goog.require('goog.array');
 goog.require('goog.json');
 

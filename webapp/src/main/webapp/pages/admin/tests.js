@@ -1,8 +1,7 @@
 goog.provide('cursoconducir.admin.TestsPage');
 goog.provide('cursoconducir.admin.tests');
+goog.provide('cursoconducir.admin.tests.Model');
 
-goog.require('hashchange');
-goog.require('jquery.querystring');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestModule');
 goog.require('cursoconducir.AllTestsModule');
@@ -11,10 +10,20 @@ goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
 goog.require('goog.json');
 goog.require('cursoconducir.Question');
+goog.require('goog.events.EventType');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
+goog.require('goog.Uri');
+goog.require('goog.Uri.QueryData');
 
+/**
+ * @public
+ */
 cursoconducir.admin.tests.init = function() {
+	/** @type {cursoconducir.admin.TestsPage} */
 	var testPage;
 	$(function() {
+		/** @type {jQuery} */
 		var contanier = $('#container');
 		testPage = new cursoconducir.admin.TestsPage(contanier);
 		testPage.start();
@@ -22,25 +31,50 @@ cursoconducir.admin.tests.init = function() {
 };
 
 /**
+ * @public
  * @constructor
- * @param {Object} testsContainer
+ * @param {jQuery} testsContainer
  */
 
 cursoconducir.admin.TestsPage = function(testsContainer) {
-	/** @private */
+	/**
+	 * @private
+	 * @type {string}
+	 * @const
+	 */
 	var CREATE = '#create';
-	/** @private */
+	/**
+	 * @private
+	 * @type {string}
+	 * @const
+	 */
 	var CANCEL = '#cancel';
-	/** @private */
+	/**
+	 * @private
+	 * @type {string}
+	 * @const
+	 */
 	var UPDATE = '#update';
-	/** @private */
+	/**
+	 * @private
+	 * @type {string}
+	 * @const
+	 */
 	var TEST_KEY = 'test';
-	/** @private */
+	/**
+	 * @private
+	 * @type {string}
+	 * @const
+	 */
 	var EDIT = '#edit';
-	/** @private */
+	/**
+	 * @private
+	 * @type {string}
+	 * @const
+	 */
 	var PREVIEW = '#preview';
 
-	/** @private */
+	/** @private*/ 
 	var model = {
 		/** @type {Array.<cursoconducir.Question>} */
 		allTests : null,
@@ -48,14 +82,26 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		activeTest : null
 	};
 
-	/** @private */
+	/**
+	 * @private
+	 * @type {cursoconducir.TestModule}
+	 */
 	var testModule = new cursoconducir.TestModule(testsContainer);
-	/** @private */
+	/**
+	 * @private
+	 * @type {cursoconducir.AllTestsModule}
+	 */
 	var allTestsModule = new cursoconducir.AllTestsModule(testsContainer);
 
+	/**
+	 * @private
+	 * @param {Array.<string>} selection
+	 */
 	var selectionChangedCallback = function(selection) {
 		if (!goog.array.isEmpty(selection)) {
-			var selectedTests = cursoconducir.utils.findTests(model, selection);
+			/** @type {Array.<cursoconducir.Question>} */
+			var selectedTests = cursoconducir.utils.findTests(model.allTests, selection);
+			/** @type {?boolean} */
 			var allPublished = null;
 			for ( var i = 0; i < selectedTests.length; i++) {
 				if (i == 0) {
@@ -80,32 +126,46 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	};
 	allTestsModule.addSelectionChangeCallback(selectionChangedCallback);
 
-	/** @private */
+	/**
+	 * @private
+	 * @type {cursoconducir.TestPreviewModule}
+	 */
 	var testPreviewModule = new cursoconducir.TestPreviewModule(testsContainer);
 
+	/**
+	 * @public
+	 * @type {cursoconducir.TestPreviewModule}
+	 */
 	this.testPreview = testPreviewModule;
-	
-	var postToServerDefaultSuccess = function(savetQuestions, textStatus, jqXHR) {
-		$(savetQuestions).each(function() {
-			var testIndex = cursoconducir.utils.findObjectIndexById(model.allTests, this.id);
-	        if (!model.allTests) {
-	            model.allTests = [];
-	        }
-	        if (testIndex < 0) {
-	            testIndex = model.allTests.length;
-	        }
-	        model.allTests[testIndex] = cursoconducir.utils.decode(this);
-		});
-        
-        window.location.hash = '#';
-    };
 
+	/**
+	 * 
+	 */
+	var postToServerDefaultSuccess = function(savetQuestions, textStatus, jqXHR) {
+		$(savetQuestions).each(
+				function() {
+					/** @type {number} */
+					var testIndex = cursoconducir.utils.findObjectIndexById(
+							model.allTests, this.id);
+					if (!model.allTests) {
+						model.allTests = [];
+					}
+					if (testIndex < 0) {
+						testIndex = model.allTests.length;
+					}
+					model.allTests[testIndex] = cursoconducir.utils
+							.decode(this);
+				});
+
+		window.location.hash = '#';
+	};
 
 	/** private */
 	var updateCurrentEditedTest = function() {
 		if (!testModule.isValid()) {
 			return;
 		}
+		/** @type {cursoconducir.Question} */
 		var templateTest = testModule.getTest();
 		postToServer(templateTest, postToServerDefaultSuccess);
 	};
@@ -114,9 +174,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var updateCurrentPreviewedTest = function() {
 		postToServer(model.activeTest, postToServerDefaultSuccess);
 	};
-	
-	/** 
-	 * @private 
+
+	/**
+	 * @private
 	 * @param {string=} hash
 	 */
 	var doHashChanged = function(hash) {
@@ -136,7 +196,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 			testModule.show(model);
 			updateButtons(cursoconducir.template.tests.buttons.edit);
 		} else if (hash.indexOf(UPDATE) == 0) {
-			var testId = $.getQueryString(TEST_KEY);
+			var testId = cursoconducir.utils.queryParam(TEST_KEY);
 			if ((model && model.activeTest && model.activeTest.id == testId)
 					|| testId == undefined || testId == "") {
 				testModule.show(model);
@@ -150,7 +210,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 				}, hideFeedback, showFeedback);
 			}
 		} else if (hash.indexOf(PREVIEW) == 0) {
-			var testId = $.getQueryString(TEST_KEY);
+			var testId = cursoconducir.utils.queryParam(TEST_KEY);
 			if ((model && model.activeTest && model.activeTest.id == testId)
 					|| testId == undefined || testId == "") {
 				previewTest(testModule.getTest());
@@ -172,20 +232,27 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var doPublish = function(published) {
 		var selectedTestsIds = allTestsModule.getSelection();
 		var selectedTests = [];
-		$(selectedTestsIds).each(function(){
-			var selectedTest = cursoconducir.utils.findObjectById(model.allTests, this);
-			selectedTest = cursoconducir.utils.decode(selectedTest);
-			selectedTest.published = published;
-			goog.array.insert(selectedTests, cursoconducir.utils.code(selectedTest));
-		});
-		
-		cursoconducir.Question.store(selectedTests, function() {
-			allTestsModule.show(model);
-			updateButtons(cursoconducir.template.tests.buttons.initial);
-		}, function(xhr, ajaxOptions, thrownError) {
-			showFeedback('Cannot publish or unpublish questions. Server returned error \''
-					+ xhr.status + ' ' + thrownError + '\'');
-		});
+		$(selectedTestsIds).each(
+				function() {
+					var selectedTest = cursoconducir.utils.findObjectById(
+							model.allTests, this);
+					selectedTest = cursoconducir.utils.decode(selectedTest);
+					selectedTest.published = published;
+					goog.array.insert(selectedTests, cursoconducir.utils
+							.code(selectedTest));
+				});
+
+		cursoconducir.Question
+				.store(
+						selectedTests,
+						function() {
+							allTestsModule.show(model);
+							updateButtons(cursoconducir.template.tests.buttons.initial);
+						},
+						function(xhr, ajaxOptions, thrownError) {
+							showFeedback('Cannot publish or unpublish questions. Server returned error \''
+									+ xhr.status + ' ' + thrownError + '\'');
+						});
 	};
 
 	var previewTest = function(test) {
@@ -213,54 +280,79 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		}, onComplate);
 	};
 
-	/** @private */
+	/**
+	 * @private
+	 * @param {cursoconducir.Question} templateTest
+	 * @param {function(Array.<cursoconducir.Question>, string=,Object=)} onSuccess
+	 */
 	var postToServer = function(templateTest, onSuccess) {
 		hideFeedback();
 		var test = cursoconducir.utils.code(templateTest);
 
-		cursoconducir.Question
-				.store(
+		cursoconducir.Question.store(
 						[ test ],
 						onSuccess,
+						/**
+						 * @type {function(jQuery.event,jQuery.jqXHR,Object.<string,*>,*)}
+						 */
 						function(xhr, ajaxOptions, thrownError) {
 							showFeedback('the test did not get saved because server returned error \''
-									+ xhr.status + ' ' + thrownError + '\'');
+									+ xhr.data + ' ' + thrownError + '\'');
 						});
 	};
 
+	/**
+	 * @private
+	 */
 	var doDelete = function() {
 		hideFeedback();
+		/** @type {Array.<string>} */
 		var selectedTestsIds = allTestsModule.getSelection();
+		/** @type {string} */
 		var selectedTests = '';
 		for ( var i = 0; i < selectedTestsIds.length; i++) {
-			var selectedTest = cursoconducir.utils.findObjectById(model.allTests,
-					selectedTestsIds[i]);
+			/** @type {cursoconducir.Question} */
+			var selectedTest = cursoconducir.utils.findQuestionById(
+					model.allTests, selectedTestsIds[i]);
 			selectedTests += selectedTest.title + ", ";
 		}
 		if (confirmDelete(selectedTests)) {
-			cursoconducir.Question.del(selectedTestsIds, function(wasDeleted,
-					textStatus, jqXHR) {
-				if (wasDeleted) {
-					for ( var i = 0; i < selectedTestsIds.length; i++) {
-						var spliceIndex = cursoconducir.utils
-								.findObjectIndexById(model, selectedTestsIds[i]);
-						model.allTests.splice(spliceIndex, 1);
-					}
-				}
-			},
-			function(xhr, ajaxOptions, thrownError) {
-				showFeedback('Cannot delete a test. Server returned error \''
-						+ xhr.status + ' ' + thrownError + '\'');
-			},
-			function() {
-				testsContainer.empty();
-				allTestsModule.show(model);
-				updateButtons(cursoconducir.template.tests.buttons.initial);
-			});
+			cursoconducir.Question.del(selectedTestsIds,
+							function(wasDeleted, textStatus, jqXHR) {
+								if (wasDeleted) {
+									for ( var i = 0; i < selectedTestsIds.length; i++) {
+										/** @type {number} */
+										var spliceIndex = cursoconducir.utils
+												.findObjectIndexById(model.allTests,
+														selectedTestsIds[i]);
+										model.allTests.splice(spliceIndex, 1);
+									}
+								}
+							},
+							/**
+							 * @type {function(jQuery.event,jQuery.jqXHR,Object.<string,
+							 *       *>,*)}
+							 */
+							function(xhr, ajaxOptions, thrownError) {
+								showFeedback('Cannot delete a test. Server returned error \''
+										+ xhr.data + ' ' + thrownError + '\'');
+							},
+							/**
+							 * @type {function(jQuery.event,XMLHttpRequest,Object.<string,
+							 *       *>)}
+							 */
+							function() {
+								testsContainer.empty();
+								allTestsModule.show(model);
+								updateButtons(cursoconducir.template.tests.buttons.initial);
+							});
 		}
 	};
 
-	/** @private */
+	/**
+	 * @private
+	 * @param {Array.<cursoconducir.Question>|string} selectedTests
+	 */
 	var confirmDelete = function(selectedTests) {
 		return window.confirm("Are you sure you want to delete '"
 				+ selectedTests + "' ?");
@@ -289,9 +381,14 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		});
 	};
 
-	/** @private */
+	/**
+	 * @private
+	 * @param {string} errorMessage
+	 */
 	var showFeedback = function(errorMessage) {
+		/** @type {jQuery}*/
 		var feedback = $('.feedback');
+		/** @type {string}*/
 		var templateHtml = cursoconducir.template.tests.buttons.feedback({
 			errorMessage : errorMessage
 		});
@@ -308,14 +405,11 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	/** @public */
 	this.start = function() {
-		$(window).hashchange(function() {
-			doHashChanged();
-		});
-		$(window).hashchange();
-	};
-
-	this.editImage = function(imageElement) {
-		testModule.editImage(imageElement);
+		goog.events.listen(window, goog.events.EventType.HASHCHANGE,
+				function(e) {
+					doHashChanged();
+				});
+		doHashChanged();
 	};
 
 	this.answer = function(answerIndex) {

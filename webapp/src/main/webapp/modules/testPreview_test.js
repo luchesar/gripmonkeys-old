@@ -1,5 +1,4 @@
 goog.require('goog.testing.jsunit');
-goog.require('jquery');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('cursoconducir.allquestions');
 

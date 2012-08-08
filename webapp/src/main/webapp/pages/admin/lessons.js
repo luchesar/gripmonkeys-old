@@ -7,9 +7,11 @@ goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.template.lesson.buttons');
 goog.require('cursoconducir.utils');
 
-goog.require('hashchange');
-goog.require('jquery.querystring');
 goog.require('goog.json');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
+goog.require('goog.Uri');
+goog.require('goog.Uri.QueryData');
 goog.require('cursoconducir.Lesson');
 
 /**
@@ -17,7 +19,9 @@ goog.require('cursoconducir.Lesson');
  */
 cursoconducir.admin.lessons.init = function() {
 	$(function() {
+		/** @type {jQuery} */
 		var contanier = $('#container');
+		/** @type {cursoconducir.admin.LessonPage} */
 		var lessonPage = new cursoconducir.admin.LessonPage(contanier);
 		lessonPage.start();
 	});
@@ -29,9 +33,25 @@ cursoconducir.admin.lessons.init = function() {
  * @param lessonsContainer
  */
 cursoconducir.admin.LessonPage = function(lessonsContainer) {
+	/**
+	 * @type {string}
+	 * @const
+	 */
 	var CREATE = '#create';
+	/**
+	 * @type {string}
+	 * @const
+	 */
 	var CANCEL = '#cancel';
+	/**
+	 * @type {string}
+	 * @const
+	 */
 	var UPDATE = '#update';
+	/**
+	 * @type {string}
+	 * @const
+	 */
 	var LESSON_KEY = 'lesson';
 
 	/** @private */
@@ -39,12 +59,24 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		/** @type {Array.<cursoconducir.Lesson>} */
 		allLessons : [],
 		/** @type {cursoconducir.Lesson} */
-		activeLesson : cursoconducir.Lesson.create({id: null, title: "", description: "", questionIds:[]})
+		activeLesson : cursoconducir.Lesson.create({
+			id : null,
+			title : "",
+			description : "",
+			questionIds : []
+		})
 	};
 
-	/** @type {cursoconducir.AllLessons} */
+	/**
+	 * @type {cursoconducir.AllLessons}
+	 * @private
+	 */
 	var allLessons = new cursoconducir.AllLessons(lessonsContainer);
-	
+
+	/**
+	 * @param {Array.<string>} selection
+	 * @private
+	 */
 	var selectionChangedCallback = function(selection) {
 		if (!goog.array.isEmpty(selection)) {
 			updateButtons(cursoconducir.template.lesson.buttons.initialWithSelection);
@@ -53,21 +85,27 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		}
 	};
 	allLessons.addSelectionChangeCallback(selectionChangedCallback);
-	
-	/** @type {cursoconducir.LessonForm} */
+
+	/**
+	 * @type {cursoconducir.LessonForm}
+	 * @private
+	 */
 	var lessonForm = new cursoconducir.LessonForm(lessonsContainer);
 
+	/**
+	 * @public
+	 */
 	this.start = function() {
-		$(window).hashchange(function() {
-			doHashChanged();
-		});
-		$(window).hashchange();
+		goog.events.listen(window, goog.events.EventType.HASHCHANGE,
+				function(e) {
+					doHashChanged();
+				});
+		doHashChanged();
 	};
 
 	/**
 	 * @private
-	 * @param {string=}
-	 *            hash
+	 * @param {string=} hash
 	 */
 	var doHashChanged = function(hash) {
 		hideFeedback();
@@ -91,17 +129,19 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			doUpdateLesson();
 		}
 	};
-	
+
 	/**
 	 * @private
 	 */
 	var doUpdateLesson = function() {
-		var lessonId = $.getQueryString(LESSON_KEY);
+		/** @type {string} */
+		var lessonId = /** @type {string} */ new goog.Uri(window.location).getQueryData().get(LESSON_KEY);
 		if ((model && model.activeLesson && model.activeLesson.id == lessonId)
 				|| lessonId == undefined || lessonId == "") {
 			lessonForm.show(model);
 			updateButtons(cursoconducir.template.lesson.buttons.edit);
 		} else {
+			/** @type {cursoconducir.Lesson} */
 			var foundLesson = cursoconducir.utils.findObjectById(
 					model.allLessons, lessonId);
 			if (foundLesson) {
@@ -115,14 +155,18 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					updateButtons(cursoconducir.template.lesson.buttons.edit);
 				}, function(xhr, ajaxOptions, thrownError) {
 					showFeedback('Cannot fetch test with id ' + lessonId
-							+ '. Server returned error \'' + xhr.status
-							+ ' ' + thrownError + '\'');
+							+ '. Server returned error \'' + xhr.status + ' '
+							+ thrownError + '\'');
 
 				});
 			}
 		}
 	};
 
+	/**
+	 * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)} onComplate
+	 * @private
+	 */
 	var fetchAllLessons = function(onComplate) {
 		hideFeedback();
 		cursoconducir.Lesson.getAll(function(allLessons, textStatus, jqXHR) {
@@ -133,15 +177,21 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		}, onComplate);
 	};
 
-	/** @private */
+	/**
+	 * @param {function(Object.<*>)} template
+	 * @private
+	 */
 	var updateButtons = function(template) {
+		/** @type {jQuery} */
 		var pageButtons = $('.pageButtons');
+		/** @type {string} */
 		var templateHtml = template(model);
 		pageButtons.html(templateHtml);
 
 		$('#deleteButton').click(function() {
 			doDelete();
 		});
+		/** @type {jQuery} */
 		var saveButton = $('#saveButton')[0];
 		$('#saveButton').click(function() {
 			updateCurrentEditedLesson();
@@ -153,35 +203,36 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		if (!lessonForm.isValid()) {
 			return;
 		}
-		postToServer(lessonForm.getLesson(), function(savedLessons, textStatus,
-				jqXHR) {
-			if (!model.allLessons) {
-				model.allLessons = [];
-			}
-			
-			// we can only save one lesson
-			var savedLesson = savedLessons[0];
-			
+		postToServer(lessonForm.getLesson(),
+				/** @type {function(Array.<cursoconducir.Lesson>, string=, jQuery.jqXHR=)}*/
+				function(savedLessons, textStatus, jqXHR) {
+					if (!model.allLessons) {
+						model.allLessons = [];
+					}
 
-			var lessonIndex = cursoconducir.utils.findObjectIndexById(
+					// we can only save one lesson
+					/** @type {cursoconducir.Lesson}*/
+					var savedLesson = savedLessons[0];
+					
+					/** @type {number}*/
+					var lessonIndex = cursoconducir.utils.findObjectIndexById(
 							model.allLessons, savedLesson.id);
-			if (lessonIndex < 0) {
-				goog.array.insert(model.allLessons, savedLesson);
-			} else {
-				goog.array.removeAt(model.allLessons, lessonIndex);
-				goog.array.insertAt(model.allLessons, savedLesson,
-						lessonIndex);
-			}
-			model.activeLesson = savedLesson;
-			window.location.hash = '#';
-		});
+					if (lessonIndex < 0) {
+						goog.array.insert(model.allLessons, savedLesson);
+					} else {
+						goog.array.removeAt(model.allLessons, lessonIndex);
+						goog.array.insertAt(model.allLessons, savedLesson,
+								lessonIndex);
+					}
+					model.activeLesson = savedLesson;
+					window.location.hash = '#';
+				});
 	};
 
 	/**
 	 * @private
-	 * @param {cursoconducir.Lesson}
-	 * @param {Function(Array.
-	 *            <cursoconducir.Lesson>)} onSuccess
+	 * @param {cursoconducir.Lesson} lesson
+	 * @param {function(Array.<cursoconducir.Lesson>, string=, jQuery.jqXHR=)} onSuccess
 	 */
 	var postToServer = function(lesson, onSuccess) {
 		hideFeedback();
@@ -190,30 +241,35 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 				.store(
 						[ lesson ],
 						onSuccess,
+						/**@type {function(jQuery.event,XMLHttpRequest,Object.<string,*>)}*/
 						function(xhr, ajaxOptions, thrownError) {
 							showFeedback('the lesson did not get saved because server returned error \''
-									+ xhr.status + ' ' + thrownError + '\'');
+									+ xhr.data + ' ' + thrownError + '\'');
 						});
 	};
 
+	/** @private */
 	var doDelete = function() {
 		hideFeedback();
-		/** @type Array.<string> */
+		/** @type {Array.<string>} */
 		var selectedLessonsIds = allLessons.getSelection();
+		/** @type {string} */
 		var selectedLessons = '';
 		for ( var i = 0; i < selectedLessonsIds.length; i++) {
-			/** @type cursoconducir.Lesson */
+			/** @type {cursoconducir.Lesson} */
 			var selectedLesson = cursoconducir.utils.findObjectById(
 					model.allLessons, selectedLessonsIds[i]);
 			selectedLessons += selectedLesson.title + ", ";
 		}
 		if (confirmDelete(selectedLessons)) {
-			cursoconducir.Lesson.del(selectedLessonsIds, function(wasDeleted,
-					textStatus, jqXHR) {
+			cursoconducir.Lesson.del(selectedLessonsIds,
+			/**@type {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)}*/
+			function(wasDeleted, textStatus, jqXHR) {
 				if (wasDeleted) {
 					for ( var i = 0; i < selectedLessonsIds.length; i++) {
+						/** @type {number} */
 						var spliceIndex = cursoconducir.utils
-								.findObjectIndexById(model,
+								.findObjectIndexById(model.allLessons,
 										selectedLessonsIds[i]);
 						model.allLessons.splice(spliceIndex, 1);
 					}
@@ -228,7 +284,10 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		}
 	};
 
-	/** @private */
+	/**
+	 * @private
+	 * @return boolean
+	 */
 	var confirmDelete = function(selectedTests) {
 		return window.confirm("Are you sure you want to delete '"
 				+ selectedTests + "' ?");
@@ -236,7 +295,9 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 
 	/** @private */
 	var showFeedback = function(errorMessage) {
+		/** @type {jQuery} */
 		var feedback = $('.feedback');
+		/** @type {string} */
 		var templateHtml = cursoconducir.template.lesson.buttons.feedback({
 			errorMessage : errorMessage
 		});
@@ -246,6 +307,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 
 	/** @private */
 	var hideFeedback = function() {
+		/** @type {jQuery} */
 		var feedback = $('.feedback');
 		feedback.empty();
 		feedback.addClass('hide');

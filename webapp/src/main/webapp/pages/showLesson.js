@@ -1,7 +1,6 @@
 goog.provide('cursoconducir.index.ShowLesson');
 
 goog.require('cursoconducir.indexpage.template');
-goog.require('jquery');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.array');
 goog.require('cursoconducir.showlesson.template');

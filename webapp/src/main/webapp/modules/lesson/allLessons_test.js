@@ -2,7 +2,6 @@ goog.require('cursoconducir.alllessons');
 goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.AllLessons');
 goog.require('cursoconducir.Lesson');
-goog.require('jquery');
 
 var allLessons;
 var lessonsContainer;

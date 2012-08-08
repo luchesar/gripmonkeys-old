@@ -1,3 +1,8 @@
+/**
+ * @fileoverview external library
+ * @suppress {accessControls|uselessCode|missingProperties|visibility|checkRegExp|checkTypes|checkVars|deprecated|fileoverviewTags|invalidCasts|nonStandardJsDocs|undefinedVars} 
+ * 
+ */
 goog.provide("bootstrap.twipsy");
 
 /* ==========================================================

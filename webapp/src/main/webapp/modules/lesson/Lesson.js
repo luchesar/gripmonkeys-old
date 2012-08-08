@@ -1,6 +1,5 @@
 goog.provide('cursoconducir.Lesson');
 
-goog.require('jquery');
 goog.require('goog.array');
 goog.require('goog.json');
 
@@ -32,9 +31,9 @@ cursoconducir.Lesson.create = function(lesson) {
 /**
  * Gets all the lessons object from the server
  * @public
- * @param {function(Array.<cursoconducir.Lesson>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)} error
- * @param {function()} complete
+ * @param {function(Array.<cursoconducir.Lesson>, string=, jQuery.jqXHR=)} success
+ * @param {function(XMLHttpRequest, Object, Object)=} error
+ * @param {function()=} complete
  */
 cursoconducir.Lesson.getAll = function(success, error, complete) {
 	$.ajax({
@@ -53,7 +52,7 @@ cursoconducir.Lesson.getAll = function(success, error, complete) {
  * Gets a page of lessons from the server
  * @param {number} offset
  * @param {number} length
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
+ * @param {function(Array.<cursoconducir.Lesson>, string=, jQuery.jqXHR=)} success
  * @param {function(XMLHttpRequest, Object, Object)=} error
  * @param {function()=} complete
  */
@@ -74,9 +73,9 @@ cursoconducir.Lesson.getPaged = function(offset, length, success, error, complet
  * Gets lesson object from the server with the corresponding IDs
  * @public
  * @param {Array.<String>} ids
- * @param {function(Array.<cursoconducir.Lesson>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)} error
- * @param {function()} complete
+ * @param {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)} success
+ * @param {function(XMLHttpRequest, Object, Object)=} error
+ * @param {function()=} complete
  */
 cursoconducir.Lesson.get = function(ids, success, error, complete) {
 	var idsString = '';
@@ -99,9 +98,9 @@ cursoconducir.Lesson.get = function(ids, success, error, complete) {
  * Stores lesson objects on the server
  * @public
  * @param {Array.<cursoconducir.Lesson>} lessons
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(XMLHttpRequest, Object, Object)} error
- * @param {function()} complete
+ * @param {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)} success
+ * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
+ * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
  */
 cursoconducir.Lesson.store = function(lessons, success, error, complete) {
 	var jsonData = {
@@ -122,7 +121,7 @@ cursoconducir.Lesson.store = function(lessons, success, error, complete) {
  * Deletes lesson object from the server with the corresponding IDs
  * @public
  * @param {Array.<string>} ids
- * @param {function(Array.<cursoconducir.Lesson>, string=,Object=)} success
+ * @param {function(Array.<string>, string=,jQuery.jqXHR=)} success
  * @param {function(XMLHttpRequest, Object, Object)=} error
  * @param {function()=} complete
  */

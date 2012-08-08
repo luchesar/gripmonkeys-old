@@ -6,11 +6,14 @@ goog.require("goog.array");
 
 /**
  * @constructor
- * @param {Object}
- *            container
+ * @param {jQuery} container
  */
 cursoconducir.AllTestsModule = function(container) {
-	var callbacks = [];
+	/**
+	 * @private
+	 * @type {Array.<function(Array.<string>)>}
+	 */
+	var callbacks = /** @type {Array.<function(Array.<string>)>}*/{};
 
 	/** public */
 	this.show = function(model) {
@@ -25,18 +28,31 @@ cursoconducir.AllTestsModule = function(container) {
 		});
 	};
 
+	/**
+	 * @public
+	 * @returns {Array.<string>}
+	 */
 	this.getSelection = function() {
 		return getQuestionsSelection();
 	};
 	
+	/**
+	 * @public
+	 * @param {Array.<string>} selection
+	 */
 	this.setSelection = function(selection) {
-		container.find("input[type=checkbox]").attr('checked', false);
+		container.find("input[type=checkbox]").attr('checked', 'false');
 		$(selection).each(function() {
-			container.find("input[type=checkbox][name="+this+"]").attr('checked', true);
+			container.find("input[type=checkbox][name="+this+"]").attr('checked', 'true');
 		});
 	};
 
+	/**
+	 * @private
+	 * @return {Array.<string>}
+	 */
 	var getQuestionsSelection = function() {
+		/** @type {Array.<string>}*/
 		var selection = [];
 		container.find("input[type=checkbox]").each(function() {
 			if (this.checked) {
@@ -46,6 +62,10 @@ cursoconducir.AllTestsModule = function(container) {
 		return selection;
 	};
 
+	/**
+	 * @public
+	 * @param {function(Array.<string>)} callback
+	 */
 	this.addSelectionChangeCallback = function(callback) {
 		goog.array.insert(callbacks, callback);
 	};
@@ -55,6 +75,7 @@ cursoconducir.AllTestsModule = function(container) {
 	 * @returns {Array.<string>}
 	 */
 	this.getQuestionIds = function() {
+		/** @type {Array.<string>}*/
 		var selection = [];
 		container.find("input[type=checkbox]").each(function() {
 			goog.array.insert(selection, this.name);

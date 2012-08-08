@@ -2,25 +2,13 @@ goog.provide('cursoconducir.TestModule');
 
 goog.require('cursoconducir.template.test');
 goog.require('cursoconducir.utils');
-goog.require('jquery.wysiwyg');
 goog.require('bootstrap.modal');
 
 /**
  * @constructor
- * @param container
+ * @param {jQuery} container
  */
 cursoconducir.TestModule = function(container) {
-    /** @private constant */
-    var controls = { controls : { separator00 : { visible : false },
-        separator01 : { visible : false }, separator02 : { visible : false },
-        separator03 : { visible : false }, undo : { visible : false },
-        redo : { visible : false }, separator04 : { visible : false },
-        insertHorizontalRule : { visible : false },
-        separator07 : { visible : false }, cut : { visible : false },
-        copy : { visible : false }, paste : { visible : false },
-        insertImage : { visible : false }, insertTable : { visible : false },
-        createLink : { visible : false }, code : { visible : false } } };
-
     var currentTest;
     var modalContainer;
     var imageElement;
@@ -89,7 +77,7 @@ cursoconducir.TestModule = function(container) {
         return true;
     };
 
-    /** @private */
+    /** @public */
     this.createEmptyTest = function() {
         return {
             title : '',

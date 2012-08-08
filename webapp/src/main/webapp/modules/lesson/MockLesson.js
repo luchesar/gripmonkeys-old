@@ -4,7 +4,6 @@ goog.provide('cursoconducir.alllessons');
 goog.require('cursoconducir.Lesson');
 goog.require('goog.array');
 goog.require('goog.testing.PropertyReplacer');
-goog.require('jquery');
 goog.require('cursoconducir.utils');
 
 /**

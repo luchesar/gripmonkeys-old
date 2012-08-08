@@ -4,8 +4,6 @@ goog.require('cursoconducir.Question');
 goog.require('cursoconducir.MockQuestion');
 goog.require('cursoconducir.allquestions');
 
-goog.require('jquery');
-
 var allTestsModule;
 var testContainer;
 var testContainer1;

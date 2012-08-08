@@ -4,8 +4,7 @@ goog.require('cursoconducir.template.testPreview');
 
 /**
  * @constructor
- * @param {Object}
- *            container
+ * @param {Object} container
  */
 cursoconducir.TestPreviewModule = function(container) {
 	var done = false;
@@ -21,7 +20,9 @@ cursoconducir.TestPreviewModule = function(container) {
 		return init(model, answerClickCallback);
 	};
 
-	/** public */
+	/** @public 
+	 * @param {Object} model
+	 * @param {function(cursoconducir.Question, number)=} answerClickCallback*/
 	this.add = function(model, answerClickCallback) {
 		var templateHtml = cursoconducir.template.testPreview.template(model);
 		container.append(templateHtml);
@@ -30,6 +31,9 @@ cursoconducir.TestPreviewModule = function(container) {
 	};
 	
 
+	/** @public 
+	 * @param {Object} model
+	 * @param {function(cursoconducir.Question, number)=} answerClickCallback*/
 	var init = function(model, answerClickCallback) {
 		activeTest = model.activeTest;
 		testContainer = container.find('#questionPreviewContainer'
@@ -39,9 +43,9 @@ cursoconducir.TestPreviewModule = function(container) {
 					var index = testContainer.find(event.currentTarget).attr(
 							'possibleAnswerIndex');
 					if (answerClickCallback) {
-						answerClickCallback(activeTest, parseInt(index));
+						answerClickCallback(activeTest, parseInt(index, 10));
 					} else {
-						mark(parseInt(index));
+						mark(parseInt(index, 10));
 					}
 				});
 		return testContainer;

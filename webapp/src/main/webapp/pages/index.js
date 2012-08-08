@@ -1,9 +1,6 @@
 goog.provide('cursoconducir.IndexPage');
 goog.provide('cursoconducir.index');
 
-goog.require('jquery');
-goog.require('hashchange');
-goog.require('jquery.querystring');
 goog.require('bootstrap.modal');
 goog.require('goog.net.Cookies');
 
@@ -16,13 +13,17 @@ goog.require('cursoconducir.index.ShowLesson');
 goog.require('cursoconducir.index.Initial');
 goog.require('cursoconducir.index.LessonList');
 goog.require('cursoconducir.index.SigninForm');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
+goog.require('goog.Uri');
+goog.require('goog.Uri.QueryData');
 
 /**
- * @param {string}
- *            allTestJson
+ * @param {string} allTestJson
  */
 cursoconducir.index.init = function(allTestJson) {
 	$(function() {
+		/** @type {cursoconducir.IndexPage}*/
 		var indexPage = new cursoconducir.IndexPage();
 		indexPage.start(allTestJson);
 		cursoconducir.index.showInConstruction();
@@ -46,24 +47,47 @@ cursoconducir.index.showInConstruction = function() {
  * @constructor
  */
 cursoconducir.IndexPage = function() {
+	/** @type {Array.<cursoconducir.Question>}*/
 	var allTests = null;
-
-	/** @private */
-	var ANSWER = "answer";
-	/** @private */
+	
+	/** 
+	 * @private 
+	 * @type {string}
+	 * @const
+	 */
 	var PREVIEW = "#preview";
-	/** @private */
+	/** 
+	 * @private 
+	 * @type {string}
+	 * @const
+	 */
 	var TEST_KEY = "test";
-	/** @private */
+	/** 
+	 * @private 
+	 * @type {string}
+	 * @const
+	 */
 	var LESSON = "lesson";
-	/** @private */
+	/** 
+	 * @private 
+	 * @type {string}
+	 * @const
+	 */
 	var LESSONS = "lessons";
-	/** @private */
+	/** 
+	 * @private 
+	 * @type {string}
+	 * @const
+	 */
 	var SIGNIN = "signin";
 
+	/** @type {cursoconducir.index.Initial}*/
 	var initial = null;
+	/** @type {cursoconducir.index.ShowLesson}*/
 	var showALesson = null;
+	/** @type {cursoconducir.index.LessonList}*/
 	var lessonList = null;
+	/** @type {cursoconducir.index.SigninForm}*/
 	var signinForm = null;
 
 	this.start = function(allTestsParam) {
@@ -74,13 +98,17 @@ cursoconducir.IndexPage = function() {
 		lessonList = new cursoconducir.index.LessonList(indexContainer);
 		signinForm = new cursoconducir.index.SigninForm(indexContainer);
 		
-		$(window).hashchange(function() {
-			doHashChanged();
-		});
-		$(window).hashchange();
+		goog.events.listen(window, goog.events.EventType.HASHCHANGE,
+				function(e) {
+					doHashChanged();
+				});
+		doHashChanged();
 	};
 
-	/** @private */
+	/**
+	 * @private
+	 * @param {string=} hash
+	 */
 	var doHashChanged = function(hash) {
 		if (!hash) {
 			hash = window.location.hash;
@@ -88,7 +116,7 @@ cursoconducir.IndexPage = function() {
 		if (hash == '' || hash == '#') {
 			doDefault();
 		} else if (hash.indexOf(PREVIEW) == 0) {
-			initial.doPreview($.getQueryString(TEST_KEY));
+			initial.doPreview(cursoconducir.utils.queryParam(TEST_KEY));
 		} else if (hash.indexOf(LESSONS) > -1) {
 			cursoconducir.Lesson.getAll(function(allLessons){
 				lessonList.show(allLessons);
@@ -101,6 +129,9 @@ cursoconducir.IndexPage = function() {
 		$("#footer").addClass("loaded");
 	};
 
+	/**
+	 * @private
+	 */
 	var doDefault = function() {
 		var activeTest = null;
 		if (allTests.length > 0) {
@@ -108,10 +139,12 @@ cursoconducir.IndexPage = function() {
 		}
 		initial.show(activeTest);
 	};
-
+	
+	/**
+	 * @private
+	 */
 	var doShowLesson = function() {
-		var lessonId = $.getQueryString(LESSON);
-		// var questionId = $.getQueryString(TEST_KEY)
+		var lessonId = cursoconducir.utils.queryParam(LESSON);
 		cursoconducir.Lesson.get([ lessonId ], function(lessons) {
 			var foundLesson = lessons;
 			if (goog.isArray(lessons)) {

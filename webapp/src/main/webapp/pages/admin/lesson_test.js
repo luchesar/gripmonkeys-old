@@ -1,7 +1,6 @@
 goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.admin.LessonsPage');
 goog.require('cursoconducir.admin.lessons');
-goog.require('jquery');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('cursoconducir.MockLesson');
 goog.require('cursoconducir.alllessons');

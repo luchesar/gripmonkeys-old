@@ -111,7 +111,7 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 /**
  * @public
  * @param {Array.<cursoconducir.Question>} model
- * @param {string} id
+ * @param {Array.<string>} testIds
  * @return {Array.<cursoconducir.Question>}
  */
 cursoconducir.utils.findTests = function(model, testIds) {
@@ -145,15 +145,43 @@ cursoconducir.utils.findObjectIndexById = function(array, id) {
 
 /**
  * @public
- * @param {Array.<cursoconducir.Question|cursoconducir.Lesson>} array
+ * @param {Array.<cursoconducir.Lesson>} array
  * @param {string} id
- * @return {cursoconducir.Question|cursoconducir.Lesson}
+ * @return {cursoconducir.Lesson}
  */
 cursoconducir.utils.findObjectById = function(array, id) {
 	if (array) {
+		/** @type {number}*/
 		var index = cursoconducir.utils.findObjectIndexById(array, id);
 		if (index > -1) {
 			return array[index];
 		}
 	}
+	return null;
+};
+
+/**
+ * @public
+ * @param {Array.<cursoconducir.Question>} array
+ * @param {string} id
+ * @return {cursoconducir.Question}
+ */
+cursoconducir.utils.findQuestionById = function(array, id) {
+	if (array) {
+		/** @type {number}*/
+		var index = cursoconducir.utils.findObjectIndexById(array, id);
+		if (index > -1) {
+			return array[index];
+		}
+	}
+	return null;
+};
+
+/**
+ * @public
+ * @param {string} key
+ * @return {string}
+ */
+cursoconducir.utils.queryParam = function(key){
+	return /** @type {string}*/new goog.Uri(window.location).getQueryData().get(key);
 };

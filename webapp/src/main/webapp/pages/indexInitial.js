@@ -1,6 +1,5 @@
 goog.provide('cursoconducir.index.Initial');
 
-goog.require('jquery');
 goog.require('goog.array');
 goog.require('cursoconducir.indexpage.template');
 goog.require('cursoconducir.utils');

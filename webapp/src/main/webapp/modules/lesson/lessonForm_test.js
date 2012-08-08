@@ -4,7 +4,6 @@ goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.MockQuestion');
 goog.require('cursoconducir.allquestions');
-goog.require('jquery');
 goog.require('goog.array');
 
 var lessonForm;

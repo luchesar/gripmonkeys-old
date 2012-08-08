@@ -1,7 +1,6 @@
 goog.provide('cursoconducir.index.LessonList');
 
 goog.require('cursoconducir.lessonlist.template');
-goog.require('jquery');
 goog.require('goog.array');
 
 /**
