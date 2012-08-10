@@ -2,6 +2,7 @@ goog.provide('cursoconducir.utils');
 
 goog.require('goog.array');
 goog.require('cursoconducir.Question');
+goog.require('cursoconducir.admin.tests.Model');
 
 /**
  * @public
@@ -110,7 +111,7 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 
 /**
  * @public
- * @param {Array.<cursoconducir.Question>} model
+ * @param {cursoconducir.admin.tests.Model} model
  * @param {Array.<string>} testIds
  * @return {Array.<cursoconducir.Question>}
  */

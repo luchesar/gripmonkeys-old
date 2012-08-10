@@ -8,6 +8,8 @@ goog.require("bootstrap.popover");
 goog.require("bootstrap.tooltip");
 goog.require("goog.array");
 goog.require('cursoconducir.utils');
+goog.require("cursoconducir.admin.lessons.Model");
+goog.require("cursoconducir.admin.tests.Model");
 
 /**
  * @constructor
@@ -30,29 +32,34 @@ cursoconducir.LessonForm = function(container) {
 	
 	/**
 	 * @private
+	 * @type {jQuery}
 	 */
 	var addQuestionsButton;
 	
 	/**
 	 * @private
+	 * @type {jQuery}
 	 */
 	var removeQuestionsButton;
 	
 	/**
 	 * @private
+	 * @type {jQuery}
 	 */
 	var moveQuestionUpButton;
 	
 	/**
 	 * @private
+	 * @type {jQuery}
 	 */
 	var moveQuestionDownButton;
 	
 	/**
      * @public
-     * @param {Object} model
+     * @param {cursoconducir.admin.lessons.Model} model
      */
     this.show = function(model) {
+    	/** @type {string}*/
         var templateHtml = cursoconducir.template.lessonForm.template(model);
         container.html(templateHtml);
         if (goog.isDefAndNotNull(model.activeLesson)) {
@@ -60,6 +67,10 @@ cursoconducir.LessonForm = function(container) {
     	}
     };
     
+    /**
+     * @private
+     * @param {cursoconducir.admin.lessons.Model} model
+     */
     var init = function(model) {
     	lessonQuestions = new cursoconducir.AllTestsModule($('#lessonQuestions'));
         allQuestions = new cursoconducir.AllTestsModule($('#allQuestions'));
@@ -70,7 +81,8 @@ cursoconducir.LessonForm = function(container) {
     	moveQuestionUpButton = container.find("#moveQuestionUpButton");
     	moveQuestionDownButton = container.find("#moveQuestionDownButton");
         
-        cursoconducir.Question.getAll(function(questions) {
+        cursoconducir.Question.getAll(
+        		/** @type {function(Array.<cursoconducir.Question>)}*/function(questions) {
         	updateQuestionPanels(model, questions);
         	
         	addQuestionsButton.click(function() {
@@ -94,12 +106,15 @@ cursoconducir.LessonForm = function(container) {
         	});
         	
         	moveQuestionUpButton.click(function() {
+        		/** @type {Array.<string>}*/
 				var selection = lessonQuestions.getSelection();
+				/** @type {Array.<cursoconducir.Question>}*/
 				var updatedLessonQuestions = moveUp(questions, lessonQuestions
 						.getQuestionIds(), selection);
 
 				lessonQuestions.show({
-					allTests : updatedLessonQuestions
+					allTests : updatedLessonQuestions,
+					activeTest: null
 				});
 				lessonQuestions.setSelection(selection);
 			});
@@ -110,7 +125,8 @@ cursoconducir.LessonForm = function(container) {
 						.getQuestionIds(), selection);
 
 				lessonQuestions.show({
-					allTests : updatedLessonQuestions
+					allTests : updatedLessonQuestions,
+					activeTest: null
 				});
 				lessonQuestions.setSelection(selection);
         	});
@@ -123,7 +139,8 @@ cursoconducir.LessonForm = function(container) {
         		}
         	});
         	
-        	allQuestions.addSelectionChangeCallback(function(selection) {
+        	allQuestions.addSelectionChangeCallback(
+        			/**@type {function(Array.<string>)}*/function(selection) {
         		if (selection.length > 0) {
         			addQuestionsButton.removeClass('disabled');
         		} else {
@@ -131,7 +148,8 @@ cursoconducir.LessonForm = function(container) {
         		}
         	});
         	
-        	lessonQuestions.addSelectionChangeCallback(function(selection) {
+        	lessonQuestions.addSelectionChangeCallback(
+        			/**@type {function(Array.<string>)}*/function(selection) {
         		if (selection.length > 0) {
         			moveQuestionUpButton.removeClass('disabled');
         			moveQuestionDownButton.removeClass('disabled');
@@ -144,7 +162,7 @@ cursoconducir.LessonForm = function(container) {
 //        	addQuestionsButton.popover({title:"Add selected questions to the lesson"});
 //        	removeQuestionsButton.popover({title:"Add questions", content:"Remove selected questions to the lesson"});
         });
-    }
+    };
     
     var moveUp = function(allQuestions, lessonQuestionIds, selectedIds) {
     	var newQuestionOrder = [];
@@ -190,9 +208,9 @@ cursoconducir.LessonForm = function(container) {
     
     var updateQuestionPanels = function(model, questions) {
     	var questionsSplit = splitQuestions(model, questions);
-    	lessonQuestions.show({allTests:questionsSplit.lessonQuestions});
-    	allQuestions.show({allTests:questionsSplit.allOtherQuestions});
-    }
+    	lessonQuestions.show({allTests:questionsSplit.lessonQuestions, activeTest:null});
+    	allQuestions.show({allTests:questionsSplit.allOtherQuestions, activeTest:null});
+    };
     
     /**
      * @param {Array.<cursoconducir.Question>} questions

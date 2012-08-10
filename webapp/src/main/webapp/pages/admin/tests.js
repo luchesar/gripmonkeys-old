@@ -1,6 +1,5 @@
 goog.provide('cursoconducir.admin.TestsPage');
 goog.provide('cursoconducir.admin.tests');
-goog.provide('cursoconducir.admin.tests.Model');
 
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestModule');
@@ -15,6 +14,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
+goog.require("cursoconducir.admin.tests.Model");
 
 /**
  * @public
@@ -73,8 +73,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 * @const
 	 */
 	var PREVIEW = '#preview';
-
-	/** @private*/ 
+	
+	/** @private
+	 * @type {cursoconducir.admin.tests.Model}*/ 
 	var model = {
 		/** @type {Array.<cursoconducir.Question>} */
 		allTests : null,
@@ -100,7 +101,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var selectionChangedCallback = function(selection) {
 		if (!goog.array.isEmpty(selection)) {
 			/** @type {Array.<cursoconducir.Question>} */
-			var selectedTests = cursoconducir.utils.findTests(model.allTests, selection);
+			var selectedTests = cursoconducir.utils.findTests(model, selection);
 			/** @type {?boolean} */
 			var allPublished = null;
 			for ( var i = 0; i < selectedTests.length; i++) {

@@ -3,6 +3,7 @@ goog.provide('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.template.allTests');
 goog.require("goog.soy");
 goog.require("goog.array");
+goog.require("cursoconducir.admin.tests.Model");
 
 /**
  * @constructor
@@ -15,12 +16,15 @@ cursoconducir.AllTestsModule = function(container) {
 	 */
 	var callbacks = /** @type {Array.<function(Array.<string>)>}*/{};
 
-	/** public */
+	/**@public 
+	 * @param {cursoconducir.admin.tests.Model} model*/
 	this.show = function(model) {
+		/** @type {string}*/
 		var theHtml = cursoconducir.template.allTests.template(model);
 		container.html(theHtml);
 
 		container.find("input[type=checkbox]").change(function() {
+			/** @type {Array.<string>}*/
 			var currentSellection = getQuestionsSelection();
 			for ( var i = 0; i < callbacks.length; i++) {
 				callbacks[i](currentSellection);
