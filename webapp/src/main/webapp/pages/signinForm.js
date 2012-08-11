@@ -4,9 +4,13 @@ goog.require('cursoconducir.template.signin');
 goog.require('goog.array');
 /**
  * @constructor
- * @param {Object} parentContainer
+ * @param {jQuery} parentContainer
  */
 cursoconducir.index.SigninForm = function(parentContainer) {
+	/**
+	 * @public 
+	 * @returns {jQuery}
+	 */
 	this.show = function() {
 		parentContainer.html(cursoconducir.template.signin.template());
 		

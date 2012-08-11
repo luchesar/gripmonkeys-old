@@ -5,17 +5,34 @@ goog.require('cursoconducir.indexpage.template');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
 
+
 /**
  * @constructor
  * @param {jQuery} container
  */
 cursoconducir.index.Initial = function(container, allTests) {
-	/** @private */
+	/**
+	 * @private 
+	 * @const
+	 * @type {number}
+	 * */
 	var TEST_NAVIGATION_LENGTH = 20;
 
+	/**
+	 * @private
+	 * @type {string}
+	 */
 	var initialHtml = cursoconducir.indexpage.template.initial();
+	/**
+	 * @private
+	 * @type {cursoconducir.TestPreviewModule}
+	 */
 	var testPreviewModule = null;
 
+	/**
+	 * @public
+	 * @param {cursoconducir.Question} activeTest
+	 */
 	this.show = function(activeTest) {
 		container.html(initialHtml);
 		testPreviewModule = new cursoconducir.TestPreviewModule(container
@@ -23,14 +40,20 @@ cursoconducir.index.Initial = function(container, allTests) {
 		if (!goog.isNull(activeTest) && activeTest != undefined) {
 			testPreviewModule.show({
 				activeTest : activeTest, allTests: null
-			}, function(activeTest, answerIndex) {
+			}, 
+			/** @type {function(cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
 				doAnswer(activeTest, answerIndex);
 			});
 		}
 	};
 
+	/**
+	 * @public
+	 * @param {string} testId
+	 */
 	this.doPreview = function(testId) {
 		hideExtras();
+		/** @type {string}*/
 		var explanationHtml = cursoconducir.indexpage.template
 				.explanation({
 					title : 'Test Especiales',
@@ -43,20 +66,27 @@ cursoconducir.index.Initial = function(container, allTests) {
 		$('#testContainer').empty();
 		cursoconducir.utils.findOrFetchTest({
 			allTests : allTests
-		}, testId, function(test) {
+		}, testId, 
+		/** @type {function(cursoconducir.Question)}*/function(test) {
 			if (test == undefined) {
 				return;
 			}
 			testPreviewModule.show({
 				allTests : allTests,
 				activeTest : test
-			}, function(activeTest, answerIndex) {
+			}, 
+			/** @type {function(cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
 				doAnswer(activeTest, answerIndex);
 			});
 			showNavigation(test);
 		});
 	};
 
+	/**
+	 * @private
+	 * @param {cursoconducir.Question} activeTest
+	 * @param {number} answerIndex
+	 */
 	var doAnswer = function(activeTest, answerIndex) {
 		$('#courceExplanationContainer').empty();
 		$('#nextTestLinkContainer').addClass('hide');
@@ -66,6 +96,9 @@ cursoconducir.index.Initial = function(container, allTests) {
 		showNavigation(activeTest);
 	};
 
+	/**
+	 * @private
+	 */
 	var hideExtras = function() {
 		container.find('#headerHintContainer').addClass('hide');
 		container.find('#addThisContainer').addClass('hide');
@@ -74,15 +107,25 @@ cursoconducir.index.Initial = function(container, allTests) {
 		container.find('#courceExplanationContainer').removeClass('hide');
 		testPreviewModule.hideGoToNextButton();
 	};
-
+	
+	/**
+	 * @private
+	 * @param {cursoconducir.Question} activeTest
+	 */
 	var showNavigation = function(activeTest) {
 		container.find('#testNavigationContainer').empty();
+		/** @type {cursoconducir.index.Initial.convertedModel}*/
 		var convertedModel = convertModel(activeTest);
+		/** @type {string}*/
 		var templateHtml = cursoconducir.indexpage.template
 				.navigation(convertedModel);
 		container.find('#testNavigationContainer').html(templateHtml);
 	};
-
+	
+	/**
+	 * @private
+	 * @param {cursoconducir.Question} activeTest
+	 */
 	var showGoToNextButton = function(activeTest) {
 		var convertedModel = convertModel(activeTest);
 		var goToNextUrl = "#preview?test=" + convertedModel.nextTestId
@@ -90,14 +133,24 @@ cursoconducir.index.Initial = function(container, allTests) {
 		testPreviewModule.showGoToNextButton(goToNextUrl);
 	};
 
+	/**
+	 * @private
+	 * @param {cursoconducir.Question} activeTest
+	 * @return {cursoconducir.index.Initial.convertedModel}
+	 */
 	var convertModel = function(activeTest) {
+		/** @type {cursoconducir.index.Initial.convertedModel}*/
 		var truncatedModel = {
 			allTests : null,
-			activeTest : activeTest
+			activeTest : activeTest,
+			nextTestId: null,
+			hasNext: false
 		};
-		var testArray = [];
+		/** @type {Array.<cursoconducir.Question>}*/
+		var testArray = /** @type {Array.<cursoconducir.Question>}*/[];
 
 		if (allTests && allTests.length > 0) {
+			/** @type {number}*/
 			var activeTestIndex = cursoconducir.utils.findObjectIndexById(
 					allTests, activeTest.id);
 			if (allTests.length - 1 > activeTestIndex) {
@@ -118,3 +171,8 @@ cursoconducir.index.Initial = function(container, allTests) {
 		return truncatedModel;
 	};
 };
+
+/**
+ * @typedef {{allTests:Array.<cursoconducir.Question>, activeTest:cursoconducir.Question, nextTestId:?string, hasNext:boolean}}
+ */
+cursoconducir.index.Initial.convertedModel;

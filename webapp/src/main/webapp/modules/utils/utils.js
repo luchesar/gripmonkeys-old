@@ -82,7 +82,7 @@ cursoconducir.utils.getTestLetter = function(index) {
  * @public
  * @param {Object} model
  * @param {string} testId
- * @param {function(Object)} callback
+ * @param {function(cursoconducir.Question)} callback
  * @param {function()=} hideFeedback
  * @param {function(string)=} showFeedback
  */
