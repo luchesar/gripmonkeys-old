@@ -14,9 +14,10 @@ cursoconducir.AllLessons = function(container) {
 	
 	/** 
 	 * @public
-	 * @param {Object} model 
+	 * @param {{allLessons:Array.<cursoconducir.Lesson>}} model 
 	 */
 	this.show = function(model) {
+		/** @type {string}*/
 		var theHtml = cursoconducir.template.allLessons.template(model);
 		container.html(theHtml);
 		

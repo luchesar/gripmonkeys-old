@@ -3,31 +3,86 @@ goog.provide('cursoconducir.TestModule');
 goog.require('cursoconducir.template.test');
 goog.require('cursoconducir.utils');
 goog.require('bootstrap.modal');
+goog.require('cursoconducir.Question');
+goog.require('cursoconducir.admin.tests.Model');
 
 /**
  * @constructor
  * @param {jQuery} container
  */
 cursoconducir.TestModule = function(container) {
-    var currentTest;
-    var modalContainer;
-    var imageElement;
-    var currectTestImage;
-    var imageFileName;
-    var imageFileSize;
-    var imageFileType;
-    var imageUploadProgress;
-    var doneButton;
-    var cancelButton;
-    var fileToUpload;
+	/**
+	 * @private
+	 * @type {cursoconducir.Question}
+	 */
+	var currentTest;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var modalContainer;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var imageElement;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var currectTestImage;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var imageFileName;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var imageFileSize;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var imageFileType;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var imageUploadProgress;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var doneButton;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var cancelButton;
+	/**
+	 * @private
+	 * @type {jQuery}
+	 */
+	var fileToUpload;
+	/**
+	 * @private
+	 * @type {string}
+	 */
     var imageKey;
+    /**
+	 * @private
+	 * @type {jQuery}
+	 */
     var uploadImageModalContainer;
 
     /**
-     * @public
-     * @param {Object} model
-     */
+	 * @public
+	 * @param {cursoconducir.admin.tests.Model} model
+	 */
     this.show = function(model) { 
+    	/** @type {string}*/
         var templateHtml = cursoconducir.template.test.template(model);
         container.html(templateHtml);
         currentTest = model.activeTest;
@@ -45,7 +100,11 @@ cursoconducir.TestModule = function(container) {
         });
     };
 
+    /**
+     * @private
+     */
     var resetFileToUploadContainer = function() {
+    	/** @type {string}*/
         var uploadImageModalHtml = cursoconducir.template.test.uploadImageModal();
         uploadImageModalContainer.html(uploadImageModalHtml);
         currectTestImage = $('#currentTestImage');
@@ -58,7 +117,7 @@ cursoconducir.TestModule = function(container) {
         imageFileType = $('#fileType');
         imageUploadProgress = $('#progressNumber');
         doneButton.click(function() {
-            imageElement.attr('src', currectTestImage.attr('src'));
+            imageElement.attr('src', currectTestImage.attr('src').toString());
             modalContainer.hide();
         });
         cancelButton.click(function() {
@@ -72,10 +131,13 @@ cursoconducir.TestModule = function(container) {
         $('#uploadForm')[0].reset();
     };
 
-    /** @public */
-    this.isValid = function() {
-        return true;
-    };
+    /**
+	 * @public
+	 * @return {boolean}
+	 */
+	this.isValid = function() {
+		return true;
+	};
 
     /** @public */
     this.createEmptyTest = function() {
@@ -95,7 +157,8 @@ cursoconducir.TestModule = function(container) {
 
     /** @public */
     this.getTest = function() {
-        var currentTestId = undefined;
+    	/** @type {?string}*/
+        var currentTestId = null;
         if (currentTest) {
             currentTestId = currentTest.id;
         }
@@ -114,8 +177,10 @@ cursoconducir.TestModule = function(container) {
             explanation : $("textarea[name=testExplanation]").val(),
             published: $("input[type=hidden][name=testPublished]").attr("value")};
 
+        /** @type {jQuery}*/
         var selectionOption = $("#correctAnswerIndex :selected");
-        var selectedIndex = selectionOption.attr('value');
+        /** @type {string|number}*/
+        var selectedIndex = selectionOption.attr('value').toString();
         selectedIndex = selectedIndex ? selectedIndex : 0;
         testTemplate.possibleAnswers[selectedIndex].sel = true;
         return testTemplate;
@@ -123,8 +188,7 @@ cursoconducir.TestModule = function(container) {
 
     /**
      * @private
-     * @param textArea :
-     *            HtmlElement
+     * @param {jQuery} textArea
      */
     var createEmptyHtmlEditor = function(textArea) {
         // textArea.wysiwyg(controls);
@@ -132,13 +196,19 @@ cursoconducir.TestModule = function(container) {
         // textArea.wysiwyg({ iFrameClass : "testDescription-input" });
     };
 
+    /**
+     * @private
+     */
     var editImage = function() { 
         resetFileToUploadContainer();
-        currectTestImage.attr('src', imageElement.attr('src'));
+        currectTestImage.attr('src', imageElement.attr('src').toString());
         modalContainer
                 .modal({ keyboard : true, backdrop : false, show : true });
     };
 
+    /**
+     * @private
+     */
     function fileSelected() {
         var file = fileToUpload[0].files[0];
         if (file) {
@@ -158,10 +228,16 @@ cursoconducir.TestModule = function(container) {
         }
     }
 
+    /**
+     * @private
+     */
     function uploadFile() {
+    	/** @type {FormData}*/
         var fd = new FormData();
+        /** @type {File}*/
         var firstFileToUpload = fileToUpload[0].files[0];
         fd.append("fileToUpload", firstFileToUpload);
+        /** @type {XMLHttpRequest}*/
         var xhr = new XMLHttpRequest();
         xhr.upload.addEventListener("progress", uploadProgress, false);
         xhr.addEventListener("load", uploadComplete, false);
@@ -171,8 +247,12 @@ cursoconducir.TestModule = function(container) {
         xhr.send(fd);
     }
 
+    /**
+     * @private
+     */
     function uploadProgress(evt) {
         if (evt.lengthComputable) {
+        	/** @type {number}*/
             var percentComplete = Math.round(evt.loaded * 100 / evt.total);
             imageUploadProgress.html(percentComplete.toString() + '%');
         } else {
@@ -180,8 +260,12 @@ cursoconducir.TestModule = function(container) {
         }
     }
 
+    /**
+     * @private
+     */
     function uploadComplete(evt) {
         imageKey = evt.target.getResponseHeader('key');
+        /** @type {string}*/
         var imageUrl = '/image?key=' + imageKey
                 + '&falback=/images/330x230.gif';
         
@@ -189,10 +273,16 @@ cursoconducir.TestModule = function(container) {
 //        currectTestImage.attr('src', 'http://www.antarcticconnection.com/Antarctic/travel/trips/2011/landscape212.jpg');
     }
 
+    /**
+     * @private
+     */
     function uploadFailed(evt) {
         alert("There was an error attempting to upload the file.");
     }
 
+    /**
+     * @private
+     */
     function uploadCanceled(evt) {
         alert("The upload has been canceled by the user or the browser dropped the connection.");
     }

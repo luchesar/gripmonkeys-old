@@ -69,7 +69,11 @@ cursoconducir.utils.indexes = {
 	'2' : 'C'
 };
 
-/** public */
+/**
+ * @public
+ * @param {string|number} index
+ * @return {string|number}
+ */
 cursoconducir.utils.getTestLetter = function(index) {
 	return cursoconducir.utils.indexes[index];
 };
@@ -93,7 +97,8 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 	if (hideFeedback) {
 		hideFeedback();
 	}
-	cursoconducir.Question.get([ testId ], function(test, textStatus, jqXHR) {
+	cursoconducir.Question.get([ testId ], 
+			/** @type {cursoconducir.Question.onSuccess}*/function(test, textStatus, jqXHR) {
 		if (test && test.length > 0) {
 			callback(cursoconducir.utils.decode(test[0]));
 		} else {
@@ -101,10 +106,11 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 				showFeedback('No test found with id ' + testId);
 			}
 		}
-	}, function(xhr, ajaxOptions, thrownError) {
+	}, 
+			/** @type {cursoconducir.Question.onError}*/function(xhr, ajaxOptions, thrownError) {
 		if (showFeedback) {
 			showFeedback('Cannot fetch a test. Server returned error \''
-					+ xhr.status + ' ' + thrownError + '\'');
+					+ xhr.data + ' ' + thrownError + '\'');
 		}
 	});
 };

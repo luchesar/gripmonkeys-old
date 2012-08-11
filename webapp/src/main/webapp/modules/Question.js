@@ -3,6 +3,7 @@ goog.provide('cursoconducir.Question');
 goog.require('goog.array');
 goog.require('goog.json');
 
+
 /**
  * A Question.
  * 
@@ -25,19 +26,23 @@ cursoconducir.Question = function(id, title, imageKey, description,
     this.explanation = explanation;
 };
 
-/**
- * Creates a new Question object from a js object
- * @param {Object.<string, string, string, string, Array.<Object.<string, number,string, boolean>>, string>} q
- */
-cursoconducir.Question.create = function(q) {
-    return new cursoconducir.Question(q.id, q.title, q.image, q.description, q.possibleAnswers, q.explanation);
-};
+/** @typedef {function(Array.<cursoconducir.Question>, string=,Object=)}*/
+cursoconducir.Question.onSuccess;
+
+/** @typedef {function(boolean, string=,Object=)}*/
+cursoconducir.Question.onDelSuccess;
+
+/** @typedef {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)} */
+cursoconducir.Question.onError;
+
+/** @typedef {function(jQuery.event,XMLHttpRequest,Object.<string, *>)} */
+cursoconducir.Question.onComplate;
 
 /**
  * Gets all the question object from the server
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
- * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
+ * @param {cursoconducir.Question.onSuccess} success
+ * @param {cursoconducir.Question.onError=} error
+ * @param {cursoconducir.Question.onComplate=} complete
  */
 cursoconducir.Question.getAll = function(success, error, complete) {
 	$.ajax({
@@ -56,9 +61,9 @@ cursoconducir.Question.getAll = function(success, error, complete) {
  * Gets a page of questions from the server
  * @param {number} offset
  * @param {number} length
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
- * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
+ * @param {cursoconducir.Question.onSuccess} success
+ * @param {cursoconducir.Question.onError=} error
+ * @param {cursoconducir.Question.onComplate=} complete
  */
 cursoconducir.Question.getPaged = function(offset, length, success, error, complete) {
 	$.ajax({
@@ -76,9 +81,9 @@ cursoconducir.Question.getPaged = function(offset, length, success, error, compl
 /**
  * Gets question object from the server with the corresponding IDs
  * @param {Array.<String>} ids
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
- * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
+ * @param {cursoconducir.Question.onSuccess} success
+ * @param {cursoconducir.Question.onError=} error
+ * @param {cursoconducir.Question.onComplate=} complete
  */
 cursoconducir.Question.get = function(ids, success, error, complete) {
 	var idsString = '';
@@ -100,9 +105,9 @@ cursoconducir.Question.get = function(ids, success, error, complete) {
 /**
  * Stores question objects on the server
  * @param {Array.<cursoconducir.Question>} questions
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
- * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
+ * @param {cursoconducir.Question.onSuccess} success
+ * @param {cursoconducir.Question.onError=} error
+ * @param {cursoconducir.Question.onComplate=} complete
  */
 cursoconducir.Question.store = function(questions, success, error, complete) {
 	var jsonData = {
@@ -122,9 +127,9 @@ cursoconducir.Question.store = function(questions, success, error, complete) {
 /**
  * Deletes question object from the server with the corresponding IDs
  * @param {Array.<string>} questionIds
- * @param {function(Array.<cursoconducir.Question>, string=,Object=)} success
- * @param {function(jQuery.event,jQuery.jqXHR,Object.<string, *>,*)=} error
- * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)=} complete
+ * @param {cursoconducir.Question.onDelSuccess} success
+ * @param {cursoconducir.Question.onError=} error
+ * @param {cursoconducir.Question.onComplate=} complete
  */
 cursoconducir.Question.del = function(questionIds, success, error, complete) {
 	var idsString = "";

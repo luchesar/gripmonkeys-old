@@ -7,8 +7,7 @@ goog.require('cursoconducir.TestPreviewModule');
 
 /**
  * @constructor
- * @param {Object}
- *            container
+ * @param {jQuery} container
  */
 cursoconducir.index.Initial = function(container, allTests) {
 	/** @private */
@@ -23,7 +22,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 				.find('#testContainer'));
 		if (!goog.isNull(activeTest) && activeTest != undefined) {
 			testPreviewModule.show({
-				activeTest : activeTest
+				activeTest : activeTest, allTests: null
 			}, function(activeTest, answerIndex) {
 				doAnswer(activeTest, answerIndex);
 			});

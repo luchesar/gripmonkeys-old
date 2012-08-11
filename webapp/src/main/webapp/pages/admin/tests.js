@@ -319,6 +319,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		}
 		if (confirmDelete(selectedTests)) {
 			cursoconducir.Question.del(selectedTestsIds,
+					/** @type {cursoconducir.Question.onDelSuccess}*/
 							function(wasDeleted, textStatus, jqXHR) {
 								if (wasDeleted) {
 									for ( var i = 0; i < selectedTestsIds.length; i++) {
@@ -330,18 +331,12 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 									}
 								}
 							},
-							/**
-							 * @type {function(jQuery.event,jQuery.jqXHR,Object.<string,
-							 *       *>,*)}
-							 */
+							/** @type {cursoconducir.Question.onError}*/
 							function(xhr, ajaxOptions, thrownError) {
 								showFeedback('Cannot delete a test. Server returned error \''
 										+ xhr.data + ' ' + thrownError + '\'');
 							},
-							/**
-							 * @type {function(jQuery.event,XMLHttpRequest,Object.<string,
-							 *       *>)}
-							 */
+							/** @type {cursoconducir.Question.onComplate}*/
 							function() {
 								testsContainer.empty();
 								allTestsModule.show(model);

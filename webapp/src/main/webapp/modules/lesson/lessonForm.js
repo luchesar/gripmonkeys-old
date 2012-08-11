@@ -164,11 +164,20 @@ cursoconducir.LessonForm = function(container) {
         });
     };
     
+    /**
+     * @private
+     * @param {Array.<cursoconducir.Question>} allQuestions
+     * @param {Array.<string>} lessonQuestionIds
+     * @param {Array.<string>} selectedIds
+     * @return {Array.<cursoconducir.Question>}
+     */
     var moveUp = function(allQuestions, lessonQuestionIds, selectedIds) {
-    	var newQuestionOrder = [];
+    	var newQuestionOrder = /** @type {Array.<cursoconducir.Question>}*/[];
     	var minIndex = 0;
-    	goog.array.forEach(lessonQuestionIds, function(id, index) {
-    		var question  = cursoconducir.utils.findObjectById(allQuestions, id);
+    	goog.array.forEach(lessonQuestionIds, 
+    			/**@type {function(string, number)}*/function(id, index) {
+    		/** @type {cursoconducir.Question}*/
+    		var question  = cursoconducir.utils.findQuestionById(allQuestions, id);
     		if (goog.array.contains(selectedIds, id)) {
     			if (minIndex < index) {
     				minIndex = index -1;
@@ -185,11 +194,20 @@ cursoconducir.LessonForm = function(container) {
     	return newQuestionOrder;
     };
     
+    /**
+     * @private
+     * @param {Array.<cursoconducir.Question>} allQuestions
+     * @param {Array.<string>} lessonQuestionIds
+     * @param {Array.<string>} selectedIds
+     * @return {Array.<cursoconducir.Question>}
+     */
     var moveDown = function(allQuestions, lessonQuestionIds, selectedIds) {
-    	var newQuestionOrder = [];
+    	var newQuestionOrder = /** @type {Array.<cursoconducir.Question>}*/[];
     	var maxIndex = lessonQuestionIds.length - 1 ;
-    	goog.array.forEachRight(lessonQuestionIds, function(id, index) {
-    		var question  = cursoconducir.utils.findObjectById(allQuestions, id);
+    	goog.array.forEachRight(lessonQuestionIds, 
+    			/**@type {function(string, number)}*/function(id, index) {
+    		/** @type {cursoconducir.Question}*/
+    		var question  = cursoconducir.utils.findQuestionById(allQuestions, id);
     		if (goog.array.contains(selectedIds, id)) {
     			if (maxIndex > index) {
     				maxIndex = index + 1;
@@ -206,15 +224,22 @@ cursoconducir.LessonForm = function(container) {
     	return newQuestionOrder;
     };
     
+    /**
+     * @private
+     * @param {cursoconducir.admin.lessons.Model} model
+     * @param {Array.<cursoconducir.Question>} questions
+     */
     var updateQuestionPanels = function(model, questions) {
+    	/** @type {{lessonQuestions: Array.<cursoconducir.Question>, allOtherQuestions: Array.<cursoconducir.Question>}} */
     	var questionsSplit = splitQuestions(model, questions);
     	lessonQuestions.show({allTests:questionsSplit.lessonQuestions, activeTest:null});
     	allQuestions.show({allTests:questionsSplit.allOtherQuestions, activeTest:null});
     };
     
     /**
+     * @param {cursoconducir.admin.lessons.Model} model
      * @param {Array.<cursoconducir.Question>} questions
-     * @return {Object} 
+     * @return {{lessonQuestions: Array.<cursoconducir.Question>, allOtherQuestions: Array.<cursoconducir.Question>}} 
      */
     var splitQuestions = function(model, questions) {
     	/** @type {Array.<cursoconducir.Question>}*/
@@ -251,7 +276,7 @@ cursoconducir.LessonForm = function(container) {
     
     /**
      * @public
-     * @return boolean
+     * @return {boolean}
      */
     this.isValid = function() {
     	return true;

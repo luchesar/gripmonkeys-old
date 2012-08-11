@@ -16,7 +16,7 @@
 		<attribute name="plovrConfigFile" />
 		<sequential>
 			<echo>compiling JS for config @{plovrConfigFile}</echo>
-			<java jar="${builddir}/plovr-4b3caf2b7d84.jar" fork="true" failonerror="true">
+			<java jar="${builddir}/plovr.jar" fork="true" failonerror="true">
 				<arg line="build @{plovrConfigFile}" />
 			</java>
 		</sequential>

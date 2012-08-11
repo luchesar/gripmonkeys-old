@@ -6,7 +6,7 @@ goog.require('goog.array');
 goog.require('cursoconducir.showlesson.template');
 /**
  * @constructor
- * @param {Object} container
+ * @param {jQuery} container
  */
 cursoconducir.index.ShowLesson = function(container) {
 	var topContainer = null;
@@ -50,7 +50,7 @@ cursoconducir.index.ShowLesson = function(container) {
 			var testPreviewModule = new cursoconducir.TestPreviewModule(questionsContainer);
 			goog.array.insert(testPreviewModules, testPreviewModule);
 			var	convertedQuestion = cursoconducir.utils.decode(question);
-			testPreviewModule.add({activeTest:convertedQuestion, title: index + 1});
+			testPreviewModule.add({allTests:null, activeTest:convertedQuestion, title: index + 1});
 		});
 		
 	};

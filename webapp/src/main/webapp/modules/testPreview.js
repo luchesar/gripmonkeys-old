@@ -1,18 +1,29 @@
 goog.provide('cursoconducir.TestPreviewModule');
 
 goog.require('cursoconducir.template.testPreview');
+goog.require('cursoconducir.Question');
+goog.require('cursoconducir.admin.tests.Model');
 
 /**
+ * @public
  * @constructor
- * @param {Object} container
+ * @param {jQuery} container
  */
 cursoconducir.TestPreviewModule = function(container) {
+	/** @type {boolean}*/
 	var done = false;
+	/** @type {?number}*/
 	var markedIndex = null;
+	/** @type {jQuery}*/
 	var testContainer = null;
+	/** @type {cursoconducir.Question}*/
 	var activeTest = null;
 
-	/** public */
+	/**
+	 * @public 
+	 * @param {cursoconducir.admin.tests.Model} model
+	 * @param {function(cursoconducir.Question, number)} answerClickCallback
+	 */
 	this.show = function(model, answerClickCallback) {
 		var templateHtml = cursoconducir.template.testPreview.template(model);
 		container.html(templateHtml);
@@ -21,7 +32,7 @@ cursoconducir.TestPreviewModule = function(container) {
 	};
 
 	/** @public 
-	 * @param {Object} model
+	 * @param {cursoconducir.admin.tests.Model} model
 	 * @param {function(cursoconducir.Question, number)=} answerClickCallback*/
 	this.add = function(model, answerClickCallback) {
 		var templateHtml = cursoconducir.template.testPreview.template(model);
@@ -29,7 +40,6 @@ cursoconducir.TestPreviewModule = function(container) {
 		done = false;
 		return init(model, answerClickCallback);
 	};
-	
 
 	/** @public 
 	 * @param {Object} model
@@ -51,7 +61,8 @@ cursoconducir.TestPreviewModule = function(container) {
 		return testContainer;
 	};
 
-	/** public */
+	/** public 
+	 * @param {string} url*/
 	this.showGoToNextButton = function(url) {
 		testContainer.find('#goToNextButtonContainer').removeClass('hide');
 		testContainer.find('#goToNextButton').attr('href', url);
@@ -63,7 +74,8 @@ cursoconducir.TestPreviewModule = function(container) {
 		testContainer.find('#goToNextButton').attr('href', undefined);
 	};
 
-	/** public */
+	/** public
+	 * @param {number} answerIndex */
 	this.answer = function(answerIndex) {
 		if (done) {
 			return;
@@ -86,6 +98,10 @@ cursoconducir.TestPreviewModule = function(container) {
 		done = true;
 	};
 
+	/**
+	 * @private
+	 * @param {?number} markIndex
+	 */
 	var mark = function(markIndex) {
 		markedIndex = markIndex;
 		for ( var i = 0; i < activeTest.possibleAnswers.length; i++) {
@@ -96,16 +112,31 @@ cursoconducir.TestPreviewModule = function(container) {
 			}
 		}
 	};
+	/**
+	 * @private
+	 * @type {function(?number)} 
+	 */
 	this.mark = mark;
 
+	/**
+	 * @public
+	 * @return {?number}
+	 */
 	this.getMarkedIndex = function() {
 		return markedIndex;
 	};
 	
+	/**
+	 * @public
+	 */
 	this.reset = function() {
 		done = false;
 	};
 	
+	/**
+	 * @public
+	 * @return {string}
+	 */
 	this.getTitle = function() {
 		if (activeTest) {
 			return activeTest.title;

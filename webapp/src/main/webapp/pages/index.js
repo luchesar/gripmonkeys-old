@@ -133,6 +133,7 @@ cursoconducir.IndexPage = function() {
 	 * @private
 	 */
 	var doDefault = function() {
+		/** @type {cursoconducir.Question}*/
 		var activeTest = null;
 		if (allTests.length > 0) {
 			activeTest = cursoconducir.utils.decode(allTests[0]);
@@ -144,15 +145,19 @@ cursoconducir.IndexPage = function() {
 	 * @private
 	 */
 	var doShowLesson = function() {
+		/** @type {string}*/
 		var lessonId = cursoconducir.utils.queryParam(LESSON);
-		cursoconducir.Lesson.get([ lessonId ], function(lessons) {
+		cursoconducir.Lesson.get([ lessonId ], 
+				/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
+			/** @type {Array.<cursoconducir.Lesson>|cursoconducir.Lesson}*/
 			var foundLesson = lessons;
 			if (goog.isArray(lessons)) {
 				foundLesson = lessons[0];
 			}
 
-			cursoconducir.Question.get(foundLesson.questionIds, function(
-					questions) {
+			cursoconducir.Question.get(foundLesson.questionIds, 
+					/** @type {cursoconducir.Question.onSuccess}*/function(questions) {
+				/** @type {Array.<cursoconducir.Question>|cursoconducir.Question}*/
 				var foundQuestions = questions;
 				if (!goog.isArray(foundQuestions)) {
 					foundQuestions = [foundQuestions];

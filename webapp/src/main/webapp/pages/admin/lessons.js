@@ -149,11 +149,13 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 				lessonForm.show(model);
 				updateButtons(cursoconducir.template.lesson.buttons.edit);
 			} else {
-				cursoconducir.Lesson.get([ lessonId ], function(lessons) {
+				cursoconducir.Lesson.get([ lessonId ], 
+						/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
 					model.activeLesson = lessons[0];
 					lessonForm.show(model);
 					updateButtons(cursoconducir.template.lesson.buttons.edit);
-				}, function(xhr, ajaxOptions, thrownError) {
+				}, 
+				/** @type {cursoconducir.Lesson.onError}*/function(xhr, ajaxOptions, thrownError) {
 					showFeedback('Cannot fetch test with id ' + lessonId
 							+ '. Server returned error \'' + xhr.status + ' '
 							+ thrownError + '\'');
@@ -164,14 +166,16 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	};
 
 	/**
-	 * @param {function(jQuery.event,XMLHttpRequest,Object.<string, *>)} onComplate
+	 * @param {cursoconducir.Lesson.onComplate} onComplate
 	 * @private
 	 */
 	var fetchAllLessons = function(onComplate) {
 		hideFeedback();
-		cursoconducir.Lesson.getAll(function(allLessons, textStatus, jqXHR) {
+		cursoconducir.Lesson.getAll(
+		/** @type {cursoconducir.Lesson.onSuccess}*/function(allLessons, textStatus, jqXHR) {
 			model.allLessons = allLessons;
-		}, function(xhr, ajaxOptions, thrownError) {
+		}, 
+		/** @type {cursoconducir.Lesson.onError}*/function(xhr, ajaxOptions, thrownError) {
 			showFeedback('Cannot fetch all questions. Server returned error \''
 					+ xhr.status + ' ' + thrownError + '\'');
 		}, onComplate);
@@ -204,7 +208,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			return;
 		}
 		postToServer(lessonForm.getLesson(),
-				/** @type {function(Array.<cursoconducir.Lesson>, string=, jQuery.jqXHR=)}*/
+				/** @type {cursoconducir.Lesson.onSuccess}*/
 				function(savedLessons, textStatus, jqXHR) {
 					if (!model.allLessons) {
 						model.allLessons = [];
@@ -232,19 +236,17 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	/**
 	 * @private
 	 * @param {cursoconducir.Lesson} lesson
-	 * @param {function(Array.<cursoconducir.Lesson>, string=, jQuery.jqXHR=)} onSuccess
+	 * @param {cursoconducir.Lesson.onSuccess} onSuccess
 	 */
 	var postToServer = function(lesson, onSuccess) {
 		hideFeedback();
 
 		cursoconducir.Lesson
-				.store(
-						[ lesson ],
-						onSuccess,
-						/**@type {function(jQuery.event,XMLHttpRequest,Object.<string,*>)}*/
+				.store([ lesson ],onSuccess,
+						/**@type {cursoconducir.Lesson.onError}*/
 						function(xhr, ajaxOptions, thrownError) {
 							showFeedback('the lesson did not get saved because server returned error \''
-									+ xhr.data + ' ' + thrownError + '\'');
+									+ xhr.status + ' ' + thrownError + '\'');
 						});
 	};
 
@@ -263,7 +265,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		}
 		if (confirmDelete(selectedLessons)) {
 			cursoconducir.Lesson.del(selectedLessonsIds,
-			/**@type {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)}*/
+			/**@type {cursoconducir.Lesson.onDelSuccess}*/
 			function(wasDeleted, textStatus, jqXHR) {
 				if (wasDeleted) {
 					for ( var i = 0; i < selectedLessonsIds.length; i++) {
@@ -274,10 +276,12 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 						model.allLessons.splice(spliceIndex, 1);
 					}
 				}
-			}, function(xhr, ajaxOptions, thrownError) {
+			}, 
+			/**@type {cursoconducir.Lesson.onError}*/ function(xhr, ajaxOptions, thrownError) {
 				showFeedback('Cannot delete a lesson. Server returned error \''
 						+ xhr.status + ' ' + thrownError + '\'');
-			}, function() {
+			}, 
+			/**@type {cursoconducir.Lesson.onComplate}*/function() {
 				allLessons.show(model);
 				updateButtons(cursoconducir.template.lesson.buttons.initial);
 			});
