@@ -21,6 +21,25 @@ cursoconducir.Question.onError;
 cursoconducir.Question.onComplate;
 
 /**
+ * @public
+ * @param {?string} id
+ * @param {string} title
+ * @param {string} image
+ * @param {string} description
+ * @param {Array.<string>} possibleAnswers
+ * return {cursoconducir.Question}
+ */
+cursoconducir.Question.create = function(id, title, image, description, possibleAnswers) {
+	return {
+		id : id,
+		title : title,	
+		image : image,
+		description : description,
+		possibleAnswers : possibleAnswers
+	};
+};
+
+/**
  * Gets all the question object from the server
  * @param {cursoconducir.Question.onSuccess} success
  * @param {cursoconducir.Question.onError=} error

@@ -12,6 +12,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
+goog.require('goog.History');
 goog.require('cursoconducir.Lesson');
 
 /**
@@ -61,7 +62,6 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		/** @type {?cursoconducir.Lesson} */
 		activeLesson : {id:null, title: "", description: "", questionIds:/**@type {Array.<string>}*/[]}
 	};
-
 	/**
 	 * @type {cursoconducir.AllLessons}
 	 * @private
@@ -86,18 +86,23 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @private
 	 */
 	var lessonForm = new cursoconducir.LessonForm(lessonsContainer);
+	
+	/** 
+	 * @private
+	 * @param {?goog.events.BrowserEvent} e
+	 */
+	var hashChangeListener = function(e) {
+		doHashChanged();
+	};
 
 	/**
 	 * @public
 	 */
 	this.start = function() {
-		goog.events.listen(window, goog.events.EventType.HASHCHANGE,
-				function(e) {
-					doHashChanged();
-				});
+		cursoconducir.onHashChange = hashChangeListener;
 		doHashChanged();
 	};
-
+	
 	/**
 	 * @private
 	 * @param {string=} hash

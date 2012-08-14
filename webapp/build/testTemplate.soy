@@ -11,10 +11,40 @@
 <head>
   <title>{$title} test</title>
   <script src="/input/index/closure/goog/../../$$/src/main/webapp/jslib/jquery-1.6.4.js"></script>
+  <script src="{$baseJsUrl}"></script>
+  <script>
+    goog.require('goog.events');
+    goog.require('goog.events.EventTarget');
+    goog.require('goog.testing.ContinuationTestCase');
+    goog.require('goog.testing.MockClock');
+    goog.require('goog.testing.PropertyReplacer');
+    goog.require('goog.testing.TestCase.Test');
+    goog.require('goog.testing.jsunit');
+    goog.require('goog.History');
+  </script>
 </head>
 <body>
-  <script src="{$baseJsUrl}"></script>
   <script src="{$testJsUrl}"></script>
+  <script>{literal}
+    if (typeof cursoconducir == 'undefined') {
+        cursoconducir = {};
+    }
+    
+    /**
+     * @public
+     * @param {?goog.events.BrowserEvent} e
+     */
+    cursoconducir.onHashChange = function(e){ 
+    };
+    cursoconducir.History = new goog.History();
+    goog.exportProperty(cursoconducir, "History", cursoconducir.History);
+    goog.events.listen(cursoconducir.History, goog.history.EventType.NAVIGATE, function(e) {
+                    cursoconducir.onHashChange(e)
+                });
+    cursoconducir.History.setEnabled(true);
+    {/literal}
+    
+  </script>
 </body>
 </html>
 {/template}

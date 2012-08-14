@@ -1,4 +1,3 @@
-goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.admin.LessonsPage');
 goog.require('cursoconducir.admin.lessons');
 goog.require('goog.testing.PropertyReplacer');
@@ -8,6 +7,9 @@ goog.require('cursoconducir.allquestions');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.MockQuestion');
 goog.require('goog.string');
+goog.require('goog.History');
+goog.require('goog.testing.ContinuationTestCase');
+goog.require('goog.testing.jsunit');
 
 /** @type {cursoconducir.admin.LessonPage} */
 var allLessons;
@@ -33,18 +35,25 @@ var createButton;
 var pageButtonsContainer;
 var feedbackContainer;
 
-this.setUpPage = function() {
+var testCase = new goog.testing.ContinuationTestCase();
+testCase.autoDiscoverTests();
+
+if (typeof G_testRunner != 'undefined') {
+  G_testRunner.initialize(testCase);
+}
+
+function setUpPage() {
 	$('body').append("<div id='lessonsContainer'/>");
 	$('body').append("<div class='pageButtons'></div>");
 	$('body').append("<div class='feedback hide'></div>");
 };
 
-this.setUp = function() {
-	question1 = new cursoconducir.Question("1", "question1", "q1image",
+function setUp() {
+	question1 = cursoconducir.Question.create("1", "question1", "q1image",
 			"q1description");
-	question2 = new cursoconducir.Question("2", "question2", "q2image",
+	question2 = cursoconducir.Question.create("2", "question2", "q2image",
 			"q2description");
-	question3 = new cursoconducir.Question("3", "question3", "q3image",
+	question3 = cursoconducir.Question.create("3", "question3", "q3image",
 			"q3description");
 	lesson1 = {
 		id : "lesson1Id",
@@ -68,7 +77,8 @@ this.setUp = function() {
 	init();
 };
 
-var init = function() {
+function init() {
+	window.location.hash = '';
 	lessonsContainer = $('#lessonsContainer');
 	pageButtonsContainer = $('.pageButtons');
 	feedbackContainer = $('.feedback');
@@ -81,7 +91,7 @@ var init = function() {
 	createButton = $('#createButton');
 };
 
-var testDefaultUrl = function() {
+function testDefaultUrl() {
 	cursoconducir.alllessons.assertLessonPresent(lesson1);
 	cursoconducir.alllessons.assertLessonPresent(lesson2);
 
@@ -90,7 +100,7 @@ var testDefaultUrl = function() {
 	assertEquals('#create', createButton.attr('href'));
 };
 
-var testCancelUrl = function() {
+function testCancelUrl() {
 	window.location.hash = "#cancel";
 	cursoconducir.alllessons.assertLessonPresent(lesson1);
 	cursoconducir.alllessons.assertLessonPresent(lesson2);
@@ -100,9 +110,15 @@ var testCancelUrl = function() {
 	assertEquals('#create', createButton.attr('href'));
 };
 
-var testCreateUrl = function() {
+function testCreateUrl() {
 	window.location.hash = "#create";
 
+	waitForCondition(function() {
+		return goog.isDefAndNotNull($('#saveButton')[0]);
+	}, createUrlTest);
+};
+
+function createUrlTest() {
 	var saveButton = $('#saveButton');
 	var addQuestionsButton = $('#addQuestionsButton');
 	var removeQuestionsButton = $('#addQuestionsButton');
@@ -177,10 +193,16 @@ var testCreateUrl = function() {
 	cursoconducir.alllessons.assertLessonPresent(createdLesson);
 };
 
-var testEdit = function() {
-	assertNotNulNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
+function testEdit() {
+	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
 	window.location.hash = "#update?lesson=" + lesson1.id;
+	
+	waitForCondition(function() {
+		return goog.isDefAndNotNull($('#saveButton')[0]);
+	}, editTest);
+};
 
+function editTest() {
 	var saveButton = $('#saveButton');
 	var addQuestionsButton = $('#addQuestionsButton');
 	var removeQuestionsButton = $('#addQuestionsButton');
@@ -227,8 +249,8 @@ var testEdit = function() {
 			question3);
 
 	saveButton.click();
-};
+}
 
-var testDelete = function() {
+function testDelete() {
 	fail();
 };

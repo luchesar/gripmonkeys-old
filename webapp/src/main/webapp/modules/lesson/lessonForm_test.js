@@ -15,11 +15,11 @@ var question2;
 var question3;
 
 function setUp() {
-	question1 = new cursoconducir.Question("1", "question1", "q1image",
+	question1 = cursoconducir.Question.create("1", "question1", "q1image",
 			"q1description");
-	question2 = new cursoconducir.Question("2", "question2", "q2image",
+	question2 = cursoconducir.Question.create("2", "question2", "q2image",
 			"q2description");
-	question3 = new cursoconducir.Question("3", "question3", "q3image",
+	question3 = cursoconducir.Question.create("3", "question3", "q3image",
 			"q3description");
 
 	$('body').append("<div id='testContainer'/>");

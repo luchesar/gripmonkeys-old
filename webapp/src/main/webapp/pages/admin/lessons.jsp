@@ -55,6 +55,9 @@ cursoconducir.admin.lessons.init();
 
 </head>
 <body>
+      <script type="text/javascript">
+        cursoconducir.admin.lessons.initHistory();
+      </script>
   <%@include file="../../modules/menu.html"%>
   <div class="container">
     <div class="content">
