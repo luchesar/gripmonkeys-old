@@ -12,17 +12,16 @@ goog.require('goog.string');
 /** @type {cursoconducir.admin.LessonPage} */
 var allLessons;
 var lessonsContainer;
-/** @type {cursoconducir.Lesson} */
+/** @type {?cursoconducir.Lesson} */
 var lesson1;
-/** @type {cursoconducir.Lesson} */
+/** @type {?cursoconducir.Lesson} */
 var lesson2;
-/** @type {cursoconducir.Question} */
+/** @type {?cursoconducir.Question} */
 var question1;
-/** @type {cursoconducir.Question} */
+/** @type {?cursoconducir.Question} */
 var question2;
-/** @type {cursoconducir.Question} */
+/** @type {?cursoconducir.Question} */
 var question3;
-
 /** @type {cursoconducir.MockLesson} */
 var mockLesson;
 
@@ -47,18 +46,18 @@ this.setUp = function() {
 			"q2description");
 	question3 = new cursoconducir.Question("3", "question3", "q3image",
 			"q3description");
-	lesson1 = cursoconducir.Lesson.create({
+	lesson1 = {
 		id : "lesson1Id",
 		title : "lesson1",
 		description : "lesson1 description",
 		questionIds : [ "1", "2", "3" ]
-	});
-	lesson2 = cursoconducir.Lesson.create({
+	};
+	lesson2 = {
 		id : "lesson2Id",
 		title : "lesson2",
 		description : "lesson2 description",
 		questionIds : [ "1", "2", "3" ]
-	});
+	};
 	mockLesson = new cursoconducir.MockLesson([ lesson1, lesson2 ]);
 	mockLesson.setUp();
 

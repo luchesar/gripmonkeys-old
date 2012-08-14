@@ -82,7 +82,7 @@ cursoconducir.utils.getTestLetter = function(index) {
  * @public
  * @param {Object} model
  * @param {string} testId
- * @param {function(cursoconducir.Question)} callback
+ * @param {function(?cursoconducir.Question)} callback
  * @param {function()=} hideFeedback
  * @param {function(string)=} showFeedback
  */
@@ -134,7 +134,7 @@ cursoconducir.utils.findTests = function(model, testIds) {
 /**
  * @public
  * @param {Array.<cursoconducir.Question|cursoconducir.Lesson>} array
- * @param {string} id
+ * @param {?string} id
  * @return {number}
  */
 cursoconducir.utils.findObjectIndexById = function(array, id) {
@@ -154,7 +154,7 @@ cursoconducir.utils.findObjectIndexById = function(array, id) {
  * @public
  * @param {Array.<cursoconducir.Lesson>} array
  * @param {string} id
- * @return {cursoconducir.Lesson}
+ * @return {?cursoconducir.Lesson}
  */
 cursoconducir.utils.findObjectById = function(array, id) {
 	if (array) {
@@ -171,7 +171,7 @@ cursoconducir.utils.findObjectById = function(array, id) {
  * @public
  * @param {Array.<cursoconducir.Question>} array
  * @param {string} id
- * @return {cursoconducir.Question}
+ * @return {?cursoconducir.Question}
  */
 cursoconducir.utils.findQuestionById = function(array, id) {
 	if (array) {

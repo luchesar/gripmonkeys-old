@@ -10,18 +10,18 @@ var lesson2;
 
 var setUp = function() {
 	$('body').append("<div id='lessonsContainer'/>");
-	lesson1 = cursoconducir.Lesson.create({
+	lesson1 = {
 		id: "lesson1Id",
 		title: "lesson1",
 		description: "lesson1 description",
 		questionIds: [1, 2, 3]
-	});
-	lesson2 = cursoconducir.Lesson.create({
+	};
+	lesson2 = {
 		id: "lesson2Id",
 		title: "lesson2",
 		description: "lesson2 description",
 		questionIds: [1, 2, 3]
-	});
+	};
 	init();
 };
 

@@ -79,7 +79,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var model = {
 		/** @type {Array.<cursoconducir.Question>} */
 		allTests : null,
-		/** @type {cursoconducir.Question} */
+		/** @type {?cursoconducir.Question} */
 		activeTest : null
 	};
 
@@ -166,7 +166,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		if (!testModule.isValid()) {
 			return;
 		}
-		/** @type {cursoconducir.Question} */
+		/** @type {?cursoconducir.Question} */
 		var templateTest = testModule.getTest();
 		postToServer(templateTest, postToServerDefaultSuccess);
 	};
@@ -283,7 +283,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	/**
 	 * @private
-	 * @param {cursoconducir.Question} templateTest
+	 * @param {?cursoconducir.Question} templateTest
 	 * @param {function(Array.<cursoconducir.Question>, string=,Object=)} onSuccess
 	 */
 	var postToServer = function(templateTest, onSuccess) {
@@ -312,7 +312,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		/** @type {string} */
 		var selectedTests = '';
 		for ( var i = 0; i < selectedTestsIds.length; i++) {
-			/** @type {cursoconducir.Question} */
+			/** @type {?cursoconducir.Question} */
 			var selectedTest = cursoconducir.utils.findQuestionById(
 					model.allTests, selectedTestsIds[i]);
 			selectedTests += selectedTest.title + ", ";

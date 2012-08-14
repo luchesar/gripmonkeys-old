@@ -13,7 +13,7 @@ goog.require('cursoconducir.admin.tests.Model');
 cursoconducir.TestModule = function(container) {
 	/**
 	 * @private
-	 * @type {cursoconducir.Question}
+	 * @type {?cursoconducir.Question}
 	 */
 	var currentTest;
 	/**

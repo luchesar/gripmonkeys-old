@@ -16,13 +16,13 @@ cursoconducir.TestPreviewModule = function(container) {
 	var markedIndex = null;
 	/** @type {jQuery}*/
 	var testContainer = null;
-	/** @type {cursoconducir.Question}*/
+	/** @type {?cursoconducir.Question}*/
 	var activeTest = null;
 
 	/**
 	 * @public 
 	 * @param {cursoconducir.admin.tests.Model} model
-	 * @param {function(cursoconducir.Question, number)} answerClickCallback
+	 * @param {function(?cursoconducir.Question, number)} answerClickCallback
 	 */
 	this.show = function(model, answerClickCallback) {
 		var templateHtml = cursoconducir.template.testPreview.template(model);
@@ -33,7 +33,7 @@ cursoconducir.TestPreviewModule = function(container) {
 
 	/** @public 
 	 * @param {cursoconducir.admin.tests.Model} model
-	 * @param {function(cursoconducir.Question, number)=} answerClickCallback*/
+	 * @param {function(?cursoconducir.Question, number)=} answerClickCallback*/
 	this.add = function(model, answerClickCallback) {
 		var templateHtml = cursoconducir.template.testPreview.template(model);
 		container.append(templateHtml);
@@ -43,7 +43,7 @@ cursoconducir.TestPreviewModule = function(container) {
 
 	/** @public 
 	 * @param {Object} model
-	 * @param {function(cursoconducir.Question, number)=} answerClickCallback*/
+	 * @param {function(?cursoconducir.Question, number)=} answerClickCallback*/
 	var init = function(model, answerClickCallback) {
 		activeTest = model.activeTest;
 		testContainer = container.find('#questionPreviewContainer'

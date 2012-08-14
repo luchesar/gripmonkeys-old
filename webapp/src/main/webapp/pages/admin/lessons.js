@@ -58,13 +58,8 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	var model = {
 		/** @type {Array.<cursoconducir.Lesson>} */
 		allLessons : [],
-		/** @type {cursoconducir.Lesson} */
-		activeLesson : cursoconducir.Lesson.create({
-			id : null,
-			title : "",
-			description : "",
-			questionIds : []
-		})
+		/** @type {?cursoconducir.Lesson} */
+		activeLesson : {id:null, title: "", description: "", questionIds:/**@type {Array.<string>}*/[]}
 	};
 
 	/**
@@ -118,11 +113,12 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			});
 			updateButtons(cursoconducir.template.lesson.buttons.initial);
 		} else if (hash == CREATE) {
-			model.activeLesson = cursoconducir.Lesson.create({
+			model.activeLesson = {
+				id : null,
 				title : "",
 				description : "",
 				questionIds : []
-			});
+			};
 			lessonForm.show(model);
 			updateButtons(cursoconducir.template.lesson.buttons.edit);
 		} else if (hash.indexOf(UPDATE) == 0) {
@@ -141,7 +137,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			lessonForm.show(model);
 			updateButtons(cursoconducir.template.lesson.buttons.edit);
 		} else {
-			/** @type {cursoconducir.Lesson} */
+			/** @type {?cursoconducir.Lesson} */
 			var foundLesson = cursoconducir.utils.findObjectById(
 					model.allLessons, lessonId);
 			if (foundLesson) {
@@ -215,7 +211,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					}
 
 					// we can only save one lesson
-					/** @type {cursoconducir.Lesson}*/
+					/** @type {?cursoconducir.Lesson}*/
 					var savedLesson = savedLessons[0];
 					
 					/** @type {number}*/
@@ -235,7 +231,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 
 	/**
 	 * @private
-	 * @param {cursoconducir.Lesson} lesson
+	 * @param {?cursoconducir.Lesson} lesson
 	 * @param {cursoconducir.Lesson.onSuccess} onSuccess
 	 */
 	var postToServer = function(lesson, onSuccess) {
@@ -258,7 +254,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		/** @type {string} */
 		var selectedLessons = '';
 		for ( var i = 0; i < selectedLessonsIds.length; i++) {
-			/** @type {cursoconducir.Lesson} */
+			/** @type {?cursoconducir.Lesson} */
 			var selectedLesson = cursoconducir.utils.findObjectById(
 					model.allLessons, selectedLessonsIds[i]);
 			selectedLessons += selectedLesson.title + ", ";

@@ -4,27 +4,9 @@ goog.require('goog.array');
 goog.require('goog.json');
 
 
-/**
- * A Question.
- * 
- * @constructor
- * @param {string} id
- * @param {string} title
- * @param {string} imageKey
- * @param {string} description
- * @param {Array.<string>} possibleAnswers
- * @param {string} explanation
- */
-cursoconducir.Question = function(id, title, imageKey, description,
-        possibleAnswers, explanation) {
-	/**@type {string}*/
-    this.id = id;
-    this.title = title;
-    this.image = imageKey;
-    this.description = description;
-    this.possibleAnswers = possibleAnswers;
-    this.explanation = explanation;
-};
+/** @typedef {{id:?string, title:string, image:string,description:string, possibleAnswers:Array.<string>}}*/
+cursoconducir.Question;
+cursoconducir.Question = {};
 
 /** @typedef {function(Array.<cursoconducir.Question>, string=,Object=)}*/
 cursoconducir.Question.onSuccess;

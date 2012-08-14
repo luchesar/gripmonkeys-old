@@ -176,7 +176,7 @@ cursoconducir.LessonForm = function(container) {
     	var minIndex = 0;
     	goog.array.forEach(lessonQuestionIds, 
     			/**@type {function(string, number)}*/function(id, index) {
-    		/** @type {cursoconducir.Question}*/
+    		/** @type {?cursoconducir.Question}*/
     		var question  = cursoconducir.utils.findQuestionById(allQuestions, id);
     		if (goog.array.contains(selectedIds, id)) {
     			if (minIndex < index) {
@@ -206,7 +206,7 @@ cursoconducir.LessonForm = function(container) {
     	var maxIndex = lessonQuestionIds.length - 1 ;
     	goog.array.forEachRight(lessonQuestionIds, 
     			/**@type {function(string, number)}*/function(id, index) {
-    		/** @type {cursoconducir.Question}*/
+    		/** @type {?cursoconducir.Question}*/
     		var question  = cursoconducir.utils.findQuestionById(allQuestions, id);
     		if (goog.array.contains(selectedIds, id)) {
     			if (maxIndex > index) {
@@ -259,19 +259,20 @@ cursoconducir.LessonForm = function(container) {
     
     /**
      * @public
-     * @return {cursoconducir.Lesson}
+     * @return {?cursoconducir.Lesson}
      */
     this.getLesson = function() {
-    	var id = $('input[type=hidden][name=lessonId]').val();
+    	/** @type {?string}*/
+    	var id = $('input[type=hidden][name=lessonId]').val().toString();
     	if (!id || id == "null" || id == "undefined") {
     		id = null;
     	}
-    	return cursoconducir.Lesson.create({
+    	return {
 			id: id,
-			title: $('input[type=text][name=lessonTitle]').val(),
-			description: $("textarea[name=lessonDescription]").val(),
+			title: $('input[type=text][name=lessonTitle]').val().toString(),
+			description: $("textarea[name=lessonDescription]").val().toString(),
 			questionIds: lessonQuestions.getQuestionIds()
-		});
+    	};
     };
     
     /**

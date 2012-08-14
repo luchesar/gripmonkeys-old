@@ -14,7 +14,7 @@ cursoconducir.AllTestsModule = function(container) {
 	 * @private
 	 * @type {Array.<function(Array.<string>)>}
 	 */
-	var callbacks = /** @type {Array.<function(Array.<string>)>}*/{};
+	var callbacks = /** @type {Array.<function(Array.<string>)>}*/[];
 
 	/**@public 
 	 * @param {cursoconducir.admin.tests.Model} model*/

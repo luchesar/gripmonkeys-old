@@ -31,7 +31,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 
 	/**
 	 * @public
-	 * @param {cursoconducir.Question} activeTest
+	 * @param {?cursoconducir.Question} activeTest
 	 */
 	this.show = function(activeTest) {
 		container.html(initialHtml);
@@ -41,7 +41,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 			testPreviewModule.show({
 				activeTest : activeTest, allTests: null
 			}, 
-			/** @type {function(cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
+			/** @type {function(?cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
 				doAnswer(activeTest, answerIndex);
 			});
 		}
@@ -67,7 +67,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 		cursoconducir.utils.findOrFetchTest({
 			allTests : allTests
 		}, testId, 
-		/** @type {function(cursoconducir.Question)}*/function(test) {
+		/** @type {function(?cursoconducir.Question)}*/function(test) {
 			if (test == undefined) {
 				return;
 			}
@@ -75,7 +75,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 				allTests : allTests,
 				activeTest : test
 			}, 
-			/** @type {function(cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
+			/** @type {function(?cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
 				doAnswer(activeTest, answerIndex);
 			});
 			showNavigation(test);
@@ -84,7 +84,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 
 	/**
 	 * @private
-	 * @param {cursoconducir.Question} activeTest
+	 * @param {?cursoconducir.Question} activeTest
 	 * @param {number} answerIndex
 	 */
 	var doAnswer = function(activeTest, answerIndex) {
@@ -110,11 +110,11 @@ cursoconducir.index.Initial = function(container, allTests) {
 	
 	/**
 	 * @private
-	 * @param {cursoconducir.Question} activeTest
+	 * @param {?cursoconducir.Question} activeTest
 	 */
 	var showNavigation = function(activeTest) {
 		container.find('#testNavigationContainer').empty();
-		/** @type {cursoconducir.index.Initial.convertedModel}*/
+		/** @type {?cursoconducir.index.Initial.convertedModel}*/
 		var convertedModel = convertModel(activeTest);
 		/** @type {string}*/
 		var templateHtml = cursoconducir.indexpage.template
@@ -124,7 +124,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 	
 	/**
 	 * @private
-	 * @param {cursoconducir.Question} activeTest
+	 * @param {?cursoconducir.Question} activeTest
 	 */
 	var showGoToNextButton = function(activeTest) {
 		var convertedModel = convertModel(activeTest);
@@ -135,13 +135,13 @@ cursoconducir.index.Initial = function(container, allTests) {
 
 	/**
 	 * @private
-	 * @param {cursoconducir.Question} activeTest
-	 * @return {cursoconducir.index.Initial.convertedModel}
+	 * @param {?cursoconducir.Question} activeTest
+	 * @return {?cursoconducir.index.Initial.convertedModel}
 	 */
 	var convertModel = function(activeTest) {
-		/** @type {cursoconducir.index.Initial.convertedModel}*/
+		/** @type {?cursoconducir.index.Initial.convertedModel}*/
 		var truncatedModel = {
-			allTests : null,
+			allTests : /** @type {Array.<cursoconducir.Question>}*/null,
 			activeTest : activeTest,
 			nextTestId: null,
 			hasNext: false
@@ -173,6 +173,6 @@ cursoconducir.index.Initial = function(container, allTests) {
 };
 
 /**
- * @typedef {{allTests:Array.<cursoconducir.Question>, activeTest:cursoconducir.Question, nextTestId:?string, hasNext:boolean}}
+ * @typedef {{allTests:Array.<?cursoconducir.Question>, activeTest:?cursoconducir.Question, nextTestId:?string, hasNext:boolean}}
  */
 cursoconducir.index.Initial.convertedModel;

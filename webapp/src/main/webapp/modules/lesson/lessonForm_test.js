@@ -23,12 +23,12 @@ function setUp() {
 			"q3description");
 
 	$('body').append("<div id='testContainer'/>");
-	lesson1 = cursoconducir.Lesson.create({
+	lesson1 = {
 		id : "lesson1Id",
 		title : "lesson1",
 		description : "lesson1 description",
 		questionIds : []
-	});
+	};
 
 	mockQuestion = new cursoconducir.MockQuestion([ question1, question2,
 			question3 ]);
@@ -57,12 +57,12 @@ var testShowEmptyModel = function() {
 var testShowEmptyLesson = function() {
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : cursoconducir.Lesson.create({
+		activeLesson : {
 			id : "",
 			title : "",
 			description : "",
 			questionIds : []
-		})
+		}
 	});
 	var lessonContainer = $('#lessonContainer');
 	assertNotNullNorUndefined(lessonContainer);
@@ -206,18 +206,18 @@ var testMoveQuestionUpDown = function() {
 var testGetLesson = function() {
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : cursoconducir.Lesson.create({
+		activeLesson : {
 			id : "234",
 			title : null,
 			description : null,
 			questionIds : [question1.id, question3.id]
-		})
+		}
 	});
 	lessonContainer.find('input[type=text][name=lessonTitle]').val("lesson1");
 	lessonContainer.find("textarea[name=lessonDescription]").val(
 			"lesson1Description");
 
-	/** @type {cursoconducir.Lesson} */
+	/** @type {?cursoconducir.Lesson} */
 	var lesson = lessonForm.getLesson();
 	assertEquals("234", lesson.id);
 	assertEquals("lesson1", lesson.title);
@@ -228,24 +228,24 @@ var testGetLesson = function() {
 var testGetLessonNullId = function() {
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : cursoconducir.Lesson.create({
+		activeLesson : {
 			id : null,
 			title : null,
 			description : null,
 			questionIds : [question1.id, question3.id]
-		})
+		}
 	});
-	/** @type {cursoconducir.Lesson} */
+	/** @type {?cursoconducir.Lesson} */
 	var lesson = lessonForm.getLesson();
 	assertNull(lesson.id);
 	
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : cursoconducir.Lesson.create({
+		activeLesson : {
 			title : null,
 			description : null,
 			questionIds : [question1.id, question3.id]
-		})
+		}
 	});
 	lesson = lessonForm.getLesson();
 	assertNull(lesson.id);

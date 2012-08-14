@@ -49,7 +49,7 @@
 	</target>
 
 	<target name="plovr">
-		<java jar="plovr-4b3caf2b7d84.jar" fork="true">
+		<java jar="plovr.jar" fork="true">
 			<arg line=" serve plovr-index-config.js" />
 		</java>
 	</target>

@@ -3,22 +3,9 @@ goog.provide('cursoconducir.Lesson');
 goog.require('goog.array');
 goog.require('goog.json');
 
-/**
- * A Question.
- * 
- * @constructor
- * @public
- * @param {string} id
- * @param {string} title
- * @param {string} description
- * @param {Array.<number>} questionIds
- */
-cursoconducir.Lesson = function(id, title, description, questionIds) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.questionIds = questionIds;
-};
+/** @typedef {{id:?string, title:?string, description:?string, questionIds:Array.<?number>}}*/
+cursoconducir.Lesson;
+cursoconducir.Lesson = {};
 
 /** @typedef {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)}*/
 cursoconducir.Lesson.onSuccess;

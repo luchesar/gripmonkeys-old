@@ -3,6 +3,8 @@
   "mode": "ADVANCED",
   "level": "VERBOSE",
   "externs": ["//jquery-1.6.js"],
+  "test-template":"testTemplate.soy",
+  "treat-warnings-as-errors": true,
 //   "output-charset": "UTF-8"
    "checks": {
 	   "accessControls": "ERROR",

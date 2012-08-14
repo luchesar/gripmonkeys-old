@@ -90,8 +90,13 @@ cursoconducir.IndexPage = function() {
 	/** @type {cursoconducir.index.SigninForm}*/
 	var signinForm = null;
 
+	/**
+	 * @public
+	 * @param {Array.<cursoconducir.Question>} allTestsParam
+	 */
 	this.start = function(allTestsParam) {
 		allTests = allTestsParam;
+		/** @type {jQuery}*/
 		var indexContainer = $('#indexContainer');
 		initial = new cursoconducir.index.Initial(indexContainer, allTests);
 		showALesson = new cursoconducir.index.ShowLesson(indexContainer);
@@ -133,7 +138,7 @@ cursoconducir.IndexPage = function() {
 	 * @private
 	 */
 	var doDefault = function() {
-		/** @type {cursoconducir.Question}*/
+		/** @type {?cursoconducir.Question}*/
 		var activeTest = null;
 		if (allTests.length > 0) {
 			activeTest = cursoconducir.utils.decode(allTests[0]);
