@@ -45,7 +45,7 @@ cursoconducir.AllTestsModule = function(container) {
 	 * @param {Array.<string>} selection
 	 */
 	this.setSelection = function(selection) {
-		container.find("input[type=checkbox]").attr('checked', 'false');
+		container.find("input[type=checkbox]").removeAttr('checked');
 		$(selection).each(function() {
 			container.find("input[type=checkbox][name="+this+"]").attr('checked', 'true');
 		});

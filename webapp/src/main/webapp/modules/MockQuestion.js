@@ -8,8 +8,7 @@ goog.require('goog.testing.PropertyReplacer');
 /**
  * @public
  * @constructor
- * @param {Array.
- *            <cursoconducir.Question>} allQuestions
+ * @param {Array.<cursoconducir.Question>} allQuestions
  */
 cursoconducir.MockQuestion = function(allQuestions) {
 	/**

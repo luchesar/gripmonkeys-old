@@ -1,4 +1,4 @@
-goog.provide('cursoconducir.index.ShowLesson');
+goog.provide('cursoconducir.ShowLesson');
 
 goog.require('cursoconducir.indexpage.template');
 goog.require('cursoconducir.TestPreviewModule');
@@ -8,7 +8,7 @@ goog.require('cursoconducir.showlesson.template');
  * @constructor
  * @param {jQuery} container
  */
-cursoconducir.index.ShowLesson = function(container) {
+cursoconducir.ShowLesson = function(container) {
 	/** @type {jQuery}*/
 	var topContainer = null;
 	/** @type {jQuery}*/
@@ -60,7 +60,7 @@ cursoconducir.index.ShowLesson = function(container) {
 			var testPreviewModule = new cursoconducir.TestPreviewModule(questionsContainer);
 			goog.array.insert(testPreviewModules, testPreviewModule);
 			var	convertedQuestion = cursoconducir.utils.decode(question);
-			testPreviewModule.add({allTests:null, activeTest:convertedQuestion, title: index + 1});
+			testPreviewModule.add(convertedQuestion, index + 1);
 		});
 		
 	};

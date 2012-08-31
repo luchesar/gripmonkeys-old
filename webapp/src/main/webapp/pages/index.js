@@ -9,47 +9,20 @@ goog.require('cursoconducir.TestPreviewModule');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.indexpage.template');
-goog.require('cursoconducir.index.ShowLesson');
-goog.require('cursoconducir.index.Initial');
-goog.require('cursoconducir.index.LessonList');
-goog.require('cursoconducir.index.SigninForm');
+goog.require('cursoconducir.ShowLesson');
+goog.require('cursoconducir.InitialIndex');
+goog.require('cursoconducir.LessonList');
+goog.require('cursoconducir.SigninForm');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
 
 /**
- * @param {string} allTestJson
- */
-cursoconducir.index.init = function(allTestJson) {
-	$(function() {
-		/** @type {cursoconducir.IndexPage}*/
-		var indexPage = new cursoconducir.IndexPage();
-		indexPage.start(allTestJson);
-		cursoconducir.index.showInConstruction();
-	});
-};
-
-cursoconducir.index.showInConstruction = function() {
-	var visitedCookie = "cursoconducirInConstruction";
-	var cookies = new goog.net.Cookies(document);
-	if (!cookies.containsKey(visitedCookie) == "true") {
-		$('#under-construction-modal').modal({
-			keyboard : true,
-			backdrop : true,
-			show : true
-		});
-		cookies.set(visitedCookie, "true", 864000);
-	}
-};
-
-/**
  * @constructor
+ * @param {jQuery} indexContainer
  */
-cursoconducir.IndexPage = function() {
-	/** @type {Array.<cursoconducir.Question>}*/
-	var allTests = null;
-	
+cursoconducir.IndexPage = function(indexContainer) {
 	/** 
 	 * @private 
 	 * @type {string}
@@ -81,27 +54,23 @@ cursoconducir.IndexPage = function() {
 	 */
 	var SIGNIN = "signin";
 
-	/** @type {cursoconducir.index.Initial}*/
+	/** @type {cursoconducir.InitialIndex}*/
 	var initial = null;
-	/** @type {cursoconducir.index.ShowLesson}*/
+	/** @type {cursoconducir.ShowLesson}*/	
 	var showALesson = null;
-	/** @type {cursoconducir.index.LessonList}*/
+	/** @type {cursoconducir.LessonList}*/
 	var lessonList = null;
-	/** @type {cursoconducir.index.SigninForm}*/
+	/** @type {cursoconducir.SigninForm}*/
 	var signinForm = null;
 
 	/**
 	 * @public
-	 * @param {Array.<cursoconducir.Question>} allTestsParam
 	 */
-	this.start = function(allTestsParam) {
-		allTests = allTestsParam;
-		/** @type {jQuery}*/
-		var indexContainer = $('#indexContainer');
-		initial = new cursoconducir.index.Initial(indexContainer, allTests);
-		showALesson = new cursoconducir.index.ShowLesson(indexContainer);
-		lessonList = new cursoconducir.index.LessonList(indexContainer);
-		signinForm = new cursoconducir.index.SigninForm(indexContainer);
+	this.start = function() {
+		initial = new cursoconducir.InitialIndex(indexContainer);
+		showALesson = new cursoconducir.ShowLesson(indexContainer);
+		lessonList = new cursoconducir.LessonList(indexContainer);
+		signinForm = new cursoconducir.SigninForm(indexContainer);
 		
 		goog.events.listen(window, goog.events.EventType.HASHCHANGE,
 				function(e) {
@@ -139,11 +108,11 @@ cursoconducir.IndexPage = function() {
 	 */
 	var doDefault = function() {
 		/** @type {?cursoconducir.Question}*/
-		var activeTest = null;
-		if (allTests.length > 0) {
-			activeTest = cursoconducir.utils.decode(allTests[0]);
-		}
-		initial.show(activeTest);
+//		var activeTest = null;
+//		if (allTests.length > 0) {
+//			activeTest = cursoconducir.utils.decode(allTests[0]);
+//		}
+//		initial.show(activeTest);
 	};
 	
 	/**

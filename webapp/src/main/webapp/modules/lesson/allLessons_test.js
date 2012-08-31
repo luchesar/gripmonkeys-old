@@ -34,7 +34,7 @@ var init = function() {
 var testShowEmptyModel = function() {
 	allLessons.show({
 		allLessons : [],
-		activeLesson : null,
+		activeLesson : null
 	});
 	var lessonsContainer = $('#lessonsContainer');
 	assertNotNull(lessonsContainer);
@@ -45,7 +45,7 @@ var testShowEmptyModel = function() {
 var testShowSomeTests = function() {
 	allLessons.show({
 		allLessons : [ lesson1, lesson2 ],
-		activeLesson : null,
+		activeLesson : null
 	});
 	var allLessonsContainer = $('#lessonsContainer');
 	assertNotNullNorUndefined(allLessonsContainer);
@@ -57,7 +57,7 @@ var testShowSomeTests = function() {
 var testGetSelection = function() {
 	allLessons.show({
 		allLessons : [ lesson1, lesson2 ],
-		activeLesson : null,
+		activeLesson : null
 	});
 	var checkBox1 = $("input[type='checkbox'][name='" + lesson1.id + "']");
 	var checkBox2 = $("input[type='checkbox'][name='" + lesson2.id + "']");

@@ -10,6 +10,7 @@ goog.require('goog.string');
 goog.require('goog.History');
 goog.require('goog.testing.ContinuationTestCase');
 goog.require('goog.testing.jsunit');
+goog.require('goog.Uri');
 
 /** @type {cursoconducir.admin.LessonPage} */
 var allLessons;
@@ -38,6 +39,9 @@ var feedbackContainer;
 var testCase = new goog.testing.ContinuationTestCase();
 testCase.autoDiscoverTests();
 
+var stubs = new goog.testing.PropertyReplacer();
+var initialLocation;
+
 if (typeof G_testRunner != 'undefined') {
   G_testRunner.initialize(testCase);
 }
@@ -46,6 +50,7 @@ function setUpPage() {
 	$('body').append("<div id='lessonsContainer'/>");
 	$('body').append("<div class='pageButtons'></div>");
 	$('body').append("<div class='feedback hide'></div>");
+	initialLocation = window.location;
 };
 
 function setUp() {
@@ -73,12 +78,18 @@ function setUp() {
 	mockQuestion = new cursoconducir.MockQuestion([ question1, question2,
 			question3 ]);
 	mockQuestion.setUp();
+	
+	stubs.set(window.location, "hash", "");
 
 	init();
 };
 
+function tearDownPage() {
+	stubs.set(window, "location", initialLocation);
+}
+
 function init() {
-	window.location.hash = '';
+	stubs.set(window.location, "hash", "");
 	lessonsContainer = $('#lessonsContainer');
 	pageButtonsContainer = $('.pageButtons');
 	feedbackContainer = $('.feedback');
@@ -101,7 +112,7 @@ function testDefaultUrl() {
 };
 
 function testCancelUrl() {
-	window.location.hash = "#cancel";
+	stubs.set(window.location, "hash", "#cancel");
 	cursoconducir.alllessons.assertLessonPresent(lesson1);
 	cursoconducir.alllessons.assertLessonPresent(lesson2);
 
@@ -111,7 +122,7 @@ function testCancelUrl() {
 };
 
 function testCreateUrl() {
-	window.location.hash = "#create";
+	stubs.set(window.location, "hash", "#create");
 
 	waitForCondition(function() {
 		return goog.isDefAndNotNull($('#saveButton')[0]);
@@ -195,7 +206,12 @@ function createUrlTest() {
 
 function testEdit() {
 	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
-	window.location.hash = "#update?lesson=" + lesson1.id;
+	/** type {goog.Uri}*/ 
+	var locationUri = new goog.Uri(window.location);
+	locationUri.setParameterValue("lesson", lesson1.id);
+	locationUri.setFragment("update");
+	
+	stubs.set(window, "location", locationUri.toString());
 	
 	waitForCondition(function() {
 		return goog.isDefAndNotNull($('#saveButton')[0]);
@@ -205,7 +221,7 @@ function testEdit() {
 function editTest() {
 	var saveButton = $('#saveButton');
 	var addQuestionsButton = $('#addQuestionsButton');
-	var removeQuestionsButton = $('#addQuestionsButton');
+	var removeQuestionsButton = $('#removeQuestionsButton');
 	var lessonQuestionsContainer = $('#lessonQuestions');
 	var allQuestionsContainer = $('#allQuestions');
 	assertNotNullNorUndefined(saveButton[0]);
@@ -238,7 +254,7 @@ function editTest() {
 	
 	lessonQuestionsContainer.find('input[type=checkbox]').click();
 	removeQuestionsButton.click();
-
+	
 	assertEquals('No tests yet', lessonQuestionsContainer.text());
 
 	cursoconducir.allquestions.assertQuestionPresent(allQuestionsContainer,
@@ -251,6 +267,17 @@ function editTest() {
 	saveButton.click();
 }
 
-function testDelete() {
-	fail();
+function _testDelete() {
+	var lesson1CheckBox =lessonsContainer.find("input[type='checkbox'][name='" + lesson1.id + "']");
+	assertNotNullNorUndefined(lesson1CheckBox);
+	lesson1CheckBox.click();
+	var deleteButton = $("#deleteButton");
+	assertNotNullNorUndefined(deleteButton[0]);
+	deleteButton.click();
+	
+	
+	lesson1CheckBox =lessonsContainer.find("input[type='checkbox'][name='" + lesson1.id + "']");
+	assertTrue(goog.isUndefined(lesson1CheckBox[0]));
+	var lessonTitle = $("a[href='#update?lesson=" + lesson.id + "']");
+	assertTrue(goog.isUndefined(lessonTitle[0]));
 };

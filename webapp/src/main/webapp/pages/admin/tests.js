@@ -7,6 +7,7 @@ goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
+goog.require('cursoconducir.template.questions');
 goog.require('goog.json');
 goog.require('cursoconducir.Question');
 goog.require('goog.events.EventType');
@@ -15,20 +16,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
 goog.require("cursoconducir.admin.tests.Model");
-
-/**
- * @public
- */
-cursoconducir.admin.tests.init = function() {
-	/** @type {cursoconducir.admin.TestsPage} */
-	var testPage;
-	$(function() {
-		/** @type {jQuery} */
-		var contanier = $('#container');
-		testPage = new cursoconducir.admin.TestsPage(contanier);
-		testPage.start();
-	});
-};
 
 /**
  * @public
@@ -82,17 +69,26 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		/** @type {?cursoconducir.Question} */
 		activeTest : null
 	};
+	
+	testsContainer.html(cursoconducir.template.lessonpage.content());
+
+	/** @type {jQuery} */
+	var contanier = $('#container');
+	/** @type {jQuery} */
+	var pageButtons = $('.pageButtons');
+	/** @type {jQuery} */
+	var feedback = $('.feedback');
 
 	/**
 	 * @private
 	 * @type {cursoconducir.TestModule}
 	 */
-	var testModule = new cursoconducir.TestModule(testsContainer);
+	var testModule = new cursoconducir.TestModule(contanier);
 	/**
 	 * @private
 	 * @type {cursoconducir.AllTestsModule}
 	 */
-	var allTestsModule = new cursoconducir.AllTestsModule(testsContainer);
+	var allTestsModule = new cursoconducir.AllTestsModule(contanier);
 
 	/**
 	 * @private
@@ -131,7 +127,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 * @private
 	 * @type {cursoconducir.TestPreviewModule}
 	 */
-	var testPreviewModule = new cursoconducir.TestPreviewModule(testsContainer);
+	var testPreviewModule = new cursoconducir.TestPreviewModule(contanier);
 
 	/**
 	 * @public
@@ -258,7 +254,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	var previewTest = function(test) {
 		model.activeTest = test;
-		testPreviewModule.show(model, function(activeTest, markedIndex) {
+		testPreviewModule.show(test, function(activeTest, markedIndex) {
 			testPreviewModule.answer(markedIndex);
 		});
 		updateButtons(cursoconducir.template.tests.buttons.preview);
@@ -338,7 +334,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 							},
 							/** @type {cursoconducir.Question.onComplate}*/
 							function() {
-								testsContainer.empty();
+								contanier.empty();
 								allTestsModule.show(model);
 								updateButtons(cursoconducir.template.tests.buttons.initial);
 							});
@@ -356,7 +352,6 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	/** @private */
 	var updateButtons = function(template) {
-		var pageButtons = $('.pageButtons');
 		var templateHtml = template(model);
 		pageButtons.html(templateHtml);
 
@@ -382,8 +377,6 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 * @param {string} errorMessage
 	 */
 	var showFeedback = function(errorMessage) {
-		/** @type {jQuery}*/
-		var feedback = $('.feedback');
 		/** @type {string}*/
 		var templateHtml = cursoconducir.template.tests.buttons.feedback({
 			errorMessage : errorMessage
@@ -394,7 +387,6 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	/** @private */
 	var hideFeedback = function() {
-		var feedback = $('.feedback');
 		feedback.empty();
 		feedback.addClass('hide');
 	};

@@ -1,4 +1,4 @@
-goog.provide('cursoconducir.index.LessonList');
+goog.provide('cursoconducir.LessonList');
 
 goog.require('cursoconducir.lessonlist.template');
 goog.require('goog.array');
@@ -7,7 +7,7 @@ goog.require('goog.array');
  * @constructor
  * @param {jQuery} container
  */
-cursoconducir.index.LessonList = function(container) {
+cursoconducir.LessonList = function(container) {
 	/**
 	 * @public
 	 * @param {Array.<cursoconducir.Lesson>} allLessons

@@ -21,12 +21,9 @@ body {
 </style>
 <link rel="" href="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4eebef120e5ccc31" />
 <link href="/images/logo.png" />
+<script src="../jslib/jquery-1.6.4.js" charset="UTF-8"></script>
 <script src="http://localhost:9810/compile?id=index&mode=raw&level=verbose" charset="UTF-8"></script>
-<script>
-    cursoconducir.index.init(
-<%=gson.toJson(storage.getAll(0, 15))%>
-    );
-</script>
+
 <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push([ '_setAccount', 'UA-27699376-1' ]);
@@ -46,6 +43,7 @@ body {
 </head>
 
 <body>
+  <script><%@include file="../modules/frame.js"%></script>
   <%@include file="../modules/menu.html"%>
   <div id="indexContainer"></div>
   <footer id="footer">

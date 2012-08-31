@@ -3,18 +3,29 @@
   "inherits": "plovr-root-config.js",
   
   "modules": {
-    "index": {
-      "inputs": ["../src/main/webapp/pages/index.js"],
+    "cursoconducir.modules.index": {
+      "inputs": ["../src/main/webapp/pages/index_init.js"],
       "deps": []
     },
-    "admin": {
-      "inputs": ["../src/main/webapp/pages/admin/tests.js"],
-      "deps": ["index"]
+    "cursoconducir.modules.admin.questions": {
+      "inputs": ["../src/main/webapp/pages/admin/tests_init.js"],
+      "deps": ["cursoconducir.modules.index"]
     },
-    "lessons": {
-      "inputs": ["../src/main/webapp/pages/admin/lessons.js"],
-      "deps": ["index"]
+    "cursoconducir.modules.admin.lessons": {
+      "inputs": ["../src/main/webapp/pages/admin/lessons_init.js"],
+      "deps": ["cursoconducir.modules.index"]
     }
+    
+//    , ========================= TESTS ===================================
+//    "lesson_test": {
+//        "inputs": ["../src/main/webapp/pages/admin/lesson_test.js",
+//                   "../src/main/webapp/modules/lesson/allLessons_test.js",
+//                   "../src/main/webapp/modules/lesson/lessonForm_test.js",
+//                   "../src/main/webapp/modules/testPreview_test.js"
+//                   ],
+//        "deps": ["index", "admin", "lessons"]
+//      }
   },
-  "module-output-path": "../target/CursoConducir/jsgen/%s.compiled.js"
+  "module-output-path": "../target/CursoConducir/jsgen/%s.compiled.js",
+  "global-scope-name": "__plovr__"
 }

@@ -1,4 +1,4 @@
-goog.provide('cursoconducir.index.Initial');
+goog.provide('cursoconducir.InitialIndex');
 
 goog.require('goog.array');
 goog.require('cursoconducir.indexpage.template');
@@ -10,7 +10,7 @@ goog.require('cursoconducir.TestPreviewModule');
  * @constructor
  * @param {jQuery} container
  */
-cursoconducir.index.Initial = function(container, allTests) {
+cursoconducir.InitialIndex = function(container) {
 	/**
 	 * @private 
 	 * @const
@@ -38,12 +38,11 @@ cursoconducir.index.Initial = function(container, allTests) {
 		testPreviewModule = new cursoconducir.TestPreviewModule(container
 				.find('#testContainer'));
 		if (!goog.isNull(activeTest) && activeTest != undefined) {
-			testPreviewModule.show({
-				activeTest : activeTest, allTests: null
-			}, 
-			/** @type {function(?cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
-				doAnswer(activeTest, answerIndex);
-			});
+			testPreviewModule.show(activeTest, 
+			/** @type {function(?cursoconducir.Question, number)}*/
+					function(activeTest, answerIndex) {
+						doAnswer(activeTest, answerIndex);
+					});
 		}
 	};
 
@@ -64,22 +63,14 @@ cursoconducir.index.Initial = function(container, allTests) {
 		$('#courceExplanationContainer').html(explanationHtml);
 
 		$('#testContainer').empty();
-		cursoconducir.utils.findOrFetchTest({
-			allTests : allTests
-		}, testId, 
-		/** @type {function(?cursoconducir.Question)}*/function(test) {
-			if (test == undefined) {
-				return;
-			}
-			testPreviewModule.show({
-				allTests : allTests,
-				activeTest : test
-			}, 
-			/** @type {function(?cursoconducir.Question, number)}*/function(activeTest, answerIndex) {
-				doAnswer(activeTest, answerIndex);
-			});
-			showNavigation(test);
-		});
+		cursoconducir.Question.get([testId], /** @type {cursoconducir.Question.onSuccess}*/
+				function(tests) {
+					if (tests == undefined) {
+						return;
+					}
+					testPreviewModule.show(tests[0],doAnswer);
+					showNavigation(tests[0]);
+				});
 	};
 
 	/**
@@ -114,7 +105,7 @@ cursoconducir.index.Initial = function(container, allTests) {
 	 */
 	var showNavigation = function(activeTest) {
 		container.find('#testNavigationContainer').empty();
-		/** @type {?cursoconducir.index.Initial.convertedModel}*/
+		/** @type {?cursoconducir.InitialIndex.convertedModel}*/
 		var convertedModel = convertModel(activeTest);
 		/** @type {string}*/
 		var templateHtml = cursoconducir.indexpage.template
@@ -136,10 +127,10 @@ cursoconducir.index.Initial = function(container, allTests) {
 	/**
 	 * @private
 	 * @param {?cursoconducir.Question} activeTest
-	 * @return {?cursoconducir.index.Initial.convertedModel}
+	 * @return {?cursoconducir.InitialIndex.convertedModel}
 	 */
 	var convertModel = function(activeTest) {
-		/** @type {?cursoconducir.index.Initial.convertedModel}*/
+		/** @type {?cursoconducir.InitialIndex.convertedModel}*/
 		var truncatedModel = {
 			allTests : /** @type {Array.<cursoconducir.Question>}*/null,
 			activeTest : activeTest,
@@ -149,23 +140,23 @@ cursoconducir.index.Initial = function(container, allTests) {
 		/** @type {Array.<cursoconducir.Question>}*/
 		var testArray = /** @type {Array.<cursoconducir.Question>}*/[];
 
-		if (allTests && allTests.length > 0) {
-			/** @type {number}*/
-			var activeTestIndex = cursoconducir.utils.findObjectIndexById(
-					allTests, activeTest.id);
-			if (allTests.length - 1 > activeTestIndex) {
-				truncatedModel.nextTestId = allTests[activeTestIndex + 1].id;
-				truncatedModel.hasNext = true;
-			}
-			for ( var i = 0; i < allTests.length
-					&& i < TEST_NAVIGATION_LENGTH; i++) {
-				var test = cursoconducir.utils.decode(allTests[i]);
-				if (test.id == activeTest.id) {
-					test.active = true;
-				}
-				testArray[i] = test;
-			}
-		}
+//		if (allTests && allTests.length > 0) {
+//			/** @type {number}*/
+//			var activeTestIndex = cursoconducir.utils.findObjectIndexById(
+//					allTests, activeTest.id);
+//			if (allTests.length - 1 > activeTestIndex) {
+//				truncatedModel.nextTestId = allTests[activeTestIndex + 1].id;
+//				truncatedModel.hasNext = true;
+//			}
+//			for ( var i = 0; i < allTests.length
+//					&& i < TEST_NAVIGATION_LENGTH; i++) {
+//				var test = cursoconducir.utils.decode(allTests[i]);
+//				if (test.id == activeTest.id) {
+//					test.active = true;
+//				}
+//				testArray[i] = test;
+//			}
+//		}
 		truncatedModel.allTests = testArray;
 
 		return truncatedModel;
@@ -175,4 +166,4 @@ cursoconducir.index.Initial = function(container, allTests) {
 /**
  * @typedef {{allTests:Array.<?cursoconducir.Question>, activeTest:?cursoconducir.Question, nextTestId:?string, hasNext:boolean}}
  */
-cursoconducir.index.Initial.convertedModel;
+cursoconducir.InitialIndex.convertedModel;

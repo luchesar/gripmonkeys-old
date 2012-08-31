@@ -20,6 +20,7 @@
 	   "undefinedVars": "ERROR",
 	   "uselessCode": "ERROR",
 	   "globalThis" : "ERROR"
-	 }
+	 },
+	 "output-wrapper": "(function(){%output%})();"
 }
 

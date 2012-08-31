@@ -5,6 +5,7 @@ goog.require('cursoconducir.LessonForm');
 goog.require('cursoconducir.AllLessons');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.template.lesson.buttons');
+goog.require('cursoconducir.template.lessonpage');
 goog.require('cursoconducir.utils');
 
 goog.require('goog.json');
@@ -14,23 +15,12 @@ goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
 goog.require('goog.History');
 goog.require('cursoconducir.Lesson');
-
-/**
- * @public
- */
-cursoconducir.admin.lessons.init = function() {
-	$(function() {
-		/** @type {jQuery} */
-		var contanier = $('#container');
-		/** @type {cursoconducir.admin.LessonPage} */
-		var lessonPage = new cursoconducir.admin.LessonPage(contanier);
-		lessonPage.start();
-	});
-};
+goog.require('cursoconducir.moduleconstants');
+goog.require('goog.module.ModuleManager');
 
 /**
  * @constructor
- * @private
+ * @public
  * @param lessonsContainer
  */
 cursoconducir.admin.LessonPage = function(lessonsContainer) {
@@ -54,6 +44,15 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @const
 	 */
 	var LESSON_KEY = 'lesson';
+	
+	lessonsContainer.html(cursoconducir.template.lessonpage.content());
+
+	/** @type {jQuery} */
+	var contanier = $('#container');
+	/** @type {jQuery} */
+	var pageButtons = $('.pageButtons');
+	/** @type {jQuery} */
+	var feedback = $('.feedback');
 
 	/** @private */
 	var model = {
@@ -66,7 +65,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @type {cursoconducir.AllLessons}
 	 * @private
 	 */
-	var allLessons = new cursoconducir.AllLessons(lessonsContainer);
+	var allLessons = new cursoconducir.AllLessons(contanier);
 
 	/**
 	 * @param {Array.<string>} selection
@@ -85,7 +84,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @type {cursoconducir.LessonForm}
 	 * @private
 	 */
-	var lessonForm = new cursoconducir.LessonForm(lessonsContainer);
+	var lessonForm = new cursoconducir.LessonForm(contanier);
 	
 	/** 
 	 * @private
@@ -99,7 +98,8 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @public
 	 */
 	this.start = function() {
-		cursoconducir.onHashChange = hashChangeListener;
+		goog.events.listen(window, goog.events.EventType.HASHCHANGE,hashChangeListener);
+//		cursoconducir.onHashChange = hashChangeListener;
 		doHashChanged();
 	};
 	
@@ -160,7 +160,6 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					showFeedback('Cannot fetch test with id ' + lessonId
 							+ '. Server returned error \'' + xhr.status + ' '
 							+ thrownError + '\'');
-
 				});
 			}
 		}
@@ -187,8 +186,6 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @private
 	 */
 	var updateButtons = function(template) {
-		/** @type {jQuery} */
-		var pageButtons = $('.pageButtons');
 		/** @type {string} */
 		var templateHtml = template(model);
 		pageButtons.html(templateHtml);
@@ -197,7 +194,6 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			doDelete();
 		});
 		/** @type {jQuery} */
-		var saveButton = $('#saveButton')[0];
 		$('#saveButton').click(function() {
 			updateCurrentEditedLesson();
 		});
@@ -300,8 +296,6 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 
 	/** @private */
 	var showFeedback = function(errorMessage) {
-		/** @type {jQuery} */
-		var feedback = $('.feedback');
 		/** @type {string} */
 		var templateHtml = cursoconducir.template.lesson.buttons.feedback({
 			errorMessage : errorMessage
@@ -312,8 +306,6 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 
 	/** @private */
 	var hideFeedback = function() {
-		/** @type {jQuery} */
-		var feedback = $('.feedback');
 		feedback.empty();
 		feedback.addClass('hide');
 	};

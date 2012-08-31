@@ -87,7 +87,7 @@ var testShowALesson = function() {
 	lesson1.questionIds = [ question1.id, question3.id ];
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : lesson1,
+		activeLesson : lesson1
 	});
 	var lessonContainer = $('#lessonContainer');
 	assertNotNullNorUndefined(lessonContainer);
@@ -115,7 +115,7 @@ var testShowLessonInTheRightOrder = function() {
 	lesson1.questionIds = [ question3.id, question1.id, question2.id ];
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : lesson1,
+		activeLesson : lesson1
 	});
 	var lessonContainer = $('#lessonContainer');
 	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question3, question1);
@@ -126,7 +126,7 @@ var testShowLessonInTheRightOrder = function() {
 var testAddRemoveQuestions = function() {
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : lesson1,
+		activeLesson : lesson1
 	});
 
 	var addQuestionsButton = lessonContainer.find('#addQuestionsButton');
@@ -166,7 +166,7 @@ var testMoveQuestionUpDown = function() {
 	lesson1.questionIds = [question1.id, question2.id, question3.id];
 	lessonForm.show({
 		allLessons : [],
-		activeLesson : lesson1,
+		activeLesson : lesson1
 	});
 
 	var moveQuestionUpButton = lessonContainer.find('#moveQuestionUpButton');

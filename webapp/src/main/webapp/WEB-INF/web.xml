@@ -60,22 +60,12 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>admin-tests</servlet-name>
-    <jsp-file>/pages/admin/tests.jsp</jsp-file>
+    <servlet-name>index</servlet-name>
+    <jsp-file>/pages/index.jsp</jsp-file>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>admin-tests</servlet-name>
-    <url-pattern>/admin/tests</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>admin-lessons</servlet-name>
-    <jsp-file>/pages/admin/lessons.jsp</jsp-file>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>admin-lessons</servlet-name>
-    <url-pattern>/admin/lessons</url-pattern>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
 </web-app>

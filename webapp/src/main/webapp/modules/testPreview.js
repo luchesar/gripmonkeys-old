@@ -21,31 +21,33 @@ cursoconducir.TestPreviewModule = function(container) {
 
 	/**
 	 * @public 
-	 * @param {cursoconducir.admin.tests.Model} model
+	 * @param {?cursoconducir.Question} activeQuestion
 	 * @param {function(?cursoconducir.Question, number)} answerClickCallback
 	 */
-	this.show = function(model, answerClickCallback) {
-		var templateHtml = cursoconducir.template.testPreview.template(model);
+	this.show = function(activeQuestion, answerClickCallback) {
+		var templateHtml = cursoconducir.template.testPreview.template({activeTest:activeQuestion});
 		container.html(templateHtml);
 		done = false;
-		return init(model, answerClickCallback);
+		return init(activeQuestion, answerClickCallback);
 	};
 
-	/** @public 
-	 * @param {cursoconducir.admin.tests.Model} model
+	/**
+	 * @public 
+	 * @param {?cursoconducir.Question} activeQuestion
+	 * @param {?string=} title
 	 * @param {function(?cursoconducir.Question, number)=} answerClickCallback*/
-	this.add = function(model, answerClickCallback) {
-		var templateHtml = cursoconducir.template.testPreview.template(model);
+	this.add = function(activeQuestion, title, answerClickCallback) {
+		var templateHtml = cursoconducir.template.testPreview.template({activeTest:activeQuestion, title:title});
 		container.append(templateHtml);
 		done = false;
-		return init(model, answerClickCallback);
+		return init(activeQuestion, answerClickCallback);
 	};
 
 	/** @public 
-	 * @param {Object} model
+	 * @param {?cursoconducir.Question} activeQuestion
 	 * @param {function(?cursoconducir.Question, number)=} answerClickCallback*/
-	var init = function(model, answerClickCallback) {
-		activeTest = model.activeTest;
+	var init = function(activeQuestion, answerClickCallback) {
+		activeTest = activeQuestion;
 		testContainer = container.find('#questionPreviewContainer'
 				+ activeTest.id);
 		testContainer.find('a[possibleAnswer="true"]').click(

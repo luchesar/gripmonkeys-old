@@ -24,12 +24,12 @@ var init = function() {
 };
 
 var testShow = function() {
-	var previewContainer1 = testPreviewModule.show({activeTest: question1});
+	var previewContainer1 = testPreviewModule.show(question1);
 	assertNotNullNorUndefined(previewContainer1);
 	assertNotNullNorUndefined(previewContainer1[0]);
 	assertEquals(previewContainer1.html(), testContainer.find('#questionPreviewContainer' + question1.id).html());
 	
-	var previewContainer2 = testPreviewModule.show({activeTest: question2});
+	var previewContainer2 = testPreviewModule.show(question2);
 	assertNotEquals(previewContainer1.html(), previewContainer2.html());
 	assertEquals(previewContainer2.html(), testContainer.find('#questionPreviewContainer' + question2.id).html());
 	
@@ -38,8 +38,8 @@ var testShow = function() {
 
 
 var testAdd = function() {
-	var previewContainer1 = testPreviewModule.add({activeTest: question1});
-	var previewContainer2 = testPreviewModule.add({activeTest: question2});
+	var previewContainer1 = testPreviewModule.add(question1);
+	var previewContainer2 = testPreviewModule.add(question2);
 	
 	assertNotNullNorUndefined(previewContainer1);
 	assertNotNullNorUndefined(previewContainer1[0]);
@@ -52,7 +52,7 @@ var testAdd = function() {
 };
 
 var testMarkedIndex = function() {
-	var previewContainer1 = testPreviewModule.show({activeTest: question1});
+	var previewContainer1 = testPreviewModule.show(question1);
 	
 	previewContainer1.find("#answerLink0").click();
 	assertEquals(0, testPreviewModule.getMarkedIndex());
