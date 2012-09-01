@@ -154,7 +154,7 @@ function createUrlTest() {
 	titleTextField.val('createdTestTitle');
 	descriptionTextArea.val('createdTestDescription');
 
-	assertEquals('No tests yet', lessonQuestionsContainer.text());
+	assertEquals('No questions', lessonQuestionsContainer.text());
 
 	cursoconducir.allquestions.assertQuestionPresent(allQuestionsContainer,
 			question1);
@@ -171,7 +171,7 @@ function createUrlTest() {
 
 	addQuestionsButton.click();
 
-	assertEquals('No tests yet', allQuestionsContainer.text());
+	assertEquals('No questions', allQuestionsContainer.text());
 
 	cursoconducir.allquestions.assertQuestionPresent(lessonQuestionsContainer,
 			question1);
@@ -204,12 +204,26 @@ function createUrlTest() {
 	cursoconducir.alllessons.assertLessonPresent(createdLesson);
 };
 
-function testEdit() {
+//function testEdit() {
+//	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
+//	/** type {goog.Uri}*/ 
+//	var locationUri = new goog.Uri(window.location);
+//	locationUri.setParameterValue("lesson", lesson1.id);
+//	locationUri.setFragment("update");
+//	
+//	stubs.set(window, "location", locationUri.toString());
+//	
+//	waitForCondition(function() {
+//		return goog.isDefAndNotNull($('#saveButton')[0]);
+//	}, editTest);
+//};
+
+function testEditLessonIdInTheHash() {
 	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
 	/** type {goog.Uri}*/ 
 	var locationUri = new goog.Uri(window.location);
-	locationUri.setParameterValue("lesson", lesson1.id);
-	locationUri.setFragment("update");
+	locationUri.removeParameter("lesson", lesson1.id);
+	locationUri.setFragment("update?lesson=" + lesson1.id );
 	
 	stubs.set(window, "location", locationUri.toString());
 	
@@ -240,7 +254,7 @@ function editTest() {
 	assertEquals(lesson1.title, titleTextField.val());
 	assertEquals(lesson1.description, descriptionTextArea.val());
 	
-	assertEquals('No tests yet', allQuestionsContainer.text());
+	assertEquals('No questions', allQuestionsContainer.text());
 
 	cursoconducir.allquestions.assertQuestionPresent(lessonQuestionsContainer,
 			question1);
@@ -255,7 +269,7 @@ function editTest() {
 	lessonQuestionsContainer.find('input[type=checkbox]').click();
 	removeQuestionsButton.click();
 	
-	assertEquals('No tests yet', lessonQuestionsContainer.text());
+	assertEquals('No questions', lessonQuestionsContainer.text());
 
 	cursoconducir.allquestions.assertQuestionPresent(allQuestionsContainer,
 			question1);

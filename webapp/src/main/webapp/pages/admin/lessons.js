@@ -135,8 +135,14 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @private
 	 */
 	var doUpdateLesson = function() {
+		/** @type {goog.Uri}*/
+		var locationUri = new goog.Uri(window.location);
 		/** @type {string} */
-		var lessonId = /** @type {string} */ new goog.Uri(window.location).getQueryData().get(LESSON_KEY);
+		var lessonId = /** @type {string} */ locationUri.getQueryData().get(LESSON_KEY);
+		if (!goog.isDefAndNotNull(lessonId)) {
+			var fragmentUri = new goog.Uri(locationUri.getFragment());
+			lessonId = /** @type {string} */fragmentUri.getQueryData().get(LESSON_KEY);
+		}
 		if ((model && model.activeLesson && model.activeLesson.id == lessonId)
 				|| lessonId == undefined || lessonId == "") {
 			lessonForm.show(model);

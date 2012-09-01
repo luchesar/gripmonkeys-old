@@ -43,7 +43,6 @@ body {
 </head>
 
 <body>
-  <script><%@include file="../modules/frame.js"%></script>
   <%@include file="../modules/menu.html"%>
   <div id="indexContainer"></div>
   <footer id="footer">
