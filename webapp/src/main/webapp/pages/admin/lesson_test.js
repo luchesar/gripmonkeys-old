@@ -204,21 +204,7 @@ function createUrlTest() {
 	cursoconducir.alllessons.assertLessonPresent(createdLesson);
 };
 
-//function testEdit() {
-//	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
-//	/** type {goog.Uri}*/ 
-//	var locationUri = new goog.Uri(window.location);
-//	locationUri.setParameterValue("lesson", lesson1.id);
-//	locationUri.setFragment("update");
-//	
-//	stubs.set(window, "location", locationUri.toString());
-//	
-//	waitForCondition(function() {
-//		return goog.isDefAndNotNull($('#saveButton')[0]);
-//	}, editTest);
-//};
-
-function testEditLessonIdInTheHash() {
+function testEdit() {
 	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
 	/** type {goog.Uri}*/ 
 	var locationUri = new goog.Uri(window.location);
