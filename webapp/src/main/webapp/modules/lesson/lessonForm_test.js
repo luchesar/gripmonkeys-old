@@ -75,7 +75,7 @@ var testShowEmptyLesson = function() {
 			.val());
 
 	var lessonQuestions = lessonContainer.find("#lessonQuestions");
-	assertEquals("No tests yet", lessonQuestions.text());
+	assertEquals("No questions", lessonQuestions.text());
 
 	var allQuestions = lessonContainer.find('#allQuestions');
 	cursoconducir.allquestions.assertQuestionPresent(allQuestions, question1);

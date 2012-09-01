@@ -40,7 +40,7 @@ var testShowEmptyModel = function() {
 	var allTestsContainer = $('#allTestsContainer');
 	assertNotNull(allTestsContainer);
 
-	assertEquals("No tests yet", allTestsContainer.text());
+	assertEquals("No questions", allTestsContainer.text());
 };
 
 var testShowSomeTests = function() {
