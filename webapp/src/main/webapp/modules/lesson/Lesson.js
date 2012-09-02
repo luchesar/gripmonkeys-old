@@ -11,12 +11,6 @@ cursoconducir.Lesson = {};
 /** @typedef {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)}*/
 cursoconducir.Lesson.onSuccess;
 
-/** @typedef {function(XMLHttpRequest,jQuery.jqXHR,Object.<string, *>,*)} */
-cursoconducir.TitledEntity.onError;
-
-/** @typedef {function(jQuery.event,XMLHttpRequest,Object.<string, *>)} */
-cursoconducir.TitledEntity.onComplate;
-
 /**
  * @private
  * @type {cursoconducir.TitledEntityStorageClient}
