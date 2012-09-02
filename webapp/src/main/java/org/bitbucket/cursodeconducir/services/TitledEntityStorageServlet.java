@@ -25,6 +25,7 @@ public abstract class TitledEntityStorageServlet<ES extends TitledEntityStorage<
 	public static final String ID = "key";
 	public static final String OFFSET = "offset";
 	public static final String LENGTH = "length";
+	public static final String COUNT = "count";
 	public static final String INVALID_JSON = "passed test JSON is not valid:";
 	private final Gson gson;
 	private final ES storage;
@@ -44,6 +45,7 @@ public abstract class TitledEntityStorageServlet<ES extends TitledEntityStorage<
 		String questionIds = aReq.getParameter(ID);
 		String offset = aReq.getParameter(OFFSET);
 		String length = aReq.getParameter(LENGTH);
+		String countPublished = aReq.getParameter(COUNT);
 
 		if (all != null) {
 			gson.toJson(storage.getAll(), aResp.getWriter());
@@ -73,6 +75,9 @@ public abstract class TitledEntityStorageServlet<ES extends TitledEntityStorage<
 				return;
 			}
 			gson.toJson(storage.getAll(offsetI, lengthI), aResp.getWriter());
+		} else if (countPublished != null) {
+			boolean published = Boolean.parseBoolean(countPublished);
+			gson.toJson(storage.count(published), aResp.getWriter());
 		}
 	}
 

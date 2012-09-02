@@ -1,11 +1,13 @@
 package org.bitbucket.cursodeconducir.services.storage;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.Set;
 
-import org.bitbucket.cursodeconducir.services.ServiceException;
 import org.bitbucket.cursodeconducir.services.Util;
 import org.bitbucket.cursodeconducir.services.entity.TitledEntity;
 import org.junit.After;
@@ -243,6 +245,44 @@ public class TitledEntityStorageTest {
 						test4.getId())));
 		assertEquals(Lists.newArrayList(test3, test4),
 				Lists.newArrayList(storage.get(test3.getId(), test4.getId())));
+	}
+	
+	@org.junit.Test
+	public void testCount() throws Exception {
+		MockTitledEntity test1 = new MockTitledEntity("title1", "image", "description");
+		MockTitledEntity test2 = new MockTitledEntity("title2", "image", "description");
+		MockTitledEntity test3 = new MockTitledEntity("title3", "image", "description");
+		MockTitledEntity test4 = new MockTitledEntity("title4", "image", "description");
+		test1.setPublished(true);
+		test2.setPublished(true);
+		test3.setPublished(true);
+		test4.setPublished(true);
+
+		assertEquals(0, storage.count(true));
+		assertEquals(0, storage.count(false));
+		storage.put(test1);
+		assertEquals(1, storage.count(true));
+		assertEquals(1, storage.count(false));
+		storage.put(test2);
+		assertEquals(2, storage.count(true));
+		storage.put(test3);
+		assertEquals(3, storage.count(true));
+		storage.put(test4);
+		assertEquals(4, storage.count(true));
+		
+		test1.setPublished(false);
+		storage.put(test1);
+		assertEquals(3, storage.count(true));
+		
+		test2.setPublished(false);
+		storage.put(test2);
+		assertEquals(2, storage.count(true));
+		storage.delete(test3.getId());
+		assertEquals(1, storage.count(true));
+		storage.delete(test4.getId());
+		assertEquals(0, storage.count(true));
+		
+		assertEquals(2, storage.count(false));
 	}
 
 	protected MockTitledEntity putAndGet(MockTitledEntity saveMe) throws Exception {

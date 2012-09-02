@@ -90,4 +90,13 @@ public abstract class TitledEntityStorage<TE extends TitledEntity> {
         }
         objectify.delete(keys);
     }
+
+	public int count(boolean published) {
+		Objectify objectify = Util.factory().begin();
+        Query<TE> query = objectify.query(clazz);
+        if (published) {
+        	query.filter("published", published);
+        }
+        return query.count();
+	}
 }

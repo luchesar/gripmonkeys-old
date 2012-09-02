@@ -15,6 +15,9 @@ cursoconducir.TitledEntity.onSuccess;
 /** @typedef {function(boolean, string=,Object=)}*/
 cursoconducir.TitledEntity.onDelSuccess;
 
+/** @typedef {function(number, string=,Object=)}*/
+cursoconducir.TitledEntity.onCountSuccess;
+
 /** @typedef {function(XMLHttpRequest,jQuery.jqXHR,Object.<string, *>,*)} */
 cursoconducir.TitledEntity.onError;
 
@@ -38,7 +41,7 @@ cursoconducir.TitledEntityStorageClient.prototype.httpPath;
 
 /**
  * @public
- * Gets all the question object from the server
+ * Gets all the entities object from the server
  * @param {cursoconducir.TitledEntity.onSuccess} success
  * @param {cursoconducir.TitledEntity.onError=} error
  * @param {cursoconducir.TitledEntity.onComplate=} complete
@@ -80,7 +83,7 @@ cursoconducir.TitledEntityStorageClient.prototype.getPaged = function(offset, le
 
 /**
  * @public
- * Gets question object from the server with the corresponding IDs
+ * Gets entities object from the server with the corresponding IDs
  * @param {Array.<String>} ids
  * @param {cursoconducir.TitledEntity.onSuccess} success
  * @param {cursoconducir.TitledEntity.onError=} error
@@ -105,7 +108,27 @@ cursoconducir.TitledEntityStorageClient.prototype.get = function(ids, success, e
 
 /**
  * @public
- * Stores question objects on the server
+ * Gets all entity objects count
+ * @param {cursoconducir.TitledEntity.onCountSuccess} success
+ * @param {cursoconducir.TitledEntity.onError=} error
+ * @param {cursoconducir.TitledEntity.onComplate=} complete
+ */
+cursoconducir.TitledEntityStorageClient.prototype.count = function(success, error, complete) {
+	$.ajax({
+		type : "GET",
+		url : '/' + this.httpPath + '?count=true',
+		contentType : "application/json; charset=utf-8",
+		data : {},
+		dataType : 'json',
+		success : success,
+		error :error,
+		complete : complete
+	});
+};
+
+/**
+ * @public
+ * Stores entities objects on the server
  * @param {Array.<cursoconducir.Question>} questions
  * @param {cursoconducir.TitledEntity.onSuccess} success
  * @param {cursoconducir.TitledEntity.onError=} error
@@ -128,7 +151,7 @@ cursoconducir.TitledEntityStorageClient.prototype.store = function(questions, su
 
 /**
  * @public
- * Deletes question object from the server with the corresponding IDs
+ * Deletes entities object from the server with the corresponding IDs
  * @param {Array.<string>} questionIds
  * @param {cursoconducir.TitledEntity.onDelSuccess} success
  * @param {cursoconducir.TitledEntity.onError=} error

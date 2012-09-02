@@ -286,6 +286,54 @@ public class TitledEntityStorageServletTest {
 				responseWriter.toString());
 	}
 	
+	@Test
+	public void testDoGetCount() throws Exception {
+		MockTitledEntity te3 = newTE(3);
+		MockTitledEntity te4 = newTE(4);
+		
+		te1.setPublished(true);
+		te2.setPublished(true);
+		te3.setPublished(true);
+		te4.setPublished(true);
+		
+		assertEquals(0, getCount(true + ""));
+		assertEquals(0, getCount(false + ""));
+		storage.put(te1);
+		assertEquals(1, getCount(true + ""));
+		assertEquals(1, getCount(false + ""));
+		storage.put(te2);
+		assertEquals(2, getCount(true + ""));
+		storage.put(te3);
+		assertEquals(3, getCount(true + ""));
+		storage.put(te4);
+		assertEquals(4, getCount(true + ""));
+		
+		te1.setPublished(false);
+		storage.put(te1);
+		assertEquals(3, getCount(true + ""));
+		
+		te2.setPublished(false);
+		storage.put(te2);
+		assertEquals(2, getCount(true + ""));
+		storage.delete(te3.getId());
+		assertEquals(1, getCount(true + ""));
+		storage.delete(te4.getId());
+		assertEquals(0, getCount(true + ""));
+		
+		assertEquals(2, getCount("NonBooleanValue"));
+		assertEquals(2, getCount("false"));
+	}
+	
+	private int getCount(String published) throws Exception {
+		resetResponse();
+		when(request.getParameter(TitledEntityStorageServlet.COUNT))
+				.thenReturn(published);
+		servlet.doGet(request, response);
+		verify(response, never()).setStatus(anyInt());
+		
+		return gson.fromJson(responseWriter.toString(), Integer.class);
+	}
+	
 	/*@Test
 	public void testDoGetFiltered() throws Exception {
 		fail();
