@@ -280,7 +280,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	/**
 	 * @private
 	 * @param {?cursoconducir.Question} templateTest
-	 * @param {function(Array.<cursoconducir.Question>, string=,Object=)} onSuccess
+	 * @param {cursoconducir.Question.onSuccess} onSuccess
 	 */
 	var postToServer = function(templateTest, onSuccess) {
 		hideFeedback();
@@ -290,11 +290,11 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 						[ test ],
 						onSuccess,
 						/**
-						 * @type {function(jQuery.event,jQuery.jqXHR,Object.<string,*>,*)}
+						 * @type {cursoconducir.TitledEntity.onError}
 						 */
 						function(xhr, ajaxOptions, thrownError) {
 							showFeedback('the test did not get saved because server returned error \''
-									+ xhr.data + ' ' + thrownError + '\'');
+									+ xhr.status + ' ' + thrownError + '\'');
 						});
 	};
 
@@ -315,7 +315,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		}
 		if (confirmDelete(selectedTests)) {
 			cursoconducir.Question.del(selectedTestsIds,
-					/** @type {cursoconducir.Question.onDelSuccess}*/
+					/** @type {cursoconducir.TitledEntity.onDelSuccess}*/
 							function(wasDeleted, textStatus, jqXHR) {
 								if (wasDeleted) {
 									for ( var i = 0; i < selectedTestsIds.length; i++) {
@@ -327,12 +327,12 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 									}
 								}
 							},
-							/** @type {cursoconducir.Question.onError}*/
+							/** @type {cursoconducir.TitledEntity.onError}*/
 							function(xhr, ajaxOptions, thrownError) {
 								showFeedback('Cannot delete a test. Server returned error \''
-										+ xhr.data + ' ' + thrownError + '\'');
+										+ xhr.status + ' ' + thrownError + '\'');
 							},
-							/** @type {cursoconducir.Question.onComplate}*/
+							/** @type {cursoconducir.TitledEntity.onComplate}*/
 							function() {
 								contanier.empty();
 								allTestsModule.show(model);

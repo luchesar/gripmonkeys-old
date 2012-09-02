@@ -162,7 +162,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					lessonForm.show(model);
 					updateButtons(cursoconducir.template.lesson.buttons.edit);
 				}, 
-				/** @type {cursoconducir.Lesson.onError}*/function(xhr, ajaxOptions, thrownError) {
+				/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
 					showFeedback('Cannot fetch test with id ' + lessonId
 							+ '. Server returned error \'' + xhr.status + ' '
 							+ thrownError + '\'');
@@ -172,7 +172,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	};
 
 	/**
-	 * @param {cursoconducir.Lesson.onComplate} onComplate
+	 * @param {cursoconducir.TitledEntity.onComplate} onComplate
 	 * @private
 	 */
 	var fetchAllLessons = function(onComplate) {
@@ -181,7 +181,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		/** @type {cursoconducir.Lesson.onSuccess}*/function(allLessons, textStatus, jqXHR) {
 			model.allLessons = allLessons;
 		}, 
-		/** @type {cursoconducir.Lesson.onError}*/function(xhr, ajaxOptions, thrownError) {
+		/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
 			showFeedback('Cannot fetch all questions. Server returned error \''
 					+ xhr.status + ' ' + thrownError + '\'');
 		}, onComplate);
@@ -246,7 +246,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 
 		cursoconducir.Lesson
 				.store([ lesson ],onSuccess,
-						/**@type {cursoconducir.Lesson.onError}*/
+						/**@type {cursoconducir.TitledEntity.onError}*/
 						function(xhr, ajaxOptions, thrownError) {
 							showFeedback('the lesson did not get saved because server returned error \''
 									+ xhr.status + ' ' + thrownError + '\'');
@@ -268,7 +268,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		}
 		if (confirmDelete(selectedLessons)) {
 			cursoconducir.Lesson.del(selectedLessonsIds,
-			/**@type {cursoconducir.Lesson.onDelSuccess}*/
+			/**@type {cursoconducir.TitledEntity.onDelSuccess}*/
 			function(wasDeleted, textStatus, jqXHR) {
 				if (wasDeleted) {
 					for ( var i = 0; i < selectedLessonsIds.length; i++) {
@@ -280,11 +280,11 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					}
 				}
 			}, 
-			/**@type {cursoconducir.Lesson.onError}*/ function(xhr, ajaxOptions, thrownError) {
+			/**@type {cursoconducir.TitledEntity.onError}*/ function(xhr, ajaxOptions, thrownError) {
 				showFeedback('Cannot delete a lesson. Server returned error \''
 						+ xhr.status + ' ' + thrownError + '\'');
 			}, 
-			/**@type {cursoconducir.Lesson.onComplate}*/function() {
+			/**@type {cursoconducir.TitledEntity.onComplate}*/function() {
 				allLessons.show(model);
 				updateButtons(cursoconducir.template.lesson.buttons.initial);
 			});

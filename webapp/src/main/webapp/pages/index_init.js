@@ -1,3 +1,5 @@
+goog.provide('cursoconducir.index_init');
+
 goog.require('cursoconducir.IndexPage');
 goog.require('goog.module.ModuleLoader');
 goog.require('goog.module.ModuleManager');
@@ -19,8 +21,6 @@ moduleManager.setLoader(moduleLoader);
 moduleManager.setAllModuleInfo(goog.global['PLOVR_MODULE_INFO']);
 moduleManager.setModuleUris(goog.global['PLOVR_MODULE_URIS']);
 
-/** @type {goog.Uri}*/
-var locationUri = new goog.Uri(window.location);
 /** @type {cursoconducir.IndexPage}*/
 var index = null;
 /** @type {cursoconducir.admin.TestsPage}*/
@@ -44,7 +44,11 @@ var loadPage = function(moduleId, onLoaded) {
 	}
 };
 
-$(function() {
+/**
+ * @public
+ * @param {goog.Uri} locationUri
+ */
+cursoconducir.index_init.onPageLoad = function(locationUri) {
 	/** @type {jQuery}*/
 	var indexContainer = $('#indexContainer');
 	
@@ -65,5 +69,8 @@ $(function() {
 			index.start();
 		});
 	} 
+};
 
+$(function() {
+	cursoconducir.index_init.onPageLoad(new goog.Uri(window.location));
 });

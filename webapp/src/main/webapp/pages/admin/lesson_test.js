@@ -39,12 +39,12 @@ var feedbackContainer;
 var testCase = new goog.testing.ContinuationTestCase();
 testCase.autoDiscoverTests();
 
-var stubs = new goog.testing.PropertyReplacer();
-var initialLocation;
-
 if (typeof G_testRunner != 'undefined') {
   G_testRunner.initialize(testCase);
 }
+
+var stubs = new goog.testing.PropertyReplacer();
+var initialLocation;
 
 function setUpPage() {
 	$('body').append("<div id='lessonsContainer'/>");
