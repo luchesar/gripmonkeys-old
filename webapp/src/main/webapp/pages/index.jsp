@@ -13,7 +13,8 @@
 <meta name="description"
   content="autoescuela, auto escuela, auto escuela online, autoescuela online,  test dgt, tests dgt, test de conducir, carnet de conducir, carne de conducir, test de trafico, curso conducir, cursoconducir, todotest, todo test, test dgt 2011, tests dgt 2011" />
 <meta name="author" content="" />
-<%@include file="../modules/cssAndJs.html"%>
+<link rel="stylesheet" href="/css/bootstrap.css"/>
+<link rel="stylesheet" href="/css/docs.css"/>
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -43,7 +44,7 @@ body {
 </head>
 
 <body>
-  <%@include file="../modules/menu.html"%>
+  <%@include file="menu.html"%>
   <div id="indexContainer"></div>
   <footer id="footer">
     <div class="container">

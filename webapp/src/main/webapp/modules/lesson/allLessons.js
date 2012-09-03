@@ -4,10 +4,11 @@ goog.require("cursoconducir.Lesson");
 goog.require('cursoconducir.template.allLessons');
 goog.require("goog.soy");
 goog.require("goog.array");
+goog.require('cursoconducir.PagedEntityList');
 
 /**
  * @constructor
- * @param {Object} container
+ * @param {jQuery} container
  */
 cursoconducir.AllLessons = function(container) {
 	var callbacks = [];

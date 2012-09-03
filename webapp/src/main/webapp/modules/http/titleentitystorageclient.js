@@ -1,4 +1,5 @@
 goog.provide('cursoconducir.TitledEntityStorageClient');
+goog.provide('cursoconducir.TitledEntity');
 
 goog.require('goog.array');
 goog.require('goog.json');
@@ -109,14 +110,15 @@ cursoconducir.TitledEntityStorageClient.prototype.get = function(ids, success, e
 /**
  * @public
  * Gets all entity objects count
+ * @param {boolean} publishedOnly
  * @param {cursoconducir.TitledEntity.onCountSuccess} success
  * @param {cursoconducir.TitledEntity.onError=} error
  * @param {cursoconducir.TitledEntity.onComplate=} complete
  */
-cursoconducir.TitledEntityStorageClient.prototype.count = function(success, error, complete) {
+cursoconducir.TitledEntityStorageClient.prototype.count = function(publishedOnly, success, error, complete) {
 	$.ajax({
 		type : "GET",
-		url : '/' + this.httpPath + '?count=true',
+		url : '/' + this.httpPath + '?count=' + publishedOnly,
 		contentType : "application/json; charset=utf-8",
 		data : {},
 		dataType : 'json',

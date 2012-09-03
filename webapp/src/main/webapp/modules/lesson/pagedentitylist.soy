@@ -1,0 +1,25 @@
+{namespace cursoconducir.template.pagedentitylist}
+
+/**
+ * @param pages
+ * @param containerId
+ */
+{template .content}
+<div id="{$containerId}">
+    <div class="noSpacingOrMargin pagination">
+            <ul>
+                    {foreach $page in $pages}
+                <li class="{if $page.active} active{{/if}}"><a id="top{$page.title}">{$page.title}</a></li>
+                    {/foreach}
+            </ul>
+    </div>
+    <div id="placeHolder"/>
+    <div class="noSpacingOrMargin pagination">
+            <ul>
+                    {foreach $page in $pages}
+                <li class="{if $page.active} active{{/if}}"><a id="bottom{$page.title}>{$page.title}</a></li>
+                    {/foreach}
+            </ul>
+    </div>
+</div>
+{/template}

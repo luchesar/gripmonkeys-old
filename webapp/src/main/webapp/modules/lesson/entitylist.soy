@@ -1,0 +1,32 @@
+{namespace cursoconducir.template.entitylist}
+
+/**
+ * The template for all lessons.
+ * @param entities
+ * @param emptyMessage
+ */
+{template .content}
+<div id="entitiesContainer">
+  {foreach $entity in $entities}
+  <div id="entitysInAList" class="container">
+    <div class="container mini-layout">
+      <div class="row">
+        <div class="span1">
+          <input type="checkbox" name="{$entity.id}"/>
+        </div>
+        <div class="span13">
+          <h4 class="pull-left">
+            <a id="entityTitleLink{$entity.id}">{$entity.title}&nbsp;</a>
+          </h4>
+          <div id="testDescription" class="pull-left">
+          {$entity.description}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{ifempty}
+<small>{if $emptyMessage}{$emptyMessage}{else}No entities{/if}</small>
+{/foreach}
+</div>
+{/template}
