@@ -4,6 +4,7 @@ goog.require("cursoconducir.Lesson");
 goog.require('cursoconducir.template.allLessons');
 goog.require("goog.soy");
 goog.require("goog.array");
+goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.PagedEntityList');
 
 /**

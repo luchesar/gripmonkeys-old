@@ -5,20 +5,14 @@ goog.require('cursoconducir.template.entitylist');
 goog.require("goog.array");
 
 /**
- * @typedef {{entities:Array.<cursoconducir.TitledEntity>, emptyLabel:?string}}
- */
-cursoconducir.EntityList.model;
-
-/**
  * @constructor
  * @param {jQuery} container
- * @param {string=} emptyLabel
  */
 cursoconducir.EntityList = function(container) {
 	/** @type {Array.<function(Array.<string>)>}*/
 	var callbacks = [];
 	
-	/** @type {Array.<function(Array.<number>)>}*/
+	/** @type {Array.<function(number)>}*/
 	var linkClickCallbacks = [];
 	
 	/** 
@@ -42,7 +36,7 @@ cursoconducir.EntityList = function(container) {
 		container.find("a").each(function() {
 			$(this).click(function() {
 				/** @type {number}*/
-				var clickId = /** @type {number}*/this.id.substring(15, this.id.length);
+				var clickId = /** @type {number}*/ $(this).attr('eId');
 				for (var i = 0; i < linkClickCallbacks.length; i ++) {
 					linkClickCallbacks[i](clickId);
 				}
@@ -58,13 +52,25 @@ cursoconducir.EntityList = function(container) {
 		return getLessonSelection();
 	};
 	
+	/**
+	 * @public
+	 * @param {Array.<string>} selection
+	 */
+	this.setSelection = function(selection) {
+		container.find("input[type=checkbox]").removeAttr('checked');
+		$(selection).each(function() {
+			container.find("input[type=checkbox][name="+this+"]").attr('checked', 'true');
+		});
+	};
+	
 	/** 
 	 * @private
 	 * @return {Array.<string>}
 	 */
 	var getLessonSelection = function() {
+		/** @type {Array.<string>}*/
 		var selection = [];
-		$("input[type=checkbox]").each(function() {
+		container.find("input[type=checkbox]").each(function() {
 			if (this.checked) {
 				goog.array.insert(selection, this.name.toString());
 			}
@@ -87,4 +93,22 @@ cursoconducir.EntityList = function(container) {
 	this.addLinkCallback = function(callback) {
 		goog.array.insert(linkClickCallbacks, callback);
 	};
+	
+	/**
+	 * @public
+	 * @returns {Array.<string>}
+	 */
+	this.getEntityIds = function() {
+		/** @type {Array.<string>}*/
+		var allIds = [];
+		container.find("input[type=checkbox]").each(function() {
+			goog.array.insert(allIds, this.name);
+		});
+		return allIds;
+	};
 };
+
+/**
+ * @typedef {{entities:Array.<cursoconducir.TitledEntity>, emptyLabel:?string}}
+ */
+cursoconducir.EntityList.model;

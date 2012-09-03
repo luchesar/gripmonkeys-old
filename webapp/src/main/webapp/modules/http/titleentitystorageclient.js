@@ -5,7 +5,7 @@ goog.require('goog.array');
 goog.require('goog.json');
 
 
-/** @typedef {{id:?string, title:string, image:string,description:string}}*/
+/** @typedef {{id:?string, title:string, image:string, published:?boolean, description:string}}*/
 cursoconducir.TitledEntity;
 
 cursoconducir.TitledEntity = {};
