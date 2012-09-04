@@ -175,5 +175,3 @@ cursoconducir.TitledEntityStorageClient.prototype.del = function(questionIds, su
         complete : complete
     });
 };
-
-

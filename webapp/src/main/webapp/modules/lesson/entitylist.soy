@@ -20,13 +20,13 @@
         </div>
         <div class="span3">
           <div class="media-grid">
-            <a id="testImageLink{$entity.id}" eId="{$entity.id}" style="margin: 0 0 0px 20px;">
+            <a id="testImageLink{$entity.id}" eId="{$entity.id}" style="margin: 0 0 0px 20px; cursor:pointer">
              <img class="thumbnail" src="/image?key={$entity.image}&s=80&falback=/images/80x50.gif" alt="/images/80x50.gif"> </a>
           </div>
         </div>
         <div class="span8">
           <h4 class="pull-left">
-            <a id="entityTitleLink{$entity.id}" eId="{$entity.id}">{$entity.title}&nbsp;</a>
+            <a id="entityTitleLink{$entity.id}" eId="{$entity.id}" style="cursor:pointer">{$entity.title}&nbsp;</a>
           </h4>
           <div id="testDescription" class="pull-left">
           {$entity.description}

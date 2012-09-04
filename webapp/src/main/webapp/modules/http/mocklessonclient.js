@@ -1,5 +1,4 @@
 goog.provide('cursoconducir.MockLessonClient');
-goog.provide('cursoconducir.alllessons');
 
 goog.require('cursoconducir.Lesson');
 goog.require('goog.array');
@@ -44,20 +43,3 @@ cursoconducir.MockLessonClient = function(allLessons) {
 		stubs.reset();
 	};
 };
-
-var assertLessonPresent = function(lesson) {
-	var lessonTitle = $("a[href='#update?lesson=" + lesson.id + "']");
-	assertNotNullNorUndefined(lessonTitle);
-	assertEquals(lesson.title, lessonTitle.text().trim());
-
-	assertNotNullNorUndefined($("div:contains('" + lesson.description + "')")
-			.text());
-
-	var checkBox = $("input[type='checkbox'][name='" + lesson.id + "']");
-	assertNotNullNorUndefined(checkBox[0]);
-};
-
-/**
- * @public
- */
-cursoconducir.alllessons.assertLessonPresent = assertLessonPresent;

@@ -1,4 +1,5 @@
 goog.provide('cursoconducir.MockTitledEntityStorageClient');
+goog.provide('cursoconducir.titledentityassert');
 
 goog.require('cursoconducir.TitledEntityStorageClient');
 
@@ -128,3 +129,32 @@ cursoconducir.MockTitledEntityStorageClient.prototype.del = function(questionIds
 	success();
 	complete();
 };
+
+cursoconducir.titledentityassert.assertEntityPresent = function(entity) {
+	var entityTitle = $("a[id='entityTitleLink" + entity.id + "']");
+	assertNotNullNorUndefined(entityTitle);
+	assertEquals(entity.title, entityTitle.text().trim());
+	assertTrue(entityTitle.attr('href') == undefined);
+	
+	if (entity.published) {
+		var publishedImage = $('img[src="/images/published.png"][id="publishedIndication' + entity.id + '"]');	
+		assertNotNullNorUndefined(publishedImage[0]);
+	} else {
+		var unpublishedImage = $('img[src="/images/unpublished.png"][id="publishedIndication' + entity.id + '"]');
+		assertNotNullNorUndefined(unpublishedImage[0]);
+	}
+	
+	var imageLink = $('a[id="testImageLink' + entity.id + '"]');
+	assertNotNullNorUndefined(imageLink[0]);
+	
+	var image = $('img[src="/image?key=' + entity.image + '&s=80&falback=/images/80x50.gif"]');
+	assertNotNullNorUndefined(image[0]);
+
+	assertNotNullNorUndefined($("div:contains('" + entity.description + "')")
+			.text());
+
+	var checkBox = $("input[type='checkbox'][name='" + entity.id + "']");
+	assertNotNullNorUndefined(checkBox[0]);
+};
+
+

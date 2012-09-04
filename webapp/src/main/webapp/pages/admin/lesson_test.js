@@ -2,7 +2,7 @@ goog.require('cursoconducir.admin.LessonsPage');
 goog.require('cursoconducir.admin.lessons');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('cursoconducir.MockLessonClient');
-goog.require('cursoconducir.alllessons');
+goog.require('cursoconducir.titledentityassert');
 goog.require('cursoconducir.allquestions');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.MockQuestionClient');
@@ -12,6 +12,7 @@ goog.require('goog.testing.ContinuationTestCase');
 goog.require('goog.testing.jsunit');
 goog.require('goog.Uri');
 goog.require('cursoconducir.LessonClient');
+goog.require('cursoconducir.titledentityassert');
 
 /** @type {cursoconducir.admin.LessonPage} */
 var allLessons;
@@ -104,8 +105,8 @@ function init() {
 };
 
 function testDefaultUrl() {
-	cursoconducir.alllessons.assertLessonPresent(lesson1);
-	cursoconducir.alllessons.assertLessonPresent(lesson2);
+	cursoconducir.titledentityassert.assertEntityPresent(lesson1);
+	cursoconducir.titledentityassert.assertEntityPresent(lesson2);
 
 	assertNotNullNorUndefined(createButton[0]);
 
@@ -114,8 +115,8 @@ function testDefaultUrl() {
 
 function testCancelUrl() {
 	stubs.set(window.location, "hash", "#cancel");
-	cursoconducir.alllessons.assertLessonPresent(lesson1);
-	cursoconducir.alllessons.assertLessonPresent(lesson2);
+	cursoconducir.titledentityassert.assertEntityPresent(lesson1);
+	cursoconducir.titledentityassert.assertEntityPresent(lesson2);
 
 	assertNotNullNorUndefined(createButton[0]);
 
@@ -185,8 +186,8 @@ function createUrlTest() {
 
 	init();
 
-	cursoconducir.alllessons.assertLessonPresent(lesson1);
-	cursoconducir.alllessons.assertLessonPresent(lesson2);
+	cursoconducir.titledentityassert.assertEntityPresent(lesson1);
+	cursoconducir.titledentityassert.assertEntityPresent(lesson2);
 
 	var createdLesson;
 	new cursoconducir.LessonClient().getAll(function(allLessons) {
@@ -202,11 +203,11 @@ function createUrlTest() {
 		createdLesson = savedLesson;
 	});
 
-	cursoconducir.alllessons.assertLessonPresent(createdLesson);
+	cursoconducir.titledentityassert.assertEntityPresent(createdLesson);
 };
 
 function testEdit() {
-	assertNotNullNorUndefined($('a[href="#update?lesson=' + lesson1.id + '"]')[0]);
+	assertNotNullNorUndefined($('a[eid="' + lesson1.id + '"]')[0]);
 	/** type {goog.Uri}*/ 
 	var locationUri = new goog.Uri(window.location);
 	locationUri.removeParameter("lesson", lesson1.id);
@@ -266,6 +267,14 @@ function editTest() {
 			question3);
 
 	saveButton.click();
+}
+
+function testClickLink() {
+	$('a[eid="' + lesson1.id + '"]').click();
+	
+	var locationUri = new goog.Uri(window.location);
+	locationUri.removeParameter("lesson", lesson1.id);
+	assertEquals("update?lesson=" + lesson1.id , locationUri.getFragment());
 }
 
 function _testDelete() {

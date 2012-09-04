@@ -1,6 +1,7 @@
 goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.TitledEntity');
+goog.require('cursoconducir.titledentityassert');
 
 /** @type {Array.<cursoconducir.EntityList>}*/
 var entityList;
@@ -65,8 +66,8 @@ var testShowSomeTests = function() {
 	var allLessonsContainer = $('#parent');
 	assertNotNullNorUndefined(allLessonsContainer);
 
-	assertEntityPresent(e1);
-	assertEntityPresent(e2);
+	cursoconducir.titledentityassert.assertEntityPresent(e1);
+	cursoconducir.titledentityassert.assertEntityPresent(e2);
 };
 
 var testGetSelection = function() {
@@ -288,29 +289,3 @@ function newE(num) {
 	};
 }
 
-var assertEntityPresent = function(entity) {
-	var entityTitle = $("a[id='entityTitleLink" + entity.id + "']");
-	assertNotNullNorUndefined(entityTitle);
-	assertEquals(entity.title, entityTitle.text().trim());
-	assertTrue(entityTitle.attr('href') == undefined);
-	
-	if (entity.published) {
-		var publishedImage = $('img[src="/images/published.png"][id="publishedIndication' + entity.id + '"]');	
-		assertNotNullNorUndefined(publishedImage[0]);
-	} else {
-		var unpublishedImage = $('img[src="/images/unpublished.png"][id="publishedIndication' + entity.id + '"]');
-		assertNotNullNorUndefined(unpublishedImage[0]);
-	}
-	
-	var imageLink = $('a[id="testImageLink' + entity.id + '"]');
-	assertNotNullNorUndefined(imageLink[0]);
-	
-	var image = $('img[src="/image?key=' + entity.image + '&s=80&falback=/images/80x50.gif"]');
-	assertNotNullNorUndefined(image[0]);
-
-	assertNotNullNorUndefined($("div:contains('" + entity.description + "')")
-			.text());
-
-	var checkBox = $("input[type='checkbox'][name='" + entity.id + "']");
-	assertNotNullNorUndefined(checkBox[0]);
-};
