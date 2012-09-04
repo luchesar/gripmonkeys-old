@@ -3,7 +3,7 @@ goog.provide('cursoconducir.admin.tests');
 
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestModule');
-goog.require('cursoconducir.AllTestsModule');
+goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
@@ -92,9 +92,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var testModule = new cursoconducir.TestModule(contanier);
 	/**
 	 * @private
-	 * @type {cursoconducir.AllTestsModule}
+	 * @type {cursoconducir.EntityList}
 	 */
-	var allTestsModule = new cursoconducir.AllTestsModule(contanier);
+	var allTestsModule = new cursoconducir.EntityList(contanier);
 
 	/**
 	 * @private
@@ -190,7 +190,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		if (hash == '' || hash == '#' || hash == CANCEL) {
 			model.activeTest = null;
 			initAllTests(function() {
-				allTestsModule.show(model);
+				allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
 				updateButtons(cursoconducir.template.tests.buttons.initial);
 				$("#footer").addClass("loaded");
 			});
@@ -248,7 +248,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		questionClient.store(
 						selectedTests,
 						function() {
-							allTestsModule.show(model);
+							allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
 							updateButtons(cursoconducir.template.tests.buttons.initial);
 						},
 						function(xhr, ajaxOptions, thrownError) {
@@ -340,7 +340,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 							/** @type {cursoconducir.TitledEntity.onComplate}*/
 							function() {
 								contanier.empty();
-								allTestsModule.show(model);
+								allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
 								updateButtons(cursoconducir.template.tests.buttons.initial);
 							});
 		}

@@ -1,7 +1,7 @@
 goog.provide('cursoconducir.LessonForm');
 
 goog.require('cursoconducir.template.lessonForm');
-goog.require('cursoconducir.AllTestsModule');
+goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.QuestionClient');
 goog.require("bootstrap.twipsy");
@@ -21,13 +21,13 @@ cursoconducir.LessonForm = function(container) {
 	
 	/** 
 	 * @private
-	 * @type {cursoconducir.AllTestsModule}
+	 * @type {cursoconducir.EntityList}
 	 */
 	var lessonQuestions;
 	
 	/**
 	 * @private
-	 * @type {cursoconducir.AllTestsModule}
+	 * @type {cursoconducir.EntityList}
 	 */
 	var allQuestions;
 	
@@ -79,8 +79,8 @@ cursoconducir.LessonForm = function(container) {
      * @param {cursoconducir.admin.lessons.Model} model
      */
     var init = function(model) {
-    	lessonQuestions = new cursoconducir.AllTestsModule($('#lessonQuestions'));
-        allQuestions = new cursoconducir.AllTestsModule($('#allQuestions'));
+    	lessonQuestions = new cursoconducir.EntityList($('#lessonQuestions'));
+        allQuestions = new cursoconducir.EntityList($('#allQuestions'));
         
         addQuestionsButton = container.find("#addQuestionsButton");
     	removeQuestionsButton = container.find("#removeQuestionsButton");
@@ -117,23 +117,25 @@ cursoconducir.LessonForm = function(container) {
 				var selection = lessonQuestions.getSelection();
 				/** @type {Array.<cursoconducir.Question>}*/
 				var updatedLessonQuestions = moveUp(questions, lessonQuestions
-						.getQuestionIds(), selection);
+						.getEntityIds(), selection);
 
 				lessonQuestions.show({
-					allTests : updatedLessonQuestions,
-					activeTest: null
+					entities : updatedLessonQuestions,
+					emptyLabel: 'No questions'
 				});
 				lessonQuestions.setSelection(selection);
 			});
         	
         	moveQuestionDownButton.click(function() {
+        		/** @type {Array.<string>}*/
         		var selection = lessonQuestions.getSelection();
+        		/** @type {Array.<cursoconducir.Question>}*/
 				var updatedLessonQuestions = moveDown(questions, lessonQuestions
-						.getQuestionIds(), selection);
+						.getEntityIds(), selection);
 
 				lessonQuestions.show({
-					allTests : updatedLessonQuestions,
-					activeTest: null
+					entities : updatedLessonQuestions,
+					emptyLabel: 'No questions'
 				});
 				lessonQuestions.setSelection(selection);
         	});
@@ -239,8 +241,8 @@ cursoconducir.LessonForm = function(container) {
     var updateQuestionPanels = function(model, questions) {
     	/** @type {{lessonQuestions: Array.<cursoconducir.Question>, allOtherQuestions: Array.<cursoconducir.Question>}} */
     	var questionsSplit = splitQuestions(model, questions);
-    	lessonQuestions.show({allTests:questionsSplit.lessonQuestions, activeTest:null});
-    	allQuestions.show({allTests:questionsSplit.allOtherQuestions, activeTest:null});
+    	lessonQuestions.show({entities:questionsSplit.lessonQuestions, emptyLabel:'No questions'});
+    	allQuestions.show({entities:questionsSplit.allOtherQuestions, emptyLabel:'No questions'});
     };
     
     /**
@@ -278,7 +280,7 @@ cursoconducir.LessonForm = function(container) {
 			id: id,
 			title: $('input[type=text][name=lessonTitle]').val().toString(),
 			description: $("textarea[name=lessonDescription]").val().toString(),
-			questionIds: lessonQuestions.getQuestionIds()
+			questionIds: lessonQuestions.getEntityIds()
     	};
     };
     

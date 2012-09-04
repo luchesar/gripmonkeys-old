@@ -108,7 +108,7 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 			}
 		}
 	}, 
-			/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
+	/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
 		if (showFeedback) {
 			showFeedback('Cannot fetch a test. Server returned error \''
 					+ xhr.status + ' ' + thrownError + '\'');

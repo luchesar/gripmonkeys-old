@@ -2,7 +2,6 @@ goog.provide('cursoconducir.admin.LessonsPage');
 goog.provide('cursoconducir.admin.lessons');
 
 goog.require('cursoconducir.LessonForm');
-goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.template.lesson.buttons');
 goog.require('cursoconducir.template.lessonpage');
 goog.require('cursoconducir.utils');
