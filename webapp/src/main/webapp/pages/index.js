@@ -7,6 +7,7 @@ goog.require('goog.net.Cookies');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('cursoconducir.Question');
+goog.require('cursoconducir.QuestionClient');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.indexpage.template');
 goog.require('cursoconducir.ShowLesson');
@@ -53,6 +54,12 @@ cursoconducir.IndexPage = function(indexContainer) {
 	 * @const
 	 */
 	var SIGNIN = "signin";
+	
+	/**
+	 * @private
+	 * @type {cursoconducir.QuestionClient}
+	 */
+	var questionClient = new cursoconducir.QuestionClient();
 
 	/** @type {cursoconducir.InitialIndex}*/
 	var initial = null;
@@ -129,7 +136,7 @@ cursoconducir.IndexPage = function(indexContainer) {
 				foundLesson = lessons[0];
 			}
 
-			cursoconducir.Question.get(foundLesson.questionIds, 
+			questionClient.get(foundLesson.questionIds, 
 					/** @type {cursoconducir.Question.onSuccess}*/function(questions) {
 				/** @type {Array.<cursoconducir.Question>|cursoconducir.Question}*/
 				var foundQuestions = questions;

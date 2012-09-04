@@ -19,7 +19,7 @@ cursoconducir.MockTitledEntityStorageClient = function(allEntities) {
 goog.inherits(cursoconducir.MockTitledEntityStorageClient, cursoconducir.TitledEntityStorageClient);
 
 /**
- * @private
+ * @public
  * @type {Array.<cursoconducir.TitledEntity>}
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.allEntities_;

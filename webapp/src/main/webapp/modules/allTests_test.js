@@ -1,7 +1,7 @@
 goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.Question');
-goog.require('cursoconducir.MockQuestion');
+goog.require('cursoconducir.MockQuestionClient');
 goog.require('cursoconducir.allquestions');
 
 var allTestsModule;

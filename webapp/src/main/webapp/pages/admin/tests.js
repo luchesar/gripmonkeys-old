@@ -10,9 +10,9 @@ goog.require('cursoconducir.template.tests.buttons');
 goog.require('cursoconducir.template.questions');
 goog.require('goog.json');
 goog.require('cursoconducir.Question');
+goog.require('cursoconducir.QuestionClient');
 goog.require('goog.events.EventType');
 goog.require('goog.events');
-goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
 goog.require("cursoconducir.admin.tests.Model");
@@ -78,6 +78,12 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var pageButtons = $('.pageButtons');
 	/** @type {jQuery} */
 	var feedback = $('.feedback');
+	
+	/**
+	 * @private
+	 * @type {cursoconducir.QuestionClient}
+	 */
+	var questionClient = new cursoconducir.QuestionClient();
 
 	/**
 	 * @private
@@ -239,8 +245,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 							.code(selectedTest));
 				});
 
-		cursoconducir.Question
-				.store(
+		questionClient.store(
 						selectedTests,
 						function() {
 							allTestsModule.show(model);
@@ -266,7 +271,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 			return;
 		}
 		hideFeedback();
-		cursoconducir.Question.getAll(function(data, textStatus, jqXHR) {
+		questionClient.getAll(function(data, textStatus, jqXHR) {
 			model.allTests = [];
 			for ( var i = 0; i < data.length; i++) {
 				model.allTests[i] = cursoconducir.utils.decode(data[i]);
@@ -286,7 +291,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		hideFeedback();
 		var test = cursoconducir.utils.code(templateTest);
 
-		cursoconducir.Question.store(
+		questionClient.store(
 						[ test ],
 						onSuccess,
 						/**
@@ -314,7 +319,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 			selectedTests += selectedTest.title + ", ";
 		}
 		if (confirmDelete(selectedTests)) {
-			cursoconducir.Question.del(selectedTestsIds,
+			questionClient.del(selectedTestsIds,
 					/** @type {cursoconducir.TitledEntity.onDelSuccess}*/
 							function(wasDeleted, textStatus, jqXHR) {
 								if (wasDeleted) {

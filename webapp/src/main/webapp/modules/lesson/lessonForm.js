@@ -3,6 +3,7 @@ goog.provide('cursoconducir.LessonForm');
 goog.require('cursoconducir.template.lessonForm');
 goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.Question');
+goog.require('cursoconducir.QuestionClient');
 goog.require("bootstrap.twipsy");
 goog.require("bootstrap.popover");
 goog.require("bootstrap.tooltip");
@@ -55,6 +56,12 @@ cursoconducir.LessonForm = function(container) {
 	var moveQuestionDownButton;
 	
 	/**
+	 * @private
+	 * @type {cursoconducir.QuestionClient}
+	 */
+	var questionClient = new cursoconducir.QuestionClient();
+	
+	/**
      * @public
      * @param {cursoconducir.admin.lessons.Model} model
      */
@@ -81,7 +88,7 @@ cursoconducir.LessonForm = function(container) {
     	moveQuestionUpButton = container.find("#moveQuestionUpButton");
     	moveQuestionDownButton = container.find("#moveQuestionDownButton");
         
-        cursoconducir.Question.getAll(
+    	questionClient.getAll(
         		/** @type {function(Array.<cursoconducir.Question>)}*/function(questions) {
         	updateQuestionPanels(model, questions);
         	

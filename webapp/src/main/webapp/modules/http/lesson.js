@@ -5,7 +5,6 @@ goog.require('goog.json');
 goog.require('cursoconducir.TitledEntityStorageClient');
 
 /** @typedef {{id:?string, title:?string, description:?string, questionIds:Array.<?number>}}*/
-cursoconducir.Lesson;
 cursoconducir.Lesson = {};
 
 /** @typedef {function(Array.<cursoconducir.Lesson>, string=,jQuery.jqXHR=)}*/

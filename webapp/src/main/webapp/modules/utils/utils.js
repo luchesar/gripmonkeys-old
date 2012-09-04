@@ -2,6 +2,7 @@ goog.provide('cursoconducir.utils');
 
 goog.require('goog.array');
 goog.require('cursoconducir.Question');
+goog.require('cursoconducir.QuestionClient');
 goog.require('cursoconducir.admin.tests.Model');
 
 /**
@@ -97,7 +98,7 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 	if (hideFeedback) {
 		hideFeedback();
 	}
-	cursoconducir.Question.get([ testId ], 
+	new cursoconducir.QuestionClient().get([ testId ], 
 			/** @type {cursoconducir.Question.onSuccess}*/function(test, textStatus, jqXHR) {
 		if (test && test.length > 0) {
 			callback(cursoconducir.utils.decode(test[0]));

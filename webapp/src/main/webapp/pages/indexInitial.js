@@ -4,6 +4,8 @@ goog.require('goog.array');
 goog.require('cursoconducir.indexpage.template');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.TestPreviewModule');
+goog.require('cursoconducir.Question');
+goog.require('cursoconducir.QuestionClient');
 
 
 /**
@@ -28,6 +30,12 @@ cursoconducir.InitialIndex = function(container) {
 	 * @type {cursoconducir.TestPreviewModule}
 	 */
 	var testPreviewModule = null;
+	
+	/**
+	 * @private
+	 * @type {cursoconducir.QuestionClient}
+	 */
+	var questionClient = new cursoconducir.QuestionClient();
 
 	/**
 	 * @public
@@ -63,7 +71,8 @@ cursoconducir.InitialIndex = function(container) {
 		$('#courceExplanationContainer').html(explanationHtml);
 
 		$('#testContainer').empty();
-		cursoconducir.Question.get([testId], /** @type {cursoconducir.Question.onSuccess}*/
+		questionClient.get([testId], 
+				/** @type {cursoconducir.Question.onSuccess}*/
 				function(tests) {
 					if (tests == undefined) {
 						return;

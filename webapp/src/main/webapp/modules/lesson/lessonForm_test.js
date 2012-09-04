@@ -2,7 +2,7 @@ goog.require('goog.testing.jsunit');
 goog.require('cursoconducir.LessonForm');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.Question');
-goog.require('cursoconducir.MockQuestion');
+goog.require('cursoconducir.MockQuestionClient');
 goog.require('cursoconducir.allquestions');
 goog.require('goog.array');
 
@@ -30,7 +30,7 @@ function setUp() {
 		questionIds : []
 	};
 
-	mockQuestion = new cursoconducir.MockQuestion([ question1, question2,
+	mockQuestion = new cursoconducir.MockQuestionClient([ question1, question2,
 			question3 ]);
 	mockQuestion.setUp();
 

@@ -12,7 +12,7 @@ cursoconducir.EntityList = function(container) {
 	/** @type {Array.<function(Array.<string>)>}*/
 	var callbacks = [];
 	
-	/** @type {Array.<function(number)>}*/
+	/** @type {Array.<function(string)>}*/
 	var linkClickCallbacks = [];
 	
 	/** 
@@ -35,8 +35,8 @@ cursoconducir.EntityList = function(container) {
 		
 		container.find("a").each(function() {
 			$(this).click(function() {
-				/** @type {number}*/
-				var clickId = /** @type {number}*/ $(this).attr('eId');
+				/** @type {string}*/
+				var clickId = /** @type {string}*/ 	$(this).attr('eId');
 				for (var i = 0; i < linkClickCallbacks.length; i ++) {
 					linkClickCallbacks[i](clickId);
 				}
@@ -88,7 +88,7 @@ cursoconducir.EntityList = function(container) {
 	
 	/** 
 	 * @public
-	 * @param {function(Array.<number>)} callback
+	 * @param {function(Array.<string>)} callback
 	 */
 	this.addLinkCallback = function(callback) {
 		goog.array.insert(linkClickCallbacks, callback);

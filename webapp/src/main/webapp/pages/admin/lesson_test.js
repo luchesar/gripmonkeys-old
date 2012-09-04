@@ -5,7 +5,7 @@ goog.require('cursoconducir.MockLesson');
 goog.require('cursoconducir.alllessons');
 goog.require('cursoconducir.allquestions');
 goog.require('cursoconducir.Question');
-goog.require('cursoconducir.MockQuestion');
+goog.require('cursoconducir.MockQuestionClient');
 goog.require('goog.string');
 goog.require('goog.History');
 goog.require('goog.testing.ContinuationTestCase');
@@ -28,7 +28,7 @@ var question3;
 /** @type {cursoconducir.MockLesson} */
 var mockLesson;
 
-/** @type {cursoconducir.MockQuestion} */
+/** @type {cursoconducir.MockQuestionClient} */
 var mockQuestion;
 
 var createButton;
@@ -75,7 +75,7 @@ function setUp() {
 	mockLesson = new cursoconducir.MockLesson([ lesson1, lesson2 ]);
 	mockLesson.setUp();
 
-	mockQuestion = new cursoconducir.MockQuestion([ question1, question2,
+	mockQuestion = new cursoconducir.MockQuestionClient([ question1, question2,
 			question3 ]);
 	mockQuestion.setUp();
 	

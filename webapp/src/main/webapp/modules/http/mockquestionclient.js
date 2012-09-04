@@ -1,81 +1,40 @@
-goog.provide('cursoconducir.MockQuestion');
+goog.provide('cursoconducir.MockQuestionClient');
 goog.provide('cursoconducir.allquestions');
 
 goog.require('cursoconducir.Question');
 goog.require('goog.array');
 goog.require('goog.testing.PropertyReplacer');
+goog.require('cursoconducir.MockTitledEntityStorageClient');
 
 /**
  * @public
  * @constructor
  * @param {Array.<cursoconducir.Question>} allQuestions
  */
-cursoconducir.MockQuestion = function(allQuestions) {
-	/**
-	 * @private
-	 * @type {Array.<cursocqonducir.Question>}
-	 */
-	var questions = allQuestions;
-
+cursoconducir.MockQuestionClient = function(allQuestions) {
 	/**
 	 * @private
 	 * @type {goog.testing.PropertyReplacer}
 	 */
 	var stubs = new goog.testing.PropertyReplacer();
+	
+	/**
+	 * @private
+	 * @type {cursoconducir.MockTitledEntityStorageClient}
+	 */
+	var mockClient = new cursoconducir.MockTitledEntityStorageClient(allQuestions);
 
 	/**
 	 * @public
 	 */
 	this.setUp = function() {
-		stubs.set(cursoconducir.Question, "getAll", function(success, error,
-				complete) {
-			success(questions);
-			if (complete) {
-				complete();
-			}
-		});
-
-		stubs.set(cursoconducir.Question, "get", function(ids, success, error,
-				complete) {
-			/** @type {Array.<cursoconducir.Question>} */
-			var foundLessons = [];
-			$(questions).each(function() {
-				if (goog.array.contains(ids, this.id)) {
-					goog.array.insert(foundLessons, this);
-				}
-			});
-			success(foundLessons);
-			if (complete) {
-				complete();
-			}
-		});
-
-		stubs.set(cursoconducir.Question, "store", function(questions, success,
-				error, complete) {
-			$(questions).each(function() {
-				goog.array.insert(questions, this);
-			});
-			success();
-			if (complete) {
-				complete();
-			}
-		});
-
-		stubs.set(cursoconducir.Question, "del", function(ids, success, error,
-				complete) {
-			/** @type {Array.<cursoconducir.Question>} */
-			var newLessons = [];
-			$(questions).each(function() {
-				if (!goog.array.contains(ids, this.id)) {
-					goog.array.insert(newLessons, this);
-				}
-			});
-			questions = newLessons;
-			success();
-			if (complete) {
-				complete();
-			}
-		});
+		stubs.set(cursoconducir.QuestionClient.prototype, "getAll", mockClient.getAll);
+		stubs.set(cursoconducir.QuestionClient.prototype, "get", mockClient.get);
+		stubs.set(cursoconducir.QuestionClient.prototype, "store", mockClient.store);
+		stubs.set(cursoconducir.QuestionClient.prototype, "del", mockClient.del);
+		stubs.set(cursoconducir.QuestionClient.prototype, "count", mockClient.count);
+		stubs.set(cursoconducir.QuestionClient.prototype, "getPaged", mockClient.getPaged);
+		stubs.set(cursoconducir.QuestionClient.prototype, "allEntities_", mockClient.allEntities_);
 	};
 
 	/**
