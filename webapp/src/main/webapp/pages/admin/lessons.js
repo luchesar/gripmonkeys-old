@@ -7,6 +7,8 @@ goog.require('cursoconducir.AllTestsModule');
 goog.require('cursoconducir.template.lesson.buttons');
 goog.require('cursoconducir.template.lessonpage');
 goog.require('cursoconducir.utils');
+goog.require('cursoconducir.Lesson');
+goog.require('cursoconducir.LessonClient');
 
 goog.require('goog.json');
 goog.require('goog.events');
@@ -61,6 +63,13 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		/** @type {?cursoconducir.Lesson} */
 		activeLesson : {id:null, title: "", description: "", questionIds:/**@type {Array.<string>}*/[]}
 	};
+	
+	/**
+	 * @private
+	 * @type {cursoconducir.LessonClient}
+	 */
+	var lessonClient = new cursoconducir.LessonClient();
+	
 	/**
 	 * @type {cursoconducir.AllLessons}
 	 * @private
@@ -156,7 +165,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 				lessonForm.show(model);
 				updateButtons(cursoconducir.template.lesson.buttons.edit);
 			} else {
-				cursoconducir.Lesson.get([ lessonId ], 
+				lessonClient.get([ lessonId ], 
 						/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
 					model.activeLesson = lessons[0];
 					lessonForm.show(model);
@@ -177,7 +186,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 */
 	var fetchAllLessons = function(onComplate) {
 		hideFeedback();
-		cursoconducir.Lesson.getAll(
+		lessonClient.getAll(
 		/** @type {cursoconducir.Lesson.onSuccess}*/function(allLessons, textStatus, jqXHR) {
 			model.allLessons = allLessons;
 		}, 
@@ -244,8 +253,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	var postToServer = function(lesson, onSuccess) {
 		hideFeedback();
 
-		cursoconducir.Lesson
-				.store([ lesson ],onSuccess,
+		lessonClient.store([ lesson ],onSuccess,
 						/**@type {cursoconducir.TitledEntity.onError}*/
 						function(xhr, ajaxOptions, thrownError) {
 							showFeedback('the lesson did not get saved because server returned error \''
@@ -267,7 +275,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			selectedLessons += selectedLesson.title + ", ";
 		}
 		if (confirmDelete(selectedLessons)) {
-			cursoconducir.Lesson.del(selectedLessonsIds,
+			lessonClient.del(selectedLessonsIds,
 			/**@type {cursoconducir.TitledEntity.onDelSuccess}*/
 			function(wasDeleted, textStatus, jqXHR) {
 				if (wasDeleted) {

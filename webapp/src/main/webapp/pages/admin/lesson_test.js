@@ -1,7 +1,7 @@
 goog.require('cursoconducir.admin.LessonsPage');
 goog.require('cursoconducir.admin.lessons');
 goog.require('goog.testing.PropertyReplacer');
-goog.require('cursoconducir.MockLesson');
+goog.require('cursoconducir.MockLessonClient');
 goog.require('cursoconducir.alllessons');
 goog.require('cursoconducir.allquestions');
 goog.require('cursoconducir.Question');
@@ -11,6 +11,7 @@ goog.require('goog.History');
 goog.require('goog.testing.ContinuationTestCase');
 goog.require('goog.testing.jsunit');
 goog.require('goog.Uri');
+goog.require('cursoconducir.LessonClient');
 
 /** @type {cursoconducir.admin.LessonPage} */
 var allLessons;
@@ -25,7 +26,7 @@ var question1;
 var question2;
 /** @type {?cursoconducir.Question} */
 var question3;
-/** @type {cursoconducir.MockLesson} */
+/** @type {cursoconducir.MockLessonClient} */
 var mockLesson;
 
 /** @type {cursoconducir.MockQuestionClient} */
@@ -72,7 +73,7 @@ function setUp() {
 		description : "lesson2 description",
 		questionIds : [ "1", "2", "3" ]
 	};
-	mockLesson = new cursoconducir.MockLesson([ lesson1, lesson2 ]);
+	mockLesson = new cursoconducir.MockLessonClient([ lesson1, lesson2 ]);
 	mockLesson.setUp();
 
 	mockQuestion = new cursoconducir.MockQuestionClient([ question1, question2,
@@ -188,7 +189,7 @@ function createUrlTest() {
 	cursoconducir.alllessons.assertLessonPresent(lesson2);
 
 	var createdLesson;
-	cursoconducir.Lesson.getAll(function(allLessons) {
+	new cursoconducir.LessonClient().getAll(function(allLessons) {
 		assertEquals(3, allLessons.length);
 		var savedLesson = allLessons[2];
 		assertNotNull('createdTestTitle', savedLesson.id);

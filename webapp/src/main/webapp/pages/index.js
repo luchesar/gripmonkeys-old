@@ -18,6 +18,8 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
+goog.require('cursoconducir.Lesson');
+goog.require('cursoconducir.LessonClient');
 
 /**
  * @constructor
@@ -69,6 +71,12 @@ cursoconducir.IndexPage = function(indexContainer) {
 	var lessonList = null;
 	/** @type {cursoconducir.SigninForm}*/
 	var signinForm = null;
+	
+	/**
+	 * @private
+	 * @type {cursoconducir.LessonClient}
+	 */
+	var lessonClient = new cursoconducir.LessonClient();
 
 	/**
 	 * @public
@@ -99,7 +107,7 @@ cursoconducir.IndexPage = function(indexContainer) {
 		} else if (hash.indexOf(PREVIEW) == 0) {
 			initial.doPreview(cursoconducir.utils.queryParam(TEST_KEY));
 		} else if (hash.indexOf(LESSONS) > -1) {
-			cursoconducir.Lesson.getAll(function(allLessons){
+			lessonClient.getAll(function(allLessons){
 				lessonList.show(allLessons);
 			});
 		} else if (hash.indexOf(LESSON) > -1) {
@@ -128,7 +136,7 @@ cursoconducir.IndexPage = function(indexContainer) {
 	var doShowLesson = function() {
 		/** @type {string}*/
 		var lessonId = cursoconducir.utils.queryParam(LESSON);
-		cursoconducir.Lesson.get([ lessonId ], 
+		lessonClient.get([ lessonId ], 
 				/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
 			/** @type {Array.<cursoconducir.Lesson>|cursoconducir.Lesson}*/
 			var foundLesson = lessons;

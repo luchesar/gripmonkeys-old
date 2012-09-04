@@ -97,15 +97,16 @@ cursoconducir.MockTitledEntityStorageClient.prototype.count = function(published
  * @inheritDoc
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.store = function(questions, success, error, complete) {
-	$(this.allEntities_).each(function() {
+	var that = this;
+	$(questions).each(function() {
 		if (!this.id) {
 			this.id = Math.random();
 		}
-		var foundEntity = cursoconducir.utils.findObjectById(this.allEntities_, this.id);
+		var foundEntity = cursoconducir.utils.findObjectById(that.allEntities_, this.id);
 		if (foundEntity) {
-			goog.array.remove(this.allEntities_, this);
+			goog.array.remove(that.allEntities_, this);
 		} 
-		goog.array.insert(this.allEntities_, this);
+		goog.array.insert(that.allEntities_, this);
 	});
 	success(this.allEntities_);
 	if (complete) {
