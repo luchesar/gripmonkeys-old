@@ -3,6 +3,7 @@ goog.require('cursoconducir.LessonForm');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.MockQuestionClient');
+goog.require('cursoconducir.titledentityassert');
 goog.require('cursoconducir.allquestions');
 goog.require('goog.array');
 
@@ -78,9 +79,9 @@ var testShowEmptyLesson = function() {
 	assertEquals("No questions", lessonQuestions.text());
 
 	var allQuestions = lessonContainer.find('#allQuestions');
-	cursoconducir.allquestions.assertQuestionPresent(allQuestions, question1);
-	cursoconducir.allquestions.assertQuestionPresent(allQuestions, question2);
-	cursoconducir.allquestions.assertQuestionPresent(allQuestions, question3);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question2, false);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question3, false);
 };
 
 var testShowALesson = function() {
@@ -102,13 +103,11 @@ var testShowALesson = function() {
 			"textarea[name=lessonDescription]").val());
 
 	var lessonQuestions = lessonContainer.find("#lessonQuestions");
-	cursoconducir.allquestions
-			.assertQuestionPresent(lessonQuestions, question1);
-	cursoconducir.allquestions
-			.assertQuestionPresent(lessonQuestions, question3);
+	cursoconducir.titledentityassert.assertEntityPresent(lessonQuestions, question1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(lessonQuestions, question3, false);
 
 	var allQuestions = lessonContainer.find('#allQuestions');
-	cursoconducir.allquestions.assertQuestionPresent(allQuestions, question2);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question2, false);
 };
 
 var testShowLessonInTheRightOrder = function() {
@@ -118,9 +117,9 @@ var testShowLessonInTheRightOrder = function() {
 		activeLesson : lesson1
 	});
 	var lessonContainer = $('#lessonContainer');
-	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question3, question1);
-	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question3, question2);
-	cursoconducir.allquestions.assertQuestionBefore(lessonContainer, question1, question2);
+	cursoconducir.titledentityassert.assertQuestionBefore(lessonContainer, question3, question1);
+	cursoconducir.titledentityassert.assertQuestionBefore(lessonContainer, question3, question2);
+	cursoconducir.titledentityassert.assertQuestionBefore(lessonContainer, question1, question2);
 };
 
 var testAddRemoveQuestions = function() {
@@ -140,10 +139,8 @@ var testAddRemoveQuestions = function() {
 
 	addQuestionsButton.click();
 	var lessonQuestions = lessonContainer.find("#lessonQuestions");
-	cursoconducir.allquestions
-			.assertQuestionPresent(lessonQuestions, question1);
-	cursoconducir.allquestions
-			.assertQuestionPresent(lessonQuestions, question3);
+	cursoconducir.titledentityassert.assertEntityPresent(lessonQuestions, question1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(lessonQuestions, question3, false);
 	assertTrue(goog.array.equals([question1.id, question3.id], lessonForm.getLesson().questionIds));
 
 	lessonQuestions.find("input[type='checkbox'][name='" + question1.id + "']")
@@ -153,12 +150,9 @@ var testAddRemoveQuestions = function() {
 	removeQuestionsButton.click();
 
 	allQuestions = lessonContainer.find('#allQuestions');
-	cursoconducir.allquestions
-			.assertQuestionPresent(allQuestions, question1);
-	cursoconducir.allquestions
-			.assertQuestionPresent(allQuestions, question2);
-	cursoconducir.allquestions
-			.assertQuestionPresent(allQuestions, question3);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question2, false);
+	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question3, false);
 	assertTrue(goog.array.equals([], lessonForm.getLesson().questionIds));
 };
 

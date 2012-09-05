@@ -130,31 +130,63 @@ cursoconducir.MockTitledEntityStorageClient.prototype.del = function(questionIds
 	complete();
 };
 
-cursoconducir.titledentityassert.assertEntityPresent = function(entity) {
-	var entityTitle = $("a[id='entityTitleLink" + entity.id + "']");
+/**
+ * @public
+ * @param {jQuery} container
+ * @param {cursoconducir.TitledEntity} entity
+ * @param {boolean=} selected
+ */
+cursoconducir.titledentityassert.assertEntityPresent = function(container, entity, selected) {
+	var entityTitle = container.find("a[id='entityTitleLink" + entity.id + "']");
 	assertNotNullNorUndefined(entityTitle);
 	assertEquals(entity.title, entityTitle.text().trim());
 	assertTrue(entityTitle.attr('href') == undefined);
 	
 	if (entity.published) {
-		var publishedImage = $('img[src="/images/published.png"][id="publishedIndication' + entity.id + '"]');	
+		var publishedImage = container.find('img[src="/images/published.png"][id="publishedIndication' + entity.id + '"]');	
 		assertNotNullNorUndefined(publishedImage[0]);
 	} else {
-		var unpublishedImage = $('img[src="/images/unpublished.png"][id="publishedIndication' + entity.id + '"]');
+		var unpublishedImage = container.find('img[src="/images/unpublished.png"][id="publishedIndication' + entity.id + '"]');
 		assertNotNullNorUndefined(unpublishedImage[0]);
 	}
 	
-	var imageLink = $('a[id="testImageLink' + entity.id + '"]');
+	var imageLink = container.find('a[id="testImageLink' + entity.id + '"]');
 	assertNotNullNorUndefined(imageLink[0]);
 	
-	var image = $('img[src="/image?key=' + entity.image + '&s=80&falback=/images/80x50.gif"]');
+	var image = container.find('img[src="/image?key=' + entity.image + '&s=80&falback=/images/80x50.gif"]');
 	assertNotNullNorUndefined(image[0]);
 
-	assertNotNullNorUndefined($("div:contains('" + entity.description + "')")
+	assertNotNullNorUndefined(container.find("div:contains('" + entity.description + "')")
 			.text());
 
-	var checkBox = $("input[type='checkbox'][name='" + entity.id + "']");
+	var checkBox = container.find("input[type='checkbox'][name='" + entity.id + "']");
 	assertNotNullNorUndefined(checkBox[0]);
+	if (goog.isDefAndNotNull(selected)) {
+		if (!selected) {
+			assertEquals(undefined, checkBox.attr('checked'));
+		}
+	}
+};
+
+/**
+ * @public
+ * @param {jQuery} container
+ * @param {cursoconducir.TitledEntity} entity1
+ * @param {cursoconducir.TitledEntity} entity2
+ */
+cursoconducir.titledentityassert.assertQuestionBefore = function(container, entity1, entity2) {
+	var checkBox1 = container.find("input[type='checkbox'][name='" + entity1.id + "']");
+	var checkBox2 = container.find("input[type='checkbox'][name='" + entity2.id + "']");
+	
+	var question1Container = checkBox1.parents('#entitysInAList');
+	var question2Container = checkBox2.parents('#entitysInAList');
+	assertNotNullNorUndefined(question1Container[0]);
+	assertNotNullNorUndefined(question2Container[0]);
+
+	assertEquals(question1Container.parent().html(), question2Container.parent().html());
+
+	var children=question1Container.parent().children();
+	assertTrue(children.index(question1Container) < children.index(question2Container));
 };
 
 

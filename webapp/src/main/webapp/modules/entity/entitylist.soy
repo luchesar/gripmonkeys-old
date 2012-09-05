@@ -3,7 +3,7 @@
 /**
  * The template for all lessons.
  * @param entities
- * @param emptyMessage
+ * @param emptyLabel
  */
 {template .content}
 <div id="entitiesContainer">
@@ -36,7 +36,7 @@
     </div>
   </div>
 {ifempty}
-<small>{if $emptyMessage}{$emptyMessage}{else}No entities{/if}</small>
+<small>{if $emptyLabel}{$emptyLabel}{else}No entities{/if}</small>
 {/foreach}
 </div>
 {/template}

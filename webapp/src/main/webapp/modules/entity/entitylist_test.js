@@ -49,7 +49,7 @@ var testShowEmptyModel = function() {
 var testShowEmptyModelWithLabel = function() {
 	entityList.show({
 		entities : [],
-		emptyMessage: 'some meaningful message'
+		emptyLabel: 'some meaningful message'
 	});
 	var parent = $('#parent');
 	assertNotNull(parent);
@@ -66,8 +66,8 @@ var testShowSomeTests = function() {
 	var allLessonsContainer = $('#parent');
 	assertNotNullNorUndefined(allLessonsContainer);
 
-	cursoconducir.titledentityassert.assertEntityPresent(e1);
-	cursoconducir.titledentityassert.assertEntityPresent(e2);
+	cursoconducir.titledentityassert.assertEntityPresent(parent, e1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(parent, e2, false);
 };
 
 var testGetSelection = function() {
