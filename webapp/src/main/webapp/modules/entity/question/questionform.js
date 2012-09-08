@@ -1,6 +1,6 @@
-goog.provide('cursoconducir.TestModule');
+goog.provide('cursoconducir.QuestionForm');
 
-goog.require('cursoconducir.template.test');
+goog.require('cursoconducir.template.questionform');
 goog.require('cursoconducir.utils');
 goog.require('bootstrap.modal');
 goog.require('cursoconducir.Question');
@@ -12,7 +12,7 @@ goog.require('cursoconducir.ImageUpload');
  * @constructor
  * @param {jQuery} container
  */
-cursoconducir.TestModule = function(container) {
+cursoconducir.QuestionForm = function(container) {
 	/**
 	 * @private
 	 * @type {?cursoconducir.Question}
@@ -85,7 +85,7 @@ cursoconducir.TestModule = function(container) {
 	 */
     this.show = function(model) { 
     	/** @type {string}*/
-        var templateHtml = cursoconducir.template.test.template(model);
+        var templateHtml = cursoconducir.template.questionform.content(model);
         container.html(templateHtml);
         currentTest = model.activeTest;
         if (currentTest == undefined) {
@@ -107,7 +107,7 @@ cursoconducir.TestModule = function(container) {
      */
     var resetFileToUploadContainer = function() {
     	/** @type {string}*/
-        var uploadImageModalHtml = cursoconducir.template.test.uploadImageModal();
+        var uploadImageModalHtml = cursoconducir.template.questionform.uploadImageModal();
         uploadImageModalContainer.html(uploadImageModalHtml);
         currectTestImage = $('#currentTestImage');
         doneButton = $('#doneButton');
@@ -268,8 +268,7 @@ cursoconducir.TestModule = function(container) {
     function uploadComplete(evt) {
         imageKey = evt.target.getResponseHeader('key');
         /** @type {string}*/
-        var imageUrl = '/image?key=' + imageKey
-                + '&falback=/images/330x230.gif';
+        var imageUrl = '/image?key=' + imageKey+ '&falback=/images/330x230.gif';
         
         currectTestImage.attr('src', imageUrl);
 //        currectTestImage.attr('src', 'http://www.antarcticconnection.com/Antarctic/travel/trips/2011/landscape212.jpg');

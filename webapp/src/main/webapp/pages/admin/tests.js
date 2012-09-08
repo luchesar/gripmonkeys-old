@@ -2,7 +2,7 @@ goog.provide('cursoconducir.admin.TestsPage');
 goog.provide('cursoconducir.admin.tests');
 
 goog.require('cursoconducir.utils');
-goog.require('cursoconducir.TestModule');
+goog.require('cursoconducir.QuestionForm');
 goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('goog.net.Cookies');
@@ -87,9 +87,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 
 	/**
 	 * @private
-	 * @type {cursoconducir.TestModule}
+	 * @type {cursoconducir.QuestionForm}
 	 */
-	var testModule = new cursoconducir.TestModule(contanier);
+	var testModule = new cursoconducir.QuestionForm(contanier);
 	/**
 	 * @private
 	 * @type {cursoconducir.EntityList}
