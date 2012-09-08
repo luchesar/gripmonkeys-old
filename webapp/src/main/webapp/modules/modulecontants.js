@@ -2,19 +2,19 @@ goog.provide('cursoconducir.moduleconstants');
 
 /** 
  * @public 
- * @type {string}
  * @const
+ * @type {string}
  */
 cursoconducir.moduleconstants.INDEX_MODULE = 'cursoconducir.modules.index';
 /** 
- * @public 
+ * @public
+ * @const 
  * @type {string}
- * @const
  */
 cursoconducir.moduleconstants.ADMIN_QUESTIONS_MODULE = 'cursoconducir.modules.admin.questions';
 /** 
- * @public 
+ * @public
+ * @const 
  * @type {string}
- * @const
  */
 cursoconducir.moduleconstants.ADMIN_LESSONS_MODULE = 'cursoconducir.modules.admin.lessons';

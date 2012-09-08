@@ -6,6 +6,8 @@ goog.require('bootstrap.modal');
 goog.require('cursoconducir.Question');
 goog.require('cursoconducir.admin.tests.Model');
 
+goog.require('cursoconducir.ImageUpload');
+
 /**
  * @constructor
  * @param {jQuery} container

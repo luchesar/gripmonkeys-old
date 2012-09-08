@@ -263,7 +263,7 @@ cursoconducir.LessonForm = function(container) {
 	    	goog.array.remove(allOtherQuestions, questionById);
 		});
     	
-    	return {lessonQuestions: lessonQuestions, allOtherQuestions: allOtherQuestions}
+    	return {lessonQuestions: lessonQuestions, allOtherQuestions: allOtherQuestions};
     };
     
     /**
