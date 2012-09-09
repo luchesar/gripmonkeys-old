@@ -2,7 +2,6 @@ goog.provide('cursoconducir.admin.LessonsPage');
 goog.provide('cursoconducir.admin.lessons');
 
 goog.require('cursoconducir.LessonForm');
-goog.require('cursoconducir.template.lesson.buttons');
 goog.require('cursoconducir.template.lessonpage');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.Lesson');
@@ -48,11 +47,11 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	lessonsContainer.html(cursoconducir.template.lessonpage.content());
 
 	/** @type {jQuery} */
-	var contanier = $('#container');
+	var contanier = lessonsContainer.find('#container');
 	/** @type {jQuery} */
-	var pageButtons = $('.pageButtons');
+	var pageButtons = lessonsContainer.find('.pageButtons');
 	/** @type {jQuery} */
-	var feedback = $('.feedback');
+	var feedback = lessonsContainer.find('.feedback');
 
 	/** @private */
 	var model = {
@@ -87,9 +86,9 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 */
 	var selectionChangedCallback = function(selection) {
 		if (!goog.array.isEmpty(selection)) {
-			updateButtons(cursoconducir.template.lesson.buttons.initialWithSelection);
+			updateButtons(cursoconducir.template.lessonpage.initialButtonsWithSelection);
 		} else {
-			updateButtons(cursoconducir.template.lesson.buttons.initial);
+			updateButtons(cursoconducir.template.lessonpage.initialButtons);
 		}
 	};
 	allLessons.addSelectionChangeCallback(selectionChangedCallback);
@@ -127,11 +126,13 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			hash = window.location.hash;
 		}
 		if (hash == '' || hash == '#' || hash == CANCEL) {
+			updateTitle(cursoconducir.template.lessonpage.titleInitial);
 			fetchAllLessons(function() {
 				allLessons.show({entities: model.allLessons, emptyLabel: 'No lessons'});
 			});
-			updateButtons(cursoconducir.template.lesson.buttons.initial);
+			updateButtons(cursoconducir.template.lessonpage.initialButtons);
 		} else if (hash == CREATE) {
+			updateTitle(cursoconducir.template.lessonpage.createTitle);
 			model.activeLesson = {
 				id : null,
 				title : "",
@@ -139,8 +140,9 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 				questionIds : []
 			};
 			lessonForm.show(model);
-			updateButtons(cursoconducir.template.lesson.buttons.edit);
+			updateButtons(cursoconducir.template.lessonpage.editButtons);
 		} else if (hash.indexOf(UPDATE) == 0) {
+			updateTitle(cursoconducir.template.lessonpage.editTitle);
 			doUpdateLesson();
 		}
 	};
@@ -160,7 +162,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		if ((model && model.activeLesson && model.activeLesson.id == lessonId)
 				|| lessonId == undefined || lessonId == "") {
 			lessonForm.show(model);
-			updateButtons(cursoconducir.template.lesson.buttons.edit);
+			updateButtons(cursoconducir.template.lessonpage.editButtons);
 		} else {
 			/** @type {?cursoconducir.Lesson} */
 			var foundLesson = cursoconducir.utils.findObjectById(
@@ -168,13 +170,13 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			if (foundLesson) {
 				model.activeLesson = foundLesson;
 				lessonForm.show(model);
-				updateButtons(cursoconducir.template.lesson.buttons.edit);
+				updateButtons(cursoconducir.template.lessonpage.editButtons);
 			} else {
 				lessonClient.get([ lessonId ], 
 						/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
 					model.activeLesson = lessons[0];
 					lessonForm.show(model);
-					updateButtons(cursoconducir.template.lesson.buttons.edit);
+					updateButtons(cursoconducir.template.lessonpage.editButtons);
 				}, 
 				/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
 					showFeedback('Cannot fetch test with id ' + lessonId
@@ -210,13 +212,23 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		var templateHtml = template(model);
 		pageButtons.html(templateHtml);
 
-		$('#deleteButton').click(function() {
+		lessonsContainer.find('[id="deleteButton"').click(function() {
 			doDelete();
 		});
 		/** @type {jQuery} */
-		$('#saveButton').click(function() {
+		lessonsContainer.find('[id="saveButton"]').click(function() {
 			updateCurrentEditedLesson();
 		});
+	};
+	
+	/**
+	 * @param {function(Object.<*>)} template
+	 * @private
+	 */
+	var updateTitle = function(template) {
+		/** @type {string} */
+		var templateHtml = template(model);
+		$('#mainTitle').html(templateHtml);
 	};
 
 	/** private */
@@ -299,7 +311,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			}, 
 			/**@type {cursoconducir.TitledEntity.onComplate}*/function() {
 				allLessons.show({entities: model.allLessons, emptyLabel: 'No lessons'});
-				updateButtons(cursoconducir.template.lesson.buttons.initial);
+				updateButtons(cursoconducir.template.lessonpage.initialButtons);
 			});
 		}
 	};
@@ -316,7 +328,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	/** @private */
 	var showFeedback = function(errorMessage) {
 		/** @type {string} */
-		var templateHtml = cursoconducir.template.lesson.buttons.feedback({
+		var templateHtml = cursoconducir.template.lessonpage.feedback({
 			errorMessage : errorMessage
 		});
 		feedback.html(templateHtml);

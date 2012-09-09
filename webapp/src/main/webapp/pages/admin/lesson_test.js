@@ -112,6 +112,8 @@ function testDefaultUrl() {
 	assertNotNullNorUndefined(createButton[0]);
 
 	assertEquals('#create', createButton.attr('href'));
+	var mainTitle = $('#mainTitle');
+	assertEquals('Manage Lessons <small>Create new or modify old lessons</small>', mainTitle.html());
 };
 
 function testCancelUrl() {
@@ -122,6 +124,8 @@ function testCancelUrl() {
 	assertNotNullNorUndefined(createButton[0]);
 
 	assertEquals('#create', createButton.attr('href'));
+	var mainTitle = $('#mainTitle');
+	assertEquals('Manage Lessons <small>Create new or modify old lessons</small>', mainTitle.html());
 };
 
 function testCreateUrl() {
@@ -133,16 +137,20 @@ function testCreateUrl() {
 };
 
 function createUrlTest() {
+	var mainTitle = $('#mainTitle');
 	var saveButton = $('#saveButton');
 	var addQuestionsButton = $('#addQuestionsButton');
 	var removeQuestionsButton = $('#addQuestionsButton');
 	var lessonQuestionsContainer = $('#lessonQuestions');
 	var allQuestionsContainer = $('#allQuestions');
 	assertNotNullNorUndefined(saveButton[0]);
+	assertNotNullNorUndefined(mainTitle[0]);
 	assertNotNullNorUndefined(addQuestionsButton[0]);
 	assertNotNullNorUndefined(removeQuestionsButton[0]);
 	assertNotNullNorUndefined(lessonQuestionsContainer[0]);
 	assertNotNullNorUndefined(allQuestionsContainer[0]);
+	
+	assertEquals('Create a Lesson <small>enter the lesson details</small>', mainTitle.html());
 
 	assertTrue(goog.string.contains(addQuestionsButton.attr('class'),
 			'disabled'));
@@ -222,16 +230,20 @@ function testEdit() {
 };
 
 function editTest() {
+	var mainTitle = $('#mainTitle');
 	var saveButton = $('#saveButton');
 	var addQuestionsButton = $('#addQuestionsButton');
 	var removeQuestionsButton = $('#removeQuestionsButton');
 	var lessonQuestionsContainer = $('#lessonQuestions');
 	var allQuestionsContainer = $('#allQuestions');
+	assertNotNullNorUndefined(mainTitle[0]);
 	assertNotNullNorUndefined(saveButton[0]);
 	assertNotNullNorUndefined(addQuestionsButton[0]);
 	assertNotNullNorUndefined(removeQuestionsButton[0]);
 	assertNotNullNorUndefined(lessonQuestionsContainer[0]);
 	assertNotNullNorUndefined(allQuestionsContainer[0]);
+	
+	assertEquals('Edit a Lesson <small>enter the lesson new details</small>', mainTitle.html());
 
 	assertTrue(goog.string.contains(addQuestionsButton.attr('class'),
 			'disabled'));

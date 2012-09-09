@@ -10,7 +10,7 @@
         <div class="container">
           <div class="row">
             <div class="span10">
-              <h1>
+              <h1 id="mainTitle">
                 Manage Lessons <small>Create new or modify old lessons</small>
               </h1>
             </div>
@@ -35,4 +35,65 @@
         </div>
       </div>
     </div>
+{/template}
+
+
+/**
+ * The initial title
+ */
+{template .titleInitial}
+    Manage Lessons <small>Create new or modify old lessons</small>
+{/template}
+
+/**
+ * The create title
+ */
+{template .createTitle}
+    Create a Lesson <small>enter the lesson details</small>
+{/template}
+
+/**
+ * The edit title
+ */
+{template .editTitle}
+    Edit a Lesson <small>enter the lesson new details</small
+{/template}
+
+/**
+ * The lesson management initial buttons template.
+ */
+{template .initialButtons}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>
+{/template}
+
+/**
+ * The lesson management initial template with selection.
+ */
+{template .initialButtonsWithSelection}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>&nbsp;
+    <a id="deleteButton" class="btn large primary">Delete</a>
+{/template}
+
+/**
+ * The lesson management edit buttons template.
+ */
+{template .editButtons}
+    <a id="saveButton" class="btn large primary">Save changes</a>&nbsp;
+    <a id="cancelButton" href="#cancel" class="btn large">Cancel</a>
+{/template}
+
+/**
+ * The feedback template.
+ * @param errorMessage
+ */
+{template .feedback}
+<div class="container">
+  <div class="row">
+    <div class="span16" class="center testFeedbackContent">
+      <div class="alert-message error">
+        <strong>Oww, snap!</strong>&nbsp;{$errorMessage}
+      </div>
+    </div>
+  </div>
+</div>
 {/template}
