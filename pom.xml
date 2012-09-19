@@ -120,6 +120,10 @@
       </snapshots>
     </repository>
     <repository>
+      <id>metabroadcast</id> <!--Repository to download the soy.jar from-->
+      <url>http://mvn.metabroadcast.com/repo</url>      
+    </repository>
+    <repository>
       <id>google-releases</id>
       <name>Google Releases</name>
       <url>https://oss.sonatype.org/content/repositories/google-releases</url>

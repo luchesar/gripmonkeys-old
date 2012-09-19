@@ -51,6 +51,11 @@ cursoconducir.MockXmlHttpRequest.prototype.sentFormDatas = [];
 
 /**
  * @public
+ */
+cursoconducir.MockXmlHttpRequest.prototype.status;
+
+/**
+ * @public
  * @param {string} eventType
  * @param {Function} eventListener
  * @param {boolean} b

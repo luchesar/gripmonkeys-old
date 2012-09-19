@@ -6,8 +6,9 @@ import org.bitbucket.cursodeconducir.services.entity.Lesson;
 import org.bitbucket.cursodeconducir.services.storage.LessonStorage;
 
 import com.google.gson.reflect.TypeToken;
+import com.google.inject.Singleton;
 
-@SuppressWarnings("serial")
+@Singleton @SuppressWarnings("serial")
 public class LessonStorageServlet extends
 		TitledEntityStorageServlet<LessonStorage, Lesson> {
 

@@ -35,6 +35,8 @@ cursoconducir.MockQuestionClient = function(allQuestions) {
 		stubs.set(cursoconducir.QuestionClient.prototype, "count", mockClient.count);
 		stubs.set(cursoconducir.QuestionClient.prototype, "getPaged", mockClient.getPaged);
 		stubs.set(cursoconducir.QuestionClient.prototype, "allEntities_", mockClient.allEntities_);
+		stubs.set(cursoconducir.QuestionClient.prototype, "error", mockClient.error);
+		stubs.set(cursoconducir.QuestionClient.prototype, "doError", mockClient.doError);
 	};
 
 	/**
@@ -42,6 +44,15 @@ cursoconducir.MockQuestionClient = function(allQuestions) {
 	 */
 	this.tearDown = function() {
 		stubs.reset();
+	};
+	
+	/**
+	 * @public
+	 * @param {{status:string, error:string}} error
+	 */
+	this.setError = function(error) {
+		mockClient.setError(error);
+		stubs.set(cursoconducir.QuestionClient.prototype, "error", mockClient.error);
 	};
 };
 

@@ -134,7 +134,7 @@ cursoconducir.IndexPage = function(indexContainer) {
 	 * @private
 	 */
 	var doShowLesson = function() {
-		/** @type {string}*/
+		/** @type {?string}*/
 		var lessonId = cursoconducir.utils.queryParam(LESSON);
 		lessonClient.get([ lessonId ], 
 				/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {

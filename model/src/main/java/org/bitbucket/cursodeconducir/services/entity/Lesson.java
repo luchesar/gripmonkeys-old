@@ -3,7 +3,11 @@ package org.bitbucket.cursodeconducir.services.entity;
 import java.util.List;
 
 import com.google.common.base.Objects;
+import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.Unindexed;
 
+@Cached
+@Unindexed
 public class Lesson extends TitledEntity {
     /**
      * Used only for storage purposes. Do not use for anything instead us the

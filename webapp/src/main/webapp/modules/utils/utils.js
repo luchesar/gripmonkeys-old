@@ -188,8 +188,13 @@ cursoconducir.utils.findQuestionById = function(array, id) {
 /**
  * @public
  * @param {string} key
- * @return {string}
+ * @return {?string}
  */
 cursoconducir.utils.queryParam = function(key){
-	return /** @type {string}*/new goog.Uri(window.location).getQueryData().get(key);
+	var locationUri = new goog.Uri(window.location);
+	var param =  /** @type {string}*/locationUri.getQueryData().get(key);
+	if (!goog.isDefAndNotNull(param)) {
+		return new goog.Uri(locationUri.getFragment()).getQueryData().get(key).toString();
+	}
+	return null;
 };

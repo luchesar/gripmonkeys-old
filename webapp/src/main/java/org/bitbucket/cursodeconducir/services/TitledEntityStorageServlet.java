@@ -17,6 +17,7 @@ import org.bitbucket.cursodeconducir.services.storage.TitledEntityStorage;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.inject.Singleton;
 
 @SuppressWarnings("serial")
 public abstract class TitledEntityStorageServlet<ES extends TitledEntityStorage<TE>, TE extends TitledEntity>

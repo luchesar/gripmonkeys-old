@@ -56,7 +56,7 @@ cursoconducir.InitialIndex = function(container) {
 
 	/**
 	 * @public
-	 * @param {string} testId
+	 * @param {?string} testId
 	 */
 	this.doPreview = function(testId) {
 		hideExtras();

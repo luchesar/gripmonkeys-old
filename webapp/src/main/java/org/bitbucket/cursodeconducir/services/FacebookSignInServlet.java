@@ -16,7 +16,9 @@ import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
-@SuppressWarnings("serial")
+import com.google.inject.Singleton;
+
+@Singleton @SuppressWarnings("serial")
 public class FacebookSignInServlet extends HttpServlet {
 //	private static final String APP_ID = "315440385198744";
 //	private static final String APP_SECRET = "b7b3e5904aa685bd3570e3923e5632f4";

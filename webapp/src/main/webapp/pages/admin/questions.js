@@ -70,7 +70,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		activeTest : null
 	};
 	
-	testsContainer.html(cursoconducir.template.lessonpage.content());
+	testsContainer.html(cursoconducir.template.questions.content());
 
 	/** @type {jQuery} */
 	var contanier = $('#container');
@@ -95,6 +95,13 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 * @type {cursoconducir.EntityList}
 	 */
 	var allTestsModule = new cursoconducir.EntityList(contanier);
+	allTestsModule.addLinkCallback(function(id) {
+		var locationUri = new goog.Uri(window.location);
+		locationUri.removeParameter("test");
+		locationUri.setFragment("update?test=" + id );
+		
+		window.location = locationUri.toString();
+	});
 
 	/**
 	 * @private
@@ -188,6 +195,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 			hash = window.location.hash;
 		}
 		if (hash == '' || hash == '#' || hash == CANCEL) {
+			updateTitle(cursoconducir.template.questions.titleInitial);
 			model.activeTest = null;
 			initAllTests(function() {
 				allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
@@ -195,35 +203,43 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 				$("#footer").addClass("loaded");
 			});
 		} else if (hash == CREATE) {
+			updateTitle(cursoconducir.template.questions.createTitle);
 			model.activeTest = testModule.createEmptyTest();
 			testModule.show(model);
 			updateButtons(cursoconducir.template.tests.buttons.edit);
 		} else if (hash.indexOf(UPDATE) == 0) {
+			/** @type {?string}*/
 			var testId = cursoconducir.utils.queryParam(TEST_KEY);
+			var doUpdate = function() {
+				testModule.show(model);
+				updateTitle(cursoconducir.template.questions.editTitle);
+				updateButtons(cursoconducir.template.tests.buttons.edit);
+			};
 			if ((model && model.activeTest && model.activeTest.id == testId)
 					|| testId == undefined || testId == "") {
-				testModule.show(model);
-				updateButtons(cursoconducir.template.tests.buttons.edit);
+				doUpdate();
 			} else {
-				cursoconducir.utils.findOrFetchTest(model, testId, function(
-						test) {
-					model.activeTest = test;
-					testModule.show(model);
-					updateButtons(cursoconducir.template.tests.buttons.edit);
-				}, hideFeedback, showFeedback);
+				cursoconducir.utils.findOrFetchTest(model, testId, 
+						function(test) {
+							model.activeTest = test;
+							doUpdate();
+						}, hideFeedback, showFeedback);
 			}
 		} else if (hash.indexOf(PREVIEW) == 0) {
-			var testId = cursoconducir.utils.queryParam(TEST_KEY);
-			if ((model && model.activeTest && model.activeTest.id == testId)
-					|| testId == undefined || testId == "") {
+			/** @type {?string}*/
+			var updateTestId = cursoconducir.utils.queryParam(TEST_KEY);
+			var doPreview = function() {
 				previewTest(testModule.getTest());
 				$("#footer").addClass("loaded");
+			};
+			if ((model && model.activeTest && model.activeTest.id == updateTestId)
+					|| updateTestId == undefined || updateTestId == "") {
+				doPreview();
 			} else {
-				cursoconducir.utils.findOrFetchTest(model, testId, function(
-						test) {
-					previewTest(test);
-					$("#footer").addClass("loaded");
-				}, hideFeedback, showFeedback);
+				cursoconducir.utils.findOrFetchTest(model, updateTestId, 
+						function(test) {
+							doPreview();
+						}, hideFeedback, showFeedback);
 			}
 		}
 	};
@@ -235,26 +251,24 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	var doPublish = function(published) {
 		var selectedTestsIds = allTestsModule.getSelection();
 		var selectedTests = [];
-		$(selectedTestsIds).each(
-				function() {
-					var selectedTest = cursoconducir.utils.findObjectById(
-							model.allTests, this);
-					selectedTest = cursoconducir.utils.decode(selectedTest);
-					selectedTest.published = published;
-					goog.array.insert(selectedTests, cursoconducir.utils
-							.code(selectedTest));
-				});
+		$(selectedTestsIds).each(function() {
+			var selectedTest = cursoconducir.utils.findObjectById(
+					model.allTests, this);
+			selectedTest = cursoconducir.utils.decode(selectedTest);
+			selectedTest.published = published;
+			goog.array.insert(selectedTests, cursoconducir.utils
+					.code(selectedTest));
+		});
 
-		questionClient.store(
-						selectedTests,
-						function() {
-							allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
-							updateButtons(cursoconducir.template.tests.buttons.initial);
-						},
-						function(xhr, ajaxOptions, thrownError) {
-							showFeedback('Cannot publish or unpublish questions. Server returned error \''
-									+ xhr.status + ' ' + thrownError + '\'');
-						});
+		questionClient.store(selectedTests,
+				function() {
+					allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
+					updateButtons(cursoconducir.template.tests.buttons.initial);
+				},
+				function(xhr, ajaxOptions, thrownError) {
+					showFeedback('Cannot publish or unpublish questions. Server returned error \''
+							+ xhr.status + ' ' + thrownError + '\'');
+				});
 	};
 
 	var previewTest = function(test) {
@@ -266,10 +280,6 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	};
 
 	var initAllTests = function(onComplate) {
-		if (model.allTests != null) {
-			onComplate();
-			return;
-		}
 		hideFeedback();
 		questionClient.getAll(function(data, textStatus, jqXHR) {
 			model.allTests = [];
@@ -349,6 +359,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	/**
 	 * @private
 	 * @param {Array.<cursoconducir.Question>|string} selectedTests
+	 * @return {boolean}
 	 */
 	var confirmDelete = function(selectedTests) {
 		return window.confirm("Are you sure you want to delete '"
@@ -360,21 +371,43 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		var templateHtml = template(model);
 		pageButtons.html(templateHtml);
 
-		$('#deleteButton').click(function() {
+		$('[id="deleteButton"]').click(function() {
 			doDelete();
 		});
-		$('#publishButton').click(function() {
+		$('[id="publishButton"]').click(function() {
 			doPublish(true);
 		});
-		$('#unpublishButton').click(function() {
+		$('[id="unpublishButton"]').click(function() {
 			doPublish(false);
 		});
-		$('#saveEditedButton').click(function() {
+		$('[id="saveEditedButton"]').click(function() {
 			updateCurrentEditedTest();
 		});
-		$('#savePreviewedButton').click(function() {
+		$('[id="savePreviewedButton"]').click(function() {
 			updateCurrentPreviewedTest();
 		});
+		$('[id="previewButton"]').click(function() {
+			/** @type {goog.Uri}*/var locationUri = new goog.Uri(window.location);
+			locationUri.removeParameter("test");
+			locationUri.setFragment("preview?test=" + model.activeTest.id);
+			window.location = locationUri.toString();
+		});
+		$('[id="editPreviewedButton"]').click(function() {
+			/** @type {goog.Uri}*/var locationUri = new goog.Uri(window.location);
+			locationUri.removeParameter("test");
+			locationUri.setFragment("update?test=" + model.activeTest.id);
+			window.location = locationUri.toString();
+		});
+	};
+	
+	/**
+	 * @param {function(Object.<*>)} template
+	 * @private
+	 */
+	var updateTitle = function(template) {
+		/** @type {string} */
+		var templateHtml = template(model);
+		$('#mainTitle').html(templateHtml);
 	};
 
 	/**

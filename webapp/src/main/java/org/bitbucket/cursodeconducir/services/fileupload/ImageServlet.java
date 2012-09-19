@@ -27,8 +27,10 @@ import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
+import com.google.inject.Singleton;
 
 @SuppressWarnings("serial") 
+@Singleton
 public class ImageServlet extends HttpServlet {
     private static final String IMAGE_KEY = "key";
     private static final String FALBACK_URL_KEY = "falback";

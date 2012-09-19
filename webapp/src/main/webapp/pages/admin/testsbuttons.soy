@@ -35,20 +35,18 @@
 
 /**
  * The test management edit buttons template.
- * @param activeTest
  */
 {template .edit}
-    <a id="testCancel" href="#preview?test={$activeTest.id}" class="btn large">Preview</a>&nbsp;
+    <a id="previewButton" class="btn large">Preview</a>&nbsp;
     <a id="saveEditedButton" class="btn large primary">Save changes</a>&nbsp; 
     <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
 {/template}
 
 /**
  * The test management preview buttons template.
- * @param activeTest
  */
 {template .preview}
-    <a id="testCancel" href="#update?test={$activeTest.id}" class="btn large">Edit</a>&nbsp;
+    <a id="editPreviewedButton" class="btn large">Edit</a>&nbsp;
     <a id="savePreviewedButton" class="btn large primary">Save changes</a>&nbsp; 
     <a id="testCancel" href="#cancel" class="btn large">Cancel</a>
 {/template}

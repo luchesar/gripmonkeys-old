@@ -2,6 +2,7 @@ goog.provide('cursoconducir.MockTitledEntityStorageClient');
 goog.provide('cursoconducir.titledentityassert');
 
 goog.require('cursoconducir.TitledEntityStorageClient');
+goog.require('cursoconducir.MockXmlHttpRequest');
 
 /**
  * @public
@@ -27,6 +28,12 @@ cursoconducir.MockTitledEntityStorageClient.prototype.allEntities_;
 
 /**
  * @public
+ * @type {{status:string, error:string}}
+ */
+cursoconducir.MockTitledEntityStorageClient.prototype.error = null;
+
+/**
+ * @public
  * @param {Array.<cursoconducir.TitledEntity>} allEntities
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.setEntities = function(allEntities) {
@@ -34,10 +41,22 @@ cursoconducir.MockTitledEntityStorageClient.prototype.setEntities = function(all
 };
 
 /**
+ * @public
+ * @param {{status:string, error:string}} error
+ */
+cursoconducir.MockTitledEntityStorageClient.prototype.setError = function(error) {
+	this.error = error;
+};
+
+/**
  * @inheritDoc
  */ 
 cursoconducir.MockTitledEntityStorageClient.prototype.getAll = function(success, error, complete) {
-	success(this.allEntities_);
+	if (!goog.isDefAndNotNull(this.error)) {
+		success(this.allEntities_);
+	} else {
+		this.doError(error);
+	}
 	if (complete) {
 		complete();
 	}
@@ -47,11 +66,16 @@ cursoconducir.MockTitledEntityStorageClient.prototype.getAll = function(success,
  * @inheritDoc
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.getPaged = function(offset, length, success, error, complete) {
-	/**@type {Array.<cursoconducir.TitledEntity>}*/ var  paged = [];
-	for (var i = offset; i < Math.min(this.allEntities_.length,offset + length); i++) {
-		goog.array.insert(paged, this.allEntities_[i]);
+	if (!goog.isDefAndNotNull(this.error)) {
+		/**@type {Array.<cursoconducir.TitledEntity>}*/ var  paged = [];
+		for (var i = offset; i < Math.min(this.allEntities_.length,offset + length); i++) {
+			goog.array.insert(paged, this.allEntities_[i]);
+		}
+		success(paged);
+	} else {
+		this.doError(error);
 	}
-	success(paged);
+	
 	if (complete) {
 		complete();
 	}
@@ -61,13 +85,18 @@ cursoconducir.MockTitledEntityStorageClient.prototype.getPaged = function(offset
  * @inheritDoc
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.get = function(ids, success, error, complete) {
-	/**@type {Array.<cursoconducir.TitledEntity>}*/ var  foundLessons = [];
-	$(this.allEntities_).each(function() {
-		if (goog.array.contains(ids, this.id)) {
-			goog.array.insert(foundLessons, this);
-		}
-	});
-	success(foundLessons);
+	if (!goog.isDefAndNotNull(this.error)) {
+		/**@type {Array.<cursoconducir.TitledEntity>}*/ var  foundLessons = [];
+		$(this.allEntities_).each(function() {
+			if (goog.array.contains(ids, this.id)) {
+				goog.array.insert(foundLessons, this);
+			}
+		});
+		success(foundLessons);
+	} else {
+		this.doError(error);
+	}
+	
 	if (complete) {
 		complete();
 	}
@@ -77,18 +106,22 @@ cursoconducir.MockTitledEntityStorageClient.prototype.get = function(ids, succes
  * @inheritDoc
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.count = function(publishedOnly, success, error, complete) {
-	/** @type {number}*/
-	var count = this.allEntities_.length;
-	if (publishedOnly) {
-		count = 0;
-		$(this.allEntities_).each(function() {
-			if (this.isPublished) {
-				count ++;
-			}
-		});
+	if (!goog.isDefAndNotNull(this.error)) {
+		/** @type {number}*/
+		var count = this.allEntities_.length;
+		if (publishedOnly) {
+			count = 0;
+			$(this.allEntities_).each(function() {
+				if (this.isPublished) {
+					count ++;
+				}
+			});
+		}
+		success(count);
+	} else {
+		this.doError(error);
 	}
 	
-	success(count);
 	if (complete) {
 		complete();
 	}
@@ -98,18 +131,24 @@ cursoconducir.MockTitledEntityStorageClient.prototype.count = function(published
  * @inheritDoc
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.store = function(questions, success, error, complete) {
-	var that = this;
-	$(questions).each(function() {
-		if (!this.id) {
-			this.id = Math.random();
-		}
-		var foundEntity = cursoconducir.utils.findObjectById(that.allEntities_, this.id);
-		if (foundEntity) {
-			goog.array.remove(that.allEntities_, this);
-		} 
-		goog.array.insert(that.allEntities_, this);
-	});
-	success(this.allEntities_);
+	if (!goog.isDefAndNotNull(this.error)) {
+		var that = this;
+		$(questions).each(function() {
+			if (!this.id) {
+				this.id = Math.random();
+			}
+			var foundEntityIndex = cursoconducir.utils.findObjectIndexById(that.allEntities_, this.id);
+			if (foundEntityIndex > -1) {
+				that.allEntities_[foundEntityIndex] = this;
+			} else { 
+				goog.array.insert(that.allEntities_, this);
+			}
+		});
+		success(this.allEntities_);
+	} else {
+		this.doError(error);
+	}
+	
 	if (complete) {
 		complete();
 	}
@@ -119,15 +158,31 @@ cursoconducir.MockTitledEntityStorageClient.prototype.store = function(questions
  * @inheritDoc
  */
 cursoconducir.MockTitledEntityStorageClient.prototype.del = function(questionIds, success, error, complete) {
-	/**@type {Array.<cursoconducir.TitledEntity>}*/ var  newEntities = [];
-	$(this.allEntities_).each(function() {
-		if (!goog.array.contains(ids, this.id)) {
-			goog.array.insert(newEntities, this);
-		}
-	});
-	lessons = newEntities;
-	success();
+	if (!goog.isDefAndNotNull(this.error)) {
+		/**@type {Array.<cursoconducir.TitledEntity>}*/ var  newEntities = [];
+		$(this.allEntities_).each(function() {
+			if (!goog.array.contains(ids, this.id)) {
+				goog.array.insert(newEntities, this);
+			}
+		});
+		lessons = newEntities;
+		success();
+	} else {
+		this.doError(error);
+	}
+	
 	complete();
+};
+/**
+ * @private
+ */
+cursoconducir.MockTitledEntityStorageClient.prototype.doError = function(error) {
+	if (error) {
+		var xhr = new cursoconducir.MockXmlHttpRequest();
+		xhr.status = this.error.status;
+		error(xhr, null, this.error.error);
+	}
+	this.error = null;
 };
 
 /**

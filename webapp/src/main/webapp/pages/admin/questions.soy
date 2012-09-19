@@ -10,8 +10,8 @@
         <div class="container">
           <div class="row">
             <div class="span10">
-              <h1>
-                Manage Tests <small>Create new or modify old tests</small>
+              <h1 id="mainTitle">
+                {call .titleInitial /}
               </h1>
             </div>
             <div class="span6">
@@ -35,4 +35,25 @@
         </div>
       </div>
     </div>
+{/template}
+
+/**
+ * The initial title
+ */
+{template .titleInitial}
+    Manage Questions <small>Create new or modify old questions</small>
+{/template}
+
+/**
+ * The create title
+ */
+{template .createTitle}
+    Create a Question <small>enter the question details</small>
+{/template}
+
+/**
+ * The edit title
+ */
+{template .editTitle}
+    Edit a Question <small>enter the question new details</small
 {/template}

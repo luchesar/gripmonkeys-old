@@ -7,8 +7,8 @@ goog.require('goog.Uri');
 
 goog.require('cursoconducir.moduleconstants');
 
-goog.require('cursoconducir.admin.LessonsPage');
-goog.require('cursoconducir.admin.TestsPage');
+//goog.require('cursoconducir.admin.LessonsPage');
+//goog.require('cursoconducir.admin.TestsPage');
 
 /** @type {goog.module.ModuleManager}*/
 var moduleManager = goog.module.ModuleManager.getInstance();

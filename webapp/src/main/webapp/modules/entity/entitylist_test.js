@@ -46,6 +46,16 @@ var testShowEmptyModel = function() {
 	assertEquals("No entities", parent.text());
 };
 
+var testShowEmptyModelNull = function() {
+	entityList.show({
+		entities : null
+	});
+	var parent = $('#parent');
+	assertNotNull(parent);
+
+	assertEquals("No entities", parent.text());
+};
+
 var testShowEmptyModelWithLabel = function() {
 	entityList.show({
 		entities : [],

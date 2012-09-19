@@ -33,18 +33,14 @@
 				<exclude name="**/*.js" />
 			</fileset>
 		</copy>
+		<copy todir="${warDir}/jslib" file="${webapp}/jslib/jquery-1.6.4.js"/>
 	</target>
 
 	<target name="jspPatch">
 		<antcall target="copyWebappResources"/>
 		<replace file="${warDir}/pages/index.jsp">
-			<replacefilter token="http://localhost:9810/compile?id=index&amp;mode=raw&amp;level=verbose" value="/jsgen/index.compiled.js" />
-		</replace>
-		<replace file="${warDir}/pages/admin/tests.jsp">
-			<replacefilter token="http://localhost:9810/compile?id=admin-tests&amp;mode=raw&amp;level=verbose" value="/jsgen/adminTests.compiled.js" />
-		</replace>
-		<replace file="${warDir}/pages/admin/lessons.jsp">
-			<replacefilter token="http://localhost:9810/compile?id=admin-lessons&amp;mode=raw&amp;level=verbose" value="/jsgen/adminLessons.compiled.js" />
+			<replacefilter token="http://localhost:9810/compile?id=index&amp;mode=raw&amp;level=verbose" 
+			    				value="/jsgen/cursoconducir.modules.index.compiled.js" />
 		</replace>
 	</target>
 

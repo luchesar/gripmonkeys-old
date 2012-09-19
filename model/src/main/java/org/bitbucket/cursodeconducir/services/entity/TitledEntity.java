@@ -11,6 +11,7 @@ import com.googlecode.objectify.annotation.Unindexed;
 public abstract class TitledEntity {
 	@Id
 	private Long id;
+	@Indexed
 	private String title;
 	@Unindexed
 	private String image;

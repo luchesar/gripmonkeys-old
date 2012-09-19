@@ -142,7 +142,7 @@
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>
         <version>0.9.2</version>
-        <executions>
+        <!--<executions>
           <execution>
             <id>start-gae-server</id>
             <phase>pre-integration-test</phase>
@@ -157,7 +157,7 @@
               <goal>stop</goal>
             </goals>
           </execution>
-        </executions>
+        </executions>-->
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -266,5 +266,15 @@
       <type>jar</type>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <!--<dependency>
+      <groupId>com.google.closure</groupId>
+      <artifactId>soy</artifactId>
+      <version>20111222</version>
+    </dependency>-->
   </dependencies>
 </project>

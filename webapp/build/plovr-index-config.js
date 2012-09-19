@@ -27,5 +27,7 @@
 //      }
   },
   "module-output-path": "../target/CursoConducir/jsgen/%s.compiled.js",
+  "module-production-uri" : "/jsgen/%s.compiled.js",
+//  "debug": true,
   "global-scope-name": "__plovr__"
 }
