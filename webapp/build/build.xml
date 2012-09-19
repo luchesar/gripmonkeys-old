@@ -49,4 +49,10 @@
 			<arg line=" serve plovr-index-config.js" />
 		</java>
 	</target>
+	
+	<target name="startPlovr">
+	</target>
+	
+	<target name="stopPlovr">
+    </target>
 </project>
