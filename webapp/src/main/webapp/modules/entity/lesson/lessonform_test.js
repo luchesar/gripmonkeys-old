@@ -68,8 +68,6 @@ var testShowEmptyLesson = function() {
 	var lessonContainer = $('#lessonContainer');
 	assertNotNullNorUndefined(lessonContainer);
 
-	assertEquals("Create new lesson enter new lesson fields", lessonContainer
-			.find('h3[align=center]').text());
 	assertEquals("", lessonContainer.find('input[type=text][name=lessonTitle]')
 			.val());
 	assertEquals("", lessonContainer.find("textarea[name=lessonDescription]")
@@ -93,8 +91,6 @@ var testShowALesson = function() {
 	var lessonContainer = $('#lessonContainer');
 	assertNotNullNorUndefined(lessonContainer);
 
-	assertEquals("Create new lesson enter new lesson fields", lessonContainer
-			.find('h3[align=center]').text());
 	assertEquals(lesson1.id, lessonContainer.find(
 			'input[type=hidden][name=lessonId]').val());
 	assertEquals(lesson1.title, lessonContainer.find(
@@ -117,9 +113,9 @@ var testShowLessonInTheRightOrder = function() {
 		activeLesson : lesson1
 	});
 	var lessonContainer = $('#lessonContainer');
-	cursoconducir.titledentityassert.assertQuestionBefore(lessonContainer, question3, question1);
-	cursoconducir.titledentityassert.assertQuestionBefore(lessonContainer, question3, question2);
-	cursoconducir.titledentityassert.assertQuestionBefore(lessonContainer, question1, question2);
+	cursoconducir.titledentityassert.assertEntityBefore(lessonContainer, question3, question1);
+	cursoconducir.titledentityassert.assertEntityBefore(lessonContainer, question3, question2);
+	cursoconducir.titledentityassert.assertEntityBefore(lessonContainer, question1, question2);
 };
 
 var testAddRemoveQuestions = function() {

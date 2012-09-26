@@ -3,6 +3,7 @@ goog.provide('cursoconducir.titledentityassert');
 
 goog.require('cursoconducir.TitledEntityStorageClient');
 goog.require('cursoconducir.MockXmlHttpRequest');
+goog.require('goog.string');
 
 /**
  * @public
@@ -194,7 +195,7 @@ cursoconducir.MockTitledEntityStorageClient.prototype.doError = function(error) 
 cursoconducir.titledentityassert.assertEntityPresent = function(container, entity, selected) {
 	var entityTitle = container.find("a[id='entityTitleLink" + entity.id + "']");
 	assertNotNullNorUndefined(entityTitle);
-	assertEquals(entity.title, entityTitle.text().trim());
+	assertEquals(entity.title, goog.string.trim(entityTitle.text()));
 	assertTrue(entityTitle.attr('href') == undefined);
 	
 	if (entity.published) {
@@ -229,7 +230,7 @@ cursoconducir.titledentityassert.assertEntityPresent = function(container, entit
  * @param {cursoconducir.TitledEntity} entity1
  * @param {cursoconducir.TitledEntity} entity2
  */
-cursoconducir.titledentityassert.assertQuestionBefore = function(container, entity1, entity2) {
+cursoconducir.titledentityassert.assertEntityBefore = function(container, entity1, entity2) {
 	var checkBox1 = container.find("input[type='checkbox'][name='" + entity1.id + "']");
 	var checkBox2 = container.find("input[type='checkbox'][name='" + entity2.id + "']");
 	

@@ -10,7 +10,7 @@ goog.require('goog.array');
 cursoconducir.MockXmlHttpRequest = function() {
 };
 
-goog.inherits(cursoconducir.MockXmlHttpRequest, XMLHttpRequest);
+//goog.inherits(cursoconducir.MockXmlHttpRequest, XMLHttpRequest);
 
 /**
  * @public
