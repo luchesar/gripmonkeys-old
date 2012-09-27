@@ -75,7 +75,6 @@ function setUpPage() {
 	assertEntityPresent = cursoconducir.titledentityassert.assertEntityPresent;
 	$('body').append("<div id='lessonsContainer'/>");
 	$('body').append("<div class='pageButtons'></div>");
-	$('body').append("<div class='feedback hide'></div>");
 	initialLocation = window.location;
 };
 
@@ -157,11 +156,10 @@ function testDefaultUrl() {
 
 function testDefaltUrlServerError() {
 	var error = {status: "error status", error: "error message"};
-	mockQuestion.setError(error);
+	mockLesson.setError(error);
 	init();
 	
 	assertTrue($('.feedback').text().indexOf(error.status + ' ' + error.error) > 0);
-	
 	assertFalse($('.feedback').hasClass('hide'));
 }
 
@@ -257,13 +255,15 @@ function testCreateServerErrorOnSave() {
 	stubs.set(window.location, "hash", "#create");
 
 	waitForCondition(function() {
-		return goog.isDefAndNotNull($('#saveEditedButton')[0]);
+		return goog.isDefAndNotNull($('#saveButton')[0]);
 	}, function() {
 		initElements();
-		questionTitle.val('createdTestTitle');
-		questionDescription.val('createdTestDescription');
+		var titleTextField = $('input[type="text"][name="lessonTitle"]');
+		var descriptionTextArea = $("textarea[name=lessonDescription]");
+		titleTextField.val('createdTestTitle');
+		descriptionTextArea.val('createdTestDescription');
 		var error = {status: "error status", error: "error message"};
-		mockQuestion.setError(error);
+		mockLesson.setError(error);
 		saveButton.click();
 		
 		waitForCondition(function() {
@@ -331,15 +331,15 @@ function editTest() {
 }
 
 function testEditServerError() {
-	mockQuestion = new cursoconducir.MockQuestionClient([]);
-	mockQuestion.setUp();
+	mockLesson = new cursoconducir.MockLessonClient([]);
+	mockLesson.setUp();
 	init();
 	var error = {status: "error status", error: "error message"};
-	mockQuestion.setError(error);
+	mockLesson.setError(error);
 	/** type {goog.Uri}*/ 
 	var locationUri = new goog.Uri(window.location);
-	locationUri.removeParameter("test", question1.id);
-	locationUri.setFragment("update?test=" + question1.id );
+	locationUri.removeParameter("lesson", question1.id);
+	locationUri.setFragment("update?lesson=" + question1.id );
 	
 	stubs.set(window, "location", locationUri.toString());
 	
@@ -408,11 +408,11 @@ function testPublishUnpublish() {
 }
 
 function testPublishUnpublishServerError() {
-	$("input[type='checkbox'][name='" + question1.id + "']").click();
+	$("input[type='checkbox'][name='" + lesson1.id + "']").click();
 	initElements();
 	
 	var error = {status: "error status", error: "error message"};
-	mockQuestion.setError(error);
+	mockLesson.setError(error);
 	publishButton.click();
 	
 	waitForCondition(function() {
@@ -420,10 +420,10 @@ function testPublishUnpublishServerError() {
 	}, function() {
 		assertFalse($('.feedback').hasClass('hide'));
 		
-		new cursoconducir.QuestionClient().get([question1.id], function(questions) {
-			assertEquals(question1.id, questions[0].id);
-			assertTrue(questions[0].published);
-			assertEntityPresent(lessonsContainer, questions[0], false);
+		new cursoconducir.LessonClient().get([lesson1.id], function(lessons) {
+			assertEquals(lesson1.id, lessons[0].id);
+			assertTrue(lessons[0].published);
+			assertEntityPresent(lessonsContainer, lessons[0], false, false);
 		});
 	});
 	
