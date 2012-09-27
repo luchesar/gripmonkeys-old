@@ -134,6 +134,22 @@ cursoconducir.utils.findTests = function(model, testIds) {
 
 /**
  * @public
+ * @param {cursoconducir.admin.lessons.Model} model
+ * @param {Array.<string>} lessonIds
+ * @return {Array.<cursoconducir.Lesson>}
+ */
+cursoconducir.utils.findLessons = function(model, lessonIds) {
+	/** @type {Array.<cursoconducir.Lesson>}*/
+	var foundLessons = [];
+	for (var i = 0; i < lessonIds.length; i++) {
+		var lesson = cursoconducir.utils.findObjectById(model.allLessons, lessonIds[i]);
+		goog.array.insert(foundLessons, lesson);
+	}
+	return foundLessons;
+};
+
+/**
+ * @public
  * @param {Array.<cursoconducir.Question|cursoconducir.Lesson>} array
  * @param {?string} id
  * @return {number}

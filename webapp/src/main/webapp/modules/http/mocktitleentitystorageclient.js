@@ -186,13 +186,15 @@ cursoconducir.MockTitledEntityStorageClient.prototype.doError = function(error) 
 	this.error = null;
 };
 
+
 /**
  * @public
  * @param {jQuery} container
  * @param {cursoconducir.TitledEntity} entity
  * @param {boolean=} selected
+ * @param {boolean=} checkImage
  */
-cursoconducir.titledentityassert.assertEntityPresent = function(container, entity, selected) {
+cursoconducir.titledentityassert.assertEntityPresent = function(container, entity, selected, checkImage) {
 	var entityTitle = container.find("a[id='entityTitleLink" + entity.id + "']");
 	assertNotNullNorUndefined(entityTitle);
 	assertEquals(entity.title, goog.string.trim(entityTitle.text()));
@@ -207,10 +209,14 @@ cursoconducir.titledentityassert.assertEntityPresent = function(container, entit
 	}
 	
 	var imageLink = container.find('a[id="testImageLink' + entity.id + '"]');
-	assertNotNullNorUndefined(imageLink[0]);
-	
 	var image = container.find('img[src="/image?key=' + entity.image + '&s=80&falback=/images/80x50.gif"]');
-	assertNotNullNorUndefined(image[0]);
+	if (!goog.isDefAndNotNull(checkImage) || checkImage) {
+		assertTrue(goog.isDefAndNotNull(imageLink[0]));
+		assertTrue(goog.isDefAndNotNull(image[0]));
+	} else {
+		assertFalse(goog.isDefAndNotNull(imageLink[0]));
+		assertFalse(goog.isDefAndNotNull(image[0]));
+	}
 
 	assertNotNullNorUndefined(container.find("div:contains('" + entity.description + "')")
 			.text());

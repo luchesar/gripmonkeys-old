@@ -4,6 +4,7 @@
  * The template for all lessons.
  * @param entities
  * @param emptyLabel
+ * @param showImage
  */
 {template .content}
 <div id="entitiesContainer">
@@ -20,10 +21,12 @@
           </p>
         </div>
         <div class="span3">
+          {if $showImage == true}
           <div class="media-grid">
             <a id="testImageLink{$entity.id}" eId="{$entity.id}" style="margin: 0 0 0px 20px; cursor:pointer">
              <img class="thumbnail" src="/image?key={$entity.image}&s=80&falback=/images/80x50.gif" alt="/images/80x50.gif"> </a>
           </div>
+          {/if}
         </div>
         <div class="span8">
           <h4 class="pull-left">

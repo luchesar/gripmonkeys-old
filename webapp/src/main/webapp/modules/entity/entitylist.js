@@ -15,11 +15,16 @@ cursoconducir.EntityList = function(container) {
 	/** @type {Array.<function(string)>}*/
 	var linkClickCallbacks = [];
 	
+	/** @private
+	 * @type {boolean}*/
+	this.showImage = true;
+	
 	/** 
 	 * @public
 	 * @param {cursoconducir.EntityList.model} model 
 	 */
 	this.show = function(model) {
+		model.showImage = this.showImage;
 		/** @type {string}*/
 		var theHtml = cursoconducir.template.entitylist.content(model);
 		container.html(theHtml);
@@ -42,6 +47,14 @@ cursoconducir.EntityList = function(container) {
 				}
 			});
 		});
+	};
+	
+	/** 
+	 * @public
+	 * @param {boolean} showImage
+	 */
+	this.setShowImage = function(showImage) {
+		this.showImage = showImage;
 	};
 
 	/** 

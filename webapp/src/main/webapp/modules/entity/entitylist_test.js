@@ -80,6 +80,20 @@ var testShowSomeTests = function() {
 	cursoconducir.titledentityassert.assertEntityPresent(parent, e2, false);
 };
 
+var testShowSomeTestsWithoutTheImage = function() {
+	e3.published = true;
+	e4.image = undefined;
+	entityList.setShowImage(false);
+	entityList.show({
+		entities : [ e1, e2 , e3, e4]
+	});
+	var allLessonsContainer = $('#parent');
+	assertNotNullNorUndefined(allLessonsContainer);
+
+	cursoconducir.titledentityassert.assertEntityPresent(parent, e1, false, false);
+	cursoconducir.titledentityassert.assertEntityPresent(parent, e2, false, false);
+};
+
 var testGetSelection = function() {
 	entityList.show({
 		entities : [ e1, e2 ]

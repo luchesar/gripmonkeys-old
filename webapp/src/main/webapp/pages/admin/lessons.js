@@ -72,6 +72,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @private
 	 */
 	var allLessons = new cursoconducir.EntityList(contanier);
+	allLessons.setShowImage(false);
 	allLessons.addLinkCallback(function(id) {
 		var locationUri = new goog.Uri(window.location);
 		locationUri.removeParameter("lesson");
@@ -86,7 +87,26 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 */
 	var selectionChangedCallback = function(selection) {
 		if (!goog.array.isEmpty(selection)) {
-			updateButtons(cursoconducir.template.lessonpage.initialButtonsWithSelection);
+			/** @type {Array.<cursoconducir.Lesson>} */
+			var selectedLessons = cursoconducir.utils.findLessons(model, selection);
+			/** @type {?boolean} */
+			var allPublished = null;
+			for ( var i = 0; i < selectedLessons.length; i++) {
+				if (i == 0) {
+					allPublished = selectedLessons[i].published;
+				}
+				if (allPublished != selectedLessons[i].published) {
+					allPublished = null;
+					break;
+				}
+			}
+			if (allPublished === true) {
+				updateButtons(cursoconducir.template.lessonpage.initialSelectionUnpublish);
+			} else if (allPublished === false) {
+				updateButtons(cursoconducir.template.lessonpage.initialSelectionPublish);
+			} else {
+				updateButtons(cursoconducir.template.lessonpage.initialSelectionDifferentPublish);
+			}
 		} else {
 			updateButtons(cursoconducir.template.lessonpage.initialButtons);
 		}
@@ -118,6 +138,14 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	
 	/**
 	 * @private
+	 */
+	var showTheLessons = function() {
+		allLessons.show({entities: model.allLessons, emptyLabel: 'No lessons'});
+		updateButtons(cursoconducir.template.lessonpage.initialButtons);
+	};
+	
+	/**
+	 * @private
 	 * @param {string=} hash
 	 */
 	var doHashChanged = function(hash) {
@@ -127,10 +155,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		}
 		if (hash == '' || hash == '#' || hash == CANCEL) {
 			updateTitle(cursoconducir.template.lessonpage.titleInitial);
-			fetchAllLessons(function() {
-				allLessons.show({entities: model.allLessons, emptyLabel: 'No lessons'});
-			});
-			updateButtons(cursoconducir.template.lessonpage.initialButtons);
+			fetchAllLessons(showTheLessons);
 		} else if (hash == CREATE) {
 			updateTitle(cursoconducir.template.lessonpage.createTitle);
 			model.activeLesson = {
@@ -202,6 +227,29 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					+ xhr.status + ' ' + thrownError + '\'');
 		}, onComplate);
 	};
+	
+	/**
+	 * @private
+	 * @param {boolean} published
+	 */
+	var doPublish = function(published) {
+		var selectedLessonIds = allLessons.getSelection();
+		var selectedLessons = [];
+		$(selectedLessonIds).each(function() {
+			var selectedLesson = cursoconducir.utils.findObjectById(
+					model.allLessons, this);
+			selectedLesson.published = published;
+			goog.array.insert(selectedLessons, selectedLesson);
+		});
+
+		lessonClient.store(selectedLessons, 
+				/**@type {cursoconducir.Lesson.onSuccess}*/
+				function(a,b,c){showTheLessons();},
+				function(xhr, ajaxOptions, thrownError) {
+					showFeedback('Cannot publish or unpublish lesson. Server returned error \''
+							+ xhr.status + ' ' + thrownError + '\'');
+				});
+	};
 
 	/**
 	 * @param {function(Object.<*>)} template
@@ -215,9 +263,14 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		lessonsContainer.find('[id="deleteButton"').click(function() {
 			doDelete();
 		});
-		/** @type {jQuery} */
 		lessonsContainer.find('[id="saveButton"]').click(function() {
 			updateCurrentEditedLesson();
+		});
+		lessonsContainer.find('[id="publishButton"]').click(function() {
+			doPublish(true);
+		});
+		lessonsContainer.find('[id="unpublishButton"]').click(function() {
+			doPublish(false);
 		});
 	};
 	
@@ -308,11 +361,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 			/**@type {cursoconducir.TitledEntity.onError}*/ function(xhr, ajaxOptions, thrownError) {
 				showFeedback('Cannot delete a lesson. Server returned error \''
 						+ xhr.status + ' ' + thrownError + '\'');
-			}, 
-			/**@type {cursoconducir.TitledEntity.onComplate}*/function() {
-				allLessons.show({entities: model.allLessons, emptyLabel: 'No lessons'});
-				updateButtons(cursoconducir.template.lessonpage.initialButtons);
-			});
+			}, showTheLessons);
 		}
 	};
 
