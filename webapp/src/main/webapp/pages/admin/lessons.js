@@ -200,6 +200,10 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 				lessonClient.get([ lessonId ], 
 						/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
 					model.activeLesson = lessons[0];
+					if (!goog.isArray(lessons)) {
+						model.activeLesson = lessons;
+					}
+					
 					lessonForm.show(model);
 					updateButtons(cursoconducir.template.lessonpage.editButtons);
 				}, 

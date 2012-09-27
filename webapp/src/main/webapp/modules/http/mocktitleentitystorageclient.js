@@ -73,6 +73,11 @@ cursoconducir.MockTitledEntityStorageClient.prototype.getPaged = function(offset
 			goog.array.insert(paged, this.allEntities_[i]);
 		}
 		success(paged);
+		if (paged.length == 1) {
+			success(paged[0]);
+		} else {
+			success(paged);
+		}
 	} else {
 		this.doError(error);
 	}
@@ -93,7 +98,11 @@ cursoconducir.MockTitledEntityStorageClient.prototype.get = function(ids, succes
 				goog.array.insert(foundLessons, this);
 			}
 		});
-		success(foundLessons);
+		if (foundLessons.length == 1) {
+			success(foundLessons[0]);
+		} else {
+			success(foundLessons);
+		}
 	} else {
 		this.doError(error);
 	}

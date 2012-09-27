@@ -98,17 +98,21 @@ cursoconducir.utils.findOrFetchTest = function(model, testId, callback,
 	if (hideFeedback) {
 		hideFeedback();
 	}
-	new cursoconducir.QuestionClient().get([ testId ], 
-			/** @type {cursoconducir.Question.onSuccess}*/function(test, textStatus, jqXHR) {
-		if (test && test.length > 0) {
+	new cursoconducir.QuestionClient().get([ testId ],
+	/** @type {cursoconducir.Question.onSuccess} */
+	function(test, textStatus, jqXHR) {
+		
+		if (goog.isArray(test) && test.length > 0) {
 			callback(cursoconducir.utils.decode(test[0]));
+		} else if(!goog.isArray(test)) {
+			callback(cursoconducir.utils.decode(test));
 		} else {
 			if (showFeedback) {
 				showFeedback('No test found with id ' + testId);
 			}
 		}
-	}, 
-	/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
+	},/** @type {cursoconducir.TitledEntity.onError} */
+	function(xhr, ajaxOptions, thrownError) {
 		if (showFeedback) {
 			showFeedback('Cannot fetch a test. Server returned error \''
 					+ xhr.status + ' ' + thrownError + '\'');

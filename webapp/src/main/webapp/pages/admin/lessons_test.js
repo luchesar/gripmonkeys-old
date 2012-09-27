@@ -330,6 +330,25 @@ function editTest() {
 	saveButton.click();
 }
 
+function testEditFromUrl() {
+	initElements();
+	/** type {goog.Uri}*/ 
+	var locationUri = new goog.Uri(window.location);
+	locationUri.removeParameter("lesson", lesson1.id);
+	locationUri.setFragment("update?lesson=" + lesson1.id );
+	
+	stubs.set(window, "location", locationUri.toString());
+	
+	lessonsContainer.empty();
+	pageButtonsContainer.empty();
+	feedbackContainer.empty();
+	allLessons = new cursoconducir.admin.LessonPage(lessonsContainer);
+	allLessons.start();
+	initElements();
+	
+	editTest();
+}
+
 function testEditServerError() {
 	mockLesson = new cursoconducir.MockLessonClient([]);
 	mockLesson.setUp();
@@ -386,10 +405,10 @@ function testPublishUnpublish() {
 	publishButton.click();
 	
 	new cursoconducir.LessonClient().get([lesson1.id], function(lessons) {
-		assertEquals(lesson1.id, lessons[0].id);
-		assertTrue(lessons[0].published);
-		assertEntityPresent(lessonsContainer, lessons[0], false, false);
-		lesson1 = lessons[0];
+		assertEquals(lesson1.id, lessons.id);
+		assertTrue(lessons.published);
+		assertEntityPresent(lessonsContainer, lessons, false, false);
+		lesson1 = lessons;
 	});
 	
 	$("input[type='checkbox'][name='" + lesson1.id + "']").click();
@@ -401,9 +420,9 @@ function testPublishUnpublish() {
 	unpublishButton.click();
 	
 	new cursoconducir.LessonClient().get([lesson1.id], function(lessons) {
-		assertEquals(lesson1.id, lessons[0].id);
-		assertFalse(lessons[0].published);
-		assertEntityPresent(lessonsContainer, lessons[0], false, false);
+		assertEquals(lesson1.id, lessons.id);
+		assertFalse(lessons.published);
+		assertEntityPresent(lessonsContainer, lessons, false, false);
 	});
 }
 

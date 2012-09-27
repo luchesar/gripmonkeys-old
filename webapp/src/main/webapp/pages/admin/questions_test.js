@@ -281,6 +281,25 @@ function editTest() {
 	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, editedQuestion, false);
 }
 
+function testEditFromUrl() {
+	initElements();
+	/** type {goog.Uri}*/ 
+	var locationUri = new goog.Uri(window.location);
+	locationUri.removeParameter("test", question1.id);
+	locationUri.setFragment("update?test=" + question1.id );
+	
+	stubs.set(window, "location", locationUri.toString());
+	
+	questionContainer.empty();
+	pageButtonsContainer.empty();
+	feedbackContainer.empty();
+	questionPage = new cursoconducir.admin.TestsPage(questionContainer);
+	questionPage.start();
+	initElements();
+	
+	editTest();
+}
+
 function testEditServerError() {
 	mockQuestion = new cursoconducir.MockQuestionClient([]);
 	mockQuestion.setUp();
@@ -395,10 +414,10 @@ function testPublishUnpublish() {
 	publishButton.click();
 	
 	new cursoconducir.QuestionClient().get([question1.id], function(questions) {
-		assertEquals(question1.id, questions[0].id);
-		assertTrue(questions[0].published);
-		cursoconducir.titledentityassert.assertEntityPresent(questionContainer, questions[0], false);
-		question1 = questions[0];
+		assertEquals(question1.id, questions.id);
+		assertTrue(questions.published);
+		cursoconducir.titledentityassert.assertEntityPresent(questionContainer, questions, false);
+		question1 = questions;
 	});
 	
 	$("input[type='checkbox'][name='" + question1.id + "']").click();
@@ -410,9 +429,9 @@ function testPublishUnpublish() {
 	unpublishButton.click();
 	
 	new cursoconducir.QuestionClient().get([question1.id], function(questions) {
-		assertEquals(question1.id, questions[0].id);
-		assertFalse(questions[0].published);
-		cursoconducir.titledentityassert.assertEntityPresent(questionContainer, questions[0], false);
+		assertEquals(question1.id, questions.id);
+		assertFalse(questions.published);
+		cursoconducir.titledentityassert.assertEntityPresent(questionContainer, questions, false);
 	});
 }
 

@@ -178,13 +178,12 @@ function getEventWithKey(imageKey) {
 	return event;
 }
 
-/*function testEditError() {
+function testEditError() {
 	iu.edit(testImage);
 	stubs.set(iu, 'fileToUpload', [{files:[file1, file2]}]);
 	iu.doFileChange(mockXHR);
 	
 	mockXHR.doError(event);
-	
 }
 
 function testEditAbort() {
@@ -193,7 +192,7 @@ function testEditAbort() {
 	iu.doFileChange(mockXHR);
 	
 	mockXHR.doAbort(event);
-}*/
+}
 
 function testCancel() {
 	var originalSrc = testImage.attr('src');
