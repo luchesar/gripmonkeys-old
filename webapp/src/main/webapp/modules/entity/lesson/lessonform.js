@@ -89,7 +89,7 @@ cursoconducir.LessonForm = function(container) {
     	moveQuestionDownButton = container.find("#moveQuestionDownButton");
         
     	questionClient.getAll(
-        		/** @type {function(Array.<cursoconducir.Question>)}*/function(questions) {
+        		/** @type {cursoconducir.Question.onSuccess}*/function(questions) {
         	updateQuestionPanels(model, questions);
         	
         	addQuestionsButton.click(function() {
@@ -257,6 +257,9 @@ cursoconducir.LessonForm = function(container) {
     	var allOtherQuestions = [];
     	
     	goog.array.insertArrayAt(allOtherQuestions, questions);
+    	if (!goog.isDefAndNotNull(model.activeLesson.questionIds)) {
+    		model.activeLesson.questionIds = [];
+    	}
 		goog.array.forEach(model.activeLesson.questionIds, function(id) {
 			var questionById = cursoconducir.utils.findObjectById(questions, id);
 	    	goog.array.insert(lessonQuestions, questionById);

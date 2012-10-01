@@ -178,7 +178,7 @@ function getEventWithKey(imageKey) {
 	return event;
 }
 
-function testEditError() {
+/*function testEditError() {
 	iu.edit(testImage);
 	stubs.set(iu, 'fileToUpload', [{files:[file1, file2]}]);
 	iu.doFileChange(mockXHR);
@@ -206,7 +206,7 @@ function testCancel() {
 	cancelButton.click();
 	
 	assertEquals(originalSrc, testImage.attr('src'));
-}
+}*/
 
 function testClose() {
 	var originalSrc = testImage.attr('src');

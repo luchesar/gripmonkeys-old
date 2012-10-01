@@ -328,18 +328,42 @@ function testClickLink() {
 	assertEquals("update?test=" + question1.id , locationUri.getFragment());
 }
 
-function _testDelete() {
-	var lesson1CheckBox = questionContainer.find("input[type='checkbox'][name='" + lesson1.id + "']");
+function testDelete() {
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question2, false);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question3, false);
+	var lesson1CheckBox = questionContainer.find("input[type='checkbox'][name='" + question1.id + "']");
 	assertNotNullNorUndefined(lesson1CheckBox);
 	lesson1CheckBox.click();
 	var deleteButton = $("#deleteButton");
 	assertNotNullNorUndefined(deleteButton[0]);
 	deleteButton.click();
 	
-	lesson1CheckBox = questionContainer.find("input[type='checkbox'][name='" + lesson1.id + "']");
-	assertTrue(goog.isUndefined(lesson1CheckBox[0]));
-	var lessonTitle = $("a[href='#update?lesson=" + lesson.id + "']");
-	assertTrue(goog.isUndefined(lessonTitle[0]));
+	$('#cursoconducir-dialog-confirm').find('a.btn')[0].click();
+	
+	var question1CheckBox = questionContainer.find("input[type='checkbox'][name='" + question1.id + "']");
+	assertFalse(goog.isDefAndNotNull(question1CheckBox[0]));
+	var lessonTitle = $("a[href='#update?question=" + question1.id + "']");
+	assertFalse(goog.isDefAndNotNull(lessonTitle[0]));
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question2, false);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question3, false);
+};
+
+function testCancelDelete() {
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question1, false);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question2, false);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question3, false);
+	var lesson1CheckBox = questionContainer.find("input[type='checkbox'][name='" + question1.id + "']");
+	assertNotNullNorUndefined(lesson1CheckBox);
+	lesson1CheckBox.click();
+	var deleteButton = $("#deleteButton");
+	assertNotNullNorUndefined(deleteButton[0]);
+	deleteButton.click();
+	
+	$('#cursoconducir-dialog-confirm').find('a.btn')[1].click();
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question1, true);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question2, false);
+	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question3, false);
 };
 
 function testPreview() {

@@ -167,21 +167,25 @@ cursoconducir.MockTitledEntityStorageClient.prototype.store = function(questions
 /**
  * @inheritDoc
  */
-cursoconducir.MockTitledEntityStorageClient.prototype.del = function(questionIds, success, error, complete) {
+cursoconducir.MockTitledEntityStorageClient.prototype.del = function(ids, success, error, complete) {
 	if (!goog.isDefAndNotNull(this.error)) {
-		/**@type {Array.<cursoconducir.TitledEntity>}*/ var  newEntities = [];
+		var that = this;
+		/** @type {boolean}*/
+		var wasDeleted = false;
 		$(this.allEntities_).each(function() {
-			if (!goog.array.contains(ids, this.id)) {
-				goog.array.insert(newEntities, this);
+			if (goog.array.contains(ids, this.id)) {
+				goog.array.remove(that.allEntities_, this);
+				wasDeleted = true;
 			}
 		});
-		lessons = newEntities;
-		success();
+		success(wasDeleted);
+		
 	} else {
 		this.doError(error);
 	}
-	
-	complete();
+	if (complete) {
+		complete();
+	}
 };
 /**
  * @private
@@ -235,6 +239,8 @@ cursoconducir.titledentityassert.assertEntityPresent = function(container, entit
 	if (goog.isDefAndNotNull(selected)) {
 		if (!selected) {
 			assertEquals(undefined, checkBox.attr('checked'));
+		} else {
+			assertTrue(goog.isDefAndNotNull(checkBox.attr('checked')));
 		}
 	}
 };

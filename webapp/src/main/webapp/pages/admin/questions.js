@@ -5,6 +5,7 @@ goog.require('cursoconducir.utils');
 goog.require('cursoconducir.QuestionForm');
 goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.TestPreviewModule');
+goog.require('cursoconducir.dialogs');
 goog.require('goog.net.Cookies');
 goog.require('cursoconducir.template.tests.buttons');
 goog.require('cursoconducir.template.questions');
@@ -73,7 +74,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	testsContainer.html(cursoconducir.template.questions.content());
 
 	/** @type {jQuery} */
-	var contanier = $('#container');
+	var container = $('#container');
 	/** @type {jQuery} */
 	var pageButtons = $('.pageButtons');
 	/** @type {jQuery} */
@@ -89,12 +90,12 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 * @private
 	 * @type {cursoconducir.QuestionForm}
 	 */
-	var testModule = new cursoconducir.QuestionForm(contanier);
+	var testModule = new cursoconducir.QuestionForm(container);
 	/**
 	 * @private
 	 * @type {cursoconducir.EntityList}
 	 */
-	var allTestsModule = new cursoconducir.EntityList(contanier);
+	var allTestsModule = new cursoconducir.EntityList(container);
 	allTestsModule.addLinkCallback(function(id) {
 		var locationUri = new goog.Uri(window.location);
 		locationUri.removeParameter("test");
@@ -140,7 +141,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 * @private
 	 * @type {cursoconducir.TestPreviewModule}
 	 */
-	var testPreviewModule = new cursoconducir.TestPreviewModule(contanier);
+	var testPreviewModule = new cursoconducir.TestPreviewModule(container);
 
 	/**
 	 * @public
@@ -328,42 +329,44 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 					model.allTests, selectedTestsIds[i]);
 			selectedTests += selectedTest.title + ", ";
 		}
-		if (confirmDelete(selectedTests)) {
-			questionClient.del(selectedTestsIds,
+		confirmDelete(selectedTests, function(confirmed) {
+			if (confirmed) {
+				questionClient.del(selectedTestsIds,
 					/** @type {cursoconducir.TitledEntity.onDelSuccess}*/
-							function(wasDeleted, textStatus, jqXHR) {
-								if (wasDeleted) {
-									for ( var i = 0; i < selectedTestsIds.length; i++) {
-										/** @type {number} */
-										var spliceIndex = cursoconducir.utils
-												.findObjectIndexById(model.allTests,
-														selectedTestsIds[i]);
-										model.allTests.splice(spliceIndex, 1);
-									}
-								}
-							},
-							/** @type {cursoconducir.TitledEntity.onError}*/
-							function(xhr, ajaxOptions, thrownError) {
-								showFeedback('Cannot delete a test. Server returned error \''
-										+ xhr.status + ' ' + thrownError + '\'');
-							},
-							/** @type {cursoconducir.TitledEntity.onComplate}*/
-							function() {
-								contanier.empty();
-								allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
-								updateButtons(cursoconducir.template.tests.buttons.initial);
-							});
-		}
+					function(wasDeleted, textStatus, jqXHR) {
+						if (wasDeleted) {
+							for ( var i = 0; i < selectedTestsIds.length; i++) {
+								/** @type {number} */
+								var removeIndex = cursoconducir.utils
+										.findObjectIndexById(model.allTests,
+												selectedTestsIds[i]);
+								goog.array.remove(model.allTests, removeIndex); 
+							}
+						}
+					},
+					/** @type {cursoconducir.TitledEntity.onError}*/
+					function(xhr, ajaxOptions, thrownError) {
+						showFeedback('Cannot delete a test. Server returned error \''
+								+ xhr.status + ' ' + thrownError + '\'');
+					},
+					/** @type {cursoconducir.TitledEntity.onComplate}*/
+					function() {
+						container.empty();
+						allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
+						updateButtons(cursoconducir.template.tests.buttons.initial);
+					});
+			}
+		});
 	};
 
 	/**
 	 * @private
 	 * @param {Array.<cursoconducir.Question>|string} selectedTests
-	 * @return {boolean}
+	 * @param {cursoconducir.dialogs.confirmCb} callBack
 	 */
-	var confirmDelete = function(selectedTests) {
-		return window.confirm("Are you sure you want to delete '"
-				+ selectedTests + "' ?");
+	var confirmDelete = function(selectedTests, callBack) {
+		return cursoconducir.dialogs.confirm("Please confirm", "Are you sure you want to delete '"
+				+ selectedTests + "' ?", callBack);
 	};
 
 	/** @private */

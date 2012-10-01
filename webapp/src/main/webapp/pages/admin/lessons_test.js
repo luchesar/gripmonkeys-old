@@ -377,7 +377,10 @@ function testClickLink() {
 	assertEquals("update?lesson=" + lesson1.id , locationUri.getFragment());
 }
 
-function _testDelete() {
+function testDelete() {
+	assertEntityPresent(lessonsContainer, lesson1, false, false);
+	assertEntityPresent(lessonsContainer, lesson2, false, false);
+	
 	var lesson1CheckBox =lessonsContainer.find("input[type='checkbox'][name='" + lesson1.id + "']");
 	assertNotNullNorUndefined(lesson1CheckBox);
 	lesson1CheckBox.click();
@@ -385,11 +388,13 @@ function _testDelete() {
 	assertNotNullNorUndefined(deleteButton[0]);
 	deleteButton.click();
 	
+	$('#cursoconducir-dialog-confirm').find('a.btn')[0].click();
 	
 	lesson1CheckBox =lessonsContainer.find("input[type='checkbox'][name='" + lesson1.id + "']");
-	assertTrue(goog.isUndefined(lesson1CheckBox[0]));
-	var lessonTitle = $("a[href='#update?lesson=" + lesson.id + "']");
-	assertTrue(goog.isUndefined(lessonTitle[0]));
+	assertFalse(goog.isDefAndNotNull(lesson1CheckBox[0]));
+	var lessonTitle = $("a[href='#update?lesson=" + lesson1.id + "']");
+	assertFalse(goog.isDefAndNotNull(lessonTitle[0]));
+	assertEntityPresent(lessonsContainer, lesson2, false, false);
 }
 
 function testPublishUnpublish() {

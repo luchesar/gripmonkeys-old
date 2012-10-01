@@ -89,7 +89,7 @@
             <exclude>com.google.appengine:appengine-api-1.0-sdk</exclude>
             <exclude>com.google.appengine:appengine-api-1.0-labs</exclude>
             <exclude>com.google.appengine.orm:datanucleus-appengine</exclude>
-            <exclude>xerces:xercesImpl</exclude>
+            
           </excludes>
         </configuration>
       </plugin>

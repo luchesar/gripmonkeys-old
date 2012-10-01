@@ -37,7 +37,7 @@ public class HtmlUnitJsUnitRunner1 {
 	}
 	
 	@Test
-	public void lessonTest() throws Exception {
+	public void lessonsTest() throws Exception {
 		runTest("admin/lessons_test.html");
 	}
 	
@@ -63,6 +63,11 @@ public class HtmlUnitJsUnitRunner1 {
 	@Test
 	public void questionPreviewTest() throws Exception {
 		runTest("entity/question/testPreview_test.html");
+	}
+	
+	@Test
+	public void dialogsTest() throws Exception {
+		runTest("dialogs_test.html");
 	}
 
 	private void runTest(String testPath) throws IOException,

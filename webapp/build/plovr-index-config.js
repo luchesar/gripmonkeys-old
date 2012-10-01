@@ -29,5 +29,6 @@
   "module-output-path": "../target/CursoConducir/jsgen/%s.compiled.js",
   "module-production-uri" : "/jsgen/%s.compiled.js",
 //  "debug": true,
+  "test-drivers" : [ {"class": "org.openqa.selenium.htmlunit.HtmlUnitDriver"}], 
   "global-scope-name": "__plovr__"
 }

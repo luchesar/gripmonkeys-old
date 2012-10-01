@@ -65,6 +65,23 @@ var testShowEmptyLesson = function() {
 			questionIds : []
 		}
 	});
+	assertEmptyLesson();
+};
+
+var testLessonWithEmptyActiveLessonQuestionIds = function() {
+	lessonForm.show({
+		allLessons : [],
+		activeLesson : {
+			id : "",
+			title : "",
+			description : "",
+			questionIds : null
+		}
+	});
+	assertEmptyLesson();
+};
+
+var assertEmptyLesson = function() {
 	var lessonContainer = $('#lessonContainer');
 	assertNotNullNorUndefined(lessonContainer);
 
@@ -80,7 +97,7 @@ var testShowEmptyLesson = function() {
 	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question1, false);
 	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question2, false);
 	cursoconducir.titledentityassert.assertEntityPresent(allQuestions, question3, false);
-};
+}
 
 var testShowALesson = function() {
 	lesson1.questionIds = [ question1.id, question3.id ];

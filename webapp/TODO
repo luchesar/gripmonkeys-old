@@ -15,4 +15,11 @@
 8. Introduce paging and search for questions, lessons and courses
 
 
+TMP todo
+* Add alert and confirm dialogs using the bootstrap css lib
+* Make lessons and questions pages delete tests pass
+* Fix the alignment of the question lists in the lesson form
+* Add loading indications to titled entity list
+
+
 

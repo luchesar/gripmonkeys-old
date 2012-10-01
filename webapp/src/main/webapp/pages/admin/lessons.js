@@ -6,6 +6,10 @@ goog.require('cursoconducir.template.lessonpage');
 goog.require('cursoconducir.utils');
 goog.require('cursoconducir.Lesson');
 goog.require('cursoconducir.LessonClient');
+goog.require('cursoconducir.dialogs');
+goog.require('cursoconducir.Lesson');
+goog.require('cursoconducir.moduleconstants');
+goog.require('cursoconducir.EntityList');
 
 goog.require('goog.json');
 goog.require('goog.events');
@@ -13,10 +17,8 @@ goog.require('goog.events.EventType');
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
 goog.require('goog.History');
-goog.require('cursoconducir.Lesson');
-goog.require('cursoconducir.moduleconstants');
 goog.require('goog.module.ModuleManager');
-goog.require('cursoconducir.EntityList');
+
 /**
  * @constructor
  * @public
@@ -198,20 +200,22 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 				updateButtons(cursoconducir.template.lessonpage.editButtons);
 			} else {
 				lessonClient.get([ lessonId ], 
-						/** @type {cursoconducir.Lesson.onSuccess}*/function(lessons) {
-					model.activeLesson = lessons[0];
-					if (!goog.isArray(lessons)) {
-						model.activeLesson = lessons;
-					}
-					
-					lessonForm.show(model);
-					updateButtons(cursoconducir.template.lessonpage.editButtons);
-				}, 
-				/** @type {cursoconducir.TitledEntity.onError}*/function(xhr, ajaxOptions, thrownError) {
-					showFeedback('Cannot fetch test with id ' + lessonId
-							+ '. Server returned error \'' + xhr.status + ' '
-							+ thrownError + '\'');
-				});
+					/** @type {cursoconducir.Lesson.onSuccess}*/
+					function(lessons) {
+						model.activeLesson = lessons[0];
+						if (!goog.isArray(lessons)) {
+							model.activeLesson = /** @type {cursoconducir.Lesson}*/lessons;
+						}
+						
+						lessonForm.show(model);
+						updateButtons(cursoconducir.template.lessonpage.editButtons);
+					}, 
+					/** @type {cursoconducir.TitledEntity.onError}*/
+					function(xhr, ajaxOptions, thrownError) {
+						showFeedback('Cannot fetch test with id ' + lessonId
+								+ '. Server returned error \'' + xhr.status + ' '
+								+ thrownError + '\'');
+					});
 			}
 		}
 	};
@@ -263,17 +267,16 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 		/** @type {string} */
 		var templateHtml = template(model);
 		pageButtons.html(templateHtml);
-
-		lessonsContainer.find('[id="deleteButton"').click(function() {
+		pageButtons.find('#deleteButton').click(function() {
 			doDelete();
 		});
-		lessonsContainer.find('[id="saveButton"]').click(function() {
+		pageButtons.find('[id="saveButton"]').click(function() {
 			updateCurrentEditedLesson();
 		});
-		lessonsContainer.find('[id="publishButton"]').click(function() {
+		pageButtons.find('[id="publishButton"]').click(function() {
 			doPublish(true);
 		});
-		lessonsContainer.find('[id="unpublishButton"]').click(function() {
+		pageButtons.find('[id="unpublishButton"]').click(function() {
 			doPublish(false);
 		});
 	};
@@ -348,34 +351,48 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					model.allLessons, selectedLessonsIds[i]);
 			selectedLessons += selectedLesson.title + ", ";
 		}
-		if (confirmDelete(selectedLessons)) {
-			lessonClient.del(selectedLessonsIds,
-			/**@type {cursoconducir.TitledEntity.onDelSuccess}*/
-			function(wasDeleted, textStatus, jqXHR) {
-				if (wasDeleted) {
-					for ( var i = 0; i < selectedLessonsIds.length; i++) {
-						/** @type {number} */
-						var spliceIndex = cursoconducir.utils
-								.findObjectIndexById(model.allLessons,
-										selectedLessonsIds[i]);
-						model.allLessons.splice(spliceIndex, 1);
-					}
+		confirmDelete(selectedLessons,
+			/** @type {cursoconducir.dialogs.confirmCb} */
+			function(confirmed) {
+				if (confirmed) {
+					deleteLessons(selectedLessonsIds);
 				}
-			}, 
-			/**@type {cursoconducir.TitledEntity.onError}*/ function(xhr, ajaxOptions, thrownError) {
-				showFeedback('Cannot delete a lesson. Server returned error \''
-						+ xhr.status + ' ' + thrownError + '\'');
-			}, showTheLessons);
-		}
+			});
 	};
+	
+	/**
+	 * @private
+	 * @param {Array.<string>} selectedLessonsIds
+	 */
+	var deleteLessons = function(selectedLessonsIds) {
+		lessonClient.del(selectedLessonsIds,
+				/**@type {cursoconducir.TitledEntity.onDelSuccess}*/
+				function(wasDeleted, textStatus, jqXHR) {
+					if (wasDeleted) {
+						for ( var i = 0; i < selectedLessonsIds.length; i++) {
+							/** @type {number} */
+							var spliceIndex = cursoconducir.utils
+									.findObjectIndexById(model.allLessons,
+											selectedLessonsIds[i]);
+							model.allLessons.splice(spliceIndex, 1);
+						}
+					}
+				}, 
+				/**@type {cursoconducir.TitledEntity.onError}*/ function(xhr, ajaxOptions, thrownError) {
+					showFeedback('Cannot delete a lesson. Server returned error \''
+							+ xhr.status + ' ' + thrownError + '\'');
+				}, showTheLessons);
+	}
 
 	/**
 	 * @private
+	 * @param {string} selectedTests
+	 * @param {cursoconducir.dialogs.confirmCb} callBack
 	 * @return boolean
 	 */
-	var confirmDelete = function(selectedTests) {
-		return window.confirm("Are you sure you want to delete '"
-				+ selectedTests + "' ?");
+	var confirmDelete = function(selectedTests, callBack) {
+		return cursoconducir.dialogs.confirm("Please confirm", "Are you sure you want to delete '"
+				+ selectedTests + "' ?", callBack);
 	};
 
 	/** @private */
