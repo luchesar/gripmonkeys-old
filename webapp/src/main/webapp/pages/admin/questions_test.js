@@ -61,12 +61,9 @@ if (typeof G_testRunner != 'undefined') {
 
 var stubs = new goog.testing.PropertyReplacer();
 
-function setUpPage() {
-	$('body').append("<div id='questionContainer'/>");
-	$('body').append("<div class='pageButtons'></div>");
-};
-
 function setUp() {
+	$("[id='questionContainer']").remove();
+	$('body').append("<div id='questionContainer'/>");
 	question1 = createTestQuestion(1, 2, false);
 	question2 = createTestQuestion(2, 1, false);
 	question3 = createTestQuestion(3, 0, false);
@@ -349,7 +346,7 @@ function testDelete() {
 	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question3, false);
 };
 
-function testCancelDelete() {
+function _testCancelDelete() {
 	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question1, false);
 	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question2, false);
 	cursoconducir.titledentityassert.assertEntityPresent(questionContainer, question3, false);

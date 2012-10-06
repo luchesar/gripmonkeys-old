@@ -37,7 +37,14 @@ cursoconducir.EntityList = function(container) {
 				}
 			});
 		});
-		
+		container.find("[id='entitysInAList']").each(function() {
+			$(this).hover(function() {
+				$(this).addClass('selected');
+			},
+			function() {
+//				$(this).removeClass('selected');
+			});
+		});
 		container.find("a").each(function() {
 			$(this).click(function() {
 				/** @type {string}*/

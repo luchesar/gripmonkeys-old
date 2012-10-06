@@ -371,10 +371,12 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					if (wasDeleted) {
 						for ( var i = 0; i < selectedLessonsIds.length; i++) {
 							/** @type {number} */
-							var spliceIndex = cursoconducir.utils
+							var removeIndex = cursoconducir.utils
 									.findObjectIndexById(model.allLessons,
 											selectedLessonsIds[i]);
-							model.allLessons.splice(spliceIndex, 1);
+							if (removeIndex > -1) {
+								goog.array.removeAt(model.allLessons, removeIndex);
+							}
 						}
 					}
 				}, 
@@ -382,7 +384,7 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 					showFeedback('Cannot delete a lesson. Server returned error \''
 							+ xhr.status + ' ' + thrownError + '\'');
 				}, showTheLessons);
-	}
+	};
 
 	/**
 	 * @private

@@ -340,7 +340,9 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 								var removeIndex = cursoconducir.utils
 										.findObjectIndexById(model.allTests,
 												selectedTestsIds[i]);
-								goog.array.remove(model.allTests, removeIndex); 
+								if (removeIndex > -1) {
+									goog.array.removeAt(model.allTests, removeIndex);
+								}
 							}
 						}
 					},

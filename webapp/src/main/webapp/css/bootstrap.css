@@ -2270,3 +2270,7 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
 .row-fluid > .span1 {
   width: 6.382978723%;
 }
+
+.selected {
+	background-color: 444;
+}
