@@ -14,6 +14,10 @@
     "cursoconducir.modules.admin.lessons": {
       "inputs": ["../src/main/webapp/pages/admin/lessons_init.js"],
       "deps": ["cursoconducir.modules.index"]
+    },
+    "cursoconducir.modules.admin.courses": {
+        "inputs": ["../src/main/webapp/modules/entity/course/courseform.js"],
+        "deps": ["cursoconducir.modules.index"]
     }
     
 //    , ========================= TESTS ===================================

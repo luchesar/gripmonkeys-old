@@ -116,13 +116,13 @@ cursoconducir.EntityList = function(container) {
 	
 	/**
 	 * @public
-	 * @returns {Array.<string>}
+	 * @returns {Array.<number>}
 	 */
 	this.getEntityIds = function() {
-		/** @type {Array.<string>}*/
+		/** @type {Array.<number>}*/
 		var allIds = [];
 		container.find("input[type=checkbox]").each(function() {
-			goog.array.insert(allIds, this.name);
+			goog.array.insert(allIds, /** @type {number}*/this.name);
 		});
 		return allIds;
 	};

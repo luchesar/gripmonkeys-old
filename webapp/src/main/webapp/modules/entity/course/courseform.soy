@@ -1,0 +1,78 @@
+{namespace cursoconducir.template.courseForm}
+
+/**
+ * The template for a course.
+ * @param activeCourse
+ */
+{template .template}
+<div id="courseContainer">
+    {if $activeCourse}
+    <div class="clear-fix info">
+      <form>
+        <input type="hidden" name="courseId" value="{$activeCourse.id}"/>
+        <div class="container">
+          <div class="container mini-layout">
+            <div class="row-fluid">
+              <div class="span12 center">
+                <div class="clearfix">
+                  <label for="courseTitle">Title:</label>
+                  <div class="input">
+                    <input class="span12" placeholder="Course title" id="courseTitle" name="courseTitle" size="40"
+                      type="text" value="{$activeCourse.title}" /> <span class="help-block">An meaningful identifier of the course
+                    </span>
+                  </div>
+                </div>
+                <div class="clearfix">
+                  <label for="courseDescription">Description:</label>
+                  <div class="input">
+                    <textarea class="span12" id="courseDescription" name="courseDescription" rows="5">{$activeCourse.description}</textarea>
+                    <span class="help-block"> Some more information about this course</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mini-layout">
+                <div id="lessonsButtonsContainer" class="row-fluid">
+                        <div class="span12">
+                            <h3>Choose qustions for this course <small>From the list of all lesson choose the ones that are part of this course</small>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a id="addLessonsButton" class="btn small disabled">&lt;&lt;</a>&nbsp;
+                                <a id="removeLessonsButton" class="btn small disabled">&gt;&gt;</a>&nbsp;
+                            </h3>
+                        </div>
+                 </div>
+                 <div id="lessonsContainer" class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div  class="span6">
+                                <h4>Course lessons
+                                    <small>
+                                        <div class="pull-right">
+                                            <a id="moveLessonUpButton" class="btn small disabled">Up</a>&nbsp;
+                                            <a id="moveLessonDownButton" class="btn small disabled">Down</a>&nbsp;
+                                        </div>
+                                    </small>
+                                </h4>
+                                <div id="courseLessons">
+                            
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <h4>All lessons</h4>
+                                <div id="allLessons" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>   
+          </div>
+        </div>
+      </form>
+    </div>
+    {else}
+    <h3 align="center">
+      <small>No courses selected</small>
+    </h3>
+    {/if}
+</div>
+{/template}

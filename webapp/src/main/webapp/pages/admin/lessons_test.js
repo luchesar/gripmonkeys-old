@@ -450,5 +450,8 @@ function testPublishUnpublishServerError() {
 			assertEntityPresent(lessonsContainer, lessons[0], false, false);
 		});
 	});
-	
+}
+
+function _testBackForthNavigation() {
+	fail();
 }

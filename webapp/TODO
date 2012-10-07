@@ -1,4 +1,5 @@
 ========== Infrastructure ===================
+0. Compile the tests and run them compiled
 1. Integrate the JS unit tests into the build
 
 =========== Functionality ===================
@@ -16,10 +17,7 @@
 
 
 TMP todo
-* Add alert and confirm dialogs using the bootstrap css lib
-* Make lessons and questions pages delete tests pass
-* Fix the alignment of the question lists in the lesson form
 * Add loading indications to titled entity list
-
-
-
+* Introduce single title entity component in the titled entity list so the delete and publish operation can go more smoothly
+* Add background color on hover in the titled entity list
+* migrate to the new version of bootstrap

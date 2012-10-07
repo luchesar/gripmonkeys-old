@@ -492,3 +492,7 @@ function createTestQuestion(index, correctAnswerIndex, published) {
 		correctAnswerIndex: correctAnswerIndex
 	};
 };
+
+function _testBackForthNavigation() {
+	fail();
+}
