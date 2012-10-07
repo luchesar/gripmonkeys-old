@@ -241,11 +241,13 @@ cursoconducir.admin.LessonPage = function(lessonsContainer) {
 	 * @param {boolean} published
 	 */
 	var doPublish = function(published) {
+		/** @type {Array.<number>}*/
 		var selectedLessonIds = allLessons.getSelection();
-		var selectedLessons = [];
+		/** @type {Array.<cursoconducir.Lesson>}*/
+		var selectedLessons = /** @type {Array.<cursoconducir.Lesson>}*/[];
 		$(selectedLessonIds).each(function() {
-			var selectedLesson = cursoconducir.utils.findObjectById(
-					model.allLessons, this);
+			/** @type {?cursoconducir.Lesson}*/
+			var selectedLesson = cursoconducir.utils.findObjectById(model.allLessons, this);
 			selectedLesson.published = published;
 			goog.array.insert(selectedLessons, selectedLesson);
 		});

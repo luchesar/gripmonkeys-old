@@ -16,8 +16,8 @@
       "deps": ["cursoconducir.modules.index"]
     },
     "cursoconducir.modules.admin.courses": {
-        "inputs": ["../src/main/webapp/modules/entity/course/courseform.js"],
-        "deps": ["cursoconducir.modules.index"]
+      "inputs": ["../src/main/webapp/pages/admin/courses/courses_init.js"],
+      "deps": ["cursoconducir.modules.index"]
     }
     
 //    , ========================= TESTS ===================================

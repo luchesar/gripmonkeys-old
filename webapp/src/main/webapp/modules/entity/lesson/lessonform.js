@@ -261,7 +261,8 @@ cursoconducir.LessonForm = function(container) {
     		model.activeLesson.questionIds = [];
     	}
 		goog.array.forEach(model.activeLesson.questionIds, function(id) {
-			var questionById = cursoconducir.utils.findObjectById(questions, id);
+			/** @type {?cursoconducir.Question}*/
+			var questionById = cursoconducir.utils.findQuestionById(questions, id);
 	    	goog.array.insert(lessonQuestions, questionById);
 	    	goog.array.remove(allOtherQuestions, questionById);
 		});

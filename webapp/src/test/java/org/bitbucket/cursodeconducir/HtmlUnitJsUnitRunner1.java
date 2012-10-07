@@ -69,6 +69,11 @@ public class HtmlUnitJsUnitRunner1 {
 	public void dialogsTest() throws Exception {
 		runTest("dialogs_test.html");
 	}
+	
+	@Test
+	public void courseFormTest() throws Exception {
+		runTest("entity/course/courseform_test.html");
+	}
 
 	private void runTest(String testPath) throws IOException,
 			MalformedURLException, Exception {

@@ -27,6 +27,8 @@ var index = null;
 var adminQuestion = null;
 /** @type {cursoconducir.admin.LessonPage}*/
 var adminLessons = null;
+/** @type {cursoconducir.admin.CoursesPage}*/
+var adminCourses = null;
 
 
 moduleManager.setLoaded(cursoconducir.moduleconstants.INDEX_MODULE);
@@ -61,6 +63,12 @@ cursoconducir.index_init.onPageLoad = function(locationUri) {
 		loadPage(cursoconducir.moduleconstants.ADMIN_LESSONS_MODULE, function() {
 			adminLessons = new cursoconducir.admin.LessonPage(indexContainer);
 			adminLessons.start();
+		});
+		
+	} else if (locationUri.getPath().indexOf('/admin/courses') == 0) {
+		loadPage(cursoconducir.moduleconstants.ADMIN_COURSES_MODULE, function() {
+			adminCourses = new cursoconducir.admin.CoursesPage(indexContainer);
+			adminCourses.start();
 		});
 		
 	} else {

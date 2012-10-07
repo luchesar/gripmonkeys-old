@@ -263,9 +263,12 @@ cursoconducir.CourseForm = function(container) {
     		model.activeCourse.lessonIds = [];
     	}
 		goog.array.forEach(model.activeCourse.lessonIds, function(id) {
+			/** @type {?cursoconducir.Lesson}*/
 			var lessonById = cursoconducir.utils.findObjectById(lessons, id);
-	    	goog.array.insert(courseLessons, lessonById);
-	    	goog.array.remove(allOtherLessons, lessonById);
+			if (goog.isDefAndNotNull(lessonById)) {
+				goog.array.insert(courseLessons, lessonById);
+				goog.array.remove(allOtherLessons, lessonById);
+			}
 		});
     	
     	return {courseLessons: courseLessons, allOtherLessons: allOtherLessons};
