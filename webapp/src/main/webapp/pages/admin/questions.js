@@ -7,7 +7,6 @@ goog.require('cursoconducir.EntityList');
 goog.require('cursoconducir.TestPreviewModule');
 goog.require('cursoconducir.dialogs');
 goog.require('goog.net.Cookies');
-goog.require('cursoconducir.template.tests.buttons');
 goog.require('cursoconducir.template.questions');
 goog.require('goog.json');
 goog.require('cursoconducir.Question');
@@ -124,15 +123,15 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 				}
 			}
 			if (allPublished === true) {
-				updateButtons(cursoconducir.template.tests.buttons.initialSelectionUnpublish);
+				updateButtons(cursoconducir.template.questions.buttons_initialSelectionUnpublish);
 			} else if (allPublished === false) {
-				updateButtons(cursoconducir.template.tests.buttons.initialSelectionPublish);
+				updateButtons(cursoconducir.template.questions.buttons_initialSelectionPublish);
 			} else {
-				updateButtons(cursoconducir.template.tests.buttons.initialSelectionDifferentPublish);
+				updateButtons(cursoconducir.template.questions.buttons_initialSelectionDifferentPublish);
 			}
 
 		} else {
-			updateButtons(cursoconducir.template.tests.buttons.initial);
+			updateButtons(cursoconducir.template.questions.buttons_initial);
 		}
 	};
 	allTestsModule.addSelectionChangeCallback(selectionChangedCallback);
@@ -200,21 +199,21 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 			model.activeTest = null;
 			initAllTests(function() {
 				allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
-				updateButtons(cursoconducir.template.tests.buttons.initial);
+				updateButtons(cursoconducir.template.questions.buttons_initial);
 				$("#footer").addClass("loaded");
 			});
 		} else if (hash == CREATE) {
 			updateTitle(cursoconducir.template.questions.createTitle);
 			model.activeTest = testModule.createEmptyTest();
 			testModule.show(model);
-			updateButtons(cursoconducir.template.tests.buttons.edit);
+			updateButtons(cursoconducir.template.questions.buttons_edit);
 		} else if (hash.indexOf(UPDATE) == 0) {
 			/** @type {?string}*/
 			var testId = cursoconducir.utils.queryParam(TEST_KEY);
 			var doUpdate = function() {
 				testModule.show(model);
 				updateTitle(cursoconducir.template.questions.editTitle);
-				updateButtons(cursoconducir.template.tests.buttons.edit);
+				updateButtons(cursoconducir.template.questions.buttons_edit);
 			};
 			if ((model && model.activeTest && model.activeTest.id == testId)
 					|| testId == undefined || testId == "") {
@@ -264,7 +263,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		questionClient.store(selectedTests,
 				function() {
 					allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
-					updateButtons(cursoconducir.template.tests.buttons.initial);
+					updateButtons(cursoconducir.template.questions.buttons_initial);
 				},
 				function(xhr, ajaxOptions, thrownError) {
 					showFeedback('Cannot publish or unpublish questions. Server returned error \''
@@ -277,7 +276,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 		testPreviewModule.show(test, function(activeTest, markedIndex) {
 			testPreviewModule.answer(markedIndex);
 		});
-		updateButtons(cursoconducir.template.tests.buttons.preview);
+		updateButtons(cursoconducir.template.questions.buttons_preview);
 	};
 
 	var initAllTests = function(onComplate) {
@@ -355,7 +354,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 					function() {
 						container.empty();
 						allTestsModule.show({entities: model.allTests, emptyLabel: 'No questions'});
-						updateButtons(cursoconducir.template.tests.buttons.initial);
+						updateButtons(cursoconducir.template.questions.buttons_initial);
 					});
 			}
 		});
@@ -421,7 +420,7 @@ cursoconducir.admin.TestsPage = function(testsContainer) {
 	 */
 	var showFeedback = function(errorMessage) {
 		/** @type {string}*/
-		var templateHtml = cursoconducir.template.tests.buttons.feedback({
+		var templateHtml = cursoconducir.template.questions.feedback({
 			errorMessage : errorMessage
 		});
 		feedback.html(templateHtml);
