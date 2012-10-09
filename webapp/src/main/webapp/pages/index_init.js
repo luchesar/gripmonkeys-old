@@ -1,6 +1,7 @@
 goog.provide('cursoconducir.index_init');
 
 goog.require('cursoconducir.IndexPage');
+goog.require('cursoconducir.MainMenu');
 goog.require('goog.module.ModuleLoader');
 goog.require('goog.module.ModuleManager');
 goog.require('goog.Uri');
@@ -29,6 +30,10 @@ var adminQuestion = null;
 var adminLessons = null;
 /** @type {cursoconducir.admin.CoursesPage}*/
 var adminCourses = null;
+/** @type {jQuery}*/
+var mainMenuContainer
+/** @type {cursoconducir.MainMenu}*/
+var mainMenu;
 
 
 moduleManager.setLoaded(cursoconducir.moduleconstants.INDEX_MODULE);
@@ -51,27 +56,33 @@ var loadPage = function(moduleId, onLoaded) {
  * @param {goog.Uri} locationUri
  */
 cursoconducir.index_init.onPageLoad = function(locationUri) {
+	mainMenuContainer = $('#mainMenuContainer');
+	mainMenu = new cursoconducir.MainMenu(mainMenuContainer);
 	/** @type {jQuery}*/
 	var indexContainer = $('#indexContainer');
 	
 	if (locationUri.getPath().indexOf('/admin/questions') == 0) {
+		mainMenu.showAdminLinks();
 		loadPage(cursoconducir.moduleconstants.ADMIN_QUESTIONS_MODULE, function() {
 			adminQuestion = new cursoconducir.admin.TestsPage(indexContainer);
 			adminQuestion.start();
 		});
 	} else if (locationUri.getPath().indexOf('/admin/lessons') == 0) {
+		mainMenu.showAdminLinks();
 		loadPage(cursoconducir.moduleconstants.ADMIN_LESSONS_MODULE, function() {
 			adminLessons = new cursoconducir.admin.LessonPage(indexContainer);
 			adminLessons.start();
 		});
 		
 	} else if (locationUri.getPath().indexOf('/admin/courses') == 0) {
+		mainMenu.showAdminLinks();
 		loadPage(cursoconducir.moduleconstants.ADMIN_COURSES_MODULE, function() {
 			adminCourses = new cursoconducir.admin.CoursesPage(indexContainer);
 			adminCourses.start();
 		});
 		
 	} else {
+		mainMenu.showIndexLinks();
 		loadPage(cursoconducir.moduleconstants.INDEX_MODULE, function() {
 			index = new cursoconducir.IndexPage(indexContainer);
 			index.start();

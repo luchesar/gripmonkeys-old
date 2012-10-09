@@ -38,7 +38,7 @@ body {
 </head>
 
 <body>
-  <%@include file="menu.html"%>
+  <div id="mainMenuContainer"></div>
   <div id="indexContainer"></div>
   <footer id="footer">
     <div class="container">
