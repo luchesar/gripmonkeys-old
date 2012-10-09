@@ -7,16 +7,8 @@
       "inputs": ["../src/main/webapp/pages/index_init.js"],
       "deps": []
     },
-    "cursoconducir.modules.admin.questions": {
-      "inputs": ["../src/main/webapp/pages/admin/questions/questions_init.js"],
-      "deps": ["cursoconducir.modules.index"]
-    },
-    "cursoconducir.modules.admin.lessons": {
-      "inputs": ["../src/main/webapp/pages/admin/lessons/lessons_init.js"],
-      "deps": ["cursoconducir.modules.index"]
-    },
-    "cursoconducir.modules.admin.courses": {
-      "inputs": ["../src/main/webapp/pages/admin/courses/courses_init.js"],
+    "cursoconducir.modules.admin": {
+      "inputs": ["../src/main/webapp/pages/admin/admin_init.js"],
       "deps": ["cursoconducir.modules.index"]
     }
     

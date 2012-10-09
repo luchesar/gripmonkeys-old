@@ -26,3 +26,4 @@ TMP todo
 * Add background color on hover in the titled entity list
 * migrate to the new version of bootstrap
 * Add tooltip to the "P" published indication
+* Create proper footer

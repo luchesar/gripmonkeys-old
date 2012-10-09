@@ -63,20 +63,20 @@ cursoconducir.index_init.onPageLoad = function(locationUri) {
 	
 	if (locationUri.getPath().indexOf('/admin/questions') == 0) {
 		mainMenu.showAdminLinks();
-		loadPage(cursoconducir.moduleconstants.ADMIN_QUESTIONS_MODULE, function() {
+		loadPage(cursoconducir.moduleconstants.ADMIN_MODULE, function() {
 			adminQuestion = new cursoconducir.admin.TestsPage(indexContainer);
 			adminQuestion.start();
 		});
 	} else if (locationUri.getPath().indexOf('/admin/lessons') == 0) {
 		mainMenu.showAdminLinks();
-		loadPage(cursoconducir.moduleconstants.ADMIN_LESSONS_MODULE, function() {
+		loadPage(cursoconducir.moduleconstants.ADMIN_MODULE, function() {
 			adminLessons = new cursoconducir.admin.LessonPage(indexContainer);
 			adminLessons.start();
 		});
 		
 	} else if (locationUri.getPath().indexOf('/admin/courses') == 0) {
 		mainMenu.showAdminLinks();
-		loadPage(cursoconducir.moduleconstants.ADMIN_COURSES_MODULE, function() {
+		loadPage(cursoconducir.moduleconstants.ADMIN_MODULE, function() {
 			adminCourses = new cursoconducir.admin.CoursesPage(indexContainer);
 			adminCourses.start();
 		});
