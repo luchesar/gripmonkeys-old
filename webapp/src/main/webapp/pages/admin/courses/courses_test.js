@@ -137,7 +137,7 @@ function init() {
 	coursesContainer.empty();
 	pageButtonsContainer.empty();
 	feedbackContainer.empty();
-	allCourses = new cursoconducir.admin.CoursePage(coursesContainer);
+	allCourses = new cursoconducir.admin.CoursesPage(coursesContainer);
 	allCourses.start();
 	initElements();
 };
@@ -340,7 +340,7 @@ function testEditFromUrl() {
 	coursesContainer.empty();
 	pageButtonsContainer.empty();
 	feedbackContainer.empty();
-	allCourses = new cursoconducir.admin.CoursePage(coursesContainer);
+	allCourses = new cursoconducir.admin.CoursesPage(coursesContainer);
 	allCourses.start();
 	initElements();
 	

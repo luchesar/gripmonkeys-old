@@ -3,7 +3,6 @@
 1. Integrate the JS unit tests into the build
 
 =========== Functionality ===================
-1. Course admin page - title, description, image and list of lessons
 2. Course user page - show all the lessons that belongs to this course
 3. Improve the user do lesson page. 
     3.1. Add navigation widget to all the user pages starting from the index and with back button
@@ -14,10 +13,16 @@
 7. Admin navigation widget showing the path from the admin page index and a back button
 
 8. Introduce paging and search for questions, lessons and courses
+9. Add login
 
 
 TMP todo
+* Redo the navigation to add tokens to the history instead of using listeneres to the hash change
+* Put all the admin pages under /admin and use the hash for navigation like /admin#courses, /admin/lessons and /admin/questions
+* Add images to the modal dialogs
+* Add image editing to the courses and lessons pages
 * Add loading indications to titled entity list
 * Introduce single title entity component in the titled entity list so the delete and publish operation can go more smoothly
 * Add background color on hover in the titled entity list
 * migrate to the new version of bootstrap
+* Add tooltip to the "P" published indication

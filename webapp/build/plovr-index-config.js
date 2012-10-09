@@ -8,11 +8,11 @@
       "deps": []
     },
     "cursoconducir.modules.admin.questions": {
-      "inputs": ["../src/main/webapp/pages/admin/tests_init.js"],
+      "inputs": ["../src/main/webapp/pages/admin/questions/questions_init.js"],
       "deps": ["cursoconducir.modules.index"]
     },
     "cursoconducir.modules.admin.lessons": {
-      "inputs": ["../src/main/webapp/pages/admin/lessons_init.js"],
+      "inputs": ["../src/main/webapp/pages/admin/lessons/lessons_init.js"],
       "deps": ["cursoconducir.modules.index"]
     },
     "cursoconducir.modules.admin.courses": {
