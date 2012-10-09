@@ -14,7 +14,7 @@
 
 8. Introduce paging and search for questions, lessons and courses
 9. Add login
-
+10. Back up and restore admin functions
 
 TMP todo
 * Redo the navigation to add tokens to the history instead of using listeneres to the hash change

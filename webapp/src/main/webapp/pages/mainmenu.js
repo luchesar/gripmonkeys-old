@@ -41,7 +41,16 @@ cursoconducir.MainMenu.prototype.showIndexLinks = function() {
 
 /**
  * @public
+ * @param {cursoconducir.MainMenu.ActiveAdminPage} active
  */
-cursoconducir.MainMenu.prototype.showAdminLinks = function() {
-	this.menuItems.html(cursoconducir.mainmenu.template.adminLinks());
+cursoconducir.MainMenu.prototype.showAdminLinks = function(active) {
+	this.menuItems.html(cursoconducir.mainmenu.template.adminLinks({active:active}));
 };
+
+/** @enum {string} */
+cursoconducir.MainMenu.ActiveAdminPage = {
+	COURSES : "courses",
+	LESSONS : "lessons",
+	QUESTIONS : "questions"
+};
+

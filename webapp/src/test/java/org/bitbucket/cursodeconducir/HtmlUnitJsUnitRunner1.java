@@ -38,12 +38,12 @@ public class HtmlUnitJsUnitRunner1 {
 	
 	@Test
 	public void lessonsTest() throws Exception {
-		runTest("admin/lessons_test.html");
+		runTest("admin/lessons/lessons_test.html");
 	}
 	
 	@Test
 	public void questionsTest() throws Exception {
-		runTest("admin/questions_test.html");
+		runTest("admin/questions/questions_test.html");
 	}
 	@Test
 	public void questionFormTest() throws Exception {
@@ -74,7 +74,12 @@ public class HtmlUnitJsUnitRunner1 {
 	public void courseFormTest() throws Exception {
 		runTest("entity/course/courseform_test.html");
 	}
-
+	
+	@Test
+	public void mainMenuTest() throws Exception {
+		runTest("mainmenu_test.html");
+	}
+	
 	private void runTest(String testPath) throws IOException,
 			MalformedURLException, Exception {
 		HtmlPage page = webClient.getPage(webAppUrl + testPath);

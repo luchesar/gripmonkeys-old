@@ -29,11 +29,12 @@
 
 /**
  * The links for the admin pages
+ * @param active
  */
 {template .adminLinks}
         <ul class="nav">
-          <li><a href="/admin/courses">Courses</a></li>
-          <li><a href="/admin/lessons">Lessons</a></li>
-          <li><a href="/admin/questions">Questions</a></li>
+          <li {if $active == 'courses'}class="active"{/if}><a href="/admin/courses">Courses</a></li>
+          <li {if $active == 'lessons'}class="active"{/if}><a href="/admin/lessons">Lessons</a></li>
+          <li {if $active == 'questions'}class="active"{/if}><a href="/admin/questions">Questions</a></li>
         </ul>
 {/template}

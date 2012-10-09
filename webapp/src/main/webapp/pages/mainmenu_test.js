@@ -25,10 +25,24 @@ function testShow() {
 function testLinks() {
 	/** @type {jQuery}*/
 	var toolbarContainer = assertBasics();
-	mainMenu.showAdminLinks();
-	assertAdminLinks(toolbarContainer);
+	mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.LESSONS);
+	assertAdminLinks(toolbarContainer, cursoconducir.MainMenu.ActiveAdminPage.LESSONS);
 	mainMenu.showIndexLinks();
 	assertIndexLinks(toolbarContainer);
+}
+
+function testActiveLinks() {
+	/** @type {jQuery}*/
+	var toolbarContainer = assertBasics();
+	
+	mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.COURSES);
+	assertAdminLinks(toolbarContainer, cursoconducir.MainMenu.ActiveAdminPage.COURSES);
+	
+	mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.LESSONS);
+	assertAdminLinks(toolbarContainer, cursoconducir.MainMenu.ActiveAdminPage.LESSONS);
+	
+	mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.QUESTIONS);
+	assertAdminLinks(toolbarContainer, cursoconducir.MainMenu.ActiveAdminPage.QUESTIONS);
 }
 
 /**
@@ -56,14 +70,27 @@ function assertIndexLinks(toolbarContainer) {
 	assertEquals("Acceder", signInLink.html());
 }
 
-function assertAdminLinks(toolbarContainer) {
+/**
+ * @param {jQuery} toolbarContainer
+ * @param {cursoconducir.MainMenu.ActiveAdminPage} active
+ */
+function assertAdminLinks(toolbarContainer, active) {
 	/** @type {jQuery}*/
 	var coursesLink = toolbarContainer.find('a[href="/admin/courses"]');
 	assertEquals("Courses", coursesLink.html());
+	if (cursoconducir.MainMenu.ActiveAdminPage.COURSES === active) {
+		assertTrue(coursesLink.parent().hasClass('active'));
+	}
 	/** @type {jQuery}*/
-	var signInLink = toolbarContainer.find('a[href="/admin/lessons"]');
-	assertEquals("Lessons", signInLink.html());
+	var lessonsLink = toolbarContainer.find('a[href="/admin/lessons"]');
+	assertEquals("Lessons", lessonsLink.html());
+	if (cursoconducir.MainMenu.ActiveAdminPage.LESSONS === active) {
+		assertTrue(lessonsLink.parent().hasClass('active'));
+	}
 	/** @type {jQuery}*/
-	var signInLink = toolbarContainer.find('a[href="/admin/questions"]');
-	assertEquals("Questions", signInLink.html());
+	var questionsLink = toolbarContainer.find('a[href="/admin/questions"]');
+	assertEquals("Questions", questionsLink.html());
+	if (cursoconducir.MainMenu.ActiveAdminPage.QUESTIONS === active) {
+		assertTrue(questionsLink.parent().hasClass('active'));
+	}
 }

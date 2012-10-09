@@ -31,7 +31,7 @@ var adminLessons = null;
 /** @type {cursoconducir.admin.CoursesPage}*/
 var adminCourses = null;
 /** @type {jQuery}*/
-var mainMenuContainer
+var mainMenuContainer;
 /** @type {cursoconducir.MainMenu}*/
 var mainMenu;
 
@@ -62,20 +62,20 @@ cursoconducir.index_init.onPageLoad = function(locationUri) {
 	var indexContainer = $('#indexContainer');
 	
 	if (locationUri.getPath().indexOf('/admin/questions') == 0) {
-		mainMenu.showAdminLinks();
+		mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.QUESTIONS);
 		loadPage(cursoconducir.moduleconstants.ADMIN_MODULE, function() {
 			adminQuestion = new cursoconducir.admin.TestsPage(indexContainer);
 			adminQuestion.start();
 		});
 	} else if (locationUri.getPath().indexOf('/admin/lessons') == 0) {
-		mainMenu.showAdminLinks();
+		mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.LESSONS);
 		loadPage(cursoconducir.moduleconstants.ADMIN_MODULE, function() {
 			adminLessons = new cursoconducir.admin.LessonPage(indexContainer);
 			adminLessons.start();
 		});
 		
 	} else if (locationUri.getPath().indexOf('/admin/courses') == 0) {
-		mainMenu.showAdminLinks();
+		mainMenu.showAdminLinks(cursoconducir.MainMenu.ActiveAdminPage.COURSES);
 		loadPage(cursoconducir.moduleconstants.ADMIN_MODULE, function() {
 			adminCourses = new cursoconducir.admin.CoursesPage(indexContainer);
 			adminCourses.start();
