@@ -1,0 +1,33 @@
+{namespace cursoconducir.template.dialogs}
+
+/**
+ * Template for the modal dialogs
+ * @param dialogId
+ * @param title
+ * @param message
+ * @param image
+ * @param buttons
+ */
+{template .buttons}
+<div id="{$dialogId}" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>{$title}</h3>
+  </div>
+  <div id="body" class="modal-body">
+    {if $image}
+    <div class="media-grid">
+      <a id="imageLink"> <img id="dialog-image" class="thumbnail" src="{$image}" /> </a>
+    </div>
+    {/if}
+    <div id="message">
+    {$message|noAutoescape}
+    </div>
+  </div>
+  <div class="modal-footer">
+    {foreach $button in $buttons}
+        <a id="button{$button}" class="btn">{$button}</a>
+    {/foreach}
+  </div>
+</div>
+{/template}

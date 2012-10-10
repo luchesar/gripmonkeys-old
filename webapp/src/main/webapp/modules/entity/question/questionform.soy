@@ -1,0 +1,109 @@
+{namespace cursoconducir.template.questionform}
+
+/**
+ * The template for all tests.
+ * @param activeTest
+ */
+{template .content}
+{if $activeTest}
+<div id="uploadImageModalContainer">
+</div>
+<div class="clear-fix info">
+  <form>
+    <div class="container">
+      <div class="container mini-layout">
+        <div class="row">
+          <div class="span16 center">
+            <div class="clearfix">
+              <label for="testTitle">Title:</label>
+              <div class="input">
+                <input style="width: 420px;" placeholder="Test title" id="testTitle" name="testTitle" size="40"
+                  type="text" value="{$activeTest.title}" /> <span class="help-block">An meaningful identifier of the test
+                </span>
+              </div>
+            </div>
+            <div class="clearfix">
+              <label for="testTitle">Image:</label>
+              <div class="input">
+                <div class="media-grid">
+                  <a id="testImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true"
+                    href="#"> <img class="thumbnail" id="testImage"
+                    src="/image?key={$activeTest.image}&falback=/images/330x230.gif" alt=""> </a>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix">
+              <label for="testDescription">Question:</label>
+              <div class="input">
+                <textarea style="width: 410px;" id="testDescription" name="testDescription" rows="5">{$activeTest.description}</textarea>
+                <span class="help-block"> The introduction to the test and questions </span>
+              </div>
+            </div>
+            {foreach $possibleAnswer in $activeTest.possibleAnswers}
+            <div class="clearfix">
+              <label for="answer1">Answer {$possibleAnswer.title}</label>
+              <div class="input">
+                <textarea style="width: 410px;" id="answer{$possibleAnswer.index}" name="answer{$possibleAnswer.index}" rows="2">{$possibleAnswer.text}</textarea>
+                <span class="help-block"> The first possible answer of the test </span>
+              </div>
+            </div>
+            {/foreach}
+            <div class="clearfix">
+              <label for="correctAnswerIndex">Correct answer:</label>
+              <div class="input">
+                <select class="small" name="correctAnswerIndex" id="correctAnswerIndex"> 
+                {foreach $possibleAnswer in $activeTest.possibleAnswers}
+                  <option value="{$possibleAnswer.index}"{if $possibleAnswer.sel}selected{/if}>{$possibleAnswer.title}</option> 
+                {/foreach}
+                </select> <span class="help-block">Select the correct answer</span>
+              </div>
+            </div>
+            <div class="clearfix">
+              <label for="testExplanation">Test explanation:</label>
+              <div class="input">
+                <textarea style="width: 610px;" id="testExplanation" name="testExplanation" rows="12">{$activeTest.explanation}</textarea>
+                <span class="help-block"> The explanation of the correct answer </span>
+              </div>
+            </div>
+            <input type="hidden" id="testPublished" name="testPublished" value="{$activeTest.published}"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{else}
+<h3 align="center">
+  <small>No test selected</small>
+</h3>
+{/if}
+{/template}
+
+/**
+ * Template for the upload image modal only
+ */
+{template .uploadImageModal}
+<div id="upload-image-modal" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>Chose an image</h3>
+  </div>
+  <div id="upload-image-modal-body" class="modal-body">
+    <div class="media-grid">
+      <a id="testImageLink"> <img class="thumbnail" id="currentTestImage" src="/images/330x230.gif" /> </a>
+    </div>
+    <form id="uploadForm" name="uploadForm" enctype="multipart/form-data" method="post" action="upload">
+      <div id="fileToUploadContainer">
+        <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" />        
+      </div>
+      <div id="fileName"></div>
+      <div id="fileSize"></div>
+      <div id="fileType"></div>
+      <div id="progressNumber"></div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a id="imageUploadmodalCancelButton" class="btn">Cancel</a><a id="doneButton" class="btn primary">Done</a>
+  </div>
+</div>
+{/template}

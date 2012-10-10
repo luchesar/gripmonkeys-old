@@ -1,0 +1,31 @@
+{namespace cursoconducir.template.imageupload}
+
+/**
+ * Template for the upload image modal only
+ */
+{template .modal}
+<div id="upload-image-modal" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>Chose an image</h3>
+  </div>
+  <div id="upload-image-modal-body" class="modal-body">
+    <div class="media-grid">
+      <a id="imageLink"> <img class="thumbnail" id="modalImage" src="/images/330x230.gif" /> </a>
+    </div>
+    <form id="uploadForm" name="uploadForm" enctype="multipart/form-data" method="post" action="upload">
+      <div id="fileToUploadContainer">
+        <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" />        
+      </div>
+      <div id="fileName"></div>
+      <div id="fileSize"></div>
+      <div id="fileType"></div>
+      <div id="progressNumber"></div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a id="imageUploadmodalCancelButton" class="btn">Cancel</a>
+    <a id="doneButton" class="btn primary">Done</a>
+  </div>
+</div>
+{/template}

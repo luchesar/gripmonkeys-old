@@ -1,0 +1,88 @@
+{namespace cursoconducir.template.testPreview}
+
+/**
+ * The template for all tests.
+ * @param activeTest
+ * @param title
+ */
+{template .template}
+
+<div id="questionPreviewContainer{$activeTest.id}" class="clear-fix info">
+  <div class="container">
+    <div id="previewContainer" class="container mini-layout well">
+      <div class="row">
+        <div class="span6">
+          <div class="media-grid">
+            <a id="testPeviewImageLink" data-controls-modal="upload-modal" data-backdrop="false" data-keyboard="true"> <img
+              class="thumbnail" id="testPreviewImage" src="/image?key={$activeTest.image}&falback=/images/330x230.gif" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="span10">
+          <div class="mini-layout highlightArea">
+            <div class="page-header">
+              <div class="container">
+                <div class="row">
+                  <div class="span1 textAccent">
+                    <h1 id="testPreviewTitle">{if $title}{$title} {else}{$activeTest.title}{/if}</h1>
+                  </div>
+                  <div class="span9">
+                    <p>
+                      <b id="testPreviewDescription">{$activeTest.description|noAutoescape}</b>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="testPreviewAnswers" class="container">
+              <table>
+                {foreach $possibleAnswer in $activeTest.possibleAnswers}
+                <tr>
+                  <td><div class="media-grid answer-radius">
+                      <a possibleAnswer="true" class="btn small" id="answerLink{$possibleAnswer.index}" possibleAnswerIndex="{$possibleAnswer.index}">{$possibleAnswer.title}&nbsp;</a>
+                    </div></td>
+                  <td><div id="answerText{$possibleAnswer.index}" class="span8 testTextElement">{$possibleAnswer.text|noAutoescape}</div></td>
+                </tr>
+                {/foreach}
+                
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="wrongAnswerContainer" class="hide">
+          <div class="span16" align="center">
+            <div id="incorrectContainer" class="alert-message error" style="text-align: center">
+              <p>
+                <strong>INCORRECTO</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="correctAnswerContainer" class="hide">
+          <div class="span16" align="center">
+            <div id="correctContainer" class="alert-message success" style="text-align: center">
+              <p>
+                <strong>CORRECTO</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="explanationContainer" class="hide">
+          <div class="mini-layout highlightArea">
+            {$activeTest.explanation|noAutoescape}
+          </div>
+        </div>
+      </div>
+      <div id="goToNextButtonContainer" class="row hide">
+        <div class="span16">
+          <a id="goToNextButton" class="btn large danger pull-right"><strong>Siguiente &rarr;</strong> </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{/template}

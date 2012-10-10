@@ -1,7 +1,9 @@
 .*/target
+.*\.pyc
 .*/src/main/webapp/WEB-INF/lib/.*\.jar
 .*/src/main/webapp/WEB-INF/classes
 webapp/WEB-INF/appengine-generated
+webapp/src/main/webapp/jsgen
 
 syntax: regexp
 target

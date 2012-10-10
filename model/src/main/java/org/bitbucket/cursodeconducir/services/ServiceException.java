@@ -1,5 +1,6 @@
 package org.bitbucket.cursodeconducir.services;
 
+@SuppressWarnings("serial")
 public class ServiceException extends Exception {
 	public ServiceException() {
 		super();
