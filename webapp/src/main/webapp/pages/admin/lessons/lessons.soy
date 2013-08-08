@@ -1,0 +1,117 @@
+{namespace cursoconducir.template.lessonpage}
+
+/**
+ * The lessons management template.
+ */
+{template .content}
+  <div class="container">
+    <div class="content">
+      <div class="page-header page-header-ext">
+        <div class="container">
+          <div class="row">
+            <div class="span10">
+              <h1 id="mainTitle">
+                {call .titleInitial /}
+              </h1>
+            </div>
+            <div class="span6">
+              <div class="pull-right pageButtons"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container feedback hide"></div>
+      <div class="row" id="container"></div>
+      <div class="container feedback hide"></div>
+      <div class="container">
+        <div class="container">
+          <div class="row">
+            <div class="span10">&nbsp;</div>
+            <div class="span6">
+              <div class="pull-right pageButtons">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{/template}
+
+
+/**
+ * The initial title
+ */
+{template .titleInitial}
+    Manage Lessons <small>Create new or modify old lessons</small>
+{/template}
+
+/**
+ * The create title
+ */
+{template .createTitle}
+    Create a Lesson <small>enter the lesson details</small>
+{/template}
+
+/**
+ * The edit title
+ */
+{template .editTitle}
+    Edit a Lesson <small>enter the lesson new details</small
+{/template}
+
+/**
+ * The lesson management initial buttons template.
+ */
+{template .initialButtons}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>
+{/template}
+
+/**
+ * The test management initial buttons template with selection of unpublished questions only.
+ */
+{template .initialSelectionPublish}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>&nbsp;
+    <a id="deleteButton" class="btn large primary">Delete</a>&nbsp;
+    <a id="publishButton" class="btn large">Publish</a>
+{/template}
+
+/**
+ * The test management initial buttons template with selection of published questions only.
+ */
+{template .initialSelectionUnpublish}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>&nbsp;
+    <a id="deleteButton" class="btn large primary">Delete</a>&nbsp;
+    <a id="unpublishButton" class="btn large">Unpublish</a>
+{/template}
+
+/**
+ * The test management initial buttons template with selection of both published and unpublished questions.
+ */
+{template .initialSelectionDifferentPublish}
+    <a id="createButton" class="btn large danger" href="#create">Create</a>&nbsp;
+    <a id="deleteButton" class="btn large primary">Delete</a>&nbsp;
+{/template}
+
+/**
+ * The lesson management edit buttons template.
+ */
+{template .editButtons}
+    <a id="saveButton" class="btn large primary">Save changes</a>&nbsp;
+    <a id="cancelButton" href="#cancel" class="btn large">Cancel</a>
+{/template}
+
+/**
+ * The feedback template.
+ * @param errorMessage
+ */
+{template .feedback}
+<div class="container">
+  <div class="row">
+    <div class="span16" class="center testFeedbackContent">
+      <div class="alert-message error">
+        <strong>Oww, snap!</strong>&nbsp;{$errorMessage}
+      </div>
+    </div>
+  </div>
+</div>
+{/template}

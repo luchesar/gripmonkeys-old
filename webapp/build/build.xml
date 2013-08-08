@@ -1,0 +1,58 @@
+<project name="cursoconducir" default="none">
+	<property name="builddir" value="${basedir}" />
+	<property name="webapp" value="${builddir}/../src/main/webapp" />
+	<property name="warDir" value="${builddir}/../target/tmpwar" />
+	<property name="compiledJs" value="${warDir}/jsgen/" />
+
+	<target name="none">
+	</target>
+
+	<target name="compile-js">
+		<mkdir dir="${compiledJs}" />
+		<compile plovrConfigFile="${builddir}/plovr-index-config.js" />
+	</target>
+
+	<macrodef name="compile">
+		<attribute name="plovrConfigFile" />
+		<sequential>
+			<echo>compiling JS for config @{plovrConfigFile}</echo>
+			<java jar="${builddir}/plovr.jar" fork="true" failonerror="true">
+				<arg line="build @{plovrConfigFile}" />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="copyWebappResources">
+		<mkdir dir="${warDir}"/>
+		<copy todir="${warDir}" includeemptydirs="false">
+			<fileset dir="${webapp}">
+				<exclude name="**/jslib/**/*.*" />
+				<exclude name="**/*_test.html" />
+				<exclude name="**/*_tests.html" />
+				<exclude name="**/*.soy" />
+				<exclude name="**/*.js" />
+			</fileset>
+		</copy>
+		<copy todir="${warDir}/jslib" file="${webapp}/jslib/jquery-1.6.4.js"/>
+	</target>
+
+	<target name="jspPatch">
+		<antcall target="copyWebappResources"/>
+		<replace file="${warDir}/pages/index.jsp">
+			<replacefilter token="http://localhost:9810/compile?id=index&amp;mode=raw&amp;level=verbose" 
+			    				value="/jsgen/cursoconducir.modules.index.compiled.js" />
+		</replace>
+	</target>
+
+	<target name="plovr">
+		<java jar="plovr.jar" fork="true">
+			<arg line=" serve plovr-index-config.js" />
+		</java>
+	</target>
+	
+	<target name="startPlovr">
+	</target>
+	
+	<target name="stopPlovr">
+    </target>
+</project>

@@ -1,0 +1,33 @@
+{namespace org.plovr}
+
+/**
+ * @param title
+ * @param baseJsUrl
+ * @param testJsUrl
+ */
+{template .test}
+<!doctype html>
+<html>
+<head>
+  <title>{$title} test</title>
+  <script src="/input/index/$$/src/main/webapp/jslib/jquery-1.6.4.js"></script>
+  <script src="{$baseJsUrl}"></script>
+  <meta charset='utf-8'/>
+  <link rel="stylesheet" href="/input/index/$$/src/main/webapp/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/input/index/$$/src/main/webapp/css/docs.css"/>
+  <script>
+    goog.require('goog.events');
+    goog.require('goog.events.EventTarget');
+    goog.require('goog.testing.ContinuationTestCase');
+    goog.require('goog.testing.MockClock');
+    goog.require('goog.testing.PropertyReplacer');
+    goog.require('goog.testing.TestCase.Test');
+    goog.require('goog.testing.jsunit');
+    goog.require('goog.History');
+  </script>
+</head>
+<body>
+  <script src="{$testJsUrl}"></script>
+</body>
+</html>
+{/template}

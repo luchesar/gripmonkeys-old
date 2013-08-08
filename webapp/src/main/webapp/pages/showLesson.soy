@@ -1,0 +1,30 @@
+{namespace cursoconducir.showlesson.template}
+
+/**
+ * The template for doing a lesson.
+ * @param lesson
+ */
+{template .showLesson}
+    <div id="lesson{$lesson.id}">
+        <div class="container">
+            <div class="row">
+                <div id="explanationContainer" class="span6">
+                </div>
+            </div>
+        </div>    
+        
+        <div id="questionsContainer">
+        </div>
+        <div id="buttonsConatiner" class="container">
+            <div class="row">
+                <div class="span16">
+                    <div class="pull-right">
+                        <!--<input name="showExplanation" type="checkbox">Mostrar la explicación</input>
+                        &nbsp;&nbsp;-->
+                        <a id="submitAnswersButton" class="btn danger pull-right">Enviar respuestas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/template}

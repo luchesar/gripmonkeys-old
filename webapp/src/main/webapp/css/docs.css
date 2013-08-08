@@ -1,0 +1,111 @@
+.mini-layout {
+	border: 1px solid #ddd;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+.mini-layout div {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.answer-radius a {
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+}
+
+.testTextElement {
+	margin: 0 0 18px;
+	padding: 7px 14px;
+}
+
+.grayed {
+	background-color: e7e7e7;
+}
+
+h1 hint,
+h2 hint,
+h3 hint,
+h4 hint,
+h5 hint,
+h6 hint {
+  color: #495961;
+}
+
+h1 hint {
+  font-size: 18px;
+  font-weight: normal;
+}
+h2 hint {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+h3 hint {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.highlightArea {
+    background-color: #ffffff;
+    padding: 0px 0px 10px 10px;
+    '
+}
+h4 hint {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+div.textAccent h1, 
+div.textAccent h2,
+div.textAccent h3,
+div.textAccent h4,
+div.textAccent h5 {
+	color: #124c7c;
+}
+
+.framed-image:before, .framed-image:after {
+  display: table;
+  content: "";
+}
+
+.framed-image:after {
+  clear: both;
+}
+
+.framed-image a img {
+  padding: 4px;
+  margin: 0 0 20px 20px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.framed-image a img {
+  display: block;
+}
+.framed-image a img:hover {
+  border-color: #0069d6;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.noHoverLink a:hover {
+  background-color: inherit;
+}
+
+.noSpacingOrMargin {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;

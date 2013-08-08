@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.bitbucket.cursodeconducir</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>model</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>Model</name>
+
+  <properties>
+    <datanucleus.version>1.1.5</datanucleus.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <buildcommands>
+            <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+            <buildcommand>com.google.appengine.eclipse.core.enhancerbuilder</buildcommand>
+            <buildcommand>com.google.appengine.eclipse.core.projectValidator</buildcommand>
+          </buildcommands>
+          <additionalProjectnatures>
+            <projectnature>org.eclipse.jdt.core.javanature</projectnature>
+            <projectnature>com.google.appengine.eclipse.core.gaeNature</projectnature>
+          </additionalProjectnatures>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+      <version>${appengine.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-labs</artifactId>
+      <version>${appengine.version}</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-stubs</artifactId>
+      <version>${appengine.version}</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-jsr107cache</artifactId>
+      <version>${appengine.version}</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.objectify</groupId>
+      <artifactId>objectify</artifactId>
+      <version>3.0</version>
+    </dependency>
+  </dependencies>
+</project>
