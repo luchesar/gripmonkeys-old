@@ -12,7 +12,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <guava.version>r08</guava.version>
-    <appengine.version>1.8.3</appengine.version>
+    <appengine.version>1.8.4</appengine.version>
   </properties>
 
   <modules>
